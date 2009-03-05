@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instruments>
+	
+	<category name="string">
+		<instrument name="harp" />	
+		<instrument name="lyre" />	
+		<instrument name="psaltery" />	
+	</category>
+	
+	<category name="wind">
+		<instrument name="horn" />	
+		<instrument name="saxophone" />	
+		<instrument name="piccolo" />	
+	</category>
+	
+</instruments>

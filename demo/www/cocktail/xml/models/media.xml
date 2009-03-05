@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model>
+	
+	<!-- ========================= Media/index ========================= -->
+	
+	<action name="index"> 
+		
+		<datasource id="index" locale="*" type="inline">
+			<title>MEDIA</title>
+		</datasource>
+		
+		<datasource id="index" locale="en" type="inline">
+			<text-swf><![CDATA[ Loaded SWF: ]]></text-swf>
+			<text-img><![CDATA[ Loaded IMG: ]]></text-img>
+			<frame-1><![CDATA[FRAME 1]]></frame-1>
+			<frame-2><![CDATA[FRAME 2]]></frame-2>
+			<frame-3><![CDATA[FRAME 3]]></frame-3>
+			<frame-4><![CDATA[FRAME 4]]></frame-4>
+			<frame-5><![CDATA[FRAME 5]]></frame-5>
+			<frame-6><![CDATA[FRAME 6]]></frame-6>
+			<frame-7><![CDATA[FRAME 7]]></frame-7>
+			<frame-8><![CDATA[FRAME 8]]></frame-8>
+			<frame-9><![CDATA[FRAME 9]]></frame-9>
+		</datasource>
+		
+		<datasource id="index" locale="pt" type="inline">
+			<text-swf><![CDATA[ SWF Carregado: ]]></text-swf>
+			<text-img><![CDATA[ IMG Carregado: ]]></text-img>
+			<frame-1><![CDATA[QUADRO 1]]></frame-1>
+			<frame-2><![CDATA[QUADRO 2]]></frame-2>
+			<frame-3><![CDATA[QUADRO 3]]></frame-3>
+			<frame-4><![CDATA[QUADRO 4]]></frame-4>
+			<frame-5><![CDATA[QUADRO 5]]></frame-5>
+			<frame-6><![CDATA[QUADRO 6]]></frame-6>
+			<frame-7><![CDATA[QUADRO 7]]></frame-7>
+			<frame-8><![CDATA[QUADRO 8]]></frame-8>
+			<frame-9><![CDATA[QUADRO 9]]></frame-9>
+		</datasource>
+		
+	</action>
+	
+</model>

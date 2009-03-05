@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model>
+	
+	<!-- ========================= Datasources/index ========================= -->
+	
+	<action name="index"> 
+		
+		<!-- inline datasources -->
+		
+		<!-- EN -->
+		<datasource id="index" locale="en" type="inline">
+			
+			<title>FORM</title>
+			<text><![CDATA[ Here you'll can see how to build a form. ]]></text>
+			
+			<name-label><![CDATA[ Type here your name: ]]></name-label>
+			<email-label><![CDATA[ Type here your email: ]]></email-label>
+			<select-label><![CDATA[ Select a project to know more about: ]]></select-label>
+				<select-0><![CDATA[ PROJECT ]]></select-0>
+				<select-1><![CDATA[ FLEX ]]></select-1>
+				<select-2><![CDATA[ COCKTAIL ]]></select-2>
+			<comment-label><![CDATA[ Be kind, insert a comment: ]]></comment-label>
+			<radio-label><![CDATA[ Check one, or none. ]]></radio-label>
+				<radio-1><![CDATA[ One ]]></radio-1>
+				<radio-2><![CDATA[ None ]]></radio-2>
+			<check-label><![CDATA[ What do you like? ]]></check-label>
+				<check-1><![CDATA[ Music ]]></check-1>
+				<check-2><![CDATA[ Code ]]></check-2>
+			
+			<send><![CDATA[ !SEND ]]></send>
+			<sending><![CDATA[ Sending form... ]]></sending>
+			
+			<success-msg>Form sent! Check your email. :)</success-msg>
+			<error-msg>Failed to send form.</error-msg>
+			
+			<name-msg>Please, type your name.</name-msg>
+			<email-msg>Please, insert a valid email.</email-msg>
+			<info-msg>Please, select a substance.</info-msg>
+			<comment-msg>Come on, say something about this demo! :P</comment-msg>
+			
+		</datasource>
+		
+		
+		
+		<!-- PT -->
+		<datasource id="index" locale="pt" type="inline">
+			
+			<title>FORMULÁRIO</title>
+			<text><![CDATA[ Aqui voçê verá como construir um formulário. ]]></text>
+			<name-label><![CDATA[ Digite aqui o seu nome: ]]></name-label>
+			<email-label><![CDATA[ Digite aqui o seu email: ]]></email-label>
+			<select-label><![CDATA[ Selecione um projeto para saber mais: ]]></select-label>
+				<select-0><![CDATA[ PROJETO ]]></select-0>
+				<select-1><![CDATA[ FLEX ]]></select-1>
+				<select-2><![CDATA[ COCKTAIL ]]></select-2>
+			<radio-label><![CDATA[ Marque algum, ou nenhum. ]]></radio-label>
+				<radio-1><![CDATA[ Algum ]]></radio-1>
+				<radio-2><![CDATA[ Nenhum ]]></radio-2>
+			<check-label><![CDATA[ Do que voçê gosta? ]]></check-label>
+				<check-1><![CDATA[ Música ]]></check-1>
+				<check-2><![CDATA[ Código ]]></check-2>
+			<comment-label><![CDATA[ Por gentileza, insira um comentário: ]]></comment-label>
+			
+			<send><![CDATA[ !ENVIAR ]]></send>
+			<sending><![CDATA[ Enviando formulário... ]]></sending>
+			
+			<success-msg>Formulário enviado! Veja seu email. :)</success-msg>
+			<error-msg>Falha no envio do formulário.</error-msg>
+			
+			<name-msg>Por favor, digite seu nome.</name-msg>
+			<email-msg>Por favor, insira um email valido.</email-msg>
+			<info-msg>Por favor, selecione uma substância.</info-msg>
+			<comment-msg>Vamos lá, diga algo sobre esse demo! :P</comment-msg>
+			
+		</datasource>
+	</action>
+	
+</model>

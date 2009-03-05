@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view>
+	
+	<!-- ################################### LAYOUT ################################### -->
+	
+	<layout>
+		
+		<!-- ========================= Main/base ========================= -->
+		
+		<action name="base">
+			<div id="body-base">
+				<div id="top">
+					<txt id="title">{title}</txt>
+					<div id="menu">
+						<module id="menu-mod" classname="Menu">
+							<btn id="main" style="menu-btn">
+								<txt id="label" style="menu-label">{main}</txt>
+							</btn>
+							<btn id="datasources" style="menu-btn">
+								<txt id="label" style="menu-label">{datasources}</txt>
+							</btn>
+							<btn id="media" style="menu-btn">
+								<txt id="label" style="menu-label">{media}</txt>
+							</btn>
+							<btn id="form" style="menu-btn">
+								<txt id="label" style="menu-label">{form}</txt>
+							</btn>
+						</module>
+					</div>
+					<div id="locales">
+						<module id="locales-mod" classname="Locales">
+							<btn id="en" style="locale-btn">
+								<txt id="label" style="locale-label">{en}</txt>
+							</btn>
+							<btn id="pt" style="locale-btn">
+								<txt id="label" style="locale-label">{pt}</txt>
+							</btn>
+						</module>
+					</div>
+				</div>
+				
+				<div id="main" />
+				
+				<div id="bottom">
+					<txt id="copyright">{copyright}</txt>
+				</div>
+			</div>
+			
+			<font id="BauerBlackCond" src="bauer_black_cond.swf" classname="BauerBodoniBlackCond" />
+			<font id="AGCondBold" src="avant_demi_bold.swf" classname="AvantGardeCondensedBQDemiBold" />
+		</action>
+		
+		
+		
+		<!-- ========================= Main/home ========================= -->
+		
+		<action name="home">
+			<div id="body-home">
+				<txt id="subtitle">{subtitle}</txt>
+				<txt id="text">{text}</txt>
+			</div>
+		</action>
+		
+	</layout>
+	
+	
+	
+	<!-- ################################### STYLES ################################### -->
+	
+	<styles>
+		
+		<!-- ========================= Main/base ========================= -->
+		
+		<div id="body-base" />
+			
+			<div id="top" bg="true" bg_width="800" bg_height="90" bg_color="0x000000" padding="10" />
+				<txt id="title" color="0xffffff" font_size="45" font="BauerBlackCond" />
+				<div id="menu" snap="0 1" />
+					<btn id="menu-btn"
+						margin_right="2"
+						bg="true"
+						bg_width="85"
+						bg_color="0x9a005c"
+						bg_over_color="0x0099cc"
+						bg_alpha="1"
+					/>
+					<txt id="menu-label"
+						color="0xFFFFFF"
+						align="center"
+						font="AGCondBold"
+						font_size="12"
+						drop_shadow_distance="1"
+						drop_shadow_angle="45"
+						drop_shadow_color="0x000000"
+						drop_shadow_alpha="0.75"
+						drop_shadow_blurX="1"
+						drop_shadow_blurY="1"
+					/>
+				
+				<div id="locales" bg_width="52" align="right" />
+					<btn id="locale-btn"
+						margin_right="2"
+						bg="true"
+						bg_width="20"
+						bg_color="0x9a005c"
+						bg_over_color="0x0099cc"
+						bg_alpha="1"
+					/>
+					<txt id="locale-label"
+						color="0xFFFFFF"
+						align="center"
+						font="AGCondBold"
+						font_size="12"
+						drop_shadow_distance="1"
+						drop_shadow_angle="45"
+						drop_shadow_color="0x000000"
+						drop_shadow_alpha="0.75"
+						drop_shadow_blurX="1"
+						drop_shadow_blurY="1"
+					/>
+					
+			<div id="main" snap="0 1" bg="true" bg_width="800" bg_height="600" bg_color="0xffffff" />
+			
+			<div id="bottom" snap="0 1" bg="true" bg_width="800" bg_height="15" bg_color="0x000000" />
+				<txt id="copyright" align="center" color="0xffffff" font="BauerBlackCond" />
+		
+		
+		
+		<!-- ========================= Main/home ========================= -->
+		
+		<div id="body-home" y="90" padding="25" />
+			<txt id="subtitle" font_size="50" font="BauerBlackCond" />
+			<txt id="text" snap="0 1" margin_top="10" font_size="30" font="AGCondBold" />
+		
+	</styles>
+	
+</view>
