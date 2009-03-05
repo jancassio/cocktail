@@ -2,7 +2,7 @@
 <config>
 	
 	<!-- MAIN MOVIE PROPERTIES -->
-	<movie scaleMode="noScale" showMenu="false" width="800" height="600" align="C" />
+	<movie scaleMode="noScale" showMenu="false" width="800" height="705" align="C" />
 	
 	<!-- CACHE CONTROL -->
 	<cache local="false" development="true" production="true" />
