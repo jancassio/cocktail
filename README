@@ -22,5 +22,5 @@ fast tips
 4. create a symbolic link from "demo/www" folder into your webserver root
 folder, so you can acces it @ localhost.
 
-5. after compile, launch "http://localhost/symbolic_link_name" to see the demo
+5. after compiling, launch "http://localhost/symbolic_link_name" to see the demo
 working.
