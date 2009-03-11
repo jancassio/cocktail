@@ -1,0 +1,1 @@
+package cocktail.lib {	import cocktail.core.Index;		/**	 * @author nybras | nybras@codeine.it	 */	public class MVCCommon extends Index 	{		public function MVCCommon()		{			super();		}	}}

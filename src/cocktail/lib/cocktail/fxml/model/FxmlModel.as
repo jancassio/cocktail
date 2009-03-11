@@ -1,0 +1,1 @@
+package cocktail.lib.cocktail.fxml.model {	import cocktail.lib.cocktail.fxml.Fxml;				/**	 * @author nybras | nybras@codeine.it	 */	public class FxmlModel extends Fxml 	{		public function FxmlModel()		{			super();		}	}}

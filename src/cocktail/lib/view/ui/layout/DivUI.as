@@ -1,0 +1,1 @@
+package cocktail.lib.view.ui.layout {	import cocktail.lib.view.styles.renders.PositionRender;	import cocktail.lib.view.ui.UI;		/**	 * DivUI class.	 * @author nybras | nybras@codeine.it	 */	public class DivUI extends UI	{		public function after_load () : void		{			uses( new PositionRender () );		}	}}
