@@ -1,5 +1,5 @@
 package cocktail.core.data.ds 
-{	import cocktail.core.Index;			
+{	import cocktail.core.Index;					
 
 	/**	 * @author nybras | nybras@codeine.it	 */	public class TreeNode extends Index 
 	{

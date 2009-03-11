@@ -26,8 +26,8 @@
 
 package cocktail.utils 
 {
-	import cocktail.core.Index;
-	
+	import cocktail.core.Index;			
+
 	/**
 	 * Utilities for string manipuation.
 	 * 
@@ -35,6 +35,17 @@ package cocktail.utils
 	 */
 	public class StringUtil extends Index 
 	{
+		
+		/**
+		 * Replaces all found occurencies.
+		 * @param string	String source.
+		 * @param search	String search entry.
+		 * @param replace	String replacement.
+		 */
+		public static function replace_all ( string : String, search : *, replace : * ) : String
+		{
+			return string.split( search ).join( replace ); 
+		}
 		
 		/**
 		 * Returns the given string in lowercase, except the first char that becomes uppercase.

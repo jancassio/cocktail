@@ -307,9 +307,9 @@ package cocktail.lib
 			if ( ! ( model_structure is XML ) )
 				model_schema = <action name={dao.action} />;
 			else
-			{				model_schema = preprocessor.preprocess_globals( model_structure, model.xmlPath );
-				model_schema = preprocessor.preprocess_params( model_schema, model.xmlPath );
-				model_schema = preprocessor.preprocess_loops ( model_schema, model.xmlPath );
+			{				model_schema = preprocessor.globals( model_structure, model.xmlPath );
+				model_schema = preprocessor.params( model_schema, model.xmlPath );
+				model_schema = preprocessor.loops ( model_schema, model.xmlPath );
 			}			
 			model.cache_action ( model_schema );
 			
@@ -434,10 +434,10 @@ package cocktail.lib
 			if ( ! ( view_structure is XML ) )
 				view_structure = <action name={current_process.action} />;
 			
-			view_schema = preprocessor.preprocess_globals ( view_structure, view.xmlPath );
-			view_schema = preprocessor.preprocess_params( view_schema, view.xmlPath );
-			view_schema = preprocessor.preprocess_loops ( view_schema, view.xmlPath );
-			view_schema = preprocessor.preprocess_sweeps ( view_schema, view.xmlPath );
+			view_schema = preprocessor.globals ( view_structure, view.xmlPath );
+			view_schema = preprocessor.params( view_schema, view.xmlPath );
+			view_schema = preprocessor.loops ( view_schema, view.xmlPath );
+			view_schema = preprocessor.sweeps ( view_schema, view.xmlPath );
 			
 			view.cache_action( view_schema );
 			view.$load();

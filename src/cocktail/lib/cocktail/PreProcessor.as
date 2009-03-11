@@ -34,11 +34,11 @@ package cocktail.lib.cocktail
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var globals : Globals;
-		private var params : Params;
+		private var _globals : Globals;
+		private var _params : Params;
 //		private var commands : Commands;
-		private var loops : Loops;
-		private var sweeps : Sweeps;
+		private var _loops : Loops;
+		private var _sweeps : Sweeps;
 		
 		
 		
@@ -54,8 +54,8 @@ package cocktail.lib.cocktail
 		 */
 		public function PreProcessor ( bind : Bind, model : Model, view : View )
 		{
-			globals = new Globals();			params = new Params();//			commands = new Commands( bind, model, view );
-			loops = new Loops();			sweeps = new Sweeps( bind, model, view );		}
+			_globals = new Globals();			_params = new Params();//			commands = new Commands( bind, model, view );
+			_loops = new Loops();			_sweeps = new Sweeps( bind, model, view );		}
 
 		
 		
@@ -69,9 +69,9 @@ package cocktail.lib.cocktail
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all GLOBALS pre processed.
 		 */
-		public function preprocess_globals ( source : XML, path : String ) : XML
+		public function globals ( source : XML, path : String ) : XML
 		{
-			return globals.preprocess( source, path );
+			return _globals.preprocess( source, path );
 		}
 		
 		/**
@@ -80,9 +80,9 @@ package cocktail.lib.cocktail
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all PARAMS pre processed.
 		 */
-		public function preprocess_params ( source : XML, path : String ) : XML
+		public function params ( source : XML, path : String ) : XML
 		{
-			return params.preprocess( source, path );
+			return _params.preprocess( source, path );
 		}
 		
 //		/**
@@ -91,7 +91,7 @@ package cocktail.lib.cocktail
 //		 * @param path	The xml file path.
 //		 * @return	The given xml source, with all COMMANDS pre processed.
 //		 */
-//		public function preprocess_comands ( source : XML, path : String ) : XML
+//		public function comands ( source : XML, path : String ) : XML
 //		{
 //			return commands.preprocess( source, path );
 //		}
@@ -102,9 +102,9 @@ package cocktail.lib.cocktail
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all LOOPS pre processed.
 		 */
-		public function preprocess_loops ( source : XML, path : String ) : XML
+		public function loops ( source : XML, path : String ) : XML
 		{
-			return loops.preprocess( source, path );
+			return _loops.preprocess( source, path );
 		}
 		
 		/**
@@ -113,8 +113,8 @@ package cocktail.lib.cocktail
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all SWEEPS pre processed.
 		 */
-		public function preprocess_sweeps ( source : XML, path : String ) : XML
+		public function sweeps ( source : XML, path : String ) : XML
 		{
-			return sweeps.preprocess( source, path );
+			return _sweeps.preprocess( source, path );
 		}
 	}}
