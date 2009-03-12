@@ -49,9 +49,9 @@ package cocktail.lib.cocktail.preprocessor
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var bind : Bind;
-		private var model : Model;
-		private var view : View;
+		private var _bind : Bind;
+		private var _model : Model;
+		private var _view : View;
 		
 		
 		
@@ -67,9 +67,9 @@ package cocktail.lib.cocktail.preprocessor
 		 */
 		public function Sweeps ( bind : Bind, model : Model, view : View )
 		{
-			this.bind = bind;
-			this.model = model;
-			this.view = view;
+			_bind = bind;
+			_model = model;
+			_view = view;
 		}
 		
 		
@@ -118,10 +118,10 @@ package cocktail.lib.cocktail.preprocessor
 			
 			buffer = new XMLList( <root/> );
 			
-			for each ( item in model.datasource( datasource ).binds )
+			for each ( item in _model.datasource( datasource ).binds )
 			{
 				sweeped = children.split( name ).join( item.localName() as String );
-				sweeped = sweeped.split( value ).join( bind.g ( item.localName() as String ) );
+				sweeped = sweeped.split( value ).join( _bind.g ( item.localName() as String ) );
 				
 				buffer.appendChild( new XMLList ( sweeped ) );
 			}

@@ -25,10 +25,21 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail 
-{	import cocktail.core.Index;	import cocktail.core.data.bind.Bind;	import cocktail.lib.Model;	import cocktail.lib.View;	import cocktail.lib.cocktail.preprocessor.Globals;	import cocktail.lib.cocktail.preprocessor.Loops;	import cocktail.lib.cocktail.preprocessor.Params;	import cocktail.lib.cocktail.preprocessor.Sweeps;		/**
+{	import cocktail.core.Index;
+	import cocktail.core.data.bind.Bind;
+	import cocktail.lib.Model;
+	import cocktail.lib.View;
+	import cocktail.lib.cocktail.preprocessor.Binds;
+	import cocktail.lib.cocktail.preprocessor.Globals;
+	import cocktail.lib.cocktail.preprocessor.Loops;
+	import cocktail.lib.cocktail.preprocessor.Params;
+	import cocktail.lib.cocktail.preprocessor.Sweeps;	
+
+	/**
 	 * Pre Processor main class.
 	 * @author nybras | nybras@codeine.it
 	 * @see	Globals	 * @see	Params	 * @see	Loops	 * @see	Sweeps
+	 * @see	Binds
 	 * @see	IPreProcessor	 */	public class PreProcessor extends Index 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -39,6 +50,7 @@ package cocktail.lib.cocktail
 //		private var commands : Commands;
 		private var _loops : Loops;
 		private var _sweeps : Sweeps;
+		private var _binds : Binds;
 		
 		
 		
@@ -55,8 +67,8 @@ package cocktail.lib.cocktail
 		public function PreProcessor ( bind : Bind, model : Model, view : View )
 		{
 			_globals = new Globals();			_params = new Params();//			commands = new Commands( bind, model, view );
-			_loops = new Loops();			_sweeps = new Sweeps( bind, model, view );		}
-
+			_loops = new Loops();			_sweeps = new Sweeps( bind, model, view );			_binds = new Binds( bind, model, view );		}
+		
 		
 		
 		/* ---------------------------------------------------------------------
@@ -64,7 +76,7 @@ package cocktail.lib.cocktail
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Pre processing globals.
+		 * Pre-processing globals.
 		 * @param source	The xml content to be pre processed.
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all GLOBALS pre processed.
@@ -75,7 +87,7 @@ package cocktail.lib.cocktail
 		}
 		
 		/**
-		 * Pre processing action params.
+		 * Pre-processing action params.
 		 * @param source	The xml content to be pre processed.
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all PARAMS pre processed.
@@ -86,7 +98,7 @@ package cocktail.lib.cocktail
 		}
 		
 //		/**
-//		 * Pre processing commands. 
+//		 * Pre-processing commands. 
 //		 * @param source	The xml content to be pre processed.
 //		 * @param path	The xml file path.
 //		 * @return	The given xml source, with all COMMANDS pre processed.
@@ -97,7 +109,7 @@ package cocktail.lib.cocktail
 //		}
 		
 		/**
-		 * Pre processing loops. 
+		 * Pre-processing loops. 
 		 * @param source	The xml content to be pre processed.
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all LOOPS pre processed.
@@ -108,7 +120,7 @@ package cocktail.lib.cocktail
 		}
 		
 		/**
-		 * Pre processing sweeps.
+		 * Pre-processing sweeps.
 		 * @param source	The xml content to be pre processed.
 		 * @param path	The xml file path.
 		 * @return	The given xml source, with all SWEEPS pre processed.
@@ -116,5 +128,16 @@ package cocktail.lib.cocktail
 		public function sweeps ( source : XML, path : String ) : XML
 		{
 			return _sweeps.preprocess( source, path );
+		}
+		
+		/**
+		 * Pre-processing/Plugging binds.
+		 * @param source	The xml content to be pre processed.
+		 * @param path	The xml file path.
+		 * @return	The given xml source, with all BINDS pre processed.
+		 */
+		public function binds ( source : XML, path : String ) : XML
+		{
+			return _binds.preprocess( source, path );
 		}
 	}}

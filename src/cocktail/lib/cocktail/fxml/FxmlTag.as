@@ -24,33 +24,59 @@
 	
 *******************************************************************************/
 
-package cocktail.core.data.dao.layout
-{	import cocktail.core.data.dao.DAO;
-	
+package cocktail.lib.cocktail.fxml
+{
+	import cocktail.core.Index;				
+
 	/**
-	 * Layout's action data-access-object, used by View class.
-	 * 	 * @author nybras | nybras@codeine.it
-	 * @see	LayoutItemDAO	 */	public class LayoutActionDAO extends DAO 
+	 * Fxml basic node class.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class FxmlTag extends Index 
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+			PROPERTIES
 		--------------------------------------------------------------------- */
 		
-		public var name : String;
-		public var items : Array;
+		private var _properties : Array;
 		
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+			SETTING / PARSING PROPERTIES
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Creates a new LayoutActionDAO instance.
-		 * @param name	Action name.
-		 * @param items	Array of <code>LayoutItemDAO</code>
+		 * Keep all properties for future parsing.
+		 * @param properties	Tag properties you has defined in your UI class,
+		 * each one divided by a pipe "|".
 		 */
-		public function LayoutActionDAO ( name : String, items : Array = null )
-		{			this.name = name;
-			this.items = ( items || [] );		}
-	}}
+		public function _set_properties ( properties : String ) : void
+		{
+			_properties = [].concat ( properties.split ( "|" ) );
+		}
+				/**
+		 * Parses the item's node attributes according the declared vars.
+		 * @param fxml_node	Node xml of any fxml tag, in view or model.
+		 */
+		public function _parse_properties ( fxml_node : XML ) : void
+		{
+			var value : *;
+			var property : XML;
+			var property_name : String;
+			
+			for each ( property_name in _properties )
+				property = describe( property_name );
+				if ( ( value = fxml_node.@[ property.@name ] ) != undefined )
+				{
+					switch ( property.@type )
+					{
+						case "Boolean":
+							value = ( value == "true" || value == true );
+						break;
+					}
+					this[ property.@name ] = value;
+				}
+		}
+	}
+}

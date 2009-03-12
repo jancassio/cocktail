@@ -374,7 +374,7 @@ package cocktail.lib
 			], $after_init );
 			
 			model.$init();
-			view.$init();
+			view._init();
 		}		
 		private function $after_init () : void
 		{
@@ -440,7 +440,7 @@ package cocktail.lib
 			view_schema = preprocessor.sweeps ( view_schema, view.xmlPath );
 			
 			view.cache_action( view_schema );
-			view.$load();
+			view._load();
 			
 			request.listen( $load_complete, null, $load_progress, $load_start );
 			request.start();
@@ -462,7 +462,7 @@ package cocktail.lib
 			
 			$rendering();
 			task.wait( view.class_path + "/render_done", $render_done );
-			view.$render( );
+			view._render( );
 		}		
 		/**
 		 * 

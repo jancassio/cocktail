@@ -24,53 +24,14 @@
 	
 *******************************************************************************/
 
-package cocktail.core {
+package cocktail.core {
 	import cocktail.core.Index;
-	import cocktail.core.data.dao.layout.LayoutAssetDAO;
-	import cocktail.core.data.dao.layout.LayoutBtnDAO;
-	import cocktail.core.data.dao.layout.LayoutCheckDAO;
-	import cocktail.core.data.dao.layout.LayoutDivDAO;
-	import cocktail.core.data.dao.layout.LayoutFontDAO;
-	import cocktail.core.data.dao.layout.LayoutHrDAO;
-	import cocktail.core.data.dao.layout.LayoutImgDAO;
-	import cocktail.core.data.dao.layout.LayoutOptionDAO;
-	import cocktail.core.data.dao.layout.LayoutRadiobuttonDAO;
-	import cocktail.core.data.dao.layout.LayoutRadiogroupDAO;
-	import cocktail.core.data.dao.layout.LayoutScrollDAO;
-	import cocktail.core.data.dao.layout.LayoutSelectDAO;
-	import cocktail.core.data.dao.layout.LayoutSwfDAO;
-	import cocktail.core.data.dao.layout.LayoutTxtDAO;
-	import cocktail.core.data.dao.model.ModelActionDAO;
-	import cocktail.core.data.dao.style.StyleBtnDAO;
-	import cocktail.core.data.dao.style.StyleCheckDAO;
-	import cocktail.core.data.dao.style.StyleDivDAO;
-	import cocktail.core.data.dao.style.StyleHrDAO;
-	import cocktail.core.data.dao.style.StyleImgDAO;
-	import cocktail.core.data.dao.style.StyleOptionDAO;
-	import cocktail.core.data.dao.style.StyleRadiobuttonDAO;
-	import cocktail.core.data.dao.style.StyleRadiogroupDAO;
-	import cocktail.core.data.dao.style.StyleSelectDAO;
-	import cocktail.core.data.dao.style.StyleSwfDAO;
-	import cocktail.core.data.dao.style.StyleTxtDAO;
 	import cocktail.lib.model.datasources.AmfDataSource;
 	import cocktail.lib.model.datasources.HttpDataSource;
 	import cocktail.lib.model.datasources.InlineDataSource;
-	import cocktail.lib.model.datasources.XmlDataSource;
-	import cocktail.lib.view.elements.AssetElement;
-	import cocktail.lib.view.elements.BtnElement;
-	import cocktail.lib.view.elements.CheckElement;
-	import cocktail.lib.view.elements.DivElement;
-	import cocktail.lib.view.elements.FontElement;
-	import cocktail.lib.view.elements.HrElement;
-	import cocktail.lib.view.elements.ImgElement;
-	import cocktail.lib.view.elements.OptionElement;
-	import cocktail.lib.view.elements.RadiobuttonElement;
-	import cocktail.lib.view.elements.RadiogroupElement;
-	import cocktail.lib.view.elements.SelectElement;
-	import cocktail.lib.view.elements.SwfElement;
-	import cocktail.lib.view.elements.TxtElement;		
+	import cocktail.lib.model.datasources.XmlDataSource;	
 
-	/**
+		/**
 	 * Embeder class for cocktail.
 	 * 
 	 * @author nybras | nybras@codeine.it
@@ -79,38 +40,6 @@ package cocktail.core {
 	{
 		public function EmbederTail ()
 		{
-			StyleTxtDAO;
-			StyleImgDAO;
-			StyleBtnDAO;
-			StyleSwfDAO;
-			StyleDivDAO;
-			StyleHrDAO;
-			StyleSelectDAO;			StyleOptionDAO;			StyleRadiobuttonDAO;
-			StyleRadiogroupDAO;
-			StyleCheckDAO;						LayoutTxtDAO;
-			LayoutImgDAO;
-			LayoutBtnDAO;
-			LayoutSwfDAO;
-			LayoutFontDAO;
-			LayoutAssetDAO;
-			LayoutDivDAO;
-			LayoutScrollDAO;
-			LayoutHrDAO;
-			LayoutHrDAO;
-			LayoutSelectDAO;			LayoutOptionDAO;
-			LayoutRadiobuttonDAO;
-			LayoutRadiogroupDAO;
-			LayoutCheckDAO;			
-			AssetElement;			SwfElement;
-			TxtElement;
-			ImgElement;
-			BtnElement;
-			FontElement;
-			DivElement;			HrElement;			SelectElement;			OptionElement;
-			RadiobuttonElement;
-			RadiogroupElement;
-			CheckElement;			
-			ModelActionDAO;
 			XmlDataSource;
 			HttpDataSource;
 			InlineDataSource;

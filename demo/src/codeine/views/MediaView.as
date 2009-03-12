@@ -23,9 +23,9 @@ package codeine.views
 
 		public function before_render () : void
 		{
-			sprite.alpha = 0;
+			_sprite.alpha = 0;
 			
-			_eclipse = MovieClip( child( "body.files.col-right.swf.timeline" ).holder );
+			_eclipse = MovieClip( child( "body.files.col-right.swf.timeline" )._holder );
 			_buttons = child( "body.files.col-right.menu" ).childs( );
 			_triggers = [];
 			
