@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <model>
+
+ 	<datasource id="base" locale="*" type="inline">
+		<title>codeine - cocktail demo application</title>
+		<copyright><![CDATA[ 2009 - codeine ]]></copyright>
+		<en>EN</en>
+		<pt>PT</pt>
+	</datasource> 
+	
+	<datasource id="menu" locale="en" type="inline">
+		<main>HOME</main>
+		<datasources>DATSOURCES</datasources>
+		<media>MEDIA</media>
+		<form>FORM</form>
+	</datasource>
+	
+	<datasource id="menu" locale="pt" type="inline">
+		<main>HOME</main>
+		<datasources>DATASOURCES</datasources>
+		<media>MEDIA</media>
+		<form>FORM</form>
+	</datasource>
+	
+</model>

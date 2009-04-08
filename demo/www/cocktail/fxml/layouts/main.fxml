@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+	
+	<!-- ========================= Main/base ========================= -->
+	
+	<action name="base">
+		<div id="body-base">
+			<div id="top">
+				<txt id="title">{title}</txt>
+				<div id="menu">
+					<module id="menu-mod" classname="Menu">
+						<require src="main/menu.fxml" /> 
+					</module>
+				</div>
+				<div id="locales">
+					<module id="locales-mod" classname="Locales">
+						<btn id="en" style="locale-btn">
+							<txt id="label" style="locale-label">{en}</txt>
+						</btn>
+						<btn id="pt" style="locale-btn">
+							<txt id="label" style="locale-label">{pt}</txt>
+						</btn>
+					</module>
+				</div>
+			</div>
+			
+			<div id="main" />
+			
+			<div id="bottom">
+				<txt id="copyright">{copyright}</txt>
+			</div>
+		</div>
+		
+		<font id="BauerBlackCond" src="bauer_black_cond.swf" classname="BauerBodoniBlackCond" />
+		<font id="AGCondBold" src="avant_demi_bold.swf" classname="AvantGardeCondensedBQDemiBold" />
+	</action>
+	
+	
+	
+	<!-- ========================= Main/home ========================= -->
+	
+	<action name="home">
+		<div id="body-home">
+			<txt id="subtitle">{subtitle}</txt>
+			<txt id="text">{text}</txt>
+		</div>
+	</action>
+	
+</layout>

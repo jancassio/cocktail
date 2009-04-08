@@ -56,7 +56,7 @@ package cocktail.lib.model.datasources.interfaces
 		function set src ( value : String ) : void;
 		
 		function boot ( model : Model, bind : Bind, item : XML, request : RequestConnector ) : void;
-		function load ( autoStart : Boolean = false ) : IDataSource;
+		function load () : IDataSource;
 		
 		function listen ( complete : Function ) : void
 		function unlisten ( complete : Function ) : void

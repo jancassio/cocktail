@@ -25,6 +25,7 @@
 *******************************************************************************/
 
 package cocktail.lib {
+	import cocktail.lib.Layout;
 	import cocktail.core.Index;
 	import cocktail.core.Task;
 	import cocktail.core.connectors.MotionConnector;
@@ -42,11 +43,9 @@ package cocktail.lib {
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
-	import flash.events.Event;		
-
-	/**	 * Main cocktail View class.	 * 
-	 * This is the base class for every single View you have in your application.
-	 * 
+	import flash.events.Event;	
+	/**	 * Main cocktail View class. This is the base class for every single View
+	 * you have in your application.
 	 * @author nybras | nybras@codeine.it
 	 * @see Index
 	 * @see Cocktail
@@ -74,24 +73,24 @@ package cocktail.lib {
 		protected var _style : Style;
 		
 		protected var _holder : DisplayObject;		protected var _loader : Loader;		protected var _request : RequestConnector;		
-		public final var motion : MotionConnector; 				
+		public var motion : MotionConnector; 				
 				/* ---------------------------------------------------------------------
 			INITIALIZING
 		--------------------------------------------------------------------- */
 				/**
-		 * Boot the View according the cocktail strict flow.
+		 * Initializing the view.
 		 * @param ctrl	Area controller.
 		 * @param forceLayout	Forces the layout loading process.
 		 */
-		internal function boot ( controller : Controller, layout : Layout, fxml_node : XML ) : void
+		internal function init ( controller : Controller, layout : Layout, fxml_node : XML ) : void
 		{			_parse_properties( fxml_node );
 			
 			_childs = new Tree();
 			_sprite = new Sprite ();
 			
 			_controller = controller;			_layout = layout;			
-			_task = controller.task;			_bind = controller.bind;
-			_request = controller.request;
+//			_task = controller._task;//			_bind = controller._bind;
+//			_request = controller._request;
 			
 			_layout.addChild( this );
 						motion = new MotionConnector ( _sprite );
@@ -109,7 +108,7 @@ package cocktail.lib {
 		 */
 		public function set up ( target : View ) : void 
 		{
-			this._parent = target;
+			_parent = target;
 		}
 		/**
 		 * Gets the view parent.
@@ -117,7 +116,7 @@ package cocktail.lib {
 		 */
 		public function get up () : View
 		{
-			return this._parent;
+			return _parent;
 		}
 						/**
 		 * Sets the view parent.
@@ -125,7 +124,7 @@ package cocktail.lib {
 		 */
 		public function set prev ( target : View ) : void 
 		{
-			this._prev = target;
+			_prev = target;
 		}
 		/**
 		 * Gets the view parent.
@@ -133,7 +132,7 @@ package cocktail.lib {
 		 */
 		public function get prev () : View
 		{
-			return this._prev;
+			return _prev;
 		}
 								/* ---------------------------------------------------------------------
 			NAVIGATION & LOCALE HANDLERS
@@ -146,25 +145,13 @@ package cocktail.lib {
 		 */
 		final public function redirect ( url : String, silentMode : Boolean = false, freeze : Boolean = false ) : void
 		{
-			this._controller.redirect( url , silentMode, freeze );
+			_controller.redirect( url , silentMode, freeze );
 		}
 		
 		/**		 * Change the current locale string for I18n.		 * @param locale	The string locale to use.		 */
 		final public function switchLocale ( locale : String ) : void
-		{			this._controller.switchLocale( locale );
-		}								/* ---------------------------------------------------------------------
-			NOMENCLATURE HANDLERs
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Cleans up the class name, removing the "View" sufix.
-		 * @return	The class name without the "View" sufix.
-		 */
-		final public function get clean_class_name () : String
-		{
-			return class_name.replace( "View" , "" );
-		}
-		
+		{			_controller.switchLocale( locale );
+		}		
 		
 		
 		/**
@@ -174,7 +161,7 @@ package cocktail.lib {
 		public function addChild ( child : View ) : View
 		{
 //			//			child.up = this;//			child.prev = ( head ? null : ( ( target.length ? childs[ target.length - 1 ] : null ) ) );//			child.current_process = current_process;//			//			if ( head )//			{//				if ( target.length )
-//					target[ 0 ].prev = child;//				//				target.unshift( child );//			}	//			else//				target.push( child );//			//			child.boot( _controller );//			//			if ( _status == Status.RENDER_DONE || _status == Status.RENDERING )////				child.$load();
+//					target[ 0 ].prev = child;//				//				target.unshift( child );//			}	//			else//				target.push( child );//			//			child.boot( _controller );//			//			if ( _status == Status.RENDER_DONE || _status == Status.RENDERING )////				child._load();
 //				child._render();			
 			return child;		}
 		
@@ -275,7 +262,7 @@ package cocktail.lib {
 		 */
 		internal final function _before_init () : void
 		{
-			log.info( "$before_init();" );
+			log.info( "_before_init();" );
 			try { this[ "before_init" ](); } catch ( e : Error ) {};		}
 		
 		/**		 * TODO - add documentation
@@ -293,9 +280,9 @@ package cocktail.lib {
 		 */
 		internal final function _after_init () : void
 		{
-			log.info( "$after_init();" );
+			log.info( "_after_init();" );
 			try { this[ "after_init" ](); } catch ( e : Error ) {};
-			_task.done( class_path + "/$after_init" );
+			_task.done( class_path + "/_after_init" );
 		}
 								/* ---------------------------------------------------------------------
 			LOAD SEQUENCE EXECUTION
@@ -306,7 +293,7 @@ package cocktail.lib {
 		 */
 		internal final function _before_load () : void
 		{
-			log.info( "$before_load();" );						try { this[ "before_load" ](); } catch ( e : Error ) {};
+			log.info( "_before_load();" );						try { this[ "before_load" ](); } catch ( e : Error ) {};
 		}
 				/**
 		 * 
@@ -327,14 +314,14 @@ package cocktail.lib {
 		 */
 		internal final function _after_load ( event : RequestEvent ) : void
 		{
-			log.info( "$after_load();" );
+			log.info( "_after_load();" );
 			
 			if ( event != null ) {
 				_holder = event.iLoadableFile.getData( "flash.display.Loader" ).contentLoaderInfo.content;
 				_loader = event.iLoadableFile.loadManagerObject as Loader;
 			}
 						
-			_task.done( class_path + "/$after_load" );
+			_task.done( class_path + "/_after_load" );
 			try { this[ "after_load" ](); } catch ( e : Error ) {};
 		}
 								/* ---------------------------------------------------------------------
@@ -346,7 +333,7 @@ package cocktail.lib {
 		 */
 		internal final function _before_render (  ) : void
 		{
-			log.info( "$before_render();" );			//			try { style().apply( this ); } catch ( e1 : Error ) {}
+			log.info( "_before_render();" );			//			try { style().apply( this ); } catch ( e1 : Error ) {}
 			try { this[ "before_render" ](); } catch ( e2 : Error ) {};		}
 				/**
 		 * 
@@ -364,8 +351,8 @@ package cocktail.lib {
 		 * 
 		 */
 		internal final function _after_render () : void
-		{			log.info( "$after_render();" );
-			_task.done( class_path + "/$after_render" );
+		{			log.info( "_after_render();" );
+			_task.done( class_path + "/_after_render" );
 			
 			try {
 				this[ "after_render" ]( ); 
@@ -381,9 +368,9 @@ package cocktail.lib {
 		/**
 		 * 
 		 */
-		internal function $before_destroy ( dao : ProcessDAO ) : void
+		private function _before_destroy ( dao : ProcessDAO ) : void
 		{
-			log.info( "$before_destroy();" );
+			log.info( "_before_destroy();" );
 			
 			try {				this[ "before_destroy" ]( dao ); 
 			} catch ( e1 : Error ) {
@@ -395,21 +382,21 @@ package cocktail.lib {
 		/**
 		 * 
 		 */
-		internal function _destroy ( dao : ProcessDAO ) : void
+		protected function _destroy ( dao : ProcessDAO ) : void
 		{
-			log.info( "$destroy();" );						_destroying();			//			var item : View;			//			for each ( item in childs() ) {//				item.$destroy( dao );//			}			
-			this.$before_destroy( dao );
+			log.info( "_destroy();" );						_destroying();			//			var item : View;			//			for each ( item in childs() ) {//				item._destroy( dao );//			}			
+			this._before_destroy( dao );
 		}
 		
 		/**
 		 * 
 		 */
-		internal function $after_destroy () : void
+		private function _after_destroy () : void
 		{
 //			var destroyed : ProcessDAO;
 //			var child : View;
 //			
-//			log.info( "$after_destroy();" );
+//			log.info( "_after_destroy();" );
 //			
 //			if ( dead_processes.length )
 //			{

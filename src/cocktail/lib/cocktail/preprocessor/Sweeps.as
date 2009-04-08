@@ -30,8 +30,7 @@ package cocktail.lib.cocktail.preprocessor
 	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
-	import cocktail.lib.cocktail.interfaces.IPreProcessor;
-	import cocktail.lib.model.datasources.interfaces.IDataSource;	
+	import cocktail.lib.cocktail.interfaces.IPreProcessor;	
 
 	/**
 	 * Pre Processor class for <sweep> tags.
@@ -86,7 +85,7 @@ package cocktail.lib.cocktail.preprocessor
 		 */
 		public function preprocess ( xml : XML, path : String ) : XML
 		{
-			var item : XML;
+//			var item : XML;
 			
 			var sweep : XML;
 			var content : XML;
@@ -96,7 +95,7 @@ package cocktail.lib.cocktail.preprocessor
 			var name : String;
 			var value : String;
 			
-			var sweeped : String;
+//			var sweeped : String;
 			var buffer : XMLList;
 			
 			if ( ! xml..sweep.length() )
@@ -118,13 +117,14 @@ package cocktail.lib.cocktail.preprocessor
 			
 			buffer = new XMLList( <root/> );
 			
-			for each ( item in _model.datasource( datasource ).binds )
-			{
-				sweeped = children.split( name ).join( item.localName() as String );
-				sweeped = sweeped.split( value ).join( _bind.g ( item.localName() as String ) );
-				
-				buffer.appendChild( new XMLList ( sweeped ) );
-			}
+//			TODO - fix block
+//			for each ( item in _model.datasource( datasource ).binds )
+//			{
+//				sweeped = children.split( name ).join( item.localName() as String );
+//				sweeped = sweeped.split( value ).join( _bind.g ( item.localName() as String ) );
+//				
+//				buffer.appendChild( new XMLList ( sweeped ) );
+//			}
 			
 			sweep.parent().replace( sweep.childIndex(), buffer.children() );
 			

@@ -112,7 +112,7 @@ package cocktail.lib.cocktail.preprocessor
 				case "GATEWAY_PRODUCTION":	value = config.gateway ( "production" );	break;
 				
 				case "LOCALE_DEFAULT":		value = config.defaultLocale;				break;
-				case "LOCALE_CURRENT":		value = config.currentLocale;				break;	
+				case "LOCALE_CURRENT":		value = config.current_locale;				break;	
 			}
 			
 			if ( value == null )

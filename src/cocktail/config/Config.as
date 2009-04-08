@@ -144,7 +144,7 @@ package cocktail.config
 		 */
 		private function get configPath () : String
 		{
-			return ( ( pluginMode ? "./" : "../" ) + "cocktail/xml/config.xml" );
+			return ( ( pluginMode ? "./" : "../" ) + "cocktail/config/config.fxml" );
 		}
 		
 		/**
@@ -242,7 +242,7 @@ package cocktail.config
 		 * Get the current locale.
 		 * @return	The locales array.
 		 */
-		public function get currentLocale ( ) : String
+		public function get current_locale ( ) : String
 		{
 			return _currentLocale;
 		}
@@ -251,7 +251,7 @@ package cocktail.config
 		 * Set the current locale.
 		 * @return	The locales array.
 		 */
-		public function set currentLocale ( locale : String ) : void
+		public function set current_locale ( locale : String ) : void
 		{
 			_currentLocale = locale;
 		}

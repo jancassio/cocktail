@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+	<btn id="main" style="menu-btn">
+		<txt id="label" style="menu-label">{main}</txt>
+	</btn>
+	<btn id="datasources" style="menu-btn">
+		<txt id="label" style="menu-label">{datasources}</txt>
+	</btn>
+	<btn id="media" style="menu-btn">
+		<txt id="label" style="menu-label">{media}</txt>
+	</btn>
+	<btn id="form" style="menu-btn">
+		<txt id="label" style="menu-label">{form}</txt>
+	</btn>
+</layout>

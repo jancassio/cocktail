@@ -30,8 +30,9 @@ package cocktail.core {	import cocktail.config.Config;
 	import cocktail.core.loggers.MonsterLogger;
 	import cocktail.lib.Controller;
 	
+	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
-	import flash.utils.getQualifiedClassName;import flash.utils.describeType;	
+	import flash.utils.getQualifiedClassName;	
 
 	/**	 * Index class is the base class for almost every class inside cocktail package, specially the MVC core.	 * 	 * @author nybras | nybras@codeine.it	 */	public class Index 	{				/* ---------------------------------------------------------------------			ACCESS RESCRICTIONS		--------------------------------------------------------------------- */				protected namespace restricted;		protected var authorized : Array = new Array();								/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				private static var _config : Config;		private static var _router : Router;		private static var _finder : Function;				public var log : Logger;		public var alcon : AlconLogger;		public var monster : MonsterLogger;						
 		/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new Index instance.		 */		public function Index ()		{			log = new Logger( class_path );			alcon = new AlconLogger( class_path );			monster = new MonsterLogger( class_path );						log = monster;		}								/* ---------------------------------------------------------------------			CONFIG CACHE & LISTENING		--------------------------------------------------------------------- */				/**		 * Caches the application base config.		 * @param config	Config instance reference.		 */		protected function cacheConfig ( config : Config ) : void		{			if ( Index._config == null ) {				Index._config = config;				return;			}			log.warn( "The config has already been cached by Cocktail." );
@@ -42,16 +43,60 @@ package cocktail.core {	import cocktail.config.Config;
 		 */
 		public function describe ( name : String ) : XML
 		{
+			var described : XML;
+			
 			try
 			{
-				return describeType( this[ name ] );
+				described = describeType( this[ name ] );
 			}
 			catch ( e : Error )
 			{
 				log.warn ( "Cannot describe item "+ name +"''." );
+				log.warn ( e );
+			}
+			
+			return described;
+		}
+		/**		 * Gets the class name.		 * @return	The class name, without the package notation '::' (package::class).		 */		public function get class_name () : String {			return class_path.split( "." ).pop();		}				/**		 * Gets the class path.		 * @return	The class path, with the package notation '::' as (package::class).		 */		public function get class_path () : String {			return ( getQualifiedClassName( this)  as String ).replace( "::", "." );					}
+		
+		/**
+		 * Check if some property/method/variabel is defined in the given scope.
+		 * @param scope	Scope to evaluate.
+		 * @param property	Property/Method/Variable to evaluate.
+		 */
+		public function defined ( scope : *, property : String ) : void
+		{
+			var result : Boolean;
+			
+			try
+			{
+				scope[ property ];
+				result = true;
+			}
+			catch ( e : Error ) 
+			{
+				if ( e.errorID == 1006 )
+					result = false;
 			}
 		}
-				/**		 * Gets the class name.		 * @return	The class name, without the package notation '::' (package::class).		 */		public function get class_name () : String {			return class_path.split( "." ).pop();		}				/**		 * Gets the class path.		 * @return	The class path, with the package notation '::' as (package::class).		 */		public function get class_path () : String {			return ( getQualifiedClassName( this)  as String ).replace( "::", "." );					}
+		
+		/**
+		 * Tries to execute some method, handling the possible error results.
+		 * @param scope	Method scope.
+		 * @param method	Method name.
+		 * @param params	Method params
+		 */
+		public function try_exec (
+			scope : *,
+			method : String,
+			params : * = null
+		) : void
+		{
+			if ( defined ( scope, method ) )
+				scope[ method ].apply ( scope, (
+					params != null ? [].concat( params ) : []
+				) );
+		}
 		
 		
 		
