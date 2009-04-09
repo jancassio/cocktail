@@ -85,7 +85,8 @@ package cocktail
 		 * 		<br/># 2=fatal,error
 		 * 		<br/># 3=fatal,error,debug
 		 * 		<br/># 4=fatal,error,debug,warn
-		 * 		<br/># 5=fatal,error,debug,warn,info
+		 * 		<br/># 5=fatal,error,debug,warn,notice
+		 * 		<br/># 6=fatal,error,debug,warn,notice,info
 		 * @param logDetail	Application default log detail (default=1).
 		 * 		<br/># 0=Doesnt add any extra prefix besides the log level.
 		 * 		<br/># 1=Adds a prefix to all log calls, with the 'ClassName'
