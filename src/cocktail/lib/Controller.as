@@ -37,11 +37,10 @@ package cocktail.lib
 	import cocktail.lib.cocktail.PreProcessor;
 	import cocktail.lib.cocktail.tweaks.ControllerTweaks;
 	import cocktail.utils.ArrayUtil;
-	import cocktail.utils.Timeout;
 	
 	import flash.display.Sprite;	
 
-	/**
+		/**
 	 * Main cocktail Controller class. This is the base class for every single
 	 * Controller you have in your application.
 	 * @author nybras | nybras@codeine.it
@@ -57,21 +56,18 @@ package cocktail.lib
 		--------------------------------------------------------------------- */
 		
 		protected var _preprocessor : PreProcessor;
-//		protected var _dependences : Array;
 		
-//		protected var _task : Task;
 		protected var _request : RequestConnector;
 		protected var _bind : Bind;
 		
-//		public var root : Cocktail;
-		public var stage : Sprite;		
 		public var model : Model;
 		public var layout : Layout;
+		
+		public var stage : Sprite;
 		
 		public var current_process : ProcessDAO;
 		public var dead_process : ProcessDAO;
 		public var active_process : Array;
-		//		protected var _status : String;
 		
 		
 		
@@ -126,7 +122,7 @@ package cocktail.lib
 			
 			// sets the current proccess and notify "load_start"
 			current_process = process;
-			_load_start( null, false );
+//			_load_start( null, false );
 			
 			// executes the controller action
 			try
@@ -198,11 +194,85 @@ package cocktail.lib
 		
 		
 		/* ---------------------------------------------------------------------
+			MODEL / LAYOUT LOADING CONTROL
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Loads the model.
+		 */
+		private function _load_model () : void
+		{
+			_task.wait( model.class_path +"/_after_load", _load_layout );
+			model._load();
+			
+		}
+		
+		/**
+		 * Loads the layout.
+		 */
+		private function _load_layout () : void
+		{
+			layout._load();
+			_task.wait( layout.class_path +"/_after_load", _load_layout );
+			
+//			_request.listen( _load_complete, null, _load_progress, _load_start );
+//			_request.start();
+		}
+		
+		
+//		/* ---------------------------------------------------------------------
+//			LOAD NOTIFICATIONS
+//		--------------------------------------------------------------------- */
+//		
+//		// sending load output to view
+//		
+//		private var running : Boolean;
+//		
+//		private function _load_start ( event : RequestEvent = null, known : Boolean = true ) : void
+//		{
+//			if ( running ) return;
+//			
+//			running = true;
+//			try {
+//				layout["load_start"]( known );
+//			} catch ( e : Error )
+//			{
+//				try {
+//					layout["load_start"]();
+//				} catch ( e1 : Error ) {}
+//			}
+//		}
+//		
+//		private function _load_progress ( event : RequestEvent ) : void
+//		{
+//			var t : Number;
+//			var l : Number;
+//			var p : Number;
+//			
+//			t = event.iMassLoader.bytesTotal;
+//			l = event.iMassLoader.bytesLoaded;
+//			p = ( l / t );
+//			
+//			try { layout["load_progress"]( p, l, t ); } catch ( e : Error ){}
+//		}
+//		
+//		private function _load_complete ( event : RequestEvent = null ) : void
+//		{
+//			running = false;
+//			
+//			try { layout["load_complete"](); } catch ( e : Error ) {}
+//			
+//			new Timeout( proxy( _after_load, event ), 300 ).exec();
+//		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			LOAD SEQUENCE EXECUTION
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * 
+		 * Invoked Before load starts.
 		 */
 		private function _before_load () : void
 		{
@@ -211,8 +281,8 @@ package cocktail.lib
 			try_exec ( this, "before_load" );
 		}
 		
-		/**
-		 * 
+		/**	
+		 * Loads the required action.
 		 */
 		private function _load () : void
 		{
@@ -221,31 +291,7 @@ package cocktail.lib
 		}
 		
 		/**
-		 * 
-		 */
-		private function _load_model () : void
-		{
-			_task.wait( model.class_path +"/_after_load", _load_view );
-			model._load();
-			
-		}
-		
-		/**
-		 * 
-		 */
-		private function _load_view () : void
-		{
-//			layout.cache_action( view_schema );
-//			TODO - implement layout load
-//			layout._load();
-			
-			_request.listen( _load_complete, null, _load_progress, _load_start );
-			_request.start();
-		}
-		
-		
-		/**
-		 * 
+		 * Invoked after load complete.
 		 */
 		private function _after_load ( event : RequestEvent ) : void
 		{
@@ -260,9 +306,10 @@ package cocktail.lib
 			_rendering();
 			_task.wait( layout.class_path + "/render_done", _render_done );
 			
-//			TODO - implement layout render
-//			layout._render( );
+			layout._render( );
 		}		
+		
+		
 		/**
 		 * 
 		 */		private function execMVC () : void		{
@@ -285,48 +332,7 @@ package cocktail.lib
 				else
 					layout.log.error( e3 );
 			};
-		}				
-				// sending load output to view
-		
-		private var running : Boolean;
-		
-		private function _load_start ( event : RequestEvent = null, known : Boolean = true ) : void
-		{
-			if ( running ) return;
-			
-			running = true;
-			try {
-				layout["load_start"]( known );
-			} catch ( e : Error )
-			{
-				try {
-					layout["load_start"]();
-				} catch ( e1 : Error ) {}
-			}
-		}
-		
-		private function _load_progress ( event : RequestEvent ) : void
-		{
-			var t : Number;
-			var l : Number;
-			var p : Number;
-			
-			t = event.iMassLoader.bytesTotal;
-			l = event.iMassLoader.bytesLoaded;
-			p = ( l / t );
-			
-			try { layout["load_progress"]( p, l, t ); } catch ( e : Error ){}
-		}
-		
-		private function _load_complete ( event : RequestEvent = null ) : void
-		{
-			running = false;
-			
-			try { layout["load_complete"](); } catch ( e : Error ) {}
-			
-			new Timeout( proxy( _after_load, event ), 300 ).exec();
-		}
-		
+		}		
 		
 		
 		/* ---------------------------------------------------------------------

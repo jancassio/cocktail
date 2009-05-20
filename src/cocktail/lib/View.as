@@ -25,26 +25,8 @@
 *******************************************************************************/
 
 package cocktail.lib {
-	import cocktail.lib.Layout;
-	import cocktail.core.Index;
-	import cocktail.core.Task;
-	import cocktail.core.connectors.MotionConnector;
-	import cocktail.core.connectors.RequestConnector;
-	import cocktail.core.connectors.request.RequestEvent;
-	import cocktail.core.data.bind.Bind;
-	import cocktail.core.data.dao.ProcessDAO;
-	import cocktail.core.data.ds.Tree;
-	import cocktail.core.status.Status;
-	import cocktail.lib.Controller;
-	import cocktail.lib.cocktail.tweaks.ViewTweaks;
-	import cocktail.lib.view.styles.Style;
-	import cocktail.utils.Timeout;
-	
-	import flash.display.DisplayObject;
-	import flash.display.Loader;
-	import flash.display.Sprite;
-	import flash.events.Event;	
-	/**	 * Main cocktail View class. This is the base class for every single View
+	import cocktail.core.Index;	import cocktail.core.Task;	import cocktail.core.connectors.MotionConnector;	import cocktail.core.connectors.RequestConnector;	import cocktail.core.connectors.request.RequestEvent;	import cocktail.core.data.bind.Bind;	import cocktail.core.data.dao.ProcessDAO;	import cocktail.core.data.ds.Tree;	import cocktail.core.status.Status;	import cocktail.lib.Controller;	import cocktail.lib.Layout;	import cocktail.lib.cocktail.tweaks.ViewTweaks;	import cocktail.lib.view.styles.Style;	import cocktail.utils.Timeout;		import flash.display.DisplayObject;	import flash.display.Loader;	import flash.display.Sprite;	import flash.events.Event;	
+	/**	 * Main cocktail View class. This is the base class for every single View
 	 * you have in your application.
 	 * @author nybras | nybras@codeine.it
 	 * @see Index
