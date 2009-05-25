@@ -24,22 +24,10 @@
 	
 *******************************************************************************/
 
-package cocktail.config 
+package cocktail.core 
 {
-	import cocktail.Cocktail;
-	import cocktail.core.Index;
-	import cocktail.core.connectors.RequestConnector;
-	import cocktail.core.connectors.request.RequestEvent;
-	import cocktail.utils.Timeout;
-	
-	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;
-	
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.system.Capabilities;	
-
-	/**
+	import cocktail.Cocktail;	import cocktail.core.Index;	import cocktail.core.connectors.RequestConnector;	import cocktail.core.connectors.request.RequestEvent;	import cocktail.utils.Timeout;		import swfaddress.SWFAddress;	import swfaddress.SWFAddressEvent;		import flash.events.Event;	import flash.events.EventDispatcher;	import flash.system.Capabilities;	
+	/**
 	 * Config class is the source holder for the application base config.	 * @author nybras | nybras@codeine.it	 */	public class Config extends Index
 	{
 		/* ---------------------------------------------------------------------

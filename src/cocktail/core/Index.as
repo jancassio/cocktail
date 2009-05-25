@@ -24,8 +24,7 @@
 	
 *******************************************************************************/
 
-package cocktail.core {	import cocktail.config.Config;
-	import cocktail.core.loggers.AlconLogger;
+package cocktail.core {	import cocktail.core.loggers.AlconLogger;
 	import cocktail.core.loggers.Logger;
 	import cocktail.core.loggers.MonsterLogger;
 	import cocktail.lib.Controller;

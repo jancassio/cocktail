@@ -26,7 +26,7 @@
 
 package cocktail 
 {
-	import cocktail.config.Config;
+	import cocktail.core.Config;
 	import cocktail.core.EmbederTail;
 	import cocktail.core.Index;
 	import cocktail.core.Processes;
