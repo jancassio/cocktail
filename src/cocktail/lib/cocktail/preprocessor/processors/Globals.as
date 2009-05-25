@@ -24,7 +24,7 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.cocktail.preprocessor 
+package cocktail.lib.cocktail.preprocessor.processors 
 {
 	import cocktail.core.Index;
 	import cocktail.lib.cocktail.interfaces.IPreProcessor;

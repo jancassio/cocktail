@@ -34,13 +34,13 @@ package cocktail.lib
 	import cocktail.core.data.bind.Bind;
 	import cocktail.core.data.dao.ProcessDAO;
 	import cocktail.lib.Model;
-	import cocktail.lib.cocktail.PreProcessor;
+	import cocktail.lib.cocktail.preprocessor.PreProcessor;
 	import cocktail.lib.cocktail.tweaks.ControllerTweaks;
 	import cocktail.utils.ArrayUtil;
 	
 	import flash.display.Sprite;	
 
-		/**
+	/**
 	 * Main cocktail Controller class. This is the base class for every single
 	 * Controller you have in your application.
 	 * @author nybras | nybras@codeine.it
@@ -172,7 +172,6 @@ package cocktail.lib
 		private function run_process () : void
 		{
 			trace ( "RUN PROCESS!!!" );
-			//return;
 			
 			if ( current_process.freeze )
 			{
@@ -187,8 +186,8 @@ package cocktail.lib
 				layout.class_path +"/run"
 			], _load );
 			
-			model.run( current_process );
-			layout.run( current_process );
+			model.run ( current_process );
+			layout.run ( current_process );
 		}
 		
 		
@@ -218,6 +217,7 @@ package cocktail.lib
 //			_request.listen( _load_complete, null, _load_progress, _load_start );
 //			_request.start();
 		}
+		
 		
 		
 //		/* ---------------------------------------------------------------------
@@ -286,6 +286,8 @@ package cocktail.lib
 		 */
 		private function _load () : void
 		{
+			trace ( "_LOAD!" );
+			
 			_before_load();
 			_load_model();
 		}

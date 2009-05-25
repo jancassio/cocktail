@@ -24,26 +24,16 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.cocktail.preprocessor 
-{
-	import cocktail.core.Index;
-	import cocktail.core.data.bind.Bind;
+package cocktail.lib.cocktail.preprocessor.processors 
+{	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
-	import cocktail.lib.cocktail.interfaces.IPreProcessor;	
+	import cocktail.lib.cocktail.interfaces.IPreProcessor;
+	import cocktail.utils.StringUtil;	
 
 	/**
-	 * Pre Processor class for <sweep> tags.
-	 * @author nybras | nybras@codeine.it
-	 * @see	PreProcessor
-	 * @see Globals
-	 * @see Params
-	 * @see Loops
-	 * @see IPreProcessor
-	 */
-	public class Sweeps extends Index implements IPreProcessor
+	 * Pre Processor class for {binds}.	 * @author nybras | nybras@codeine.it	 */	public class Binds implements IPreProcessor 
 	{
-
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
@@ -59,12 +49,12 @@ package cocktail.lib.cocktail.preprocessor
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Creates a new Sweeps instance.
+		 * Creates a new Binds instance.
 		 * @param bind	Controller's Bind reference.
 		 * @param model	Controller's Model reference.
 		 * @param view	Controller's View reference.
 		 */
-		public function Sweeps ( bind : Bind, model : Model, view : View )
+		public function Binds ( bind : Bind, model : Model, view : View )
 		{
 			_bind = bind;
 			_model = model;
@@ -78,57 +68,19 @@ package cocktail.lib.cocktail.preprocessor
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Pre-process all SWEEP tags.
+		 * Pre-process all binds.
 		 * @param xml	The xml content to be pre-processed.
 		 * @param path	The path of the xml file ( just to display clear error messages ).
 		 * @return	The xml pos-processed.
-		 */
-		public function preprocess ( xml : XML, path : String ) : XML
-		{
-//			var item : XML;
+		 */		public function preprocess( xml: XML, path: String ) : XML
+		{			var key : String;
+			var content : String;
 			
-			var sweep : XML;
-			var content : XML;
-			var children : String;
+			content = xml;
 			
-			var datasource : String;
-			var name : String;
-			var value : String;
+			for each ( key in StringUtil.enclosure( content, "{", "}") )
+				StringUtil.replace_all( content, key, _bind.g( StringUtil.innerb( key ) ) );
 			
-//			var sweeped : String;
-			var buffer : XMLList;
-			
-			if ( ! xml..sweep.length() )
-				return xml;
-			
-			content = new XML ( xml.toString() );
-			sweep = content..sweep[ 0 ];
-			children = sweep.children().toXMLString();
-			
-			datasource = sweep.@datasource;
-			name = "#"+ sweep.@name +"#";
-			value = "#"+ sweep.@value +"#";
-			
-			if ( name == "##" )
-				log.warn( "You probably want to use some NAME alias at the <sweep/> tag in file "+ path +"\r\r\t"+ sweep.toXMLString() );
-			
-			if ( value == "##" )
-				log.warn( "You probably want to use some VALUE alias at the <sweep/> tag in file "+ path +"\r\r\t"+ sweep.toXMLString() );
-			
-			buffer = new XMLList( <root/> );
-			
-//			TODO - fix block
-//			for each ( item in _model.datasource( datasource ).binds )
-//			{
-//				sweeped = children.split( name ).join( item.localName() as String );
-//				sweeped = sweeped.split( value ).join( _bind.g ( item.localName() as String ) );
-//				
-//				buffer.appendChild( new XMLList ( sweeped ) );
-//			}
-			
-			sweep.parent().replace( sweep.childIndex(), buffer.children() );
-			
-			return content;
+			return new XML ( content );
 		}
-	}
-}
+	}}

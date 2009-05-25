@@ -24,16 +24,16 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.cocktail 
+package cocktail.lib.cocktail.preprocessor 
 {	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
-	import cocktail.lib.cocktail.preprocessor.Binds;
-	import cocktail.lib.cocktail.preprocessor.Globals;
-	import cocktail.lib.cocktail.preprocessor.Loops;
-	import cocktail.lib.cocktail.preprocessor.Params;
-	import cocktail.lib.cocktail.preprocessor.Sweeps;	
+	import cocktail.lib.cocktail.preprocessor.processors.Binds;
+	import cocktail.lib.cocktail.preprocessor.processors.Globals;
+	import cocktail.lib.cocktail.preprocessor.processors.Loops;
+	import cocktail.lib.cocktail.preprocessor.processors.Params;
+	import cocktail.lib.cocktail.preprocessor.processors.Sweeps;	
 
 	/**
 	 * Pre Processor main class.
