@@ -28,7 +28,7 @@ package cocktail.lib.cocktail.preprocessor.processors
 {	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
-	import cocktail.lib.cocktail.interfaces.IPreProcessor;
+	import cocktail.lib.cocktail.preprocessor.interfaces.IPreProcessor;
 	import cocktail.utils.StringUtil;	
 
 	/**

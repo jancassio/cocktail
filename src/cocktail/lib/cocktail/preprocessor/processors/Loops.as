@@ -27,7 +27,7 @@
 package cocktail.lib.cocktail.preprocessor.processors 
 {
 	import cocktail.core.Index;
-	import cocktail.lib.cocktail.interfaces.IPreProcessor;	
+	import cocktail.lib.cocktail.preprocessor.interfaces.IPreProcessor;	
 	
 	/**
 	 * Pre Processor class for <loop> tags.
