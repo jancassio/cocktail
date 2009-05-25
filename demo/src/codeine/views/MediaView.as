@@ -1,10 +1,14 @@
 package codeine.views 
 {
-	import cocktail.core.data.dao.ProcessDAO;	import cocktail.lib.interfaces.IView;		import codeine.AppView;		import flash.display.MovieClip;	
-	/**
+	import cocktail.core.data.dao.ProcessDAO;
+	
+	import codeine.AppView;
+	
+	import flash.display.MovieClip;	
+	/**
 	 * @author kreigne
 	 */
-	public class MediaView extends AppView implements IView 
+	public class MediaView extends AppView 
 	{
 		private var _eclipse : MovieClip;
 		private var _buttons : Array;
