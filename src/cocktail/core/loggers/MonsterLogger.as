@@ -26,8 +26,10 @@
 
 package cocktail.core.loggers 
 {
-	import cocktail.core.interfaces.ILogger;		import nl.demonsters.debugger.MonsterDebugger;	
-	/**
+	import cocktail.core.loggers.interfaces.ILogger;
+	
+	import nl.demonsters.debugger.MonsterDebugger;	
+	/**
 	 * DeMonsterLogger is the connector-class for DeMonster debugger.
 	 * @author nybras | nybras@codeine.it
 	 */

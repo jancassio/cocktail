@@ -26,7 +26,7 @@
 
 package cocktail.core.loggers 
 {
-	import cocktail.core.interfaces.ILogger;
+	import cocktail.core.loggers.interfaces.ILogger;
 	
 	import com.hexagonstar.util.debug.Debug;
 	
