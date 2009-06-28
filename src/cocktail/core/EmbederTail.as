@@ -24,7 +24,8 @@
 	
 *******************************************************************************/
 
-package cocktail.core {
+package cocktail.core 
+{
 	import cocktail.core.Index;
 	import cocktail.lib.model.datasources.AmfDataSource;
 	import cocktail.lib.model.datasources.HttpDataSource;

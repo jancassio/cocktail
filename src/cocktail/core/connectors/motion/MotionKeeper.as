@@ -31,10 +31,12 @@ package cocktail.core.connectors.motion
 
 	/**
 	 * MotionKeeper takes care of listen/unlisten features for MotionConnector.
-	 * 	 * @author nybras | nybras@codeine.it
+	 * 
+	 * @author nybras | nybras@codeine.it
 	 * @see	MotionConnector
 	 * @see TweenEvent
-	 */	public class MotionKeeper 
+	 */
+	public class MotionKeeper 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -89,4 +91,6 @@ package cocktail.core.connectors.motion
 			if ( progress != null ) target.removeEventListener( TweenEvent.UPDATE , progress );
 			if ( start != null ) target.removeEventListener( TweenEvent.START , start );
 			return this;
-		}	}}
+		}
+	}
+}

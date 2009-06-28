@@ -24,4 +24,19 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers {	import cocktail.lib.view.helpers.Helper;		/**	 * @author nybras | nybras@codeine.it	 */	public class Mp3Helper extends Helper 	{		public function Mp3Helper ()		{			super( );		}	}}
+package cocktail.lib.view.helpers 
+{
+	import cocktail.lib.view.helpers.Helper;
+	
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Mp3Helper extends Helper 
+	{
+
+		public function Mp3Helper ()
+		{
+			super( );
+		}
+	}
+}

@@ -24,4 +24,73 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.form.rules {	import cocktail.core.Index;	import cocktail.lib.view.helpers.FormHelper;	import cocktail.lib.view.helpers.interfaces.IRule;		/**	 * Rule base class.	 * @author nybras | nybras@codeine.it	 */	public class Rule extends Index implements IRule	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				protected var _message : String;		protected var _form : FormHelper;								/* ---------------------------------------------------------------------			BOOTING		--------------------------------------------------------------------- */				/**		 * Boots the rule.		 * @param form	Parent form.		 * @param message	Rule error message.		 */		public function boot ( form : FormHelper, message : String = null ) : Rule		{			_form = form;			_message = message;			return this;		}						/* ---------------------------------------------------------------------			TESTING		--------------------------------------------------------------------- */				/**		 * Test value against rule.		 * 		=> obs: this method MUST to be overwritten  		 * @param value	Value to be tested.		 */		public function test ( value : * ) : Boolean		{			log.fatal( "Method 'test' MUST to be overwritten by subclasses." );			return false;		}						/* ---------------------------------------------------------------------			GETTERS		--------------------------------------------------------------------- */				/**		 * Gets the rule error message.		 * @return	The rule error message.		 */		public function get message () : String		{			return _message;		}	}}
+package cocktail.lib.view.helpers.form.rules 
+{
+	import cocktail.core.Index;
+	import cocktail.lib.view.helpers.FormHelper;
+	import cocktail.lib.view.helpers.interfaces.IRule;	
+
+	/**
+	 * Rule base class.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Rule extends Index implements IRule
+	{
+
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		protected var _message : String;
+		protected var _form : FormHelper;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			BOOTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Boots the rule.
+		 * @param form	Parent form.
+		 * @param message	Rule error message.
+		 */
+		public function boot ( form : FormHelper, message : String = null ) : Rule
+		{
+			_form = form;
+			_message = message;
+			return this;
+		}
+
+		
+		
+		/* ---------------------------------------------------------------------
+			TESTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Test value against rule.
+		 * 		=> obs: this method MUST to be overwritten  
+		 * @param value	Value to be tested.
+		 */
+		public function test ( value : * ) : Boolean
+		{
+			log.fatal( "Method 'test' MUST to be overwritten by subclasses." );
+			return false;
+		}
+		
+		
+		/* ---------------------------------------------------------------------
+			GETTERS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Gets the rule error message.
+		 * @return	The rule error message.
+		 */
+		public function get message () : String
+		{
+			return _message;
+		}
+	}
+}

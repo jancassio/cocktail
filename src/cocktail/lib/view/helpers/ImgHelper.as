@@ -24,4 +24,13 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers {	/**	 * @author nybras | nybras@codeine.it	 */	public class ImgHelper 	{	}}
+package cocktail.lib.view.helpers 
+{
+
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class ImgHelper 
+	{
+	}
+}

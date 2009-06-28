@@ -24,4 +24,62 @@
 	
 *******************************************************************************/
 
-package cocktail.core.data.bind {	/**	 * Binded class used by Bind.	 * @author nybras | nybras@codeine.it	 * @see Bind	 */	internal class Binded 	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				public var key : String;		public var change : *;		public var setter : String;		public var value : *;								/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new Binded instance.		 * @param key	Binded key.		 * @param change		Binded method or setter's scope.		 * @param setter	Binded setter (optional).		 */		public function Binded ( key : String, change  : *, setter : String = null ) : void		{			this.key = key;			this.change = change;			this.setter = setter;		}								/* ---------------------------------------------------------------------			UPDATING		--------------------------------------------------------------------- */				/**		 * Updates the binded item.		 * @param value	New value.		 */		internal function update ( value : * ) : void		{			this.value = value;						if ( setter != null )				change[ setter ] = value;			else				( change as Function )( value );		}	}}
+package cocktail.core.data.bind 
+{
+
+	/**
+	 * Binded class used by Bind.
+	 * @author nybras | nybras@codeine.it
+	 * @see Bind
+	 */
+	internal class Binded 
+	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		public var key : String;
+		public var change : *;
+		public var setter : String;
+		public var value : *;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Creates a new Binded instance.
+		 * @param key	Binded key.
+		 * @param change		Binded method or setter's scope.
+		 * @param setter	Binded setter (optional).
+		 */
+		public function Binded ( key : String, change  : *, setter : String = null ) : void
+		{
+			this.key = key;
+			this.change = change;
+			this.setter = setter;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			UPDATING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Updates the binded item.
+		 * @param value	New value.
+		 */
+		internal function update ( value : * ) : void
+		{
+			this.value = value;
+			
+			if ( setter != null )
+				change[ setter ] = value;
+			else
+				( change as Function )( value );
+		}
+	}
+}

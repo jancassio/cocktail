@@ -1,7 +1,11 @@
 package cocktail.core.data.ds 
-{	import cocktail.core.Index;					
+{
+	import cocktail.core.Index;					
 
-	/**	 * @author nybras | nybras@codeine.it	 */	public class TreeNode extends Index 
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class TreeNode extends Index 
 	{
 //		private var _up: TreeNode;
 //		private var _prev: TreeNode;
@@ -15,7 +19,9 @@ package cocktail.core.data.ds
 //		
 //		public function TreeNode ( data : * )
 //		{
-//			_stack = {};//			_data = data;//		}
+//			_stack = {};
+//			_data = data;
+//		}
 //		
 //		
 //		
@@ -42,4 +48,5 @@ package cocktail.core.data.ds
 //		public function size(): TreeNode
 //		{
 //		}
-	}}
+	}
+}

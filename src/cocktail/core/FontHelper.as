@@ -64,7 +64,8 @@ package cocktail.core
 		 * Checks if font is already registred.
 		 * @param alias	Name of the font (same used in add function).
 		 * @return	True if font is registred, false otherwise.
-		 */		public static function exists (alias : String) : Boolean
+		 */
+		public static function exists (alias : String) : Boolean
 		{
 			return (FontHelper.fontList[alias] != null);
 		}

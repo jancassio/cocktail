@@ -25,14 +25,18 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail.tweaks 
-{	import cocktail.Cocktail;
+{
+	import cocktail.Cocktail;
 	import cocktail.core.Task;
 	import cocktail.core.data.dao.ProcessDAO;
 	import cocktail.core.status.Status;
 	import cocktail.lib.cocktail.tweaks.Tweaks;	
 
 	/**
-	 * Controller tweaks.	 * @author nybras | nybras@codeine.it	 */	public class ControllerTweaks extends Tweaks 
+	 * Controller tweaks.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class ControllerTweaks extends Tweaks 
 	{
 		public var root : Cocktail;
 		
@@ -42,7 +46,8 @@ package cocktail.lib.cocktail.tweaks
 		protected var _status : String;
 		
 		
-				/* ---------------------------------------------------------------------
+		
+		/* ---------------------------------------------------------------------
 			USES HANDLERS
 		--------------------------------------------------------------------- */
 		
@@ -187,4 +192,5 @@ package cocktail.lib.cocktail.tweaks
 			_status = Status.DESTROY_DONE;
 			_task.done( class_path + "/destroy_done" );
 		}
-	}}
+	}
+}

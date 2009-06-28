@@ -25,11 +25,22 @@
 *******************************************************************************/
 
 package cocktail.core.connectors
-{	import cocktail.core.connectors.motion.MotionKeeper;		import gs.TweenMax;	import gs.easing.Linear;		import flash.display.MovieClip;	import flash.display.Sprite;	
-	/**
+{
+	import cocktail.core.connectors.motion.MotionKeeper;
+	
+	import gs.TweenMax;
+	import gs.easing.Linear;
+	
+	import flash.display.MovieClip;
+	import flash.display.Sprite;	
+
+	/**
 	 * MotionConnector class acts like a proxy between cocktail and some tween engine (in this case, the engine tween is TweenMax). 
-	 * 	 * @author nybras | nybras@codeine.it
-	 * @see	TweenMax	 */	public class MotionConnector 
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 * @see	TweenMax
+	 */
+	public class MotionConnector 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -360,4 +371,5 @@ package cocktail.core.connectors
 			return this.move( "blurXY", start, duration, { blurFilter : { blurX : end, blurY : end }, delay : delay, ease: ( equation || Linear.easeNone ) } );
 		}
 		
-	}}
+	}
+}

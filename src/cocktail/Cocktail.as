@@ -46,7 +46,8 @@ package cocktail
 	 * @author nybras | nybras@codeine.it
 	 * @see Index
 	 * @see Router
-	 */	public class Cocktail extends Index
+	 */
+	public class Cocktail extends Index
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -165,8 +166,10 @@ package cocktail
 		/**
 		 * Reboot the current view ( destroy all and render again )
 		 */
-		public function reboot () : void		{
+		public function reboot () : void
+		{
 			processes.reboot();
 		}
-			}
+		
+	}
 }

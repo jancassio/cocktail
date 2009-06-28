@@ -24,5 +24,47 @@
 	
 *******************************************************************************/
 
-package cocktail.core.data.dao{	import cocktail.core.Index;		import flash.utils.describeType;	import flash.utils.getQualifiedClassName;	
-	/**	* Default DAO to be extended for all DAO objects	*/	public class DAO extends Index {				/**		 * Creates a new DAO instance		 */		public function DAO() {					}				/**		 * Default DAO conversion to string (debug uses)		 * @return	The DAO data converted into string.		 */		public function toString():String {			var result:String;			var vars:XMLList;			var i:uint;						result = "\r[ " + getQualifiedClassName(this) + " ]\r";			vars = describeType(this)..variable;						for (i = 0; i < vars.length(); i++) {				result += "\t[" + vars[i].@name + "]:" + vars[i].@type + " = {" + this[vars[i].@name] + "}\r";			}						result += "[ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ]\r";						return result;		}					}	}
+package cocktail.core.data.dao
+{
+	import cocktail.core.Index;
+	
+	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;	
+
+	/**
+	* Default DAO to be extended for all DAO objects
+	*/
+	public class DAO extends Index {
+		
+		/**
+		 * Creates a new DAO instance
+		 */
+		public function DAO() {
+			
+		}
+		
+		/**
+		 * Default DAO conversion to string (debug uses)
+		 * @return	The DAO data converted into string.
+		 */
+		public function toString():String {
+			var result:String;
+			var vars:XMLList;
+			var i:uint;
+			
+			result = "\r[ " + getQualifiedClassName(this) + " ]\r";
+			vars = describeType(this)..variable;
+			
+			for (i = 0; i < vars.length(); i++) {
+				result += "\t[" + vars[i].@name + "]:" + vars[i].@type + " = {" + this[vars[i].@name] + "}\r";
+			}
+			
+			result += "[ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ]\r";
+			
+			return result;
+		}
+		
+		
+	}
+	
+}

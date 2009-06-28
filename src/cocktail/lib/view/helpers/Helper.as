@@ -24,4 +24,19 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers {	import cocktail.core.Index;		/**	 * @author nybras | nybras@codeine.it	 */	public class Helper extends Index 	{		public function Helper ()		{			super( );		}	}}
+package cocktail.lib.view.helpers 
+{
+	import cocktail.core.Index;
+	
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Helper extends Index 
+	{
+
+		public function Helper ()
+		{
+			super( );
+		}
+	}
+}

@@ -24,4 +24,19 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers {	import cocktail.lib.view.helpers.Helper;		/**	 * @author nybras | nybras@codeine.it	 */	public class FlvHelper extends Helper 	{		public function FlvHelper ()		{			super( );		}	}}
+package cocktail.lib.view.helpers 
+{
+	import cocktail.lib.view.helpers.Helper;
+	
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class FlvHelper extends Helper 
+	{
+
+		public function FlvHelper ()
+		{
+			super( );
+		}
+	}
+}

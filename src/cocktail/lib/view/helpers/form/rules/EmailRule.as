@@ -24,4 +24,39 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.form.rules {	import cocktail.lib.view.helpers.interfaces.IRule;								/**	 * Validation class for Email.	 * @author nybras | nybras@codeine.it	 * @see	FormHelper	 * @see	FormItem	 * @see	IRule	 */	public class EmailRule extends Rule implements IRule 	{		/* ---------------------------------------------------------------------			CONST		--------------------------------------------------------------------- */				private static const EMAIL : RegExp = /\b[A-Z0-9_.-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;								/* ---------------------------------------------------------------------			TESTING		--------------------------------------------------------------------- */				/**		 * Tests the given value against the rule.		 * @param value	Value to be tested.		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.		 */		override public function test ( value : * ) : Boolean		{			return EMAIL.test( value );		}	}}
+package cocktail.lib.view.helpers.form.rules 
+{
+	import cocktail.lib.view.helpers.interfaces.IRule;							
+
+	/**
+	 * Validation class for Email.
+	 * @author nybras | nybras@codeine.it
+	 * @see	FormHelper
+	 * @see	FormItem
+	 * @see	IRule
+	 */
+	public class EmailRule extends Rule implements IRule 
+	{
+		/* ---------------------------------------------------------------------
+			CONST
+		--------------------------------------------------------------------- */
+		
+		private static const EMAIL : RegExp = /\b[A-Z0-9_.-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			TESTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Tests the given value against the rule.
+		 * @param value	Value to be tested.
+		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.
+		 */
+		override public function test ( value : * ) : Boolean
+		{
+			return EMAIL.test( value );
+		}
+	}
+}

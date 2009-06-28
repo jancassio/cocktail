@@ -26,5 +26,10 @@
 
 package cocktail.core 
 {
-	/**	 * @author nybras | nybras@codeine.it	 */	public class Render 
-	{	}}
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Render 
+	{
+	}
+}

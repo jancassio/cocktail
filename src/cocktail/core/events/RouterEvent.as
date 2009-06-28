@@ -25,12 +25,16 @@
 *******************************************************************************/
 
 package cocktail.core.events 
-{	import flash.events.Event;
+{
+	import flash.events.Event;
 	
 	/**
 	 * RouterEvent class is the Event class for the Router class.
-	 * 	 * @author nybras | nybras@codeine.it
-	 * @see Router	 */	public class RouterEvent extends Event
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 * @see Router
+	 */
+	public class RouterEvent extends Event
 	{
 		
 		/* ---------------------------------------------------------------------
@@ -58,8 +62,10 @@ package cocktail.core.events
 		 * Creates a new RouterEvent class.
 		 */
 		public function RouterEvent (type : String, location : String, freezed : Boolean )
-		{			super( type );
+		{
+			super( type );
 			this.location = location;
 			this.freezed = freezed;
 		}
-	}}
+	}
+}

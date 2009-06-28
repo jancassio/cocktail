@@ -24,4 +24,16 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.interfaces {	/**	 * Basic interface for Rules.	 * @author nybras | nybras@codeine.it	 */	public interface IRule 	{		function get message () : String;		function test ( value : * ) : Boolean;	}}
+package cocktail.lib.view.helpers.interfaces 
+{
+
+	/**
+	 * Basic interface for Rules.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public interface IRule 
+	{
+		function get message () : String;
+		function test ( value : * ) : Boolean;
+	}
+}

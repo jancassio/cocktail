@@ -24,8 +24,13 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.form.rules {
-	import cocktail.lib.view.helpers.form.rules.Rule;	import cocktail.lib.view.helpers.interfaces.IRule;	import cocktail.utils.StringUtil;		/**
+package cocktail.lib.view.helpers.form.rules 
+{
+	import cocktail.lib.view.helpers.form.rules.Rule;
+	import cocktail.lib.view.helpers.interfaces.IRule;
+	import cocktail.utils.StringUtil;	
+
+	/**
 	 * @author carlos
 	 */
 	public class NumericRule extends Rule implements IRule 

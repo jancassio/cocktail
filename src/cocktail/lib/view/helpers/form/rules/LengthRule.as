@@ -24,4 +24,65 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.form.rules {	import cocktail.lib.view.helpers.interfaces.IRule;	import cocktail.utils.StringUtil;		/**	 * Validation class for chars length.	 * @author nybras | nybras@codeine.it	 * @see	FormHelper	 * @see	FormItem	 * @see	IRule	 */	public class LengthRule extends Rule implements IRule 	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				private var _min : Number;		private var _max : Number;								/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new Email validation instance.		 * @param min	Min chars need to validate.		 * @param max	Max chars needed to validate (optional).		 */		public function LengthRule ( min : Number, max : Number = undefined)		{			_min = min;			_max = max;		}								/* ---------------------------------------------------------------------			TESTING		--------------------------------------------------------------------- */				/**		 * Tests the given value against the rule.		 * @param value	Value to be tested.		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.		 */		override public function test ( value : * ) : Boolean		{			var result : Boolean;			var str : String;						str = StringUtil.trim( value );			result = ( str.length >= _min );			result = ( ( _max == 0 || str.length <= _max ) && result );						return result;		}	}}
+package cocktail.lib.view.helpers.form.rules 
+{
+	import cocktail.lib.view.helpers.interfaces.IRule;
+	import cocktail.utils.StringUtil;	
+
+	/**
+	 * Validation class for chars length.
+	 * @author nybras | nybras@codeine.it
+	 * @see	FormHelper
+	 * @see	FormItem
+	 * @see	IRule
+	 */
+	public class LengthRule extends Rule implements IRule 
+	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		private var _min : Number;
+		private var _max : Number;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Creates a new Email validation instance.
+		 * @param min	Min chars need to validate.
+		 * @param max	Max chars needed to validate (optional).
+		 */
+		public function LengthRule ( min : Number, max : Number = undefined)
+		{
+			_min = min;
+			_max = max;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			TESTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Tests the given value against the rule.
+		 * @param value	Value to be tested.
+		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.
+		 */
+		override public function test ( value : * ) : Boolean
+		{
+			var result : Boolean;
+			var str : String;
+			
+			str = StringUtil.trim( value );
+			result = ( str.length >= _min );
+			result = ( ( _max == 0 || str.length <= _max ) && result );
+			
+			return result;
+		}
+	}
+}

@@ -24,5 +24,52 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.model.datasources {	import cocktail.core.connectors.request.RequestEvent;	import cocktail.lib.model.datasources.DataSource;	import cocktail.lib.model.datasources.interfaces.IDataSource;	import cocktail.utils.Timeout;		import flash.events.Event;		/**	 * DataSource class for inline data.	 * 	 * @author nybras | nybras@codeine.it	 * @see DataSource	 * @see IDataSource	 */	public class InlineDataSource extends DataSource implements IDataSource	{		/* ---------------------------------------------------------------------			LOADING		--------------------------------------------------------------------- */				/**		 * Loads the data source.
-		 * @return	A reference to this instance itself.		 */		public function load () : IDataSource		{			new Timeout( load_complete, 1 ).exec();			raw = info.children();			return this;		}								/* ---------------------------------------------------------------------			CACHING & PLUGGING		--------------------------------------------------------------------- */				/**		 * Caches the loaded data into the <code>raw</code> property.		 */		private function load_complete ( event : RequestEvent = null ) : void		{			plug();			dispatch( Event.COMPLETE );		}	}}
+package cocktail.lib.model.datasources 
+{
+	import cocktail.core.connectors.request.RequestEvent;
+	import cocktail.lib.model.datasources.DataSource;
+	import cocktail.lib.model.datasources.interfaces.IDataSource;
+	import cocktail.utils.Timeout;
+	
+	import flash.events.Event;	
+
+	/**
+	 * DataSource class for inline data.
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 * @see DataSource
+	 * @see IDataSource
+	 */
+	public class InlineDataSource extends DataSource implements IDataSource
+	{
+		/* ---------------------------------------------------------------------
+			LOADING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Loads the data source.
+		 * @return	A reference to this instance itself.
+		 */
+		public function load () : IDataSource
+		{
+			new Timeout( load_complete, 1 ).exec();
+			raw = info.children();
+			return this;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			CACHING & PLUGGING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Caches the loaded data into the <code>raw</code> property.
+		 */
+		private function load_complete ( event : RequestEvent = null ) : void
+		{
+			plug();
+			dispatch( Event.COMPLETE );
+		}
+	}
+}

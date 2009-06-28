@@ -25,7 +25,8 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail.preprocessor.processors 
-{	import cocktail.core.data.dao.ProcessDAO;	
+{
+	import cocktail.core.data.dao.ProcessDAO;	
 	import cocktail.core.Index;
 	import cocktail.lib.cocktail.preprocessor.interfaces.IPreProcessor;
 	import cocktail.utils.StringUtil;	
@@ -38,7 +39,8 @@ package cocktail.lib.cocktail.preprocessor.processors
 	 * @see Loops
 	 * @see Sweeps
 	 * @see IPreProcessor
-	 */	public class Params extends Index implements IPreProcessor 
+	 */
+	public class Params extends Index implements IPreProcessor 
 	{
 		/* ---------------------------------------------------------------------
 			INITIALIZING

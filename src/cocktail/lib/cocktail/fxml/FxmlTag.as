@@ -55,7 +55,8 @@ package cocktail.lib.cocktail.fxml
 		{
 			_properties = [].concat ( properties.split ( "|" ) );
 		}
-				/**
+		
+		/**
 		 * Parses the item's node attributes according the declared vars.
 		 * @param fxml_node	Node xml of any fxml tag, in view or model.
 		 */

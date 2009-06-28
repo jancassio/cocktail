@@ -32,9 +32,13 @@ package cocktail.lib.model.datasources.interfaces
 	
 	/**
 	 * Interface for DataSource package.
-	 * 	 * @author nybras | nybras@codeine.it
+	 * 
+	 * @author nybras | nybras@codeine.it
 	 * @see DataSource
-	 * @see XmlDataSource	 * @see HttpDataSource	 */	public interface IDataSource
+	 * @see XmlDataSource
+	 * @see HttpDataSource
+	 */
+	public interface IDataSource
 	{
 		function query ( query : String, src : * = null ) : *;
 		
@@ -60,4 +64,5 @@ package cocktail.lib.model.datasources.interfaces
 		
 		function listen ( complete : Function ) : void
 		function unlisten ( complete : Function ) : void
-	}}
+	}
+}

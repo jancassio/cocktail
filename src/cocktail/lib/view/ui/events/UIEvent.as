@@ -25,9 +25,17 @@
 *******************************************************************************/
 
 package cocktail.lib.view.ui.events 
-{	import cocktail.lib.View;		import flash.events.EventDispatcher;	import flash.events.MouseEvent;		
-	/**
-	 * 	 * @author nybras | nybras@codeine.it	 */	public class UIEvent extends View 
+{
+	import cocktail.lib.View;
+	
+	import flash.events.EventDispatcher;
+	import flash.events.MouseEvent;		
+
+	/**
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class UIEvent extends View 
 	{
 		/* ---------------------------------------------------------------------
 			LISTENERS CONTROL
@@ -103,4 +111,5 @@ package cocktail.lib.view.ui.events
 			handle( MouseEvent.ROLL_OVER, handler, params );
 			return this;
 		}
-	}}
+	}
+}

@@ -24,4 +24,19 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.events {	import flash.events.Event;		/**	 * @author nybras | nybras@codeine.it	 */	public class Mp3Event extends Event 	{		public function Mp3Event (type : String, bubbles : Boolean = false, cancelable : Boolean = false)		{			super( type , bubbles , cancelable );		}	}}
+package cocktail.lib.view.helpers.events 
+{
+	import flash.events.Event;
+	
+	/**
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Mp3Event extends Event 
+	{
+
+		public function Mp3Event (type : String, bubbles : Boolean = false, cancelable : Boolean = false)
+		{
+			super( type , bubbles , cancelable );
+		}
+	}
+}

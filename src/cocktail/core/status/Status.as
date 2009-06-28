@@ -24,4 +24,46 @@
 	
 *******************************************************************************/
 
-package cocktail.core.status {	/**	 * Status for Controller class.	 * 	 * @author nybras | nybras@codeine.it	 * @see Controller	 */	public class Status 	{		public static function get INITIALIZING () : String		{			return "<initializing>";		}				public static function get LOADING () : String		{			return "<loading>";		}				public static function get RENDERING () : String		{			return "<rendering>";		}				public static function get RENDER_DONE () : String		{			return "<render_done>";		}				public static function get DESTROYING () : String		{			return "<destroying>";		}				public static function get DESTROY_DONE () : String		{			return "<destroy_done>";		}	}}
+package cocktail.core.status 
+{
+
+	/**
+	 * Status for Controller class.
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 * @see Controller
+	 */
+	public class Status 
+	{
+
+		public static function get INITIALIZING () : String
+		{
+			return "<initializing>";
+		}
+		
+		public static function get LOADING () : String
+		{
+			return "<loading>";
+		}
+		
+		public static function get RENDERING () : String
+		{
+			return "<rendering>";
+		}
+		
+		public static function get RENDER_DONE () : String
+		{
+			return "<render_done>";
+		}
+		
+		public static function get DESTROYING () : String
+		{
+			return "<destroying>";
+		}
+		
+		public static function get DESTROY_DONE () : String
+		{
+			return "<destroy_done>";
+		}
+	}
+}

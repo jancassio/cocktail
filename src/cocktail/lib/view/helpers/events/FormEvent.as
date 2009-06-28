@@ -24,4 +24,42 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.events {	import cocktail.lib.view.helpers.form.FormItem;		import flash.events.Event;		/**	 * FormHelper events.	 * @author nybras | nybras@codeine.it	 */	public class FormEvent extends Event 	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				public static const VALIDATE : String = "FormItem.VALIDATE";		public static const INVALIDATE : String = "FormItem.INVALIDATE";				public var item : FormItem;								/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new FormEvent.		 * @param type	Event type.		 * @param item	FormItem that is dispatching the event.		 */		public function FormEvent ( type : String, item : FormItem )		{			super( type );			this.item = item;		}	}}
+package cocktail.lib.view.helpers.events 
+{
+	import cocktail.lib.view.helpers.form.FormItem;
+	
+	import flash.events.Event;	
+
+	/**
+	 * FormHelper events.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class FormEvent extends Event 
+	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		public static const VALIDATE : String = "FormItem.VALIDATE";
+		public static const INVALIDATE : String = "FormItem.INVALIDATE";
+		
+		public var item : FormItem;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Creates a new FormEvent.
+		 * @param type	Event type.
+		 * @param item	FormItem that is dispatching the event.
+		 */
+		public function FormEvent ( type : String, item : FormItem )
+		{
+			super( type );
+			this.item = item;
+		}
+	}
+}

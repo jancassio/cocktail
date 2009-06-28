@@ -24,4 +24,55 @@
 	
 *******************************************************************************/
 
-package cocktail.lib.view.helpers.form.rules {	import cocktail.lib.view.helpers.interfaces.IRule;						/**	 * Validation class for equality between two form fields.	 * @author nybras | nybras@codeine.it	 * @see	FormHelper	 * @see	FormItem	 * @see	IRule	 */	public class EqualRule extends Rule implements IRule 	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */				private var _alias : String;								/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new NotNull validation instance.		 * @param alias	Form field alias to compare with.		 * @param message	Rule error message.		 */		public function EqualRule ( alias : String )		{			_alias = alias;		}								/* ---------------------------------------------------------------------			TESTING		--------------------------------------------------------------------- */				/**		 * Tests the given value against the rule.		 * @param value	Value to be tested.		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.		 */		override public function test ( value : * ) : Boolean		{			return ( value == _form.g( _alias ) );		}	}}
+package cocktail.lib.view.helpers.form.rules 
+{
+	import cocktail.lib.view.helpers.interfaces.IRule;					
+
+	/**
+	 * Validation class for equality between two form fields.
+	 * @author nybras | nybras@codeine.it
+	 * @see	FormHelper
+	 * @see	FormItem
+	 * @see	IRule
+	 */
+	public class EqualRule extends Rule implements IRule 
+	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		private var _alias : String;
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Creates a new NotNull validation instance.
+		 * @param alias	Form field alias to compare with.
+		 * @param message	Rule error message.
+		 */
+		public function EqualRule ( alias : String )
+		{
+			_alias = alias;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			TESTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Tests the given value against the rule.
+		 * @param value	Value to be tested.
+		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.
+		 */
+		override public function test ( value : * ) : Boolean
+		{
+			return ( value == _form.g( _alias ) );
+		}
+	}
+}

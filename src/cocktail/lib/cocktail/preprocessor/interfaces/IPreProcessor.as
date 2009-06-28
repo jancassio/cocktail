@@ -28,9 +28,15 @@ package cocktail.lib.cocktail.preprocessor.interfaces
 {
 	/**
 	 * Interface for package 'cocktail.lib.cocktail.preprocessor'.
-	 * 	 * @author nybras | nybras@codeine.it
+	 * 
+	 * @author nybras | nybras@codeine.it
 	 * @see PreProcessor
 	 * @see Globals
-	 * @see Loops	 * @see Sweeps	 */	public interface IPreProcessor 
+	 * @see Loops
+	 * @see Sweeps
+	 */
+	public interface IPreProcessor 
 	{
-		function preprocess ( xml : XML, path : String ) : XML;	}}
+		function preprocess ( xml : XML, path : String ) : XML;
+	}
+}

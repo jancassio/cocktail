@@ -25,7 +25,8 @@
 *******************************************************************************/
 
 package cocktail.lib 
-{	import cocktail.Cocktail;
+{
+	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.Processes;
 	import cocktail.core.Task;
@@ -87,7 +88,7 @@ package cocktail.lib
 			
 			authorized = [ Processes ];
 			
-			root = root;
+			this.root = root;
 			stage = root.sprite;
 			
 			auth = root.auth( this );
@@ -137,7 +138,7 @@ package cocktail.lib
 					log.notice( e1 );
 			};
 			
-			// wait for model and layout boot
+			// wait for model and layout to boot
 			_task.wait([
 				layout.class_path +"/boot",
 				model.class_path +"/boot"
@@ -309,12 +310,15 @@ package cocktail.lib
 			_task.wait( layout.class_path + "/render_done", _render_done );
 			
 			layout._render( );
-		}		
+		}
+		
 		
 		
 		/**
 		 * 
-		 */		private function execMVC () : void		{
+		 */
+		private function execMVC () : void
+		{
 			// model
 			try {
 				model[ current_process.action ].apply( model, current_process.params );
@@ -334,7 +338,8 @@ package cocktail.lib
 				else
 					layout.log.error( e3 );
 			};
-		}		
+		}
+		
 		
 		
 		/* ---------------------------------------------------------------------

@@ -24,4 +24,41 @@
 	
 *******************************************************************************/
 
-package cocktail.core.data.dao {	import cocktail.core.data.dao.DAO;		/**	 * Task data access object, used by Task class. 	 * 	 * @author nybras | nybras@codeine.it	 * @see Task	 */	public class TaskDAO extends DAO 	{		/* ---------------------------------------------------------------------			VARS		--------------------------------------------------------------------- */					public var methods : Array;		public var actions : Array;		public var doneCount : uint;						/* ---------------------------------------------------------------------			INITIALIZING		--------------------------------------------------------------------- */				/**		 * Creates a new TaskManagerDAO instance.		 * @param methods	Methods to wait for. ( ["methodA", "methodB"] --or-- "method" )		 * @param actions	Actions to be executed after all methods execution. ( [callbackA, callbackB] --or-- callback )		 */		public function TaskDAO ( methods : *, actions : * )		{			this.methods = [].concat( methods );			this.actions = [].concat( actions );			this.doneCount = 0;		}	}}
+package cocktail.core.data.dao 
+{
+	import cocktail.core.data.dao.DAO;	
+
+	/**
+	 * Task data access object, used by Task class. 
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 * @see Task
+	 */
+	public class TaskDAO extends DAO 
+	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+			
+		public var methods : Array;
+		public var actions : Array;
+		public var doneCount : uint;
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Creates a new TaskManagerDAO instance.
+		 * @param methods	Methods to wait for. ( ["methodA", "methodB"] --or-- "method" )
+		 * @param actions	Actions to be executed after all methods execution. ( [callbackA, callbackB] --or-- callback )
+		 */
+		public function TaskDAO ( methods : *, actions : * )
+		{
+			this.methods = [].concat( methods );
+			this.actions = [].concat( actions );
+			this.doneCount = 0;
+		}
+	}
+}

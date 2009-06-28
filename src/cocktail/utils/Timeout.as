@@ -31,7 +31,10 @@ package cocktail.utils
 	
 	/**
 	 * Simple pracctice class to execute functios with a delay.
-	 * 	 * @author nybras | nybras@codeine.it	 */	public class Timeout 
+	 * 
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Timeout 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -132,4 +135,5 @@ package cocktail.utils
 		
 		
 		
-	}}
+	}
+}

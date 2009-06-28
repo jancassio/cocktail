@@ -24,9 +24,30 @@
 	
 *******************************************************************************/
 
-package cocktail.lib {
-	import cocktail.core.Index;	import cocktail.core.Task;	import cocktail.core.connectors.MotionConnector;	import cocktail.core.connectors.RequestConnector;	import cocktail.core.connectors.request.RequestEvent;	import cocktail.core.data.bind.Bind;	import cocktail.core.data.dao.ProcessDAO;	import cocktail.core.data.ds.Tree;	import cocktail.core.status.Status;	import cocktail.lib.Controller;	import cocktail.lib.Layout;	import cocktail.lib.cocktail.tweaks.ViewTweaks;	import cocktail.lib.view.styles.Style;	import cocktail.utils.Timeout;		import flash.display.DisplayObject;	import flash.display.Loader;	import flash.display.Sprite;	import flash.events.Event;	
-	/**	 * Main cocktail View class. This is the base class for every single View
+package cocktail.lib 
+{
+	import cocktail.core.Index;
+	import cocktail.core.Task;
+	import cocktail.core.connectors.MotionConnector;
+	import cocktail.core.connectors.RequestConnector;
+	import cocktail.core.connectors.request.RequestEvent;
+	import cocktail.core.data.bind.Bind;
+	import cocktail.core.data.dao.ProcessDAO;
+	import cocktail.core.data.ds.Tree;
+	import cocktail.core.status.Status;
+	import cocktail.lib.Controller;
+	import cocktail.lib.Layout;
+	import cocktail.lib.cocktail.tweaks.ViewTweaks;
+	import cocktail.lib.view.styles.Style;
+	import cocktail.utils.Timeout;
+	
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
+	import flash.display.Sprite;
+	import flash.events.Event;	
+
+	/**
+	 * Main cocktail View class. This is the base class for every single View
 	 * you have in your application.
 	 * @author nybras | nybras@codeine.it
 	 * @see Index
@@ -39,10 +60,12 @@ package cocktail.lib {
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
-				private var _parent : View;
+		
+		private var _parent : View;
 		private var _prev : View;
 		private var _next : View;
-				private var _childs : Tree;
+		
+		private var _childs : Tree;
 		
 		protected var _status : String;
 		
@@ -54,33 +77,116 @@ package cocktail.lib {
 		protected var _sprite : Sprite;
 		protected var _style : Style;
 		
-		protected var _holder : DisplayObject;		protected var _loader : Loader;		protected var _request : RequestConnector;		
-		public var motion : MotionConnector; 				
-				/* ---------------------------------------------------------------------
+		protected var _holder : DisplayObject;
+		protected var _loader : Loader;
+		protected var _request : RequestConnector;
+		
+		public var motion : MotionConnector; 
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			INITIALIZING
 		--------------------------------------------------------------------- */
-				/**
+		
+		/**
 		 * Initializing the view.
 		 * @param ctrl	Area controller.
 		 * @param forceLayout	Forces the layout loading process.
 		 */
 		internal function init ( controller : Controller, layout : Layout, fxml_node : XML ) : void
-		{			_parse_properties( fxml_node );
+		{
+			_parse_properties( fxml_node );
 			
 			_childs = new Tree();
 			_sprite = new Sprite ();
 			
-			_controller = controller;			_layout = layout;			
-//			_task = controller._task;//			_bind = controller._bind;
+			_controller = controller;
+			_layout = layout;
+			
+//			_task = controller._task;
+//			_bind = controller._bind;
 //			_request = controller._request;
 			
 			_layout.addChild( this );
-						motion = new MotionConnector ( _sprite );
+			
+			motion = new MotionConnector ( _sprite );
 			
 			config.listen( null, onStageResize );
 		}
-								/* ---------------------------------------------------------------------			STATUS MODIFIERS		--------------------------------------------------------------------- */				/**		 * Mark controller execution status as <code>initializing</code>		 */		private function _initializing () : void		{			_status = Status.INITIALIZING;		}				/**		 * Mark controller execution status as <code>loading</code>		 */		private function _loading () : void		{			_status = Status.LOADING;		}				/**		 * Mark controller execution status as <code>rendering</code>		 */		private function _rendering () : void		{			_status = Status.RENDERING;		}		/**		 * Mark controller execution status as <code>render_done</code>		 */		private function _render_done () : void		{			_status = Status.RENDER_DONE;		}				/**		 * Mark controller execution status as <code>destroying</code>		 */		private function _destroying () : void		{			_status = Status.DESTROYING;		}				/**		 * Mark controller execution status as <code>destroy_done</code>		 */		private function _destroy_done () : void		{			_status = Status.DESTROY_DONE;		}								/* ---------------------------------------------------------------------			STAGE BEHAVIORS		--------------------------------------------------------------------- */				/**		 * Listens for Event.RESIZE @ stage, and try to refresh the view.			 * @param event	Event.RESIZE.		 */		private function onStageResize ( event : Event = null ) : void		{			try { this[ "realign" ](); } catch ( e : Error ) {};		}				
-				/* ---------------------------------------------------------------------
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			STATUS MODIFIERS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Mark controller execution status as <code>initializing</code>
+		 */
+		private function _initializing () : void
+		{
+			_status = Status.INITIALIZING;
+		}
+		
+		/**
+		 * Mark controller execution status as <code>loading</code>
+		 */
+		private function _loading () : void
+		{
+			_status = Status.LOADING;
+		}
+		
+		/**
+		 * Mark controller execution status as <code>rendering</code>
+		 */
+		private function _rendering () : void
+		{
+			_status = Status.RENDERING;
+		}
+
+		/**
+		 * Mark controller execution status as <code>render_done</code>
+		 */
+		private function _render_done () : void
+		{
+			_status = Status.RENDER_DONE;
+		}
+		
+		/**
+		 * Mark controller execution status as <code>destroying</code>
+		 */
+		private function _destroying () : void
+		{
+			_status = Status.DESTROYING;
+		}
+		
+		/**
+		 * Mark controller execution status as <code>destroy_done</code>
+		 */
+		private function _destroy_done () : void
+		{
+			_status = Status.DESTROY_DONE;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			STAGE BEHAVIORS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Listens for Event.RESIZE @ stage, and try to refresh the view.	
+		 * @param event	Event.RESIZE.
+		 */
+		private function onStageResize ( event : Event = null ) : void
+		{
+			try { this[ "realign" ](); } catch ( e : Error ) {};
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			UP & NEXT shortcuts
 		--------------------------------------------------------------------- */
 		
@@ -92,7 +198,8 @@ package cocktail.lib {
 		{
 			_parent = target;
 		}
-		/**
+
+		/**
 		 * Gets the view parent.
 		 * @return	The view parent's view.
 		 */
@@ -100,7 +207,10 @@ package cocktail.lib {
 		{
 			return _parent;
 		}
-						/**
+
+		
+		
+		/**
 		 * Sets the view parent.
 		 * @param parent	The view parent's view. :)
 		 */
@@ -108,7 +218,8 @@ package cocktail.lib {
 		{
 			_prev = target;
 		}
-		/**
+
+		/**
 		 * Gets the view parent.
 		 * @return	The view parent's view.
 		 */
@@ -116,7 +227,10 @@ package cocktail.lib {
 		{
 			return _prev;
 		}
-								/* ---------------------------------------------------------------------
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			NAVIGATION & LOCALE HANDLERS
 		--------------------------------------------------------------------- */
 		
@@ -130,10 +244,15 @@ package cocktail.lib {
 			_controller.redirect( url , silentMode, freeze );
 		}
 		
-		/**		 * Change the current locale string for I18n.		 * @param locale	The string locale to use.		 */
+		/**
+		 * Change the current locale string for I18n.
+		 * @param locale	The string locale to use.
+		 */
 		final public function switchLocale ( locale : String ) : void
-		{			_controller.switchLocale( locale );
-		}		
+		{
+			_controller.switchLocale( locale );
+		}
+		
 		
 		
 		/**
@@ -142,10 +261,29 @@ package cocktail.lib {
 		 */
 		public function addChild ( child : View ) : View
 		{
-//			//			child.up = this;//			child.prev = ( head ? null : ( ( target.length ? childs[ target.length - 1 ] : null ) ) );//			child.current_process = current_process;//			//			if ( head )//			{//				if ( target.length )
-//					target[ 0 ].prev = child;//				//				target.unshift( child );//			}	//			else//				target.push( child );//			//			child.boot( _controller );//			//			if ( _status == Status.RENDER_DONE || _status == Status.RENDERING )////				child._load();
-//				child._render();			
-			return child;		}
+//			
+//			child.up = this;
+//			child.prev = ( head ? null : ( ( target.length ? childs[ target.length - 1 ] : null ) ) );
+//			child.current_process = current_process;
+//			
+//			if ( head )
+//			{
+//				if ( target.length )
+//					target[ 0 ].prev = child;
+//				
+//				target.unshift( child );
+//			}	
+//			else
+//				target.push( child );
+//			
+//			child.boot( _controller );
+//			
+//			if ( _status == Status.RENDER_DONE || _status == Status.RENDERING )
+////				child._load();
+//				child._render();
+			
+			return child;
+		}
 		
 		/**
 		 * 
@@ -156,7 +294,8 @@ package cocktail.lib {
 		}
 		
 		
-				/**
+		
+		/**
 		 * Search for the child based on the given id.
 		 * @param id	The view id to search for.
 		 * @return	The found child or null if no child is found.
@@ -177,10 +316,16 @@ package cocktail.lib {
 		 */
 		public function childs () : Array
 		{
-			var output : Array;			
-			// TODO - code it						return output;
+			var output : Array;
+			
+			// TODO - code it
+			
+			return output;
 		}
-								/**
+		
+		
+		
+		/**
 		 * Instantiates all needed views/assets.
 		 * @param items	Items to be instantiated. (default=action.items)
 		 */
@@ -209,12 +354,24 @@ package cocktail.lib {
 //				items = action.items;
 //			}
 //			
-//			for each ( item in items )//			{//				switch ( item.category )//				{//					case "module":
-//						if ( StringUtil.outerb ( item.classname ) == "[]" )//							instance = get_class( StringUtil.innerb( item.classname ));//						else//							if ( !item.shared )//								instance = get_class( app_area.replace( "$" , item.classname ) );//							else//								instance = get_class( app_elements.replace( "$" , item.classname ) );//					break;
+//			for each ( item in items )
+//			{
+//				switch ( item.category )
+//				{
+//					case "module":
+//						if ( StringUtil.outerb ( item.classname ) == "[]" )
+//							instance = get_class( StringUtil.innerb( item.classname ));
+//						else
+//							if ( !item.shared )
+//								instance = get_class( app_area.replace( "$" , item.classname ) );
+//							else
+//								instance = get_class( app_elements.replace( "$" , item.classname ) );
+//					break;
 //					
 //					default:
 //						// text|img|swf|button|div|
-//						name = StringUtil.ucasef( item.category );//						try {
+//						name = StringUtil.ucasef( item.category );
+//						try {
 //							instance = get_class( app_elements.replace( "$" , name ) );
 //						} catch ( e1 : Error ) {
 //							instance = get_class( cocktail_elements.replace( "$" , name ) );
@@ -223,10 +380,12 @@ package cocktail.lib {
 //				}
 //				
 //				view = new instance();
-//				//				view.info = item;
+//				
+//				view.info = item;
 //				view.styles = styles;
 //				
-//				addChild( view );//				
+//				addChild( view );
+//				
 //				view.run( current_process );
 //				
 //				if ( item.childs.length )
@@ -235,7 +394,8 @@ package cocktail.lib {
 		}
 		
 		
-				/* ---------------------------------------------------------------------
+		
+		/* ---------------------------------------------------------------------
 			INIT SEQUENCE EXECUTION
 		--------------------------------------------------------------------- */
 		
@@ -245,19 +405,26 @@ package cocktail.lib {
 		internal final function _before_init () : void
 		{
 			log.info( "_before_init();" );
-			try { this[ "before_init" ](); } catch ( e : Error ) {};		}
+			try { this[ "before_init" ](); } catch ( e : Error ) {};
+		}
 		
-		/**		 * TODO - add documentation
+		/**
+		 * TODO - add documentation
 		 */
 		internal final function _init () : void
-		{			_initializing();			
+		{
+			_initializing();
+			
 			var item : View;
 			
-			for each ( item in childs() )				item._init();			
+			for each ( item in childs() )
+				item._init();
+			
 			_before_init( );
 			_after_init( );
 		}
-		/**
+
+		/**
 		 * TODO - add documentation
 		 */
 		internal final function _after_init () : void
@@ -266,7 +433,10 @@ package cocktail.lib {
 			try { this[ "after_init" ](); } catch ( e : Error ) {};
 			_task.done( class_path + "/_after_init" );
 		}
-								/* ---------------------------------------------------------------------
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			LOAD SEQUENCE EXECUTION
 		--------------------------------------------------------------------- */
 		
@@ -275,15 +445,19 @@ package cocktail.lib {
 		 */
 		internal final function _before_load () : void
 		{
-			log.info( "_before_load();" );						try { this[ "before_load" ](); } catch ( e : Error ) {};
+			log.info( "_before_load();" );
+			
+			try { this[ "before_load" ](); } catch ( e : Error ) {};
 		}
-				/**
+		
+		/**
 		 * 
 		 */
 		internal final function _load () : void
 		{
 			var item : View;
-						_loading();
+			
+			_loading();
 			
 			for each ( item in childs() )
 				item._load();
@@ -306,7 +480,10 @@ package cocktail.lib {
 			_task.done( class_path + "/_after_load" );
 			try { this[ "after_load" ](); } catch ( e : Error ) {};
 		}
-								/* ---------------------------------------------------------------------
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			RENDER SEQUENCE EXECUTION
 		--------------------------------------------------------------------- */
 		
@@ -315,25 +492,38 @@ package cocktail.lib {
 		 */
 		internal final function _before_render (  ) : void
 		{
-			log.info( "_before_render();" );			//			try { style().apply( this ); } catch ( e1 : Error ) {}
-			try { this[ "before_render" ](); } catch ( e2 : Error ) {};		}
-				/**
+			log.info( "_before_render();" );
+			
+//			try { style().apply( this ); } catch ( e1 : Error ) {}
+			try { this[ "before_render" ](); } catch ( e2 : Error ) {};
+		}
+		
+		/**
 		 * 
 		 */
 		internal final function _render () : void
-		{			var item : View;						_rendering();
-						for each ( item in childs() )				item._render( );
-						_before_render( );
+		{
+			var item : View;
 			
-//			if ( _holder && ! ( this is AssetElement ) )//				_sprite.addChildAt( _holder, 0 );
+			_rendering();
+			
+			for each ( item in childs() )
+				item._render( );
+			
+			_before_render( );
+			
+//			if ( _holder && ! ( this is AssetElement ) )
+//				_sprite.addChildAt( _holder, 0 );
 			
 			new Timeout( _after_render, 200 ).exec();
 		}
-				/**
+		
+		/**
 		 * 
 		 */
 		internal final function _after_render () : void
-		{			log.info( "_after_render();" );
+		{
+			log.info( "_after_render();" );
 			_task.done( class_path + "/_after_render" );
 			
 			try {
@@ -354,7 +544,8 @@ package cocktail.lib {
 		{
 			log.info( "_before_destroy();" );
 			
-			try {				this[ "before_destroy" ]( dao ); 
+			try {
+				this[ "before_destroy" ]( dao ); 
 			} catch ( e1 : Error ) {
 				// TODO - check technique to auto destroy
 				//destroy_done();
@@ -366,7 +557,16 @@ package cocktail.lib {
 		 */
 		protected function _destroy ( dao : ProcessDAO ) : void
 		{
-			log.info( "_destroy();" );						_destroying();			//			var item : View;			//			for each ( item in childs() ) {//				item._destroy( dao );//			}			
+			log.info( "_destroy();" );
+			
+			_destroying();
+			
+//			var item : View;
+			
+//			for each ( item in childs() ) {
+//				item._destroy( dao );
+//			}
+			
 			this._before_destroy( dao );
 		}
 		
@@ -386,17 +586,22 @@ package cocktail.lib {
 //				ArrayUtil.del( dead_processes , destroyed.action, "action" );
 //				ArrayUtil.del( active_processes , destroyed.action, "action" );
 //				
-//				for each ( child in _childs[ destroyed.action ] )//					_sprite.removeChild( child._sprite );//				
-//				_childs[ destroyed.action ] = null;//				delete _childs[ destroyed.action ];
+//				for each ( child in _childs[ destroyed.action ] )
+//					_sprite.removeChild( child._sprite );
+//				
+//				_childs[ destroyed.action ] = null;
+//				delete _childs[ destroyed.action ];
 //			}
 //			
 //			if ( ! active_processes.length )
-//			{//				if ( _loader is Loader )
+//			{
+//				if ( _loader is Loader )
 //					_loader.unload();
 //				
 //				if ( up == null )
 //				{
-//					_controller.stage.removeChild( _sprite );//					_runned = false;
+//					_controller.stage.removeChild( _sprite );
+//					_runned = false;
 //				}
 //			}
 		}

@@ -25,7 +25,8 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail.preprocessor 
-{	import cocktail.core.Index;
+{
+	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
@@ -38,9 +39,15 @@ package cocktail.lib.cocktail.preprocessor
 	/**
 	 * Pre Processor main class.
 	 * @author nybras | nybras@codeine.it
-	 * @see	Globals	 * @see	Params	 * @see	Loops	 * @see	Sweeps
+	 * @see	Globals
+	 * @see	Params
+	 * @see	Loops
+	 * @see	Sweeps
 	 * @see	Binds
-	 * @see	IPreProcessor	 */	public class PreProcessor extends Index 	{
+	 * @see	IPreProcessor
+	 */
+	public class PreProcessor extends Index 
+	{
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
@@ -66,8 +73,13 @@ package cocktail.lib.cocktail.preprocessor
 		 */
 		public function PreProcessor ( bind : Bind, model : Model, view : View )
 		{
-			_globals = new Globals();			_params = new Params();//			commands = new Commands( bind, model, view );
-			_loops = new Loops();			_sweeps = new Sweeps( bind, model, view );			_binds = new Binds( bind, model, view );		}
+			_globals = new Globals();
+			_params = new Params();
+//			commands = new Commands( bind, model, view );
+			_loops = new Loops();
+			_sweeps = new Sweeps( bind, model, view );
+			_binds = new Binds( bind, model, view );
+		}
 		
 		
 		
@@ -140,4 +152,5 @@ package cocktail.lib.cocktail.preprocessor
 		{
 			return _binds.preprocess( source, path );
 		}
-	}}
+	}
+}

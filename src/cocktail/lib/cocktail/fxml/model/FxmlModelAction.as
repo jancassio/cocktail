@@ -25,7 +25,8 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail.fxml.model 
-{	import cocktail.core.connectors.RequestConnector;
+{
+	import cocktail.core.connectors.RequestConnector;
 	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.cocktail.fxml.FxmlTag;
@@ -37,7 +38,10 @@ package cocktail.lib.cocktail.fxml.model
 	import flash.events.EventDispatcher;	
 
 	/**
-	 * Fxml class for model DOM.	 * @author nybras | nybras@codeine.it	 */	public class FxmlModelAction extends FxmlTag 
+	 * Fxml class for model DOM.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class FxmlModelAction extends FxmlTag 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -58,7 +62,8 @@ package cocktail.lib.cocktail.fxml.model
 		
 		/* ---------------------------------------------------------------------
 			INITIALIZING
-		--------------------------------------------------------------------- */		
+		--------------------------------------------------------------------- */
+		
 		/**
 		 * Boot & process the given FXML action structure.
 		 * @param model	Model reference.
@@ -215,4 +220,5 @@ package cocktail.lib.cocktail.fxml.model
 		{
 			_dispatcher.removeEventListener( Event.COMPLETE, complete );
 		}
-	}}
+	}
+}

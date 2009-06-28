@@ -25,14 +25,18 @@
 *******************************************************************************/
 
 package cocktail.lib.cocktail.preprocessor.processors 
-{	import cocktail.core.data.bind.Bind;
+{
+	import cocktail.core.data.bind.Bind;
 	import cocktail.lib.Model;
 	import cocktail.lib.View;
 	import cocktail.lib.cocktail.preprocessor.interfaces.IPreProcessor;
 	import cocktail.utils.StringUtil;	
 
 	/**
-	 * Pre Processor class for {binds}.	 * @author nybras | nybras@codeine.it	 */	public class Binds implements IPreProcessor 
+	 * Pre Processor class for {binds}.
+	 * @author nybras | nybras@codeine.it
+	 */
+	public class Binds implements IPreProcessor 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -72,8 +76,10 @@ package cocktail.lib.cocktail.preprocessor.processors
 		 * @param xml	The xml content to be pre-processed.
 		 * @param path	The path of the xml file ( just to display clear error messages ).
 		 * @return	The xml pos-processed.
-		 */		public function preprocess( xml: XML, path: String ) : XML
-		{			var key : String;
+		 */
+		public function preprocess( xml: XML, path: String ) : XML
+		{
+			var key : String;
 			var content : String;
 			
 			content = xml;
@@ -83,4 +89,5 @@ package cocktail.lib.cocktail.preprocessor.processors
 			
 			return new XML ( content );
 		}
-	}}
+	}
+}

@@ -24,8 +24,23 @@
 	
 *******************************************************************************/
 
-package cocktail.lib {
-	import cocktail.core.Index;	import cocktail.core.Task;	import cocktail.core.connectors.RequestConnector;	import cocktail.core.data.bind.Bind;	import cocktail.core.data.dao.ProcessDAO;	import cocktail.core.data.so.SO;	import cocktail.lib.Controller;	import cocktail.lib.cocktail.preprocessor.PreProcessor;	import cocktail.lib.cocktail.fxml.model.FxmlModel;	import cocktail.lib.cocktail.fxml.model.FxmlModelAction;	import cocktail.lib.cocktail.tweaks.ModelTweaks;		import flash.events.Event;		/**
+package cocktail.lib 
+{
+	import cocktail.core.Index;
+	import cocktail.core.Task;
+	import cocktail.core.connectors.RequestConnector;
+	import cocktail.core.data.bind.Bind;
+	import cocktail.core.data.dao.ProcessDAO;
+	import cocktail.core.data.so.SO;
+	import cocktail.lib.Controller;
+	import cocktail.lib.cocktail.preprocessor.PreProcessor;
+	import cocktail.lib.cocktail.fxml.model.FxmlModel;
+	import cocktail.lib.cocktail.fxml.model.FxmlModelAction;
+	import cocktail.lib.cocktail.tweaks.ModelTweaks;
+	
+	import flash.events.Event;	
+
+	/**
 	 * Main Model class. This is the base class for every single Model you have
 	 * in your application.
 	 * @author nybras | nybras@codeine.it
@@ -57,7 +72,8 @@ package cocktail.lib {
 		public var booted : Boolean;
 		
 		
-				/* ---------------------------------------------------------------------
+		
+		/* ---------------------------------------------------------------------
 			BOOTING
 		--------------------------------------------------------------------- */
 		
@@ -158,7 +174,8 @@ package cocktail.lib {
 		internal final function _before_load () : void
 		{
 			log.info( "_before_load();" );
-			try { this[ "before_load" ](); } catch ( e : Error ) {}			
+			try { this[ "before_load" ](); } catch ( e : Error ) {}
+			
 		}
 		
 		/**
@@ -168,7 +185,9 @@ package cocktail.lib {
 		{
 			_before_load();
 			_current_action.load().listen ( _after_load );
-		}				/**
+		}
+		
+		/**
 		 * Invoked after the requested action is loaded.
 		 */
 		internal final function _after_load () : void
