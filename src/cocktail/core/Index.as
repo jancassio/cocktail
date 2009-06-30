@@ -297,8 +297,9 @@ package cocktail.core
 		 * Check if some property/method/variabel is defined in the given scope.
 		 * @param scope	Scope to evaluate.
 		 * @param property	Property/Method/Variable to evaluate.
+		 * @return	
 		 */
-		public function defined ( scope : *, property : String ) : void
+		public function defined ( scope : *, property : String ) : Boolean
 		{
 			var result : Boolean;
 			
@@ -312,6 +313,8 @@ package cocktail.core
 				if ( e.errorID == 1006 )
 					result = false;
 			}
+			
+			return result;
 		}
 		
 		/**
