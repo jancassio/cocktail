@@ -26,19 +26,24 @@
 
 package cocktail.lib.view.styles
 {
+	import cocktail.lib.view.styles.gunz.StylesBullet;
+	import cocktail.lib.view.styles.gunz.StylesTrigger;
+	
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;	
 
-		/**
+	/**
 	 * Styles (multiple) manager.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class Styles 
+	public class Styles
 	{
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
+		
+		public var trigger : StylesTrigger;
 		
 		private var _loading : Boolean;
 		private var _loader : URLLoader;
@@ -57,7 +62,10 @@ package cocktail.lib.view.styles
 		public function Styles ( url : String = null ) : void
 		{
 			_styles = {};
-			// load ( url );
+			trigger = new StylesTrigger ( this );
+			
+			if ( url != null )
+				load ( url );
 		}
 		
 		
@@ -71,13 +79,13 @@ package cocktail.lib.view.styles
 		 */
 		public function destroy () : void
 		{
-			if ( _loading )
-			{
-				_loader.close();
-				_loader.removeEventListener( Event.COMPLETE, _cache );
-				
-				_loading = false;
-			}	
+			if ( ! _loading )
+				return;
+			
+			_loader.close();
+			_loader.removeEventListener( Event.COMPLETE, _cache );
+			
+			_loading = false;
 			_styles = null;
 		}
 		
@@ -91,9 +99,21 @@ package cocktail.lib.view.styles
 		 * Search by the given style name.
 		 * @return	The found style, parsed into object.
 		 */
-		public function style ( name : String ) : *
+		public function get ( name : String ) : Style
 		{
-			return _styles[ name ];
+			var output : Style;
+			
+			try
+			{
+				 output = _styles[ name ];
+			}
+			catch ( e : Error )
+			{
+				output = null;
+				trace ( "Warning: STYLE DOESNT EXIST!" );
+			}
+			
+			return output;
 		}
 		
 		
@@ -121,14 +141,49 @@ package cocktail.lib.view.styles
 		private function _cache ( event : Event ) : void
 		{
 			var raw : *;
-			var style : String;
+			var name : String;
+			var style : Style;
 			
 			raw = Fss.parse ( URLLoader( event.target ).data );
-			for ( style in raw )
-				_styles[ style ] = raw[ style ];
+			for ( name in raw )
+			{
+				style = Style ( _styles[ name ] = new Style() );
+				style.boot( name, raw[ name ] );
+			}
+			
+			trigger.pull( new StylesBullet( StylesTrigger.COMPLETE ));
 			
 			_loader.removeEventListener( Event.COMPLETE, _cache );
 		}
 		
+		
+		
+		/* ---------------------------------------------------------------------
+			BULLET/TRIGGER IMPLEMENTATION ( listen/unlisten )
+		--------------------------------------------------------------------- */
+		
+		/*
+		 * THESE TWO GETTERS BELOW MUST TO BE IMPLEMENTED IN EVERY CLASS THAT
+		 * WILL USE TRIGGER/BULLETS, IN ORDER TO OFFER STRICT AUTO-COMPLETE AND
+		 * VALIDATION.  
+		 */
+		
+		/**
+		 * Start listening.
+		 * @return	The trigger <code>UserTrigger</code> reference.
+		 */
+		public function get listen () : StylesTrigger
+		{
+			return StylesTrigger ( trigger.listen );
+		}
+		
+		/**
+		 * Stop listening.
+		 * @return	The trigger <code>StylesTrigger</code> reference.
+		 */
+		public function get unlisten () : StylesTrigger
+		{
+			return StylesTrigger ( trigger.unlisten );
+		}
 	}
 }
