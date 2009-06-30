@@ -37,11 +37,11 @@ package cocktail.lib.view.styles.renders
 	{
 		public function init () : void
 		{
-			_style.plug( PositionSelector.LEFT, set_x );
-			_style.plug( PositionSelector.TOP, set_y );
+			_style.plug( PositionSelector.LEFT, _set_x );
+			_style.plug( PositionSelector.TOP, _set_y );
 		}
 		
-		private function set_x ( value : * ) : void
+		private function _set_x( value : * ) : void
 		{
 			if ( _is_percent( value ) )
 				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
@@ -49,7 +49,7 @@ package cocktail.lib.view.styles.renders
 				_target.x = u ( _clear_unit ( value ) );
 		}
 		
-		private function set_y ( value : * ) : void
+		private function _set_y( value : * ) : void
 		{
 			if ( _is_percent( value ) )
 				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
