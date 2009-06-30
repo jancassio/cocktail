@@ -26,7 +26,7 @@
 
 package cocktail.lib.view.styles.selectors 
 {
-	import cocktail.lib.view.styles.selectors.Selector;	
+	import cocktail.lib.view.styles.selectors.Selector;		
 
 	/**
 	 * Handles all position properties.
@@ -44,6 +44,7 @@ package cocktail.lib.view.styles.selectors
 		public static const BOTTOM : String = "bottom";
 		public static const ALIGN : String = "align";
 		public static const VALIGN : String = "valign";
+		public static const BACKGROUND_COLOR : String = "background-color";
 		
 		
 		
@@ -52,24 +53,34 @@ package cocktail.lib.view.styles.selectors
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * TODO - add documentation
+		 * Gets the bottom margin edge for a positioned box.
+		 * @return	The bottom margin edge.
 		 */
 		public function get left () : String { return r ( LEFT ); }
 		
 		/**
-		 * TODO - add documentation
+		 * Sets the left margin edge for a positioned box.
+		 * @param left	Possible valus are: <br/>
+		 * 				auto<br/>
+		 *				length<br/>
+		 *				%<br/>
+						inherit<br/>
 		 */
-		public function set left ( left : * ) : void { w ( LEFT, left ); }
+		public function set left ( left : * ) : void {
+			w ( LEFT, left );
+		}
 		
 		
 		
 		/**
-		 * TODO - add documentation
+		 * Gets the top margin edge for a positioned box.
 		 */
 		public function get top () : String { return r( TOP ); }
 		
 		/**
-		 * TODO - add documentation
+		 * Sets the top margin edge for a positioned box.
+		 * @param top	Possible valus are: <br/>
+		 * d
 		 */
 		public function set top ( top : * ) : void { w( TOP, top ); }
 		
@@ -85,15 +96,14 @@ package cocktail.lib.view.styles.selectors
 		 */
 		public function set right ( right : * ) : void { w ( RIGHT, right ); }
 		
-		
-		
 		/**
-		 * TODO - add documentation
+		 * Gets the bottom margin edge for a positioned box.
+		 * @return	The bottom margin edge.
 		 */
 		public function get bottom () : String { return r ( BOTTOM ); }
 		
 		/**
-		 * TODO - add documentation
+		 * Sets the bottom margin edge for a positioned box.
 		 */
 		public function set botton ( bottom : * ) : void { w ( BOTTOM, bottom ); }
 		
