@@ -28,7 +28,8 @@ package cocktail.lib.view.styles.selectors
 {
 	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
-	import cocktail.lib.view.styles.Style;		
+	import cocktail.lib.view.styles.Style;
+	import cocktail.utils.StringUtil;	
 
 	/**
 	 * Selector base class.
@@ -41,11 +42,52 @@ package cocktail.lib.view.styles.selectors
 			VARS
 		--------------------------------------------------------------------- */
 		
+		private var _booted : Boolean;
+		
 		protected var _name : String;
 		protected var _properties : Bind;
 		
 		protected var _parent : Style;
 		protected var _buffer : String;
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		---------------------------------------------------------------------- */
+		
+		/**
+		 * Boot all selectors and fill all styles / properties.
+		 * @param name	Style name.
+		 * @param properties	Parse style.
+		 */
+		public function boot ( name : String, properties: *, parent : Style  = null) : void
+		{
+			var key : String;
+			var value : String;
+			
+			if ( ! _booted )
+				return;
+			
+			_name = name;
+			_parent = parent;
+			_properties = new Bind ();
+			
+			for ( key in properties )
+			{
+				try
+				{
+					name = StringUtil.replace_all ( key, "-", "_" );
+					name = StringUtil.trim ( name ).toLowerCase();
+					value = StringUtil.trim ( properties[ key ] );
+					
+					this[  name ] = value;
+				}
+				catch ( e : Error )
+				{
+					log.error( e );
+				}
+			}
+		}
 		
 		
 		
