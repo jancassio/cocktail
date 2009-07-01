@@ -65,7 +65,7 @@ package cocktail.lib.view.styles.selectors
 			var key : String;
 			var value : String;
 			
-			if ( ! _booted )
+			if ( _booted )
 				return;
 			
 			_name = name;
