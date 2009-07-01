@@ -35,7 +35,7 @@ package cocktail.lib.view.styles.renders
 	 */
 	public class PositionRender extends Render 
 	{
-		public function init () : void
+		public function render () : void
 		{
 			_style.plug( PositionSelector.LEFT, _set_x );
 			_style.plug( PositionSelector.TOP, _set_y );
