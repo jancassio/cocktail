@@ -12,25 +12,43 @@ package
 	 */
 	public class StylesTest extends Sprite 
 	{
+		private var _ball : Sprite;
 		private var _styles : Styles;
 		private var _pos_render : PositionRender;
 		
 		public function StylesTest()
 		{
-			load_style();
+			_draw();
+			_load();
 		}
-		
-		private function load_style() : void
+
+		private function _draw() : void
 		{
-			_styles = new Styles ( "style-test.fss");
-			_styles.listen.complete( _boot_render );
+			_ball = new Sprite();
+			_ball.graphics.beginFill( 0, 1 );
+			_ball.graphics.drawCircle( 0, 0, 50 );
+		}
+
+		private function _load() : void
+		{
+			_styles = new Styles ( "style-test.fss" );
+			_styles.listen.complete( _plug );
 		}
 		
-		private function _boot_render ( bullet : StylesBullet ) : void
+		private function _plug ( bullet : StylesBullet ) : void
 		{
 			bullet;
+			
 			_pos_render = new PositionRender();
-			_pos_render.boot( this, _styles.get( "just-a-test" ) );
+			_pos_render.boot( _ball, _styles.get( "just-a-test" ) );
+			_pos_render.render();
+			
+			_render();
+		}
+		
+		private function _render () : void
+		{
+			addChild ( _ball );
 		}
 	}
 }
