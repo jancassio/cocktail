@@ -35,13 +35,29 @@ package cocktail.lib.view.styles.renders
 	 */
 	public class PositionRender extends Render 
 	{
+		/* ---------------------------------------------------------------------
+			RENDER
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Start the live rendering. 
+		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.LEFT, _set_x );
-			_style.plug( PositionSelector.TOP, _set_y );
+			_style.plug( PositionSelector.LEFT, _left );
+			_style.plug( PositionSelector.TOP, _top );
 		}
 		
-		private function _set_x( value : * ) : void
+		
+		
+		/* ---------------------------------------------------------------------
+			PROPERTIES
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * TODO: add docs
+		 */
+		private function set _left( value : * ) : void
 		{
 			if ( _is_percent( value ) )
 				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
@@ -49,12 +65,18 @@ package cocktail.lib.view.styles.renders
 				_target.x = u ( _clear_unit ( value ) );
 		}
 		
-		private function _set_y( value : * ) : void
+		/**
+		 * TODO: add docs
+		 */
+		private function set _top( value : * ) : void
 		{
 			if ( _is_percent( value ) )
 				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
 			else
 				_target.y = u ( _clear_unit ( value ) );
 		}
+		
+		
+		
 	}
 }
