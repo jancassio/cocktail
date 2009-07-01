@@ -153,14 +153,16 @@ package cocktail.core
 			FUNCTION & DEBUG UTILS
 		--------------------------------------------------------------------- */
 		
-		/**
-		 * Sends all "trace" calls to the log.debug method.
-		 * @param message	Message to be traced.
-		 */
-		public function trace ( ...message ) : void
-		{
-			log.debug.apply( log, message );
-		}
+		
+//		TODO: uncomment method for release
+//		/**
+//		 * Sends all "trace" calls to the log.debug method.
+//		 * @param message	Message to be traced.
+//		 */
+//		public function trace ( ...message ) : void
+//		{
+//			log.debug.apply( log, message );
+//		}
 		
 		/**
 		 * Creates a proxy function holding default params.
