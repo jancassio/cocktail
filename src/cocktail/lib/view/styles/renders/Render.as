@@ -80,7 +80,7 @@ package cocktail.lib.view.styles.renders
 		 */
 		protected function _is_percent ( value : * ) : Boolean
 		{
-			return /^([0-9.]+)(%|px)?/.test( value );
+			return /[0-9.]+%/.test( value );
 		}
 		
 		/**
