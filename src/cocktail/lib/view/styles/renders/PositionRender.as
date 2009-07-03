@@ -44,8 +44,8 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.LEFT, _left );
-			_style.plug( PositionSelector.TOP, _top );
+			_style.plug( PositionSelector.LEFT, _set_left );
+			_style.plug( PositionSelector.TOP, _set_top );
 		}
 		
 		
@@ -57,8 +57,9 @@ package cocktail.lib.view.styles.renders
 		/**
 		 * TODO: add docs
 		 */
-		private function set _left( value : * ) : void
+		private function _set_left( value : * ) : void
 		{
+			trace ( "LEFT: "+ value );
 			if ( _is_percent( value ) )
 				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
 			else
@@ -68,8 +69,9 @@ package cocktail.lib.view.styles.renders
 		/**
 		 * TODO: add docs
 		 */
-		private function set _top( value : * ) : void
+		private function _set_top( value : * ) : void
 		{
+			trace ( "TOP: "+ value );
 			if ( _is_percent( value ) )
 				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
 			else
