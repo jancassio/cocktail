@@ -28,6 +28,7 @@ package cocktail.lib.view.styles.selectors
 {
 	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
+	import cocktail.core.data.bind.Binded;
 	import cocktail.lib.view.styles.Style;
 	import cocktail.utils.StringUtil;	
 
@@ -53,14 +54,18 @@ package cocktail.lib.view.styles.selectors
 		
 		/* ---------------------------------------------------------------------
 			INITIALIZING
-		---------------------------------------------------------------------- */
+		--------------------------------------------------------------------- */
 		
 		/**
 		 * Boot all selectors and fill all styles / properties.
 		 * @param name	Style name.
 		 * @param properties	Parse style.
 		 */
-		public function boot ( name : String, properties: *, parent : Style  = null) : void
+		public function boot (
+			name : String,
+			properties: *,
+			parent : Style  = null
+		) : void
 		{
 			var key : String;
 			var value : String;
@@ -124,9 +129,9 @@ package cocktail.lib.view.styles.selectors
 		 * @param property	Property name to plug.
 		 * @param handler	Property update handler.
 		 */
-		public function plug ( name : String, handler : Function ) : void
+		public function plug ( name : String, handler : Function ) : Binded
 		{
-			_properties.plug( name, handler );
+			return _properties.plug( name, handler );
 		}
 		
 		/**
@@ -134,9 +139,9 @@ package cocktail.lib.view.styles.selectors
 		 * @param property	Property name to unplug.
 		 * @param handler	Property update handler.
 		 */
-		public function unplug ( name : String, handler : Function ) : void
+		public function unplug ( name : String, handler : Function ) : Boolean
 		{
-			_properties.unplug( name, handler );
+			return _properties.unplug( name, handler );
 		}
 		
 		
