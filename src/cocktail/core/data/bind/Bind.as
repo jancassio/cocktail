@@ -127,9 +127,14 @@ package cocktail.core.data.bind
 		 * Plug some key.
 		 * @param key	The key to be plugged.
 		 * @param change		The listener method or the setter's scope.
-		 * @param setter	If informed, the <code>change</code> param is handled as a scope, otherwise its handled as a method.
+		 * @param setter	If informed, the <code>change</code> param is
+		 * handled as a scope, otherwise its handled as a method.
 		 */
-		public function plug ( key : String, change  : *, setter : String = null ) : Binded
+		public function plug (
+			key : String,
+			change  : *,
+			setter : String = null
+		) : Binded
 		{
 			var item : Binded;
 			
@@ -146,10 +151,16 @@ package cocktail.core.data.bind
 		 * Unplug some key.
 		 * @param key	The key to be unplugged.
 		 * @param change		The listener method or the setter's scope.
-		 * @param setter	If informed, the <code>change</code> param is handled as a scope, otherwise its handled as a method.
-		 * @return	<code>true</code> if the key is unplugged successfully, <code>false</code> otherwise.
+		 * @param setter	If informed, the <code>change</code> param is
+		 * handled as a scope, otherwise its handled as a method.
+		 * @return	<code>true</code> if the key is unplugged successfully,
+		 * <code>false</code> otherwise.
 		 */
-		public function unplug ( key : String, change  : *, setter : String = null ) : Boolean
+		public function unplug (
+			key : String,
+			change  : *,
+			setter : String = null
+		) : Boolean
 		{
 			var item : Binded;
 			
