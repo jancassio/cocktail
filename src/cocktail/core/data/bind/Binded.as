@@ -32,11 +32,14 @@ package cocktail.core.data.bind
 	 * @author nybras | nybras@codeine.it
 	 * @see Bind
 	 */
-	internal class Binded 
+	public class Binded 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
+		
+		private var _touched : Array;
+		private var _repass_value : Boolean;
 		
 		public var key : String;
 		public var change : *;
@@ -60,6 +63,9 @@ package cocktail.core.data.bind
 			this.key = key;
 			this.change = change;
 			this.setter = setter;
+			
+			_touched = [];
+			_repass_value = false;
 		}
 		
 		
@@ -74,12 +80,40 @@ package cocktail.core.data.bind
 		 */
 		internal function update ( value : * ) : void
 		{
+			var method : Function;
+			
 			this.value = value;
 			
 			if ( setter != null )
 				change[ setter ] = value;
 			else
 				( change as Function )( value );
+			
+			for each ( method in _touched )
+				if ( _repass_value )
+					( method as Function )( value );
+				else
+					( method as Function )();
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			TOUCHING ( notifiers )
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Add a list of methods that will be "touched" every time this Bind
+		 * changes.
+		 * @param methods	Array of methods (functions) that shou be called.
+		 * @param repass_value	If <code>true</true> pass the new Bind value
+		 * to all methods -- method ( value ). Otherwise <code>false</code>
+		 * all methods is called without passing any param -- method(). 
+		 */
+		public function touch ( methods : Array, repass_value : Boolean = false ) : void
+		{
+			_touched = methods;
+			_repass_value = repass_value;
 		}
 	}
 }
