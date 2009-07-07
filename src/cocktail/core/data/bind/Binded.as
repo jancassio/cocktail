@@ -58,7 +58,11 @@ package cocktail.core.data.bind
 		 * @param change		Binded method or setter's scope.
 		 * @param setter	Binded setter (optional).
 		 */
-		public function Binded ( key : String, change  : *, setter : String = null ) : void
+		public function Binded (
+			key : String,
+			change  : *,
+			setter : String = null
+		) : void
 		{
 			this.key = key;
 			this.change = change;
@@ -110,7 +114,10 @@ package cocktail.core.data.bind
 		 * to all methods -- method ( value ). Otherwise <code>false</code>
 		 * all methods is called without passing any param -- method(). 
 		 */
-		public function touch ( methods : Array, repass_value : Boolean = false ) : void
+		public function touch (
+			methods : Array,
+			repass_value : Boolean = false
+		) : void
 		{
 			_touched = methods;
 			_repass_value = repass_value;
