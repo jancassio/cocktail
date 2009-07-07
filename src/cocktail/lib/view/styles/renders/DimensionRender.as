@@ -27,13 +27,13 @@
 package cocktail.lib.view.styles.renders 
 {
 	import cocktail.lib.view.styles.renders.Render;
-	import cocktail.lib.view.styles.selectors.PositionSelector;	
+	import cocktail.lib.view.styles.selectors.DimensionSelector;	
 	
 	/**
-	 * Render all Position properties
+	 * Render all Dimension properties
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class PositionRender extends Render 
+	public class DimensionRender extends Render 
 	{
 		/* ---------------------------------------------------------------------
 			RENDER
@@ -44,15 +44,12 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.LEFT, _left );
-			_style.plug( PositionSelector.TOP, _top );
-			_style.plug( PositionSelector.RIGHT, _right );
-			_style.plug( PositionSelector.BOTTOM, _bottom );
-			_style.plug( PositionSelector.ALIGN, _align );
-			_style.plug( PositionSelector.OVERFLOW, _overflow );
-			_style.plug( PositionSelector.OVERFLOW_X, _overflow_x );
-			_style.plug( PositionSelector.OVERFLOW_Y, _overflow_y );
-			_style.plug( PositionSelector.Z_INDEX, _z_index );
+			_style.plug( DimensionSelector.WIDTH, _width );
+			_style.plug( DimensionSelector.MIN_WIDTH, _min_width );
+			_style.plug( DimensionSelector.MAX_WIDTH, _max_width );
+			_style.plug( DimensionSelector.HEIGHT, _height );
+			_style.plug( DimensionSelector.MIN_HEIGHT, _min_height );
+			_style.plug( DimensionSelector.MAX_HEIGHT, _max_height );
 		}
 		
 		
@@ -65,33 +62,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _left( value : * ) : void
-		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
-			else
-				_target.x = u ( _clear_unit ( value ) );
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _top( value : * ) : void
-		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
-			else
-				_target.y = u ( _clear_unit ( value ) );
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _right( value : * ) : void
+		private function _width( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -100,7 +71,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _bottom( value : * ) : void
+		private function _min_width( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -109,7 +80,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _align( value : * ) : void
+		private function _max_width( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -118,7 +89,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _overflow( value : * ) : void
+		private function _height( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -127,7 +98,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _overflow_x( value : * ) : void
+		private function _min_height( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -136,16 +107,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _overflow_y( value : * ) : void
-		{
-			// TODO: implement method
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _z_index( value : * ) : void
+		private function _max_height( value : * ) : void
 		{
 			// TODO: implement method
 		}

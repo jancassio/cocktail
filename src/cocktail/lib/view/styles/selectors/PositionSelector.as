@@ -29,7 +29,7 @@ package cocktail.lib.view.styles.selectors
 	import cocktail.lib.view.styles.selectors.Selector;		
 
 	/**
-	 * Handles all position properties.
+	 * Provides all Position property selectors
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class PositionSelector extends Selector
@@ -43,8 +43,10 @@ package cocktail.lib.view.styles.selectors
 		public static const RIGHT : String = "right";
 		public static const BOTTOM : String = "bottom";
 		public static const ALIGN : String = "align";
-		public static const VALIGN : String = "valign";
-		public static const BACKGROUND_COLOR : String = "background-color";
+		public static const OVERFLOW : String = "overflow";
+		public static const OVERFLOW_X : String = "overflow-x";
+		public static const OVERFLOW_Y : String = "overflow-y";
+		public static const Z_INDEX : String = "z-index";
 		
 		
 		
@@ -53,82 +55,172 @@ package cocktail.lib.view.styles.selectors
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Gets the bottom margin edge for a positioned box.
-		 * @return	The bottom margin edge.
-		 */
-		public function get left () : String { return r ( LEFT ); }
-		
-		/**
-		 * Sets the left margin edge for a positioned box.
-		 * @param left	Possible valus are: <br/>
-		 * 				auto<br/>
-		 *				length<br/>
-		 *				%<br/>
-						inherit<br/>
-		 */
-		public function set left ( left : * ) : void {
-			w ( LEFT, left );
+	 	* Get the left for position.
+	 	* @return	The left for position.
+	 	*/
+		public function get left () : String
+		{
+			return r ( LEFT );
 		}
-		
-		
-		
+	
 		/**
-		 * Gets the top margin edge for a positioned box.
-		 */
-		public function get top () : String { return r( TOP ); }
-		
+	 	* Specifies the left for position.
+	 	* @param value	Possible values are: auto, length, %, inherit.
+	 	*/
+		public function set left ( value : * ) : void {
+			w ( LEFT, value );
+		}
+
+
+
 		/**
-		 * Sets the top margin edge for a positioned box.
-		 * @param top	Possible valus are: <br/>
-		 * d
-		 */
-		public function set top ( top : * ) : void { w( TOP, top ); }
-		
-		
-		
+	 	* Get the top for position.
+	 	* @return	The top for position.
+	 	*/
+		public function get top () : String
+		{
+			return r ( TOP );
+		}
+	
 		/**
-		 * TODO - add documentation
-		 */
-		public function get right () : String { return r ( RIGHT ); }
-		
+	 	* Specifies the top for position.
+	 	* @param value	Possible values are: auto, length, %, inherit.
+	 	*/
+		public function set top ( value : * ) : void {
+			w ( TOP, value );
+		}
+
+
+
 		/**
-		 * TODO - add documentation
-		 */
-		public function set right ( right : * ) : void { w ( RIGHT, right ); }
-		
+	 	* Get the right for position.
+	 	* @return	The right for position.
+	 	*/
+		public function get right () : String
+		{
+			return r ( RIGHT );
+		}
+	
 		/**
-		 * Gets the bottom margin edge for a positioned box.
-		 * @return	The bottom margin edge.
-		 */
-		public function get bottom () : String { return r ( BOTTOM ); }
-		
+	 	* Specifies the right for position.
+	 	* @param value	Possible values are: auto, length, %, inherit.
+	 	*/
+		public function set right ( value : * ) : void {
+			w ( RIGHT, value );
+		}
+
+
+
 		/**
-		 * Sets the bottom margin edge for a positioned box.
-		 */
-		public function set botton ( bottom : * ) : void { w ( BOTTOM, bottom ); }
-		
-		
-		
+	 	* Get the bottom for position.
+	 	* @return	The bottom for position.
+	 	*/
+		public function get bottom () : String
+		{
+			return r ( BOTTOM );
+		}
+	
 		/**
-		 * TODO - add documentation
-		 */
-		public function get align () : String { return r ( ALIGN ); }
-		
+	 	* Specifies the bottom for position.
+	 	* @param value	Possible values are: auto, length, %, inherit.
+	 	*/
+		public function set bottom ( value : * ) : void {
+			w ( BOTTOM, value );
+		}
+
+
+
 		/**
-		 * TODO - add documentation
-		 */
-		public function set align ( align : * ) : void { w ( ALIGN, align ); }
-		
-		
-		
+	 	* Get the align for position.
+	 	* @return	The align for position.
+	 	*/
+		public function get align () : String
+		{
+			return r ( ALIGN );
+		}
+	
 		/**
-		 * TODO - add documentation
-		 */
-		public function get valign () : String { return r ( VALIGN ); }
-		
+	 	* Specifies the align for position.
+	 	* @param value	Possible values are: left, top, right, bottom.
+	 	*/
+		public function set align ( value : * ) : void {
+			w ( ALIGN, value );
+		}
+
+
+
 		/**
-		 * TODO - add documentation
-		 */
-		public function set valign ( valign : * ) : void { w ( VALIGN, valign ); }
+	 	* Get the overflow for position.
+	 	* @return	The overflow for position.
+	 	*/
+		public function get overflow () : String
+		{
+			return r ( OVERFLOW );
+		}
+	
+		/**
+	 	* Specifies the overflow for position.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	*/
+		public function set overflow ( value : * ) : void {
+			w ( OVERFLOW, value );
+		}
+
+
+
+		/**
+	 	* Get the overflow-x for position.
+	 	* @return	The overflow-x for position.
+	 	*/
+		public function get overflow_x () : String
+		{
+			return r ( OVERFLOW_X );
+		}
+	
+		/**
+	 	* Specifies the overflow-x for position.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	*/
+		public function set overflow_x ( value : * ) : void {
+			w ( OVERFLOW_X, value );
+		}
+
+
+
+		/**
+	 	* Get the overflow-y for position.
+	 	* @return	The overflow-y for position.
+	 	*/
+		public function get overflow_y () : String
+		{
+			return r ( OVERFLOW_Y );
+		}
+	
+		/**
+	 	* Specifies the overflow-y for position.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	*/
+		public function set overflow_y ( value : * ) : void {
+			w ( OVERFLOW_Y, value );
+		}
+
+
+
+		/**
+	 	* Get the z-index for position.
+	 	* @return	The z-index for position.
+	 	*/
+		public function get z_index () : String
+		{
+			return r ( Z_INDEX );
+		}
+	
+		/**
+	 	* Specifies the z-index for position.
+	 	* @param value	Possible values are: number, auto, inherit.
+	 	*/
+		public function set z_index ( value : * ) : void {
+			w ( Z_INDEX, value );
+		}
 	}
 }

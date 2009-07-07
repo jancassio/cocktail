@@ -27,13 +27,13 @@
 package cocktail.lib.view.styles.renders 
 {
 	import cocktail.lib.view.styles.renders.Render;
-	import cocktail.lib.view.styles.selectors.PositionSelector;	
+	import cocktail.lib.view.styles.selectors.MarginSelector;	
 	
 	/**
-	 * Render all Position properties
+	 * Render all Margin properties
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class PositionRender extends Render 
+	public class MarginRender extends Render 
 	{
 		/* ---------------------------------------------------------------------
 			RENDER
@@ -44,15 +44,11 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.LEFT, _left );
-			_style.plug( PositionSelector.TOP, _top );
-			_style.plug( PositionSelector.RIGHT, _right );
-			_style.plug( PositionSelector.BOTTOM, _bottom );
-			_style.plug( PositionSelector.ALIGN, _align );
-			_style.plug( PositionSelector.OVERFLOW, _overflow );
-			_style.plug( PositionSelector.OVERFLOW_X, _overflow_x );
-			_style.plug( PositionSelector.OVERFLOW_Y, _overflow_y );
-			_style.plug( PositionSelector.Z_INDEX, _z_index );
+			_style.plug( MarginSelector.MARGIN, _margin );
+			_style.plug( MarginSelector.MARGIN_LEFT, _margin_left );
+			_style.plug( MarginSelector.MARGIN_TOP, _margin_top );
+			_style.plug( MarginSelector.MARGIN_RIGHT, _margin_right );
+			_style.plug( MarginSelector.MARGIN_BOTTOM, _margin_bottom );
 		}
 		
 		
@@ -65,33 +61,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _left( value : * ) : void
-		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
-			else
-				_target.x = u ( _clear_unit ( value ) );
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _top( value : * ) : void
-		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
-			else
-				_target.y = u ( _clear_unit ( value ) );
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _right( value : * ) : void
+		private function _margin( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -100,7 +70,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _bottom( value : * ) : void
+		private function _margin_left( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -109,7 +79,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _align( value : * ) : void
+		private function _margin_top( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -118,7 +88,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _overflow( value : * ) : void
+		private function _margin_right( value : * ) : void
 		{
 			// TODO: implement method
 		}
@@ -127,25 +97,7 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
-		private function _overflow_x( value : * ) : void
-		{
-			// TODO: implement method
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _overflow_y( value : * ) : void
-		{
-			// TODO: implement method
-		}
-
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _z_index( value : * ) : void
+		private function _margin_bottom( value : * ) : void
 		{
 			// TODO: implement method
 		}
