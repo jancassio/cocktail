@@ -30,7 +30,7 @@ package cocktail.lib.view.styles.renders
 	import cocktail.lib.view.styles.Style;
 	
 	import flash.display.Sprite;	
-	
+
 	/**
 	 * Render base class.
 	 * @author nybras | nybras@codeine.it
@@ -42,6 +42,7 @@ package cocktail.lib.view.styles.renders
 		--------------------------------------------------------------------- */
 		
 		private var _booted : Boolean;
+		private var _handled_value : *;
 		
 		protected var _style : Style;
 		protected var _target: Sprite;
@@ -73,25 +74,44 @@ package cocktail.lib.view.styles.renders
 		--------------------------------------------------------------------- */
 		
 		/**
+		 * Caches the given value, that will be proper handled with the other
+		 * helpers: _is_percent, _clear_unit_[TYPE].
+		 * @param value	Value to be handled.  
+		 */
+		protected function _handle ( value : * ) : void
+		{
+			_handled_value = value;
+		}
+		
+		/**
 		 * Checks if the given value is in PIXEL or in PERCENTAGE.
 		 * @param value	Value to be analysed.
 		 * @return	<code>true</code> if the value is specified in PIXELS,
 		 * otherwise <code>false</code> if its specified in PERCENTAGE.
 		 */
-		protected function _is_percent ( value : * ) : Boolean
+		protected function get _is_percent () : Boolean
 		{
-			return /[0-9.]+%/.test( value );
+			return /[0-9.]+%/.test( _handled_value );
 		}
 		
 		/**
-		 * Checks if the given value is in PIXEL or in PERCENTAGE.
-		 * @return	<code>true</code> if the value is specified in PIXELS,
-		 * otherwise <code>false</code> if its specified in PERCENTAGE.
+		 * Clean up the value removing any "px" or "%" sufixes.
+		 * @return	The clean value as String.
 		 */
-		protected function _clear_unit ( value : String ) : String
+		protected function get _clear_unit_s () : String
 		{
 			var r : RegExp = /[0-9.]+/;
-			return value.match( r )[ 0 ];
+			return String ( _handled_value ).match( r )[ 0 ];
 		}
+		
+		/**
+		 * Clean up the value removing any "px" or "%" sufixes.
+		 * @return	The clean value as Uint.
+		 */
+		protected function get _clear_unit_u () : uint
+		{
+			return uint ( _clear_unit_s );
+		}
+		
 	}
 }
