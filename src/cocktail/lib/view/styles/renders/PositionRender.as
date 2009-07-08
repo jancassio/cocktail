@@ -28,7 +28,7 @@ package cocktail.lib.view.styles.renders
 {
 	import cocktail.lib.view.styles.renders.Render;
 	import cocktail.lib.view.styles.selectors.PositionSelector;	
-	
+
 	/**
 	 * Render all Position properties
 	 * @author nybras | nybras@codeine.it
@@ -67,26 +67,27 @@ package cocktail.lib.view.styles.renders
 		  */
 		private function _left( value : * ) : void
 		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.x = ( _target.parent.width * u ( _clear_unit ( value ) ) );
+			_handle ( value );
+			
+			if ( _is_percent )
+				_target.x = ( _target.parent.width * _clear_unit_u );
 			else
-				_target.x = u ( _clear_unit ( value ) );
+				_target.x = _clear_unit_u;
 		}
-
+		
 		/**
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
 		private function _top( value : * ) : void
 		{
-			// TODO: implement "position" (absolute, relative etc) flags
-			if ( _is_percent( value ) )
-				_target.y = ( _target.parent.height * u ( _clear_unit ( value ) ) );
+			_handle ( value );
+			if ( _is_percent )
+				_target.y = ( _target.parent.height * _clear_unit_u );
 			else
-				_target.y = u ( _clear_unit ( value ) );
+				_target.y = _clear_unit_u;
 		}
-
+		
 		/**
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
