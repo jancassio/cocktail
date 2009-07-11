@@ -1,4 +1,4 @@
-package  
+package styles
 {
 	import cocktail.lib.view.styles.Styles;
 	import cocktail.lib.view.styles.gunz.StylesBullet;
@@ -10,13 +10,13 @@ package
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class StylesTest extends Sprite 
+	public class Position extends Sprite 
 	{
 		private var _ball : Sprite;
 		private var _styles : Styles;
 		private var _pos_render : PositionRender;
 		
-		public function StylesTest()
+		public function Position()
 		{
 			_draw();
 			_load();
