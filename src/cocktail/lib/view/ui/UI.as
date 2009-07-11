@@ -47,8 +47,9 @@ package cocktail.lib.view.ui
 		 */
 		protected function _add_render ( render : Render ) : void
 		{
-			_renders.push( render );
-			render.boot ( _sprite, _style );
+			// TODO : implement method
+//			_renders.push( render );
+//			render.boot ( _sprite, _style );
 		}
 		
 	}
