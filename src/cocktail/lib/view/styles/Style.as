@@ -26,14 +26,13 @@
 
 package cocktail.lib.view.styles
 {
-	import cocktail.lib.view.styles.selectors.PositionSelector;	
+	import cocktail.lib.view.styles.selectors.TextSelector;		
 
 	/**
 	 * Style (individual) manager.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class Style extends PositionSelector
+	public class Style extends TextSelector
 	{
-		
 	}
 }

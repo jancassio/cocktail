@@ -40,7 +40,7 @@ package styles
 			bullet;
 			
 			_pos_render = new PositionRender();
-			_pos_render.boot( _ball, _styles.get( "just-a-test" ) );
+			_pos_render.boot( _styles, _ball, "just-a-test" );
 			_pos_render.render();
 			
 			_render();

@@ -28,8 +28,9 @@ package cocktail.lib.view.styles.renders
 {
 	import cocktail.core.Index;
 	import cocktail.lib.view.styles.Style;
+	import cocktail.lib.view.styles.Styles;
 	
-	import flash.display.Sprite;	
+	import flash.display.DisplayObject;	
 
 	/**
 	 * Render base class.
@@ -44,9 +45,11 @@ package cocktail.lib.view.styles.renders
 		private var _booted : Boolean;
 		private var _handled_value : *;
 		
+		protected var _styles : Styles;
+		protected var _style_name : String;
 		protected var _style : Style;
-		protected var _target: Sprite;
-		
+		protected var _target : DisplayObject;
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -55,15 +58,18 @@ package cocktail.lib.view.styles.renders
 		
 		/**
 		 * Boots the render.
+		 * @param styles	Styles source reference.
 		 * @param target	Render target.
-		 * @param style	Styles source to be rendered.
+		 * @param style_name	Style name.
 		 */
-		public function boot ( target : Sprite, style : Style ) : void
+		public function boot ( styles : Styles, target : DisplayObject, style_name : String ) : void
 		{
 			if ( _booted )
 				return;
 			
-			_style = style;
+			_styles = styles;
+			_style_name = style_name;
+			_style = _styles.get( _style_name );
 			_target = target;
 		}
 		
