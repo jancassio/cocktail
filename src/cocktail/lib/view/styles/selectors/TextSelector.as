@@ -26,14 +26,22 @@
 
 package cocktail.lib.view.styles.selectors 
 {
-	import cocktail.lib.view.styles.selectors.Selector;		
+	import cocktail.lib.view.styles.selectors.Selector;	
 
 	/**
 	 * Provides all Text property selectors
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class TextSelector extends Selector
+	public class TextSelector extends PositionSelector
 	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		private var _style_obj : *;
+		
+		
+		
 		/* ---------------------------------------------------------------------
 			CONSTANTS
 		--------------------------------------------------------------------- */
@@ -202,5 +210,31 @@ package cocktail.lib.view.styles.selectors
 		public function set text_ident ( value : * ) : void {
 			w ( TEXT_IDENT, value );
 		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			PARSING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Return a object instance of the selector in a StyleSheet format
+		 */
+		public function to_obj () : *
+		{
+			_style_obj = {};	
+			
+			_style_obj[ "wordSpacing" ] = word_spacing;
+			_style_obj[ "letterSpacing" ] = letter_spacing;
+			_style_obj[ "whiteSpace" ] = white_space;
+			_style_obj[ "wordWrap" ] = word_wrap;
+			_style_obj[ "textAlign" ] = text_align;
+			_style_obj[ "textDecoration" ] = text_decoration;
+			_style_obj[ "textShadow" ] = text_shadow;
+			_style_obj[ "textIdent" ] = text_ident;
+			
+			return _style_obj;
+		}
+		
 	}
 }

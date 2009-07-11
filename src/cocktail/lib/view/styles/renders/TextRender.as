@@ -27,14 +27,36 @@
 package cocktail.lib.view.styles.renders 
 {
 	import cocktail.lib.view.styles.renders.Render;
-	import cocktail.lib.view.styles.selectors.TextSelector;	
+	import cocktail.lib.view.styles.selectors.TextSelector;
 	
+	import flash.text.StyleSheet;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;	
+
 	/**
 	 * Render all Text properties
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class TextRender extends Render 
 	{
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		private var _sheet : StyleSheet;		
+		
+		/* ---------------------------------------------------------------------
+			CONSTRUCTOR
+		--------------------------------------------------------------------- */
+		
+		public function TextRender ()
+		{
+			//init local stylesheet instance
+			_sheet = new StyleSheet();
+		}
+		
+		
+		
 		/* ---------------------------------------------------------------------
 			RENDER
 		--------------------------------------------------------------------- */
@@ -43,19 +65,70 @@ package cocktail.lib.view.styles.renders
 		 * Start the automagic live rendering. 
 		 */
 		public function render () : void
+		{	
+			var refresh : Array;
+			
+			refresh = [ this.refresh ];
+			
+			_style.plug( TextSelector.WORD_SPACING, _word_spacing ).touch( refresh );
+			_style.plug( TextSelector.LETTER_SPACING, _letter_spacing ).touch( refresh );
+			_style.plug( TextSelector.WHITE_SPACE, _white_space ).touch( refresh );
+			_style.plug( TextSelector.WORD_WRAP, _word_wrap ).touch( refresh );
+			_style.plug( TextSelector.TEXT_ALIGN, _text_align ).touch( refresh );
+			_style.plug( TextSelector.TEXT_DECORATION, _text_decoration ).touch( refresh );
+			_style.plug( TextSelector.TEXT_SHADOW, _text_shadow ).touch( refresh );
+			_style.plug( TextSelector.TEXT_IDENT, _text_ident ).touch( refresh );
+		}
+		
+		/**
+		 * Apply the styles and format in the text field.
+		 */
+		public function refresh () : void
+		{				
+			var sclass : String;
+			
+			for each ( sclass in _get_stylenames() )
+			{
+				_sheet.setStyle( "." + sclass, _styles.get( sclass).to_obj() );
+			}
+			
+			target.autoSize = TextFieldAutoSize.LEFT;
+			
+			target.defaultTextFormat = _sheet.transform( _style.to_obj() );
+			target.styleSheet = _sheet;
+			target.htmlText = "<span class='c'>COCKTAIL</span> body1 <span class='c'>sdf</span> body2";
+		}
+		
+		/**
+		 * Return all the span style names in the text value.
+		 */
+		private function _get_stylenames () : Array
 		{
-			_style.plug( TextSelector.WORD_SPACING, _word_spacing );
-			_style.plug( TextSelector.LETTER_SPACING, _letter_spacing );
-			_style.plug( TextSelector.WHITE_SPACE, _white_space );
-			_style.plug( TextSelector.WORD_WRAP, _word_wrap );
-			_style.plug( TextSelector.TEXT_ALIGN, _text_align );
-			_style.plug( TextSelector.TEXT_DECORATION, _text_decoration );
-			_style.plug( TextSelector.TEXT_SHADOW, _text_shadow );
-			_style.plug( TextSelector.TEXT_IDENT, _text_ident );
+			var props : Array;
+			var prop : String;
+			props = "<c>COCKTAIL</c>".match( /<[a-zA-Z0-9]+>/g );
+			for ( prop in props )
+				props[ prop ] = props[ prop ].slice( 1, -1 );
+			
+			return props;
 		}
 		
 		
 		
+		/* ---------------------------------------------------------------------
+			GETTERS & SETTERS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Return the target object casted to TextField 
+		 */
+		private function get target () : TextField
+		{
+			return super._target as TextField;
+		}
+		
+		
+
 		/* ---------------------------------------------------------------------
 			PROPERTIES
 		--------------------------------------------------------------------- */
@@ -75,7 +148,6 @@ package cocktail.lib.view.styles.renders
 		  */
 		private function _letter_spacing( value : * ) : void
 		{
-			// TODO: implement method
 		}
 
 		/**
