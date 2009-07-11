@@ -84,8 +84,6 @@ package cocktail.core.data.bind
 		 */
 		internal function update ( value : * ) : void
 		{
-			var method : Function;
-			
 			this.value = value;
 			
 			if ( setter != null )
@@ -93,11 +91,21 @@ package cocktail.core.data.bind
 			else
 				( change as Function )( value );
 			
+			_touch();
+		}
+		
+		/**
+		 * Touch "mirrored" methods.
+		 */
+		private function _touch () : void
+		{
+			var method : Function;
+			
 			for each ( method in _touched )
 				if ( _repass_value )
 					( method as Function )( value );
 				else
-					( method as Function )();
+					( method as Function )();;
 		}
 		
 		
@@ -121,6 +129,9 @@ package cocktail.core.data.bind
 		{
 			_touched = methods;
 			_repass_value = repass_value;
+			
+			if ( value != null )
+				_touch();
 		}
 	}
 }
