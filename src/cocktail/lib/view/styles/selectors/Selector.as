@@ -45,6 +45,9 @@ package cocktail.lib.view.styles.selectors
 		
 		private var _booted : Boolean;
 		
+		private var _last_property : String;
+		private var _last_value : String;
+		
 		protected var _name : String;
 		protected var _properties : Bind;
 		
@@ -118,6 +121,24 @@ package cocktail.lib.view.styles.selectors
 			return _parent;
 		}
 		
+		/**
+		 * Gets the the last modified property.
+		 * @return	Last modified property.
+		 */
+		public function get last_modified_property () : *
+		{
+			return _last_property;
+		}
+
+		/**
+		 * Gets the value of the last modified property.
+		 * @return	Value of the last modified property.
+		 */
+		public function get last_modified_value () : *
+		{
+			return _last_value;
+		}
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -178,7 +199,7 @@ package cocktail.lib.view.styles.selectors
 		 */
 		protected function w ( property : String, value : * ) : *
 		{
-			return _properties.s( property, value );
+			return _properties.s( _last_property=property, _last_value=value );
 		}
 	}
 }
