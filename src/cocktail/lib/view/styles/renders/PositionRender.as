@@ -28,8 +28,8 @@ package cocktail.lib.view.styles.renders
 {
 	import cocktail.lib.view.styles.renders.Render;
 	import cocktail.lib.view.styles.selectors.PositionSelector;
-	import cocktail.lib.view.styles.values.PositionValues;
-	import cocktail.lib.view.styles.vos.SnapVO;
+	import cocktail.lib.view.styles.values.enums.PositionEnum;
+	import cocktail.lib.view.styles.values.vos.position.SnapVO;
 	
 	import flash.geom.Point;	
 
@@ -93,7 +93,7 @@ package cocktail.lib.view.styles.renders
 			switch ( _style.position )
 			{
 				// RELATIVE TO STAGE (stage.x, stage.y)
-				case PositionValues.POSITION_ABSOLUTE:
+				case PositionEnum.position.ABSOLUTE:
 					point = new Point( u ( _style.left ), u ( _style.top ) );
 					_target.localToGlobal( point );
 					_target.x = point.x;
@@ -101,7 +101,7 @@ package cocktail.lib.view.styles.renders
 				break;
 				
 				// RELATIVE TO THE PARENT (parent.x, parent.y)
-				case PositionValues.POSITION_RELATIVE:
+				case PositionEnum.position.RELATIVE:
 					_target.x = u( _style.left );
 					_target.y = u( _style.top );
 				break;
