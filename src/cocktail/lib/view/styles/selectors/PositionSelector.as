@@ -26,7 +26,7 @@
 
 package cocktail.lib.view.styles.selectors 
 {
-	import cocktail.lib.view.styles.selectors.Selector;		
+	import cocktail.lib.view.styles.selectors.Selector;					
 
 	/**
 	 * Provides all Position property selectors
@@ -38,6 +38,7 @@ package cocktail.lib.view.styles.selectors
 			CONSTANTS
 		--------------------------------------------------------------------- */
 		
+		public static const POSITION : String = "position";
 		public static const LEFT : String = "left";
 		public static const TOP : String = "top";
 		public static const RIGHT : String = "right";
@@ -47,12 +48,34 @@ package cocktail.lib.view.styles.selectors
 		public static const OVERFLOW_X : String = "overflow-x";
 		public static const OVERFLOW_Y : String = "overflow-y";
 		public static const Z_INDEX : String = "z-index";
+		public static const SNAP : String = "snap";
+		public static const SNAP_LEFT : String = "snap-left";
+		public static const SNAP_TOP : String = "snap-top";
+		public static const SNAP_SCALE : String = "snap-scale";
 		
 		
 		
 		/* ---------------------------------------------------------------------
 			PROPERTIES
 		--------------------------------------------------------------------- */
+		
+		/**
+	 	* Gets the type of positioning for an element.
+	 	* @return	The positionin type.
+	 	*/
+		public function get position () : String
+		{
+			return r( POSITION );
+		}
+		
+//		/**
+//	 	* Specifies the type of positioning for an element.
+//	 	* @return	The positionin type.
+//	 	*/
+//		public function set position (  ) : String
+//		{
+//			return r ( POSITION );
+//		}
 		
 		/**
 	 	* Get the left for position.
@@ -67,7 +90,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the left for position.
 	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
-		public function set left ( value : * ) : void {
+		public function set left ( value : * ) : void
+		{
 			w ( LEFT, value );
 		}
 
@@ -86,7 +110,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the top for position.
 	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
-		public function set top ( value : * ) : void {
+		public function set top ( value : * ) : void
+		{
 			w ( TOP, value );
 		}
 
@@ -105,7 +130,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the right for position.
 	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
-		public function set right ( value : * ) : void {
+		public function set right ( value : * ) : void
+		{
 			w ( RIGHT, value );
 		}
 
@@ -124,7 +150,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the bottom for position.
 	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
-		public function set bottom ( value : * ) : void {
+		public function set bottom ( value : * ) : void
+		{
 			w ( BOTTOM, value );
 		}
 
@@ -143,7 +170,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the align for position.
 	 	* @param value	Possible values are: left, top, right, bottom.
 	 	*/
-		public function set align ( value : * ) : void {
+		public function set align ( value : * ) : void
+		{
 			w ( ALIGN, value );
 		}
 
@@ -162,7 +190,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the overflow for position.
 	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
 	 	*/
-		public function set overflow ( value : * ) : void {
+		public function set overflow ( value : * ) : void
+		{
 			w ( OVERFLOW, value );
 		}
 
@@ -181,7 +210,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the overflow-x for position.
 	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
 	 	*/
-		public function set overflow_x ( value : * ) : void {
+		public function set overflow_x ( value : * ) : void
+		{
 			w ( OVERFLOW_X, value );
 		}
 
@@ -200,7 +230,8 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the overflow-y for position.
 	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
 	 	*/
-		public function set overflow_y ( value : * ) : void {
+		public function set overflow_y ( value : * ) : void
+		{
 			w ( OVERFLOW_Y, value );
 		}
 
@@ -219,8 +250,78 @@ package cocktail.lib.view.styles.selectors
 	 	* Specifies the z-index for position.
 	 	* @param value	Possible values are: number, auto, inherit.
 	 	*/
-		public function set z_index ( value : * ) : void {
+		public function set z_index ( value : * ) : void
+		{
 			w ( Z_INDEX, value );
+		}
+		
+		
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function get snap () : String
+		{
+			return r ( SNAP );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function set snao ( value : * ) : void
+		{
+			w ( SNAP, value );
+			w ( SNAP_LEFT, value );
+			w ( SNAP_TOP, value );
+			w ( SNAP_SCALE, value );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function get snap_left () : String
+		{
+			return r ( SNAP );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function set snao_left ( value : * ) : void
+		{
+			w ( SNAP, value );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function get snap_top () : String
+		{
+			return r ( SNAP );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function set snao_top ( value : * ) : void
+		{
+			w ( SNAP, value );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function get snap_scale () : String
+		{
+			return r ( SNAP );
+		}
+		
+		/**
+	 	* TODO: write docs
+	 	*/
+		public function set snao_scale ( value : * ) : void
+		{
+			w ( SNAP, value );
 		}
 	}
 }
