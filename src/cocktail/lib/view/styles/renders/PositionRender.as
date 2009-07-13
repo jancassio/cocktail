@@ -27,7 +27,11 @@
 package cocktail.lib.view.styles.renders 
 {
 	import cocktail.lib.view.styles.renders.Render;
-	import cocktail.lib.view.styles.selectors.PositionSelector;	
+	import cocktail.lib.view.styles.selectors.PositionSelector;
+	import cocktail.lib.view.styles.values.PositionValues;
+	import cocktail.lib.view.styles.vos.SnapVO;
+	
+	import flash.geom.Point;	
 
 	/**
 	 * Render all Position properties
@@ -44,11 +48,14 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.LEFT, _left );
-			_style.plug( PositionSelector.TOP, _top );
-			_style.plug( PositionSelector.RIGHT, _right );
-			_style.plug( PositionSelector.BOTTOM, _bottom );
-			_style.plug( PositionSelector.ALIGN, _align );
+			_style.plug( PositionSelector.POSITION, _position ).touch( _incremental );
+			_style.plug( PositionSelector.LEFT, _left ).touch( _incremental );
+			_style.plug( PositionSelector.TOP, _top ).touch( _incremental );
+			_style.plug( PositionSelector.RIGHT, _right ).touch( _incremental );
+			_style.plug( PositionSelector.BOTTOM, _bottom ).touch( _incremental );
+			_style.plug( PositionSelector.ALIGN, _align ).touch( _incremental );
+//			// -> snap = 'left top scale' (width+height)
+//			_style.plug( PositionSelector.SNAP, _snap ).touch( refresh );
 			_style.plug( PositionSelector.OVERFLOW, _overflow );
 			_style.plug( PositionSelector.OVERFLOW_X, _overflow_x );
 			_style.plug( PositionSelector.OVERFLOW_Y, _overflow_y );
@@ -60,6 +67,78 @@ package cocktail.lib.view.styles.renders
 		/* ---------------------------------------------------------------------
 			PROPERTIES
 		--------------------------------------------------------------------- */
+		
+		/**
+		 * TODO: write docs
+		 */
+		private function _incremental () : void
+		{	
+			switch ( _style.last_modified_property )
+			{
+				case PositionSelector.POSITION: _incremental_position(); break;
+				case PositionSelector.SNAP: _incremental_snap(); break;
+				default:
+					_incremental_position();
+					_incremental_snap();
+			}
+		}
+		
+		/**
+		 * TODO: write docs
+		 */
+		private function _incremental_position () : void
+		{
+			var point : Point;
+			
+			switch ( _style.position )
+			{
+				// RELATIVE TO STAGE (stage.x, stage.y)
+				case PositionValues.POSITION_ABSOLUTE:
+					point = new Point( u ( _style.left ), u ( _style.top ) );
+					_target.localToGlobal( point );
+					_target.x = point.x;
+					_target.y = point.y;
+				break;
+				
+				// RELATIVE TO THE PARENT (parent.x, parent.y)
+				case PositionValues.POSITION_RELATIVE:
+					_target.x = u( _style.left );
+					_target.y = u( _style.top );
+				break;
+			}
+		}
+		
+		private function _incremental_snap () : void
+		{
+			var snap : SnapVO;
+			
+			snap = new SnapVO( _style.snap );
+			if ( snap.snap_left != undefined )
+				// TODO implement;
+				true;
+			
+			if ( snap.snap_top != undefined )
+				// TODO implement;
+				true;
+			
+			if ( snap.snap_scale != undefined )
+				// TODO implement;
+				true;
+		}
+		
+		
+		
+		/**
+		  * TODO: Write render documentation.
+		  * @param value	TODO: Write param documentation.
+		  */
+		private function _position() : void
+		{
+			_left( _style.left );
+			_right( _style.right );
+			_top( _style.top );
+			_bottom( _style.bottom );
+		}
 		
 		/**
 		  * TODO: Write render documentation.

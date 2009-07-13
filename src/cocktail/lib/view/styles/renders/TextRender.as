@@ -66,10 +66,6 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{	
-			var refresh : Array;
-			
-			refresh = [ this.refresh ];
-			
 			_style.plug( TextSelector.WORD_SPACING, _word_spacing ).touch( refresh );
 			_style.plug( TextSelector.LETTER_SPACING, _letter_spacing ).touch( refresh );
 			_style.plug( TextSelector.WHITE_SPACE, _white_space ).touch( refresh );
