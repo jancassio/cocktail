@@ -26,6 +26,7 @@
 
 package cocktail.core.data.bind 
 {
+	import cocktail.utils.ArrayUtil;				
 
 	/**
 	 * Binded class used by Bind.
@@ -38,14 +39,16 @@ package cocktail.core.data.bind
 			VARS
 		--------------------------------------------------------------------- */
 		
+		internal var _all : Boolean;
+		
 		private var _touched : Array;
-		private var _repass_value : Boolean;
 		
 		public var key : String;
 		public var change : *;
 		public var setter : String;
 		public var value : *;
 		
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -69,7 +72,6 @@ package cocktail.core.data.bind
 			this.setter = setter;
 			
 			_touched = [];
-			_repass_value = false;
 		}
 		
 		
@@ -84,6 +86,8 @@ package cocktail.core.data.bind
 		 */
 		internal function update ( value : * ) : void
 		{
+			var item : Touched;
+			
 			this.value = value;
 			
 			if ( setter != null )
@@ -91,47 +95,72 @@ package cocktail.core.data.bind
 			else
 				( change as Function )( value );
 			
-			_touch();
-		}
-		
-		/**
-		 * Touch "mirrored" methods.
-		 */
-		private function _touch () : void
-		{
-			var method : Function;
-			
-			for each ( method in _touched )
-				if ( _repass_value )
-					( method as Function )( value );
-				else
-					( method as Function )();;
+			for each ( item in _touched )
+				item.update();
 		}
 		
 		
 		
 		/* ---------------------------------------------------------------------
-			TOUCHING ( notifiers )
+			TOUCH / UNTOUCH ( notifiers )
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Add a list of methods that will be "touched" every time this Bind
-		 * changes.
-		 * @param methods	Array of methods (functions) that shou be called.
-		 * @param repass_value	If <code>true</true> pass the new Bind value
-		 * to all methods -- method ( value ). Otherwise <code>false</code>
-		 * all methods is called without passing any param -- method(). 
+		 * Add methods to be touched..
+		 * @param methods	A single method or an array of methods to touch
+		 * after the plugged handler, every time it's executed.
 		 */
-		public function touch (
-			methods : Array,
-			repass_value : Boolean = false
-		) : void
+		public function touch ( methods  : * ) : void
 		{
-			_touched = methods;
-			_repass_value = repass_value;
+			var item : Touched;
+			
+			untouch ( key, methods );
+			_touched.push( item = new Touched( key, methods ) );
 			
 			if ( value != null )
-				_touch();
+				item.update();
+		}
+		
+		
+		
+		/**
+		 * Remove methods from being touched.
+		 * @param methods	Methods to be untouched, it can be just a single
+		 * method or an array with many methods.
+		 * @return	<code>true</code> if the key is untouched successfully,
+		 * <code>false</code> otherwise.
+		 */
+		public function untouch (
+			key : String,
+			methods  : *
+		) : Boolean
+		{
+			var item : Touched;
+			
+			for each ( item in _touched )
+			{
+				if ( item.key != key )
+					continue;
+				
+				if ( methods is Array && item.methods is Array )
+				{
+					if ( ArrayUtil.compare( methods , item.methods ) )
+					{
+						ArrayUtil.del( _touched, item );
+						return true;
+					}
+				}
+				else if ( methods is Function && item.methods is Function )
+				{
+					if ( methods == item.methods )
+					{
+						ArrayUtil.del( _touched, item );
+						return true;
+					}
+				}
+			}
+			
+			return false;
 		}
 	}
 }
