@@ -26,7 +26,7 @@
 
 package cocktail.utils 
 {
-	import cocktail.core.Index;				
+	import cocktail.core.Index;					
 
 	/**
 	 * Utilities for array manipulation.
@@ -35,6 +35,30 @@ package cocktail.utils
 	 */
 	public class ArrayUtil extends Index
 	{
+		/**
+		 * Compares two arrays.
+		 * @param array1	First array for comparison.
+		 * @param array2	Second array for comparison.
+		 * @return	<code>true</code> if both arrays are indentical or
+		 * <code>false</code> otherwise.
+		 */
+		public static function compare ( array1 : Array, array2 : Array ) : Boolean
+		{
+			var i : int;
+			
+			if ( array1.length  != array2.length )
+				return false;
+			
+			i = 0;
+			do {
+				if ( array1[ i ] != array2[ i ] )
+					return false;
+			} while ( ++i < array1.length );
+			
+			return true;
+		}
+		
+		
 		/**
 		 * Deletes some item of the given array.
 		 * @param array	Array source.
