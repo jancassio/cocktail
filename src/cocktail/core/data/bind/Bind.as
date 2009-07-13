@@ -160,8 +160,8 @@ package cocktail.core.data.bind
 			unplug( key, change, setter );
 			_binded.push( item = new Binded( key, change, setter ) );
 			
-			if ( _data[ key ] != undefined )
-				item.update( _data[ key ] );
+			//if ( _data[ key ] != undefined )
+			item.update( _data[ key ] );
 			
 			return item;
 		}

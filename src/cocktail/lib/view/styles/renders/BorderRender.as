@@ -50,21 +50,25 @@ package cocktail.lib.view.styles.renders
 			_style.plug( BorderSelector.BORDER_STYLE, _border_style );
 			_style.plug( BorderSelector.BORDER_RADIUS, _border_radius );
 			_style.plug( BorderSelector.BORDER_OPACITY, _border_opacity );
+			_style.plug( BorderSelector.BORDER_LEFT, _border_left );
 			_style.plug( BorderSelector.BORDER_LEFT_COLOR, _border_left_color );
 			_style.plug( BorderSelector.BORDER_LEFT_WIDTH, _border_left_width );
 			_style.plug( BorderSelector.BORDER_LEFT_STYLE, _border_left_style );
 			_style.plug( BorderSelector.BORDER_LEFT_RADIUS, _border_left_radius );
 			_style.plug( BorderSelector.BORDER_LEFT_OPACITY, _border_left_opacity );
+			_style.plug( BorderSelector.BORDER_TOP, _border_top );
 			_style.plug( BorderSelector.BORDER_TOP_COLOR, _border_top_color );
 			_style.plug( BorderSelector.BORDER_TOP_WIDTH, _border_top_width );
 			_style.plug( BorderSelector.BORDER_TOP_STYLE, _border_top_style );
 			_style.plug( BorderSelector.BORDER_TOP_RADIUS, _border_top_radius );
 			_style.plug( BorderSelector.BORDER_TOP_OPACITY, _border_top_opacity );
+			_style.plug( BorderSelector.BORDER_RIGHT, _border_right );
 			_style.plug( BorderSelector.BORDER_RIGHT_COLOR, _border_right_color );
 			_style.plug( BorderSelector.BORDER_RIGHT_WIDTH, _border_right_width );
 			_style.plug( BorderSelector.BORDER_RIGHT_STYLE, _border_right_style );
 			_style.plug( BorderSelector.BORDER_RIGHT_RADIUS, _border_right_radius );
 			_style.plug( BorderSelector.BORDER_RIGHT_OPACITY, _border_right_opacity );
+			_style.plug( BorderSelector.BORDER_BOTTOM, _border_bottom );
 			_style.plug( BorderSelector.BORDER_BOTTOM_COLOR, _border_bottom_color );
 			_style.plug( BorderSelector.BORDER_BOTTOM_WIDTH, _border_bottom_width );
 			_style.plug( BorderSelector.BORDER_BOTTOM_STYLE, _border_bottom_style );
@@ -136,6 +140,15 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
+		private function _border_left( value : * ) : void
+		{
+			// TODO: implement method
+		}
+		
+		/**
+		  * TODO: Write render documentation.
+		  * @param value	TODO: Write param documentation.
+		  */
 		private function _border_left_color( value : * ) : void
 		{
 			// TODO: implement method
@@ -177,6 +190,15 @@ package cocktail.lib.view.styles.renders
 			// TODO: implement method
 		}
 
+		/**
+		  * TODO: Write render documentation.
+		  * @param value	TODO: Write param documentation.
+		  */
+		private function _border_top( value : * ) : void
+		{
+			trace( ' top border ->' + value );
+		}
+		
 		/**
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
@@ -226,6 +248,15 @@ package cocktail.lib.view.styles.renders
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
 		  */
+		private function _border_right( value : * ) : void
+		{
+			// TODO: implement method
+		}
+		
+		/**
+		  * TODO: Write render documentation.
+		  * @param value	TODO: Write param documentation.
+		  */
 		private function _border_right_color( value : * ) : void
 		{
 			// TODO: implement method
@@ -267,6 +298,15 @@ package cocktail.lib.view.styles.renders
 			// TODO: implement method
 		}
 
+		/**
+		  * TODO: Write render documentation.
+		  * @param value	TODO: Write param documentation.
+		  */
+		private function _border_bottom( value : * ) : void
+		{
+			// TODO: implement method
+		}
+		
 		/**
 		  * TODO: Write render documentation.
 		  * @param value	TODO: Write param documentation.
