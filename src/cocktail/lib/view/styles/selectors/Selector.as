@@ -29,6 +29,7 @@ package cocktail.lib.view.styles.selectors
 	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
 	import cocktail.core.data.bind.Binded;
+	import cocktail.core.data.bind.Touched;
 	import cocktail.lib.view.styles.Style;
 	import cocktail.utils.StringUtil;	
 
@@ -142,12 +143,12 @@ package cocktail.lib.view.styles.selectors
 		
 		
 		/* ---------------------------------------------------------------------
-			PLUG / UNPLUG
+			PLUG / UNPLUG & TOUCH / UNTOUCH
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Plug some property.
-		 * @param property	Property name to plug.
+		 * @param name	Property name to plug.
 		 * @param handler	Property update handler.
 		 */
 		public function plug ( name : String, handler : Function ) : Binded
@@ -163,6 +164,32 @@ package cocktail.lib.view.styles.selectors
 		public function unplug ( name : String, handler : Function ) : Boolean
 		{
 			return _properties.unplug( name, handler );
+		}
+		
+		
+		
+		/**
+		 * Plug (touch) some property.
+		 * @param name	Property name to plug.
+		 * @param methods	Methods to be touched when the key value changes, it
+		 * can be just a single method or an array with many methods.
+		 */
+		public function touch ( name : String, methods : * ) : Touched
+		{
+			return _properties.touch( name, methods );
+		}
+		
+		/**
+		 * Unplug (untouch) some property.
+		 * @param property	Property name to untouch.
+		 * @param methods	Methods to be untouched, it can be just a single
+		 * method or an array with many methods.
+		 * @return	<code>true</code> if the property is untouched successfully,
+		 * <code>false</code> otherwise.
+		 */
+		public function untouch ( name : String, methods : * ) : Boolean
+		{
+			return _properties.untouch( name, methods );
 		}
 		
 		
