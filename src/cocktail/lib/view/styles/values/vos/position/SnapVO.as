@@ -6,21 +6,23 @@ package cocktail.lib.view.styles.values.vos.position
 	 */
 	public class SnapVO 
 	{
-		public var snap : String;
-		public var snap_left : uint;
-		public var snap_top : uint;
-		public var snap_scale : uint;
+		public var snap : String = "0 0 0";
+		public var left : Number;
+		public var top : Number;
+		public var scale : Number;
 		
 		public function SnapVO ( raw : String ) : void
 		{
 			var split : Array;
 			
-			split = raw.split( "  " );
+			if ( raw != null )
+				snap = raw;
 			
-			snap = raw;
-			snap_left = split[ 0 ];
-			snap_top = split[ 1 ];
-			snap_scale = split[ 2 ];
+			split = snap.split( "  " );
+			
+			left = split[ 0 ];
+			top = split[ 1 ];
+			scale = split[ 2 ];
 		}
 	}
 }
