@@ -5,14 +5,14 @@ package cocktail.lib.view.styles.values.enums
 	 */
 	public class PositionEnum 
 	{
-		public static function get position () : position
+		public static function get position () : Position
 		{
-			return new position();
+			return new Position();
 		}
 	}
 }
 
-class position 
+class Position 
 {
 	public const ABSOLUTE : String = "absolute";
 	public const RELATIVE : String = "relative";
