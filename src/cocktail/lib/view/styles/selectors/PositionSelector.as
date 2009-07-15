@@ -268,7 +268,7 @@ package cocktail.lib.view.styles.selectors
 		/**
 	 	* TODO: write docs
 	 	*/
-		public function set snao ( value : * ) : void
+		public function set snap ( value : * ) : void
 		{
 			w ( SNAP, value );
 			w ( SNAP_LEFT, value );
@@ -287,7 +287,7 @@ package cocktail.lib.view.styles.selectors
 		/**
 	 	* TODO: write docs
 	 	*/
-		public function set snao_left ( value : * ) : void
+		public function set snap_left ( value : * ) : void
 		{
 			w ( SNAP, value );
 		}
@@ -303,7 +303,7 @@ package cocktail.lib.view.styles.selectors
 		/**
 	 	* TODO: write docs
 	 	*/
-		public function set snao_top ( value : * ) : void
+		public function set snap_top ( value : * ) : void
 		{
 			w ( SNAP, value );
 		}
@@ -319,7 +319,7 @@ package cocktail.lib.view.styles.selectors
 		/**
 	 	* TODO: write docs
 	 	*/
-		public function set snao_scale ( value : * ) : void
+		public function set snap_scale ( value : * ) : void
 		{
 			w ( SNAP, value );
 		}
