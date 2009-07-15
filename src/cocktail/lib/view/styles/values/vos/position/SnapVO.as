@@ -18,7 +18,7 @@ package cocktail.lib.view.styles.values.vos.position
 			if ( raw != null )
 				snap = raw;
 			
-			split = snap.split( "  " );
+			split = snap.split( " " );
 			
 			left = split[ 0 ];
 			top = split[ 1 ];
