@@ -1,4 +1,6 @@
 just-a-test:
+	left: 30px
+	top: 30px
 	letter-spacing: 30px
 	
 	
