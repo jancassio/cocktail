@@ -48,14 +48,16 @@ package cocktail.lib.view.styles.renders
 		 */
 		public function render () : void
 		{
-			_style.plug( PositionSelector.POSITION, _position ).touch( _incremental );
+//			_style.plug( PositionSelector.POSITION, _position ).touch( _incremental );
+			
+			_style.touch( PositionSelector.POSITION, _incremental );
+			
 			_style.plug( PositionSelector.LEFT, _left ).touch( _incremental );
 			_style.plug( PositionSelector.TOP, _top ).touch( _incremental );
 			_style.plug( PositionSelector.RIGHT, _right ).touch( _incremental );
 			_style.plug( PositionSelector.BOTTOM, _bottom ).touch( _incremental );
 			_style.plug( PositionSelector.ALIGN, _align ).touch( _incremental );
-//			// -> snap = 'left top scale' (width+height)
-//			_style.plug( PositionSelector.SNAP, _snap ).touch( refresh );
+			_style.touch( PositionSelector.SNAP, _incremental );
 			_style.plug( PositionSelector.OVERFLOW, _overflow );
 			_style.plug( PositionSelector.OVERFLOW_X, _overflow_x );
 			_style.plug( PositionSelector.OVERFLOW_Y, _overflow_y );
@@ -113,32 +115,26 @@ package cocktail.lib.view.styles.renders
 			var snap : SnapVO;
 			
 			snap = new SnapVO( _style.snap );
-			if ( snap.snap_left != undefined )
-				// TODO implement;
-				true;
 			
-			if ( snap.snap_top != undefined )
-				// TODO implement;
-				true;
-			
-			if ( snap.snap_scale != undefined )
-				// TODO implement;
-				true;
+//			trace ( "-----" );
+//			trace ( "SNAP LEFT: "+ snap.left );
+//			trace ( "SNAP TOP: "+ snap.top );
+//			trace ( "SNAP SCALE: "+ snap.scale );
 		}
 		
 		
 		
-		/**
-		  * TODO: Write render documentation.
-		  * @param value	TODO: Write param documentation.
-		  */
-		private function _position() : void
-		{
-			_left( _style.left );
-			_right( _style.right );
-			_top( _style.top );
-			_bottom( _style.bottom );
-		}
+//		/**
+//		  * TODO: Write render documentation.
+//		  * @param value	TODO: Write param documentation.
+//		  */
+//		private function _position( value : * ) : void
+//		{
+//			_left( _style.left );
+//			_right( _style.right );
+//			_top( _style.top );
+//			_bottom( _style.bottom );
+//		}
 		
 		/**
 		  * TODO: Write render documentation.
