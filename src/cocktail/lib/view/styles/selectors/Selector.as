@@ -29,7 +29,6 @@ package cocktail.lib.view.styles.selectors
 	import cocktail.core.Index;
 	import cocktail.core.data.bind.Bind;
 	import cocktail.core.data.bind.Binded;
-	import cocktail.core.data.bind.Touched;
 	import cocktail.lib.view.styles.Style;
 	import cocktail.utils.StringUtil;	
 
@@ -174,9 +173,9 @@ package cocktail.lib.view.styles.selectors
 		 * @param methods	Methods to be touched when the key value changes, it
 		 * can be just a single method or an array with many methods.
 		 */
-		public function touch ( name : String, methods : * ) : Touched
+		public function touch ( name : String, methods : * ) : void
 		{
-			return _properties.touch( name, methods );
+			_properties.touch( name, methods );
 		}
 		
 		/**
