@@ -1,0 +1,23 @@
+<project name="cocktail" default="all" basedir=".">
+    <description>
+        Shortcuts to some scripts
+    </description>
+    
+	<!-- value should be your ruby path -->
+	<property name="project_name" value="ruby" />
+	<property name="ruby" value="ruby" />
+	
+    <target name="all">
+    	 <antcall target="generate_embedder" />     
+    </target>
+    
+    <target name="generate_embedder" >
+        <exec executable="${ruby}" dir="." failonerror="true">
+            <arg line="${basedir}/../scripts/generate_embedder.rb"/>
+			<arg line="demo/src" />
+			<arg line="codeine" />
+			<!-- arg line="${ant.project.name}" /-->
+        </exec>
+    </target>
+    
+</project>
