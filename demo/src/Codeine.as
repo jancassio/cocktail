@@ -2,7 +2,7 @@ package
 {
 	import cocktail.Cocktail;
 	
-	import codeine.boot.Embeder;
+	import codeine.boot.Embedder;
 	
 	import flash.display.Sprite;	
 
@@ -29,7 +29,7 @@ package
 		 */
 		public function Codeine ()
 		{
-			cocktail = new Cocktail ( this, new Embeder(), "codeine", "Main/home", 3, 3 );
+			cocktail = new Cocktail ( this, new Embedder(), "codeine", "Main/home", 3, 3 );
 		}
 	}
 }
