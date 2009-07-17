@@ -1,17 +1,15 @@
 <project name="cocktail" default="all" basedir=".">
     <description>
-        Shortcuts to some scripts
+        Shortcuts to some scaffold scripts
     </description>
     
-	<!-- value should be your ruby path -->
-	<property name="project_name" value="ruby" />
 	<property name="ruby" value="ruby" />
 	
     <target name="all">
-    	 <antcall target="generate_embedder" />     
+    	 <antcall target="create_embedder" />     
     </target>
     
-    <target name="generate_embedder" >
+    <target name="create_embedder" >
         <exec executable="${ruby}" dir="." failonerror="true">
             <arg line="${basedir}/scripts/create_embedder.rb"/>
 			<arg line="demo/src" />
@@ -19,5 +17,14 @@
 			<!-- arg line="${ant.project.name}" /-->
         </exec>
     </target>
-    
+
+    <target name="create_area" >
+        <exec executable="${ruby}" dir="." failonerror="true">
+            <arg line="${basedir}/scripts/create_area.rb"/>
+			<arg line="demo/src" />
+			<arg line="codeine" />
+			<!-- arg line="${ant.project.name}" /-->
+        </exec>
+    </target>
+	    
 </project>
