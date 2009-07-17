@@ -65,7 +65,6 @@ package cocktail
 		public var processes : Processes;
 		
 		private var _config : Config;
-		private var _embeder : EmbederTail;
 		
 		private var _defaultUrl : String; 
 		
@@ -104,7 +103,6 @@ package cocktail
 			this.app = app;
 			
 			_defaultUrl = defaultUrl;
-			_embeder = embeder;
 			_app_id = appId;
 			
 			sprite = new Sprite();
@@ -113,6 +111,9 @@ package cocktail
 				app.addEventListener( Event.ADDED_TO_STAGE , boot );
 			else
 				boot ();
+			
+			//removing FDT warning
+			embeder;
 		}
 		
 		/**
