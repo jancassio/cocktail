@@ -26,6 +26,7 @@
 
 package cocktail.lib.view.styles.renders 
 {
+	import cocktail.lib.view.styles.values.vos.border.BorderVo;	
 	import cocktail.lib.view.styles.renders.Render;
 	import cocktail.lib.view.styles.selectors.BorderSelector;	
 	
@@ -196,6 +197,14 @@ package cocktail.lib.view.styles.renders
 		  */
 		private function _border_top( value : * ) : void
 		{
+			var border: BorderVo;
+
+			border = new BorderVo( value );
+			
+			_border_top_width( border.border_width );
+			_border_top_color( border.border_color );
+			_border_top_style( border.border_style );
+			
 			trace( ' top border ->' + value );
 		}
 		
