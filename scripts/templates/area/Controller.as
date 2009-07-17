@@ -7,6 +7,6 @@ package PROJECT_NAME.controllers
 	 */
 	class CONTROLLER_NAMEController extends AppController 
 	{
-		METHODS
+		ACTIONS
 	}
 }
