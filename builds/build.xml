@@ -13,7 +13,7 @@
     
     <target name="generate_embedder" >
         <exec executable="${ruby}" dir="." failonerror="true">
-            <arg line="${basedir}/../scripts/generate_embedder.rb"/>
+            <arg line="${basedir}/scripts/generate_embedder.rb"/>
 			<arg line="demo/src" />
 			<arg line="codeine" />
 			<!-- arg line="${ant.project.name}" /-->
