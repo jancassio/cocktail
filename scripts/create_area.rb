@@ -9,9 +9,21 @@ SRC_PATH = File.join( BASE_DIR, "#{ARGV[0]}/#{ARGV[1]}" )
 PRJ_NAME = ARGV[1]
 TMPL_DIR = File.join( BASE_DIR, "scripts/templates/area/" )
 
-#use shell to get area name from user
+#grab area name from user
 puts "Please inform the area name: "
 AREA_NAME = STDIN.gets.chomp
+
+#grab actions from user
+actions = Array.new
+
+puts "Type the name of the action you wanna add, and press RETURN! ( just RETURN to bypass )"
+while action = STDIN.gets.chomp do puts action end
+
+puts ACTIONS
+
+#TODO: use captured actions to populate templates
+exit;
+print "not exited"
 
 #read / supplant Controller template
 CONTROLLER_NAME = AREA_NAME
