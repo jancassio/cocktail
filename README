@@ -20,7 +20,7 @@ fast tips
 
 1. add the "src" and "demo/src" folders to classpath.
 
-2. add all "swc" inside "vendors" to classpath.
+2. add all "swc" inside "src/cocktail/vendors" to classpath.
 
 3. make the "demo/src/Codeine.as" (document class) export it's swf named
 "core.swf" inside "demo/www/cocktail/swf/".
