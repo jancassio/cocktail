@@ -1,4 +1,4 @@
-package refactoring.core 
+package cocktail.core 
 {
 
 	/**

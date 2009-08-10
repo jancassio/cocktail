@@ -1,13 +1,13 @@
-package refactoring.core 
+package cocktail.core 
 {
-	import cocktail.core.Index;	
-	
+
+	import cocktail.core.gunz.RouterBullet;
 	/**
 	 * Navigation class. 
 	 * This will do the requests
 	 * @author hems | hems@codeine.it
 	 */
-	public class Tail extends Index
+	public class Tail
 	{
 		public function go( bullet: RouterBullet )
 		{

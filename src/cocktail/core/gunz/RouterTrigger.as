@@ -1,7 +1,7 @@
-package refactoring.core 
+package cocktail.core.gunz 
 {
-	import cocktail.core.gunz.Trigger;	
-	
+	import cocktail.core.gunz.Trigger;		
+
 	/**
 	 * @author hems | hems@codeine.it
 	 */
@@ -18,7 +18,7 @@ package refactoring.core
 		/* ---------------------------------------------------------------------
 			INITIALIZING
 		--------------------------------------------------------------------- */
-		 
+		
 		/**
 		 * Creates a new UserTrigger.
 		 * @param owner	Trigger owner.

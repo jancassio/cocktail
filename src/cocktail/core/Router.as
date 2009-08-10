@@ -24,14 +24,10 @@
 	
 *******************************************************************************/
 
-package refactoring.core 
+package cocktail.core 
 {
-	import refactoring.core.RouterTrigger;
-	import cocktail.core.Index;
-	import cocktail.core.data.dao.ProcessDAO;
-	
-	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;	
+	import cocktail.core.gunz.RouterBullet;
+	import cocktail.core.gunz.RouterTrigger;	
 
 	/**
 	 * Router class is responsible for all routing operations.
@@ -40,9 +36,9 @@ package refactoring.core
 	 * @see Cocktail
 	 * @see RouterEvent
 	 */
-	public class Router extends Index
+	public class Router
 	{
-
+		
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */

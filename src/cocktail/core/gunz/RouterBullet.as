@@ -1,4 +1,4 @@
-package refactoring.core 
+package cocktail.core.gunz 
 {
 	import cocktail.core.gunz.Bullet;			
 
