@@ -24,15 +24,14 @@
 	
 *******************************************************************************/
 
-package cocktail.core 
+package refactoring.core 
 {
+	import refactoring.core.RouterTrigger;
+	import cocktail.core.Index;
 	import cocktail.core.data.dao.ProcessDAO;
-	import cocktail.core.events.RouterEvent;
 	
 	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;
-	
-	import flash.events.EventDispatcher;	
+	import swfaddress.SWFAddressEvent;	
 
 	/**
 	 * Router class is responsible for all routing operations.
@@ -43,13 +42,14 @@ package cocktail.core
 	 */
 	public class Router extends Index
 	{
+
 		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
 		
 		private var initialized : Boolean;
 		
-		private var dispatcher : EventDispatcher;
+		private var trigger : RouterTrigger;
 		private var _history : Array;
 		private var _index : Number;
 		
@@ -68,7 +68,7 @@ package cocktail.core
 		{
 			log.info( "created!" );
 			
-			this.dispatcher = new EventDispatcher();
+			this.trigger = new RouterTrigger( this );
 			
 			this.history = new Array();
 			this.index = -1;
@@ -84,6 +84,34 @@ package cocktail.core
 		}
 		
 		
+		
+		/* ---------------------------------------------------------------------
+			BULLET/TRIGGER IMPLEMENTATION ( listen/unlisten )
+		--------------------------------------------------------------------- */
+		
+		/*
+		 * THESE TWO GETTERS BELOW MUST TO BE IMPLEMENTED IN EVERY CLASS THAT
+		 * WILL USE TRIGGER/BULLETS, IN ORDER TO OFFER STRICT AUTO-COMPLETE AND
+		 * VALIDATION.  
+		 */
+		
+		/**
+		 * Start listening.
+		 * @return	The trigger <code>UserTrigger</code> reference.
+		 */
+		public function get listen(): RouterTrigger
+		{
+			return RouterTrigger ( trigger.listen );
+		}
+		
+		/**
+		 * Stop listening.
+		 * @return	The trigger <code>UserTrigger</code> reference.
+		 */
+		public function get unlisten () : RouterTrigger
+		{
+			return RouterTrigger ( trigger.unlisten );
+		}
 		
 		/* ---------------------------------------------------------------------
 			LOCATION HANDLERS ( external & internal )
@@ -121,7 +149,9 @@ package cocktail.core
 			}
 			else
 			{
-				this.dispatcher.dispatchEvent( new RouterEvent( RouterEvent.CHANGE, dao.url, lastUrlFreeze ) );
+				trigger.pull( new RouterBullet( 
+					RouterTrigger.UPDATE, dao.url, lastUrlFreeze
+				) );
 			}
 		}
 		
@@ -219,28 +249,6 @@ package cocktail.core
 		
 		
 		
-	 	/* ---------------------------------------------------------------------
-			LINSTENERS SHORTCUTS
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Listen the RouterEvent.CHANGE.
-		 */
-		public function listen ( change : Function ) : void
-		{
-			this.dispatcher.addEventListener( RouterEvent.CHANGE , change );
-		}
-		
-		/**
-		 * Unlisten the RoutEvent.CHANGE.
-		 */
-		public function unlisten ( change : Function ) : void
-		{
-			this.dispatcher.removeEventListener( RouterEvent.CHANGE , change );
-		}
-		
-		
-		
 		/* ---------------------------------------------------------------------
 			SWFADDRESS LINSTENERS
 		--------------------------------------------------------------------- */
@@ -264,20 +272,25 @@ package cocktail.core
 				if ( url == "/" )
 				{
 					if ( config.defaultUrl != "/" )
-						this.dispatcher.dispatchEvent( new RouterEvent( RouterEvent.CHANGE , config.defaultUrl, lastUrlFreeze ) );
+						trigger.pull( new RouterBullet( 
+							RouterTrigger.UPDATE, config.defaultUrl, lastUrlFreeze
+						) );
 						// SWFAddress.setTitle( xyz... );
 				}
 				else
 				{
-					this.dispatcher.dispatchEvent( new RouterEvent( RouterEvent.CHANGE , url, lastUrlFreeze ) );
-					// SWFAddress.setTitle( xyz... );
+					trigger.pull( new RouterBullet( 
+						RouterTrigger.UPDATE, url, lastUrlFreeze
+					) );
 				}
 				
 				return;
 			}
 			
 			url = ( event.value == "/" ? config.defaultUrl : event.value );
-			this.dispatcher.dispatchEvent( new RouterEvent( RouterEvent.CHANGE, url, lastUrlFreeze));
+			trigger.pull( new RouterBullet( 
+				RouterTrigger.UPDATE, url, lastUrlFreeze
+			) );
 		}
 	}
 }

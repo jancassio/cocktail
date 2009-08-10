@@ -10,5 +10,4 @@
 <AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">vendors/mousewheel.swc</AS3Classpath>
 <AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">vendors/swfaddress.swc</AS3Classpath>
 <AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">vendors/tweenmax.swc</AS3Classpath>
-<AS3Classpath generateProblems="true" type="source" useAsSharedCode="false">tests</AS3Classpath>
 </AS3Classpath>
