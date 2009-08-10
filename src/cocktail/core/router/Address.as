@@ -24,10 +24,13 @@
 	
 *******************************************************************************/
 
-package cocktail.core 
+package cocktail.core.router 
 {
 	import cocktail.core.gunz.RouterBullet;
-	import cocktail.core.gunz.RouterTrigger;	
+	import cocktail.core.gunz.RouterTrigger;
+	
+	import swfaddress.SWFAddress;
+	import swfaddress.SWFAddressEvent;	
 
 	/**
 	 * Router class is responsible for all routing operations.
@@ -36,7 +39,7 @@ package cocktail.core
 	 * @see Cocktail
 	 * @see RouterEvent
 	 */
-	public class Router
+	public class Address
 	{
 		
 		/* ---------------------------------------------------------------------
@@ -60,10 +63,8 @@ package cocktail.core
 		/**
 		 * Creates a new Router instance.
 		 */
-		public function Router ()
+		public function Address ()
 		{
-			log.info( "created!" );
-			
 			this.trigger = new RouterTrigger( this );
 			
 			this.history = new Array();
@@ -71,7 +72,6 @@ package cocktail.core
 			
 			if ( config.pluginMode ) {
 				SWFAddress.addEventListener( SWFAddressEvent.CHANGE, address_change );
-				log.info( "Running in  plugin mode, SWFAddress activated." );
 				return;
 			}
 			
@@ -129,8 +129,6 @@ package cocktail.core
 		 */
 		public function redirect ( url : String, silentMode : Boolean = false, freeze : Boolean = false ) : void
 		{
-			log.info( "redirect(" + url , silentMode , freeze + ");" );
-						
 			var dao : ProcessDAO;
 			
 			dao = new ProcessDAO( url, false, freeze );
@@ -256,8 +254,6 @@ package cocktail.core
 		 */
 		private function address_change( event : SWFAddressEvent ) : void 
 		{
-			log.info( "address_change" );
-			
 			var url : String;
 			
 			if ( ! initialized )
