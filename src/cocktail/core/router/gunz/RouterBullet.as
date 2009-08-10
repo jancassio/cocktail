@@ -1,4 +1,4 @@
-package cocktail.core.gunz 
+package cocktail.core.router.gunz 
 {
 	import cocktail.core.gunz.Bullet;			
 

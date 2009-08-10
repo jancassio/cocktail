@@ -26,8 +26,8 @@
 
 package cocktail.core.router 
 {
-	import cocktail.core.gunz.RouterBullet;
-	import cocktail.core.gunz.RouterTrigger;
+	import cocktail.core.router.gunz.RouterBullet;
+	import cocktail.core.router.gunz.RouterTrigger;
 	
 	import swfaddress.SWFAddress;
 	import swfaddress.SWFAddressEvent;	
