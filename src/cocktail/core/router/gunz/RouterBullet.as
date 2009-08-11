@@ -12,7 +12,7 @@ package cocktail.core.router.gunz
 		--------------------------------------------------------------------- */
 		
 		public var location : String;
-		public var freezed : Boolean;
+		
 		
 		
 		/* ---------------------------------------------------------------------
@@ -23,19 +23,14 @@ package cocktail.core.router.gunz
 		 * Creates a new RouterBullet.
 		 * @param type	Bullet type.
 		 * @param location	User name.
-		 * @param freezed	User gender.
-		 * @param age	User age.
 		 */
-		public function RouterBullet (
+		public function RouterBullet(
 			type : String,
-			location : String, 
-			freezed : Boolean 
+			location : String
 		) : void
 		{
 			super ( type );
-			
 			this.location = location;
-			this.freezed = freezed;
 		}
 	}
 }
