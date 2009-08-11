@@ -1,7 +1,7 @@
 package cocktail.core.factory 
 {
 	import cocktail.Cocktail;
-
+	
 	import flash.utils.Dictionary;	
 
 	/**
@@ -9,34 +9,43 @@ package cocktail.core.factory
 	 */
 	public class Factory 
 	{
-
-		private var _uniques: Dictionary;
-		public var app: Cocktail;
+		
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
+		
+		private var _uniques : Dictionary;
+		public var app : Cocktail;
+		
+		
+		/* ---------------------------------------------------------------------
+			INITIALIZING
+		--------------------------------------------------------------------- */
 
 		/**
 		 * @param app owner of the fabric
 		 */
-		public function Factor( cocktail: Cocktail )
+		public function Factory( cocktail : Cocktail )
 		{
 			app = cocktail;
 			_uniques = new Dictionary( );
 		}
-
 		
 		
-		/* unique references */
 		
-		
+		/* ---------------------------------------------------------------------
+			CONTROLLERS
+		--------------------------------------------------------------------- */
 		
 		/**
 		 * Return a unique controller
 		 * @param process	ProcessDAO to get the controller search.
 		 */
-		public function controller( clean_class_name: String ): Controller
+		public function controller( clean_class_name : String ) : Controller
 		{
-			var cls: Class;
-			var ctrl: Controller;
-			var path: String;
+			var cls : Class;
+			var ctrl : Controller;
+			var path : String;
 
 			path = config.appId + ".controllers." + clean_class_name + "Controller";
 					
@@ -52,16 +61,21 @@ package cocktail.core.factory
 		
 			return ctrl;
 		}
-
+		
+		
+		/* ---------------------------------------------------------------------
+			MODEL
+		--------------------------------------------------------------------- */
+		
 		/**
 		 * Return a unique model
 		 * @param process	ProcessDAO to get the controller search.
 		 */
-		public function model( clean_class_name: String ): Model
+		public function model( clean_class_name : String ) : Model
 		{
-			var cls: Class;
-			var model: Model;
-			var path: String;
+			var cls : Class;
+			var model : Model;
+			var path : String;
 			
 			path = config.appId + ".models." + clean_class_name + "Model";
 			
@@ -77,12 +91,16 @@ package cocktail.core.factory
 		
 			return model;
 		}
-
-		/* instant new instances */
-
-		public function layout( clean_class_name: String ): Layout
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			VIEW
+		--------------------------------------------------------------------- */
+		
+		public function layout( clean_class_name : String ) : Layout
 		{
-			var path: String;
+			var path : String;
 			path = config.appId + ".layouts." + clean_class_name + "Layout";
 			
 			return new ( get_class( path ) )( );
