@@ -54,7 +54,7 @@ package cocktail.core
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var _cocktail : Cocktail;
+		final protected var _cocktail : Cocktail;
 		private var _log : Logger;
 		
 		
