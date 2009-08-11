@@ -89,8 +89,6 @@ package cocktail.core.config
 			LOADING
 		--------------------------------------------------------------------- */
 		
-		
-		
 		/**
 		 * Keep the configuration file contents.
 		 * @param TODO: write documentation
