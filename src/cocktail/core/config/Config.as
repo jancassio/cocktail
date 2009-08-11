@@ -33,7 +33,7 @@ package cocktail.core.config
 	
 	import flash.display.Stage;
 	import flash.system.Capabilities;	
-
+	
 	/**
 	 * Config class is the source holder for the application base config.
 	 * @author nybras | nybras@codeine.it
@@ -61,19 +61,26 @@ package cocktail.core.config
 		 * Creates a new Config instance.
 		 * 
 		 * @param cocktail	Cocktail reference.
-		 * @param appId	Application identifier (MUST be the the application
+		 * @param app_id	Application identifier(MUST be the the application
 		 * folder name).
-		 * @param defaultUrl	Application default url.
+		 * @param default_url	Application default url.
 		 */
-		public function Config (
+		public function Config(
 			cocktail : Cocktail,
 			app_id: String,
-			defaultUrl : String
+			default_url : String
 		)
 		{
 			_cocktail = cocktail;
-			_default_url = defaultUrl;
+			_default_url = default_url;
 			_app_id = app_id;
+			
+			/*
+		 		TODO: IMPLEMENT ALL THE LOADING PROCESS W/ GUNZ, calling "_init)
+		 			  method to initialize everything.
+		 				
+		 			  ie.: load( _config_path ).listen( _init );
+		 	*/
 		}
 		
 		
@@ -82,24 +89,22 @@ package cocktail.core.config
 			LOADING
 		--------------------------------------------------------------------- */
 		
-		/*
-		 * TODO: IMPLEMENT ALL THE LOADING PROCESS W/ GUNZ.
-		 */
+		
 		
 		/**
 		 * Keep the configuration file contents.
 		 * @param TODO: write documentation
 		 */
-		private function _init ( ...probably_an_event ) : void 
+		private function _init( ...probably_an_event ) : void 
 		{
 			var stage : Stage;
 			
 			_raw = new XML( /* TODO: get the loaded xml raw */ );
 			
-			stage = _cocktail.stage;
+			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );;
-			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
+			stage.showDefaultContextMenu =( _movie( "showMenu" ) == true );
 		}
 		
 		
@@ -113,7 +118,7 @@ package cocktail.core.config
 		 * instantiating classes.
 		 * @return	The app id.
 		 */
-		public function get app_id () : String
+		public function get app_id() : String
 		{
 			return _app_id;
 		}
@@ -122,7 +127,7 @@ package cocktail.core.config
 		 * Gets the current external url location.
 		 * @return	The current external url location.
 		 */
-		public function get location () : String
+		public function get location() : String
 		{
 			return SWFAddress.getValue();
 		}
@@ -131,24 +136,24 @@ package cocktail.core.config
 		 * Evaluates the path for the config file.
 		 * @return	The path to the config file.
 		 */
-		private function get _config_path () : String
+		private function get _config_path() : String
 		{
-			return	( ( plugin ? "./" : "../" )
+			return	(( plugin ? "./" : "../" )
 					+ "cocktail/config/config.fxml" );
 		}
 		
 		/**
-		 * Evaluates the document cache control for the given environment, if no
-		 * environment is given, the default is used.
+		 * Evaluates the document cache control for the given environment,
+		 * if no environment is given, the default is used.
 		 * @param environment	Environment name, if no environment name is
 		 * given the default is used.
 		 * @return	<code>true</code> if cache must be used, otherwise
 		 * <code>false</code> if cache must not be used.
 		 */
-		public function cache ( environment : String = null ) : Boolean
+		public function cache( environment : String = null ) : Boolean
 		{
-			environment = ( environment || _raw..paths.@default );
-			return ( _raw..cache.@[ environment ] == "true" );
+			environment =( environment || _raw..paths.@default );
+			return( _raw..cache.@[ environment ] == "true" );
 		}
 		
 		/**
@@ -158,9 +163,9 @@ package cocktail.core.config
 		 * given the default is used.
 		 * @return	The path for document root.
 		 */
-		public function root ( environment : String = null ) : String
+		public function root( environment : String = null ) : String
 		{
-			environment = ( environment || _raw..paths.@default );
+			environment =( environment || _raw..paths.@default );
 			return _raw..paths.path.( @name == environment ).@url;
 		}
 		
@@ -169,16 +174,16 @@ package cocktail.core.config
 		 * @return <code>true</code> if movie is inside a browser,
 		 * <code>false</code> otherwise.
 		 */
-		public function get plugin () : Boolean
+		public function get plugin() : Boolean
 		{
-			return ( "PlugInActiveX".indexOf( Capabilities.playerType ) != -1 );
+			return( "PlugInActiveX".indexOf( Capabilities.playerType ) != -1 );
 		}
 		
 		/**
 		 * Get the application default url.
 		 * @return The application default url.
 		 */
-		public function get default_url () : String
+		public function get default_url() : String
 		{
 			return _default_url;
 		}
@@ -187,7 +192,7 @@ package cocktail.core.config
 		 * Evaluates the required path, based on the given extension.
 		 * @param extension	File extension you want to evaluate the path.
 		 */
-		public function path ( extension : String ) : String
+		public function path( extension : String ) : String
 		{
 			return	root() +
 					_raw..path.( attribute( "ext" ) == extension ).@folder;
@@ -199,9 +204,9 @@ package cocktail.core.config
 		 * default gateway.
 		 * @return	The url for the required gatway.
 		 */
-		public function gateway ( name : String = null ) : String
+		public function gateway( name : String = null ) : String
 		{
-			if ( name == null ) name = _raw..gateways.@default;
+			if( name == null ) name = _raw..gateways.@default;
 			return _raw..gateway.( attribute( "name" ) == name ).@url;
 		}
 		
@@ -215,13 +220,13 @@ package cocktail.core.config
 		 * Returns an array with all available locales.
 		 * @return	The locales array.
 		 */
-		public function get locales ( ) : Array
+		public function get locales( ) : Array
 		{
 			var locales : Array;
 			var locale : XML;
 			
 			locales = new Array();
-			for each ( locale in _raw..languages.* )
+			for each( locale in _raw..languages.* )
 				locales.push( locale.localName() );
 			
 			return locales;
@@ -231,7 +236,7 @@ package cocktail.core.config
 		 * Returns the default locale.
 		 * @return	Default locale.
 		 */
-		public function get default_locale ( ) : String
+		public function get default_locale( ) : String
 		{
 			return _raw..languages.@default;
 		}
@@ -240,7 +245,7 @@ package cocktail.core.config
 		 * Get the current locale.
 		 * @return	The locales array.
 		 */
-		public function get current_locale ( ) : String
+		public function get current_locale( ) : String
 		{
 			return _current_locale;
 		}
@@ -249,7 +254,7 @@ package cocktail.core.config
 		 * Set the current locale.
 		 * @return	The locales array.
 		 */
-		public function set current_locale ( locale : String ) : void
+		public function set current_locale( locale : String ) : void
 		{
 			_current_locale = locale;
 		}
@@ -264,7 +269,7 @@ package cocktail.core.config
 		 * Get the gien property in xml, inside the movie config block.
 		 * @return	The found property value.
 		 */
-		private function _movie ( property : String ) : *
+		private function _movie( property : String ) : *
 		{
 			return _raw..movie.@[ property ];
 		}
@@ -273,36 +278,36 @@ package cocktail.core.config
 		 * Get the default movie width.
 		 * @return	The default movie width.
 		 */
-		public function get width_movie () : uint
+		public function get width_movie() : uint
 		{
-			return _movie ( "width" );
+			return _movie( "width" );
 		}
 		
 		/**
 		 * Get the default movie height.
 		 * @return	The default movie height.
 		 */
-		public function get height_movie () : uint
+		public function get height_movie() : uint
 		{
-			return _movie ( "height" );
+			return _movie( "height" );
 		}
 		
 		/**
 		 * Get the current stage width.
 		 * @return	The current stage width.
 		 */
-		public function get width_stage () : uint
+		public function get width_stage() : uint
 		{
-			return _cocktail.stage.stageWidth;
+			return _cocktail.app.stage.stageWidth;
 		}
 
 		/**
 		 * Get the current stage height.
 		 * @return	The current stage width.
 		 */
-		public function get height_stage () : uint
+		public function get height_stage() : uint
 		{
-			return _cocktail.stage.stageHeight;
+			return _cocktail.app.stage.stageHeight;
 		}
 	}
 }
