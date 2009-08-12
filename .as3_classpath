@@ -3,4 +3,5 @@
 <AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">playerglobal.swc</AS3Classpath>
 <AS3Classpath generateProblems="true" type="source" useAsSharedCode="false">src</AS3Classpath>
 <AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">src/cocktail/vendors/swfaddress.swc</AS3Classpath>
+<AS3Classpath generateProblems="false" type="lib" useAsSharedCode="false">src/cocktail/vendors/as3ds.swc</AS3Classpath>
 </AS3Classpath>
