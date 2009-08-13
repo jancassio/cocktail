@@ -25,11 +25,13 @@
 
 package cocktail.core.router
 {
+	import cocktail.utils.ArrayUtil;		
+
 	/**
 	 * Handles all Routes translations.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class Routes 
+	public class RoutesTail 
 	{
 		/* ---------------------------------------------------------------------
 			VARS
@@ -50,12 +52,8 @@ package cocktail.core.router
 		 */
 		public function map( mask : String, target : String ) : void
 		{
-//			TODO: implement method
-//			
-//			thoughts:
-//			
-//			if( ArrayUtil.has( _mappings, mask, "mask" ) )
-//				ArrayUtil.del( _mappings, mask, "mask" );
+			if( ArrayUtil.has( _mappings, mask, "mask" ) )
+				ArrayUtil.del( _mappings, mask, "mask" );
 			
 			_mappings.push( new MapVO( mask, target ) );
 		}
