@@ -190,6 +190,12 @@ package cocktail.core.router
 		 */
 		public function redirect( request : Request ) : void
 		{
+			trace ( request.uri );
+			trace ( request.route.mask );
+			trace ( request.route.target );
+			trace ( request.data );
+			trace ( request.type );
+			
 //			TODO: implement method
 //			var dao : ProcessDAO;
 //			
