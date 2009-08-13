@@ -118,6 +118,15 @@ package cocktail.core
 			return _cocktail.router;
 		}
 		
+		/**
+		 * Get the application routes.
+		 * @return	The application routes.
+		 */
+		final public function get routes( ) : Router
+		{
+			return _cocktail.routes;
+		}
+		
 		
 		
 		/* ---------------------------------------------------------------------

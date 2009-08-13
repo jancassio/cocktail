@@ -28,11 +28,12 @@ package cocktail
 	import cocktail.core.embedder.EmbedderTail;
 	import cocktail.core.processes.Processes;
 	import cocktail.core.router.Router;
+	import cocktail.core.router.RoutesTail;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;	
-	
+
 	/**
 	 * Cocktail class is the framework first class to be initialized. It's
 	 * itended to be instantiated by your application main entry class (or your
@@ -53,6 +54,7 @@ package cocktail
 		
 		private var _config : Config;
 		private var _router : Router;
+		private var _routes : RoutesTail;
 		private var _processes : Processes;
 		
 		
@@ -67,19 +69,22 @@ package cocktail
 		 * @param app_id Application identifier (MUST be the the application
 		 * folder name).
 		 * @param embedder	Application embedder.
+		 * @param routes	Application routes.
 		 * @param default_url	Application default url.
 		 */
 		public function Cocktail(
 			app : Sprite,
 			app_id : String,
 			embedder : EmbedderTail,
-			default_url : String = null
+			routes : RoutesTail
+,			default_url : String = null
 		)
 		{
 			_app = app;
 			_app_id = app_id;
 			
 			_embedder = embedder;
+			_routes = routes;
 			_default_url = default_url;
 			
 			if( ! _app.stage )
@@ -131,6 +136,15 @@ package cocktail
 		 * @param	Reference to the router instance.
 		 */
 		public function get router () : Router
+		{
+			return _router;
+		}
+		
+		/**
+		 * Get the reference for the Routes instance.
+		 * @param	Reference to the routes instance.
+		 */
+		public function get routes () : Router
 		{
 			return _router;
 		}
