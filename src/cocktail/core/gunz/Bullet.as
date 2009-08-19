@@ -26,6 +26,8 @@
 
 package cocktail.core.gunz 
 {
+	import flash.utils.describeType;		
+
 	/**
 	 * Base Bullet class.
 	 * @author nybras | nybras@codeine.it
@@ -110,6 +112,37 @@ package cocktail.core.gunz
 		internal function set_owner ( owner : * ) : void
 		{
 			_owner = owner; 
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			TO STRING CONVERSION
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Format all public properties to String.
+		 * @param	The bullet into String format.
+		 */
+		public function toString() : String
+		{
+			var output : String;
+			var described : XML;
+			var props : XMLList;
+			var prop : XML;
+			
+			described = describeType( this );
+			output = "[object "+ described.@name.split( "::" ).pop() +"]\n{\n";
+			props = described..variable; 
+			
+			for each( prop in props )
+			{
+				output += "\t"+ prop.@name +" : ";
+				output += prop.@type +" = ";
+				output += this[ prop.@name ];
+			}
+			
+			return output +"\n}";
 		}
 	}
 }
