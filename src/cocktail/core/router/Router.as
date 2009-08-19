@@ -34,7 +34,7 @@ package cocktail.core.router
 	import cocktail.core.router.gunz.RouterTrigger;
 	
 	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;		
+	import swfaddress.SWFAddressEvent;	
 
 	/**
 	 * Handles all routing operations.
@@ -48,7 +48,9 @@ package cocktail.core.router
 		
 		private var _trigger : RouterTrigger;
 		
-		private var initialized : Boolean;
+		private var _initialized : Boolean;
+		private var _first_uri : Boolean;
+		
 		private var _history : Array;
 		private var _index : Number;
 		
@@ -70,6 +72,18 @@ package cocktail.core.router
 			
 			_history = new Array();
 			_index = -1;
+		}
+		
+		
+		/**
+		 * Initializes the router, listening for SWFAddress.
+		 */
+		public function init() : void
+		{
+			if( _initialized )
+				return;
+			
+			_initialized = true;
 			
 			if( config.plugin )
 			{
@@ -77,9 +91,8 @@ package cocktail.core.router
 					SWFAddressEvent.CHANGE, _set_location
 				);
 				return;
-			}
+			};
 		}
-		
 		
 		
 		/* ---------------------------------------------------------------------
@@ -148,7 +161,7 @@ package cocktail.core.router
 		 */
 		public function forward() : void
 		{
-			this.index++;
+			_index++;
 			SWFAddress.forward();
 		}
 		
@@ -157,7 +170,7 @@ package cocktail.core.router
 		 */
 		public function prev() : void
 		{
-			this.index--;
+			_index--;
 			SWFAddress.back();
 		}
 		
@@ -184,29 +197,26 @@ package cocktail.core.router
 		
 		
 		/* ---------------------------------------------------------------------
-			LOCATION HANDLERS( external & internal )
+			REQUEST HANDLERS
 		--------------------------------------------------------------------- */
-		
-		/**
-		 * Gets the current external url location.
-		 * @return	The current external url location.
-		 */
-		public function get location() : String
-		{
-			return SWFAddress.getValue();
-		}
 		
 		/**
 		 * Redirects the application to the given request.
 		 * @param request	Request to redirect the application to. 
 		 */
-		public function redirect( request : Request ) : void
+		public function get( uri : String ) : void
 		{
+			var request : Request = new Request( _cocktail, uri );
+			
+			trace ( "--------" );
+			
 			trace ( request.uri );
 			trace ( request.route.mask );
 			trace ( request.route.target );
 			trace ( request.data );
 			trace ( request.type );
+			
+			trace ( "--------" );
 			
 //			TODO: implement method
 //			var dao : ProcessDAO;
@@ -229,6 +239,26 @@ package cocktail.core.router
 //			}
 		}
 		
+		public function post( uri : String, data : * ) : void
+		{
+			
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			LOCATION HANDLERS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Gets the current external url location.
+		 * @return	The current external url location.
+		 */
+		public function get location() : String
+		{
+			return SWFAddress.getValue();
+		}
+		
 		/**
 		 * Listen the browser url changes( SWFAddress ).
 		 * @param event	SWFAddressEvent.
@@ -238,17 +268,17 @@ package cocktail.core.router
 			var url : String;
 			var bullet : RouterBullet;
 			
-			if( ! initialized )
+			if( ! _first_uri )
 			{
-				initialized = true;
+				_first_uri = true;
 				
 				url = event.value;
 				if( url == "/" )
 				{
-					if( config.default_url != "/" )
+					if( config.default_uri != "/" )
 					{
 						bullet = new RouterBullet (
-							RouterTrigger.UPDATE, config.default_url
+							RouterTrigger.UPDATE, config.default_uri
 						);
 						_trigger.pull( bullet );
 						// SWFAddress.setTitle( xyz... );
@@ -263,7 +293,7 @@ package cocktail.core.router
 				return;
 			}
 			
-			url = ( event.value == "/" ? config.default_url : event.value );
+			url = ( event.value == "/" ? config.default_uri : event.value );
 			bullet = new RouterBullet ( RouterTrigger.UPDATE, url );
 			_trigger.pull( bullet );
 		}

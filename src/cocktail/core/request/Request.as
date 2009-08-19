@@ -55,7 +55,12 @@ package cocktail.core.request
 		/**
 		 * TODO: write docs
 		 */
-		public function Request( cocktail : Cocktail, type : String, uri : String, data : * ) : void
+		public function Request(
+			cocktail : Cocktail,
+//			type : String,
+			uri : String,
+			data : * = null
+		) : void
 		{
 			super( cocktail );
 			this.type = type;

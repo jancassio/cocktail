@@ -25,7 +25,7 @@
 
 package cocktail.core.router
 {
-	import cocktail.utils.ArrayUtil;		
+	import cocktail.utils.ArrayUtil;			
 
 	/**
 	 * Handles all Routes translations.
@@ -52,9 +52,7 @@ package cocktail.core.router
 		 */
 		public function map( mask : String, target : String ) : void
 		{
-			if( ArrayUtil.has( _mappings, mask, "mask" ) )
-				ArrayUtil.del( _mappings, mask, "mask" );
-			
+			ArrayUtil.del( _mappings, mask, "mask" );
 			_mappings.push( new MapVO( mask, target ) );
 		}
 		
