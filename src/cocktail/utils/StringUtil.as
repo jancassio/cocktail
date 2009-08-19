@@ -26,14 +26,12 @@
 
 package cocktail.utils 
 {
-	import cocktail.core.Index;			
 
 	/**
 	 * Utilities for string manipuation.
-	 * 
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class StringUtil extends Index 
+	public class StringUtil 
 	{
 		
 		/**

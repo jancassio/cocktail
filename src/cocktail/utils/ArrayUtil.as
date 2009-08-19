@@ -26,13 +26,11 @@
 
 package cocktail.utils 
 {
-	import cocktail.core.Index;					
-	
 	/**
 	 * Utilities for array manipulation.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class ArrayUtil extends Index
+	public class ArrayUtil
 	{
 		/**
 		 * Compares two arrays.
