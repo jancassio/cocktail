@@ -29,7 +29,6 @@ package cocktail.core.processes
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.request.Request;
-	import cocktail.core.router.Router;
 	import cocktail.core.router.gunz.RouterBullet;	
 
 	/**
@@ -43,7 +42,6 @@ package cocktail.core.processes
 		-------------------------------------------------------------------  */
 		
 		private var _controllers : Array;
-		private var _router : Router;
 		
 		
 		
@@ -59,7 +57,7 @@ package cocktail.core.processes
 		{
 			super( cocktail);
 			_controllers = [];
-			_router.listen.update( _route );
+			router.listen.update( _route );
 		}
 		
 		
