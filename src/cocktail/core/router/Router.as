@@ -28,12 +28,13 @@ package cocktail.core.router
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
+	import cocktail.core.gunz.Trigger;
 	import cocktail.core.request.Request;
 	import cocktail.core.router.gunz.RouterBullet;
 	import cocktail.core.router.gunz.RouterTrigger;
 	
 	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;	
+	import swfaddress.SWFAddressEvent;		
 
 	/**
 	 * Handles all routing operations.
@@ -45,7 +46,7 @@ package cocktail.core.router
 			VARS
 		--------------------------------------------------------------------- */
 		
-		public var trigger : RouterTrigger;
+		private var _trigger : RouterTrigger;
 		
 		private var initialized : Boolean;
 		private var _history : Array;
@@ -65,7 +66,7 @@ package cocktail.core.router
 		{
 			super( cocktail );
 			
-			trigger = new RouterTrigger( this );
+			_trigger = new RouterTrigger( this );
 			
 			_history = new Array();
 			_index = -1;
@@ -86,21 +87,32 @@ package cocktail.core.router
 		--------------------------------------------------------------------- */
 		
 		/**
+		 * Trigger reference.
+		 * @return	The <code>RouterTrigger</code> reference.
+		 */
+		public function get trigger() : RouterTrigger
+		{
+			return _trigger;
+		}
+		
+		
+		
+		/**
 		 * Start listening.
-		 * @return	The trigger <code>UserTrigger</code> reference.
+		 * @return	The <code>UserTrigger</code> reference.
 		 */
 		public function get listen() : RouterTrigger
 		{
-			return RouterTrigger( trigger.listen );
+			return RouterTrigger( _trigger.listen );
 		}
 		
 		/**
 		 * Stop listening.
-		 * @return	The trigger <code>UserTrigger</code> reference.
+		 * @return	The <code>UserTrigger</code> reference.
 		 */
 		public function get unlisten() : RouterTrigger
 		{
-			return RouterTrigger( trigger.unlisten );
+			return RouterTrigger( _trigger.unlisten );
 		}
 		
 		
@@ -238,14 +250,14 @@ package cocktail.core.router
 						bullet = new RouterBullet (
 							RouterTrigger.UPDATE, config.default_url
 						);
-						trigger.pull( bullet );
+						_trigger.pull( bullet );
 						// SWFAddress.setTitle( xyz... );
 					}
 				}
 				else
 				{
 					bullet = new RouterBullet( RouterTrigger.UPDATE, url );
-					trigger.pull( bullet );
+					_trigger.pull( bullet );
 				
 				}
 				return;
@@ -253,7 +265,7 @@ package cocktail.core.router
 			
 			url = ( event.value == "/" ? config.default_url : event.value );
 			bullet = new RouterBullet ( RouterTrigger.UPDATE, url );
-			trigger.pull( bullet );
+			_trigger.pull( bullet );
 		}
 		
 	}
