@@ -54,7 +54,7 @@ package cocktail.core
 			VARS
 		--------------------------------------------------------------------- */
 		
-		final protected var _cocktail : Cocktail;
+		protected var _cocktail : Cocktail;
 		private var _log : Logger;
 		
 		
@@ -77,26 +77,6 @@ package cocktail.core
 		
 		
 		/* ---------------------------------------------------------------------
-			CACHING COCKTAIL REFERENCE
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Caches the cocktail reference.
-		 * @param cocktail	Cocktail reference.
-		 * @return	A refererence for 'this' scope, which can be any class that
-		 * extends index.
-		 */
-		final public function tail( cocktail : Cocktail ) : *
-		{
-			if ( _cocktail != undefined )
-				_cocktail = cocktail;
-			
-			return this;
-		}
-		
-		
-		
-		/* ---------------------------------------------------------------------
 			GETTERS
 		--------------------------------------------------------------------- */
 		
@@ -104,7 +84,7 @@ package cocktail.core
 		 * Get the application config.
 		 * @return	The application config.
 		 */
-		final public function get config( ) : Config
+		final public function get config() : Config
 		{
 			return _cocktail.config;
 		}
@@ -113,7 +93,7 @@ package cocktail.core
 		 * Get the application router.
 		 * @return	The application router.
 		 */
-		final public function get router( ) : Router
+		final public function get router() : Router
 		{
 			return _cocktail.router;
 		}
@@ -122,7 +102,7 @@ package cocktail.core
 		 * Get the application routes.
 		 * @return	The application routes.
 		 */
-		final public function get routes( ) : Router
+		final public function get routes() : Router
 		{
 			return _cocktail.routes;
 		}
