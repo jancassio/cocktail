@@ -32,8 +32,11 @@ package cocktail.core.config
 	import swfaddress.SWFAddress;
 	
 	import flash.display.Stage;
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.system.Capabilities;	
-	
+
 	/**
 	 * Config class is the source holder for the application base config.
 	 * @author nybras | nybras@codeine.it
@@ -44,12 +47,11 @@ package cocktail.core.config
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var _cocktail : Cocktail;
 		private var _raw : XML;
-		
 		private var _current_locale : String;
-		private var _default_url : String;
-		private var _app_id : String;
+		
+		
+		private var _tmp_loader : URLLoader;
 		
 		
 		
@@ -59,30 +61,26 @@ package cocktail.core.config
 		
 		/**
 		 * Creates a new Config instance.
-		 * 
 		 * @param cocktail	Cocktail reference.
-		 * @param app_id	Application identifier(MUST be the the application
-		 * folder name).
-		 * @param default_url	Application default url.
 		 */
-		public function Config(
-			cocktail : Cocktail,
-			app_id: String,
-			default_url : String
-		)
+		public function Config( cocktail : Cocktail )
 		{
+			super( cocktail );
+			
 			_cocktail = cocktail;
-			_default_url = default_url;
-			_app_id = app_id;
 			
 			/*
-		 		TODO: IMPLEMENT ALL THE LOADING PROCESS W/ GUNZ, calling "_init)
-		 			  method to initialize everything.
+		 		TODO: 	REPLACE ALL THE LOADING PROCESS WITH THE NEW LOADING
+		 		  		ENGINE, POWERED BY GUNZ
 		 				
-		 			  ie.: load( _config_path ).listen( _init );
-		 	*/
+		 					ie.: load( _config_path ).listen( _init );
+			 */
+			 
+			_tmp_loader = new URLLoader();
+			_tmp_loader.addEventListener( Event.COMPLETE, _init);
+			_tmp_loader.load( new URLRequest( _config_path ) );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -93,16 +91,19 @@ package cocktail.core.config
 		 * Keep the configuration file contents.
 		 * @param TODO: write documentation
 		 */
-		private function _init( ...probably_an_event ) : void 
+		private function _init( event : Event ) : void 
 		{
 			var stage : Stage;
 			
-			_raw = new XML( /* TODO: get the loaded xml raw */ );
+			_raw = new XML( _tmp_loader.data.toString() );
 			
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );;
-			stage.showDefaultContextMenu =( _movie( "showMenu" ) == true );
+			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
+			
+			router.init();
+			router.	get( default_uri );
 		}
 		
 		
@@ -118,7 +119,7 @@ package cocktail.core.config
 		 */
 		public function get app_id() : String
 		{
-			return _app_id;
+			return _cocktail.app_id;
 		}
 		
 		/**
@@ -136,8 +137,7 @@ package cocktail.core.config
 		 */
 		private function get _config_path() : String
 		{
-			return	(( plugin ? "./" : "../" )
-					+ "cocktail/config/config.fxml" );
+			return	( ( plugin ? "" : "." ) + "./cocktail/config/config.fxml" );
 		}
 		
 		/**
@@ -178,12 +178,12 @@ package cocktail.core.config
 		}
 		
 		/**
-		 * Get the application default url.
-		 * @return The application default url.
+		 * Get the application default URI.
+		 * @return The application default URI.
 		 */
-		public function get default_url() : String
+		public function get default_uri() : String
 		{
-			return _default_url;
+			return _cocktail.default_uri;
 		}
 		
 		/**
