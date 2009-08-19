@@ -26,7 +26,6 @@
 
 package cocktail.core.embedder
 {
-	import cocktail.core.Index;
 	import cocktail.lib.model.datasources.AmfDataSource;
 	import cocktail.lib.model.datasources.HttpDataSource;
 	import cocktail.lib.model.datasources.InlineDataSource;
@@ -36,9 +35,9 @@ package cocktail.core.embedder
 	 * Embeder class for cocktail.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class EmbedderTail extends Index 
+	public class EmbedderTail 
 	{
-		public function EmbedderTail ()
+		public function EmbedderTail()
 		{
 			XmlDataSource;
 			HttpDataSource;
