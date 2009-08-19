@@ -50,7 +50,7 @@ package cocktail
 		private var _app_id : String;
 		
 		private var _embedder : EmbedderTail;
-		private var _default_url : String; 
+		private var _default_uri : String; 
 		
 		private var _config : Config;
 		private var _router : Router;
@@ -66,18 +66,18 @@ package cocktail
 		/**
 		 * Creates a new Cocktail instance.
 		 * @param app	The application reference (document_class:Sprite).
-		 * @param app_id Application identifier (MUST be the the application
-		 * folder name).
 		 * @param embedder	Application embedder.
 		 * @param routes	Application routes.
-		 * @param default_url	Application default url.
+		 * @param app_id Application identifier (MUST be the the application
+		 * folder name).
+		 * @param default_uri	Application default URI.
 		 */
 		public function Cocktail(
 			app : Sprite,
-			app_id : String,
 			embedder : EmbedderTail,
-			routes : RoutesTail
-,			default_url : String = null
+			routes : RoutesTail,
+			app_id : String,
+			default_uri : String = null
 		)
 		{
 			_app = app;
@@ -85,9 +85,9 @@ package cocktail
 			
 			_embedder = embedder;
 			_routes = routes;
-			_default_url = default_url;
+			_default_uri = default_uri;
 			
-			if( ! _app.stage )
+			if( !_app.stage )
 				_app.addEventListener( Event.ADDED_TO_STAGE, _init );
 			else
 				_init ();
@@ -102,7 +102,7 @@ package cocktail
 			if ( event != null )
 				_app.removeEventListener( Event.ADDED_TO_STAGE , _init );
 			
-			_config = new Config( this, _app_id, _default_url );
+			_config = new Config( this );
 			_router = new Router( this );
 			_processes = new Processes( this );
 		}
@@ -120,6 +120,24 @@ package cocktail
 		public function get app () : Sprite
 		{
 			return _app;
+		}
+		
+		/**
+		 * Get the app id.
+		 * @param	The app id.
+		 */
+		public function get app_id () : String
+		{
+			return _app_id;
+		}
+		
+		/**
+		 * Get the app default URI.
+		 * @param	The app default URI.
+		 */
+		public function get default_uri () : String
+		{
+			return _default_uri;
 		}
 		
 		/**
