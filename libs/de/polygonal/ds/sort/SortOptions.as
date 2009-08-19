@@ -45,7 +45,8 @@ package de.polygonal.ds.sort
 		 * A flag that specifies case-insensitive sorting. You can use this
 		 * constant for the options parameter in the sort() method.
 		 *
-		 * @see de.polygonal.ds.SLinkedList#sort()		 * @see de.polygonal.ds.DLinkedList#sort()
+		 * @see de.polygonal.ds.SLinkedList#sort()
+		 * @see de.polygonal.ds.DLinkedList#sort()
 		 */
 		public static const CASEINSENSITIVE:int = 1 << 3;
 		

@@ -217,7 +217,9 @@ package de.polygonal.ds
 		 * An iterator is not supported, use BinaryTreeNode.preorder(),
 		 * inorder() and postorder() instead.
 		 * 
-		 * @see BinaryTreeNode#preorder		 * @see BinaryTreeNode#inorder		 * @see BinaryTreeNode#postorder
+		 * @see BinaryTreeNode#preorder
+		 * @see BinaryTreeNode#inorder
+		 * @see BinaryTreeNode#postorder
 		 */
 		public function getIterator():Iterator
 		{

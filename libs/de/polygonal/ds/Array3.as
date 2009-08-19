@@ -120,7 +120,8 @@ package de.polygonal.ds
 		 * width, height or depth of the three-dimensional array.
 		 *
 		 * @param x The x index (column).
-		 * @param y The y index (row).		 * @param z The z index (layer).
+		 * @param y The y index (row).
+		 * @param z The z index (layer).
 		 * 
 		 * @return The value at the given x/y/z index.
 		 */
@@ -150,7 +151,8 @@ package de.polygonal.ds
 		 * of truncation, otherwise all values are preserved.
 		 * 
 		 * @param w The new width (cols).
-		 * @param h The new height (rows).		 * @param d The new depth (layers).
+		 * @param h The new height (rows).
+		 * @param d The new depth (layers).
 		 */
 		public function resize(w:int, h:int, d:int):void
 		{
@@ -287,7 +289,8 @@ package de.polygonal.ds
 		public function getPile(x:int, y:int):Array
 		{
 			var t:Array = [];
-			var offset1:int = _w * _h;			var offset2:int = (y * _w + x);
+			var offset1:int = _w * _h;
+			var offset2:int = (y * _w + x);
 			for (var i:int = 0; i < _d; i++)
 				t[i] = _a[int(i * offset1 + offset2)];
 			return t;

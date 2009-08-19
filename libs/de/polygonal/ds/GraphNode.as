@@ -40,7 +40,8 @@ package de.polygonal.ds
 		 * A flag indicating whether the node is marked or not. Used by the
 		 * depthFirst and breadthFirst methods only.
 		 * 
-		 * @see Graph#depthFirst		 * @see Graph#breadthFirst
+		 * @see Graph#depthFirst
+		 * @see Graph#breadthFirst
 		 */
 		public var marked:Boolean;
 		

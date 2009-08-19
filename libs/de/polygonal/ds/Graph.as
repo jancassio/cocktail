@@ -146,7 +146,8 @@ package de.polygonal.ds
 			while (c > 0)
 			{
 				v = que[front];
-				if (!visit(v)) return;				
+				if (!visit(v)) return;
+				
 				arcs = v.arcs, k = v.numArcs;
 				for (i = 0; i < k; i++)
 				{
@@ -154,7 +155,8 @@ package de.polygonal.ds
 					
 					if (w.marked) continue;
 					w.marked = true;
-					que[int((c++ + front) & divisor)] = w;				}
+					que[int((c++ + front) & divisor)] = w;
+				}
 				
 				if (++front == 0x10000) front = 0;
 				c--;
