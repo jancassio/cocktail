@@ -208,15 +208,15 @@ package cocktail.core.router
 		{
 			var request : Request = new Request( _cocktail, uri );
 			
-			trace ( "--------" );
-			
-			trace ( request.uri );
-			trace ( request.route.mask );
-			trace ( request.route.target );
-			trace ( request.data );
-			trace ( request.type );
-			
-			trace ( "--------" );
+//			trace ( "--------" );
+//			
+//			trace ( request.uri );
+//			trace ( request.route.mask );
+//			trace ( request.route.target );
+//			trace ( request.data );
+//			trace ( request.type );
+//			
+//			trace ( "--------" );
 			
 //			TODO: implement method
 //			var dao : ProcessDAO;
