@@ -17,7 +17,7 @@ package
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var cocktail : Cocktail;
+		private var _cocktail : Cocktail;
 		
 		
 		
@@ -30,12 +30,12 @@ package
 		 */
 		public function Codeine ()
 		{
-			cocktail = new Cocktail (
+			_cocktail = new Cocktail (
 				this,
 				new Embedder(),
 				new Routes(),
 				"codeine",
-				"Main/home"
+				"main/index"
 			);
 		}
 	}
