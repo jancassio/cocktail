@@ -38,8 +38,8 @@ package cocktail.core.gunz
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private static const LISTEN		: String = "listen";
-		private static const UNLISTN	: String = "unlisten";
+		private static const LISTEN : String = "listen";
+		private static const UNLISTN : String = "unlisten";
 		
 		private var _mode : String;
 		private var _cached : Array;
