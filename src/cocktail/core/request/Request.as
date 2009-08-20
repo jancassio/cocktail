@@ -68,8 +68,9 @@ package cocktail.core.request
 		private var _type : String;
 		
 		private var _uri : String;
-		private var _title : String;
 		private var _route : Route;
+		
+		private var _title : String;
 		private var _data : String;
 		
 		
@@ -100,24 +101,36 @@ package cocktail.core.request
 			GETTERS / SETTERS
 		--------------------------------------------------------------------- */
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function get uri() : String
 		{
 			return _uri;
 		}
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function set uri( uri : String ) : void
 		{
-			_uri = uri;
-			_route = new Route( _cocktail, uri );
+			_uri = routes.clean_uri( uri );
+			_route = new Route( _cocktail, _uri );
 		}
 		
 		
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function get title() : String
 		{
 			return _title;
 		}
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function set title( title : String ) : void
 		{
 			_title = title;
@@ -125,11 +138,17 @@ package cocktail.core.request
 		
 		
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function get type() : String
 		{
 			return _type;
 		}
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function set type( type : String ) : void
 		{
 			_type = type;
@@ -137,11 +156,17 @@ package cocktail.core.request
 		
 		
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function get data() : String
 		{
 			return _data;
 		}
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function set data( data : String ) : void
 		{
 			_data = data;
@@ -149,6 +174,9 @@ package cocktail.core.request
 		
 		
 		
+		/*
+		 * TODO: write docs
+		 */
 		public function get route() : Route
 		{
 			return _route;
