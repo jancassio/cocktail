@@ -35,7 +35,8 @@ package
 				new Embedder(),
 				new Routes(),
 				"codeine",
-				"main/index"
+				"main/index/c/b/a"		// TARGET URI
+//				"mask1/a/b/c"			// MASK URI
 			);
 		}
 	}
