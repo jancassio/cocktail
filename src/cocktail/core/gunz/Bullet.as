@@ -26,8 +26,8 @@
 
 package cocktail.core.gunz 
 {
-	import flash.utils.describeType;		
-
+	import flash.utils.describeType;	
+	
 	/**
 	 * Base Bullet class.
 	 * @author nybras | nybras@codeine.it
@@ -138,7 +138,7 @@ package cocktail.core.gunz
 			for each( prop in props )
 			{
 				output += "\t"+ prop.@name +" : ";
-				output += prop.@type +" = ";
+				output += prop.@type.split( "::" ).pop() +" = ";
 				output += this[ prop.@name ];
 			}
 			
