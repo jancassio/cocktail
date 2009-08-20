@@ -37,6 +37,31 @@ package cocktail.core.request
 	public class Request extends Index
 	{
 		/* ---------------------------------------------------------------------
+			CONSTANTS (+public getters)
+		--------------------------------------------------------------------- */
+		
+		private static const _GET : String = "get";
+		private static const _POST : String = "post";
+		
+		/**
+		 * Returns a GET request type.
+		 */
+		public static function get GET() : String
+		{
+			return _GET;
+		}
+		
+		/**
+		 * Returns a GET request type.
+		 */
+		public static function get POST() : String
+		{
+			return _POST;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			VARS
 		--------------------------------------------------------------------- */
 		
@@ -58,7 +83,7 @@ package cocktail.core.request
 		 */
 		public function Request(
 			cocktail : Cocktail,
-//			type : String,
+			type : String,
 			uri : String,
 			data : * = null
 		) : void

@@ -50,8 +50,6 @@ package cocktail.core.router
 		private var _trigger : RouterTrigger;
 		
 		private var _initialized : Boolean;
-		private var _first_uri : Boolean;
-		
 		private var _history : Array;
 		private var _index : Number;
 		
@@ -206,7 +204,7 @@ package cocktail.core.router
 		{
 			var request : Request;
 			
-			request = new Request( _cocktail, uri );
+			request = new Request( _cocktail, Request.GET, uri );
 			history.push( request );
 			_index++;
 			
@@ -254,7 +252,8 @@ package cocktail.core.router
 				RouterTrigger.UPDATE,
 				new Request(
 					_cocktail,
-					( event.value == "/" ? config.default_uri : event.value )
+					Request.GET,
+					(event.value == "/" ? config.default_uri : event.value )
 				)
 			));
 		}

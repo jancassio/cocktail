@@ -53,12 +53,11 @@ package cocktail.core.request
 		 */
 		public function RequestAsync(
 			cocktail : Cocktail,
-//			type : String,
 			uri : String,
 			data : *
 		)
 		{
-			super( cocktail, uri, data );
+			super( cocktail, Request.POST, uri, data );
 			_trigger = new RequestAsyncTrigger( this );
 		}
 		
