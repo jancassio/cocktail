@@ -29,9 +29,9 @@
 	
 	<!--  ROUTES -->
 	<routes>
-		<route mask="mask1/*" target="Main/index/$1/$2/$3"/>
-		<route mask="mask2/bla/ble/*" target="Main/index/*"/>
-		<route mask="mask3/hehe" target="Main/index"/>
+		<route mask="mask1/*" target="main/index/$2/$1/$0"/>
+		<route mask="mask2/bla/ble/*" target="main/bla/*"/>
+		<route mask="mask3-hehe" target="main/blu"/>
 	</routes>
 	
 	
