@@ -26,7 +26,8 @@
 
 package cocktail.core.router.gunz 
 {
-	import cocktail.core.gunz.Bullet;			
+	import cocktail.core.gunz.Bullet;
+	import cocktail.core.request.Request;	
 
 	/**
 	 * @author hems | hems@codeine.it
@@ -37,7 +38,7 @@ package cocktail.core.router.gunz
 			BULLET PROPERTIES
 		--------------------------------------------------------------------- */
 		
-		public var location : String;
+		public var request : Request;
 		
 		
 		
@@ -48,15 +49,15 @@ package cocktail.core.router.gunz
 		/**
 		 * Creates a new RouterBullet.
 		 * @param type	Bullet type.
-		 * @param location	User name.
+		 * @param request	Request instance.
 		 */
 		public function RouterBullet(
 			type : String,
-			location : String
+			request : Request
 		) : void
 		{
 			super ( type );
-			this.location = location;
+			this.request = request;
 		}
 	}
 }
