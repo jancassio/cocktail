@@ -43,6 +43,7 @@ package cocktail.core.request
 		private var _type : String;
 		
 		private var _uri : String;
+		private var _title : String;
 		private var _route : Route;
 		private var _data : String;
 		
@@ -87,12 +88,24 @@ package cocktail.core.request
 		
 		
 		
+		public function get title() : String
+		{
+			return _title;
+		}
+		
+		public function set title( title : String ) : void
+		{
+			_title = title;
+		}
+		
+		
+		
 		public function get type() : String
 		{
 			return _type;
 		}
 		
-		public function set type(type : String) : void
+		public function set type( type : String ) : void
 		{
 			_type = type;
 		}
@@ -104,7 +117,7 @@ package cocktail.core.request
 			return _data;
 		}
 		
-		public function set data(data : String) : void
+		public function set data( data : String ) : void
 		{
 			_data = data;
 		}
