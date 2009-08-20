@@ -162,9 +162,9 @@ package cocktail
 		 * Get the reference for the Routes instance.
 		 * @param	Reference to the routes instance.
 		 */
-		public function get routes () : Router
+		public function get routes() : RoutesTail
 		{
-			return _router;
+			return _routes;
 		}
 		
 		/**

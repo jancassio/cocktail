@@ -30,9 +30,10 @@ package cocktail.core
 	import cocktail.core.config.Config;
 	import cocktail.core.logger.Logger;
 	import cocktail.core.router.Router;
+	import cocktail.core.router.RoutesTail;
 	
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;	
+	import flash.utils.getQualifiedClassName;		
 
 	/**
 	 * Index class is the base class for almost every class inside cocktail.
@@ -102,7 +103,7 @@ package cocktail.core
 		 * Get the application routes.
 		 * @return	The application routes.
 		 */
-		final public function get routes() : Router
+		final public function get routes() : RoutesTail
 		{
 			return _cocktail.routes;
 		}
