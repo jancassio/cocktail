@@ -162,7 +162,7 @@ package cocktail.core.config
 		 */
 		public function root( environment : String = null ) : String
 		{
-			environment =( environment || _raw..paths.@default );
+			environment = ( environment || _raw..paths.@default );
 			return _raw..paths.path.( @name == environment ).@url;
 		}
 		
