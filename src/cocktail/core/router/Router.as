@@ -30,6 +30,7 @@ package cocktail.core.router
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Trigger;
 	import cocktail.core.request.Request;
+	import cocktail.core.request.RequestAsync;
 	import cocktail.core.router.gunz.RouterBullet;
 	import cocktail.core.router.gunz.RouterTrigger;
 	
@@ -86,12 +87,9 @@ package cocktail.core.router
 			_initialized = true;
 			
 			if( config.plugin )
-			{
 				SWFAddress.addEventListener(
-					SWFAddressEvent.CHANGE, _set_location
+					SWFAddressEvent.CHANGE, _addressbar_change
 				);
-				return;
-			};
 		}
 		
 		
@@ -141,7 +139,7 @@ package cocktail.core.router
 		 */
 		public function get has_back() : Boolean
 		{
-			return( this.index > 0 );
+			return( index > 0 );
 		}
 
 		/**
@@ -151,7 +149,7 @@ package cocktail.core.router
 		 */
 		public function get has_forward() : Boolean
 		{
-			return( this.index < this.history.length );
+			return( index < history.length );
 		}
 		
 		
@@ -206,42 +204,29 @@ package cocktail.core.router
 		 */
 		public function get( uri : String ) : void
 		{
-			var request : Request = new Request( _cocktail, uri );
+			var request : Request;
 			
-//			trace ( "--------" );
-//			
-//			trace ( request.uri );
-//			trace ( request.route.mask );
-//			trace ( request.route.target );
-//			trace ( request.data );
-//			trace ( request.type );
-//			
-//			trace ( "--------" );
+			request = new Request( _cocktail, uri );
+			history.push( request );
+			_index++;
 			
-//			TODO: implement method
-//			var dao : ProcessDAO;
-//			
-//			dao = new ProcessDAO( url, false, freeze );
-//			lastUrlFreeze = freeze;
-//			
-//			if( ! silentMode && config.plugin ) {
-//				this.history.push( dao.url );
-//				this.index++;
-//				
-//				if( url != SWFAddress.getValue() )
-//					SWFAddress.setValue( dao.url );
-//			}
-//			else
-//			{
-//				trigger.pull( new RouterBullet( 
-//					RouterTrigger.UPDATE, dao.url, lastUrlFreeze
-//				) );
-//			}
+			if( config.plugin )
+			{
+				if( request.route.mask != SWFAddress.getValue() )
+					SWFAddress.setValue( request.route.mask );
+			}
+			else
+				trigger.pull( new RouterBullet( 
+					RouterTrigger.UPDATE, request
+				));
 		}
 		
-		public function post( uri : String, data : * ) : void
+		/*
+		 * TODO: write docs
+		 */
+		public function post( uri : String, data : * ) : RequestAsync
 		{
-			
+			return new RequestAsync( _cocktail, uri, data );
 		}
 		
 		
@@ -263,40 +248,15 @@ package cocktail.core.router
 		 * Listen the browser url changes( SWFAddress ).
 		 * @param event	SWFAddressEvent.
 		 */
-		private function _set_location( event : SWFAddressEvent ) : void 
+		private function _addressbar_change( event : SWFAddressEvent ) : void 
 		{
-			var url : String;
-			var bullet : RouterBullet;
-			
-			if( ! _first_uri )
-			{
-				_first_uri = true;
-				
-				url = event.value;
-				if( url == "/" )
-				{
-					if( config.default_uri != "/" )
-					{
-						bullet = new RouterBullet (
-							RouterTrigger.UPDATE, config.default_uri
-						);
-						_trigger.pull( bullet );
-						// SWFAddress.setTitle( xyz... );
-					}
-				}
-				else
-				{
-					bullet = new RouterBullet( RouterTrigger.UPDATE, url );
-					_trigger.pull( bullet );
-				
-				}
-				return;
-			}
-			
-			url = ( event.value == "/" ? config.default_uri : event.value );
-			bullet = new RouterBullet ( RouterTrigger.UPDATE, url );
-			_trigger.pull( bullet );
+			_trigger.pull( new RouterBullet(
+				RouterTrigger.UPDATE,
+				new Request(
+					_cocktail,
+					( event.value == "/" ? config.default_uri : event.value )
+				)
+			));
 		}
-		
 	}
 }
