@@ -27,7 +27,8 @@
 package cocktail.core.router 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.Index;	
+	import cocktail.core.Index;
+	import cocktail.utils.ArrayUtil;	
 
 	/**
 	 * Stores URIs and resolve it's route.
@@ -39,9 +40,10 @@ package cocktail.core.router
 			VARS
 		--------------------------------------------------------------------- */
 		
+		private var _api : API;
 		private var _mask : String;
 		private var _target : String;
-		
+		private var _locale : String;
 		
 		
 		/* ---------------------------------------------------------------------
@@ -71,7 +73,39 @@ package cocktail.core.router
 		 */
 		private function _resolve( uri : String ) : void
 		{
-			// TODO: Resolve routes here and set mask / target props.
+			_locale = _get_locale( uri );
+			_mask = routes.wrap( _purge_locale( uri ) );
+			_target = routes.unwrap( _purge_locale( uri ) );
+			_api = new API( _target );
+		}
+		
+		
+		
+		/**
+		 * Extracts the locale from the given URI.
+		 * @return	The extracted locale.
+		 */
+		private function _get_locale( uri : String ) : String
+		{
+			var locale : String;
+			
+			locale = uri.split( "/" ).shift();
+			
+			// If URI hasn't a locale string prefix, then the current
+			// or default locale is used.
+			if ( ! ArrayUtil.has( config.locales, locale )  )
+				locale = ( config.current_locale || config.default_locale );
+			
+			return locale;
+		}
+		
+		/**
+		 * Extracts the locale from the given URI.
+		 * @param uri	The URI without the locale prefix.
+		 */
+		private function _purge_locale( uri : String ) : String
+		{
+			return ArrayUtil.del( uri.split( "/" ), _locale ).join( "/" );
 		}
 		
 		
@@ -97,5 +131,47 @@ package cocktail.core.router
 		{
 			return _target;
 		}
+		
+		/**
+		 * Returns the route locale.
+		 * @return	Route locale.
+		 */
+		public function get locale() : String
+		{
+			return _locale;
+		}
+		
+		/**
+		 * Returns the route API.
+		 * @return	Route API.
+		 */
+		public function get api() : API
+		{
+			return _api;
+		}
+	}
+}
+
+import cocktail.utils.StringUtil;
+
+/**
+ * Route API - stores system execution infos (controller, action, params).
+ * @author nybras | nybras@codeine.it 
+ */
+internal class API
+{
+	public var controller : String;
+	public var action : String;
+	public var params : *;
+	
+	public function API( uri : String )
+	{
+		var parts : Array;
+		
+		parts = uri.split( "/" );
+		
+		controller = StringUtil.cap( parts[ 0 ] );
+		action = parts[ 1 ];
+		params = [].concat( parts.slice( 2 ) );
 	}
 }
