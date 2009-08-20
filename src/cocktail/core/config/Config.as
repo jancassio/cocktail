@@ -103,7 +103,6 @@ package cocktail.core.config
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
 			
 			router.init();
-			router.	get( default_uri );
 		}
 		
 		
