@@ -46,13 +46,33 @@ package cocktail.utils
 		}
 		
 		/**
-		 * Returns the given string in lowercase, except the first char that becomes uppercase.
+		 * Returns the given string in lowercase, except the first char that
+		 * becomes uppercase.
 		 * @param string	String source.
 		 */
 		public static function ucasef( string : String ) : String
 		{
 			return string.substr(0, 1).toUpperCase() + string.substr( 1 ).toLowerCase();
 		}
+		
+		/**
+		 * Capitalizes the given string according or no the given separator.
+		 * @param string	String to capitalize.
+		 * @param sep	Word separator (optional).
+		 * @return	The capitalized string.
+		 */
+		public static function cap( string : String, sep : String = "-" ) : String
+		{
+			var output : String;
+			var word : String;
+			
+			output = "";
+			for each( word in [].concat( string.split( sep ) ) )
+				output += ucasef( word );
+			
+			return output;
+		}
+		
 		
 		/**
 		 * Returns the first and last char of the given string.
