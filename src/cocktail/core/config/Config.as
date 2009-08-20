@@ -94,13 +94,17 @@ package cocktail.core.config
 		private function _init( event : Event ) : void 
 		{
 			var stage : Stage;
-			
+			var route : XML;
+			 
 			_raw = new XML( _tmp_loader.data.toString() );
 			
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );;
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
+			
+			for each( route in _raw..route )
+				routes.map( route.@mask, route.@target );
 			
 			router.init();
 		}
@@ -136,7 +140,10 @@ package cocktail.core.config
 		 */
 		private function get _config_path() : String
 		{
-			return	( ( plugin ? "" : "." ) + "./cocktail/config/config.fxml" );
+			return	( (	plugin ? "" : "." )
+						+ "./cocktail/config/config.fxml"
+						+ "?v="+ Math.random()
+					);
 		}
 		
 		/**
