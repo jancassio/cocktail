@@ -74,8 +74,8 @@ package cocktail.core
 			_authorized = new Array();
 			_log = new Logger( classpath );
 			
-			_cocktail.bind.plug( "log-level", _log, "log_level" );
-			_cocktail.bind.plug( "log-detail", _log, "log_detail" );
+			_cocktail.bind.plug( "log-level", _log, "level" );
+			_cocktail.bind.plug( "log-detail", _log, "detail" );
 		}
 		
 		
