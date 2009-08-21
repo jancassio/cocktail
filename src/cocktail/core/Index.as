@@ -33,7 +33,7 @@ package cocktail.core
 	import cocktail.core.router.RoutesTail;
 	
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;		
+	import flash.utils.getQualifiedClassName;	
 
 	/**
 	 * Index class is the base class for almost every class inside cocktail.
@@ -72,7 +72,10 @@ package cocktail.core
 		{
 			_cocktail = cocktail;
 			_authorized = new Array();
-			_log = new Logger( class_path );
+			_log = new Logger( classpath );
+			
+			_cocktail.bind.plug( "log-level", _log, "log_level" );
+			_cocktail.bind.plug( "log-detail", _log, "log_detail" );
 		}
 		
 		
@@ -108,6 +111,15 @@ package cocktail.core
 			return _cocktail.routes;
 		}
 		
+		/**
+		 * Get the application logger.
+		 * @return	The application logger.
+		 */
+		final public function get log() : Logger
+		{
+			return _log;
+		}
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -140,7 +152,7 @@ package cocktail.core
 		 * @return	If auth suceed sucessfully returns the restricted namespace,
 		 * otherwise return <code>null</code>.
 		 */
-		final public function auth( caller : Object ) : Namespace
+		final public function auth( caller : * ) : Namespace
 		{
 			var cls : Class;
 			
@@ -158,18 +170,18 @@ package cocktail.core
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Gets the class name.
+		 * Gets the classname.
 		 * @return	The class name, without the package notation.
 		 */
-		final public function get class_name() : String {
-			return class_path.split( "." ).pop();
+		final public function get classname() : String {
+			return classpath.split( "." ).pop();
 		}
 		
 		/**
-		 * Gets the class path.
+		 * Gets the classpath.
 		 * @return	The class path, with the package notation.
 		 */
-		final public function get class_path() : String {
+		final public function get classpath() : String {
 			return getQualifiedClassName( this ).replace( "::", "." );
 		}
 		
