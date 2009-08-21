@@ -31,7 +31,7 @@ package cocktail.core.router
 	import cocktail.utils.ArrayUtil;	
 
 	/**
-	 * Stores URIs and resolve it's route.
+	 * Stores URI and resolve it's route.
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class Route extends Index 
@@ -51,7 +51,7 @@ package cocktail.core.router
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Creates a new MapVO instance.
+		 * Creates a new Route instance.
 		 * @param cocktail	Cocktail reference..
 		 * @param uri	Request URI.
 		 */
