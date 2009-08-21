@@ -27,6 +27,7 @@ package cocktail
 	import cocktail.core.bind.Bind;
 	import cocktail.core.config.Config;
 	import cocktail.core.embedder.EmbedderTail;
+	import cocktail.core.factory.Factory;
 	import cocktail.core.processes.Processes;
 	import cocktail.core.router.Router;
 	import cocktail.core.router.RoutesTail;
@@ -58,7 +59,8 @@ package cocktail
 		private var _routes : RoutesTail;
 		private var _processes : Processes;
 		
-		private var _bind : Bind; 
+		private var _bind : Bind;
+		private var _factory : Factory;
 		
 		
 		
@@ -91,6 +93,7 @@ package cocktail
 			_default_uri = default_uri;
 			
 			_bind = new Bind();
+			_factory = new Factory( this );
 			
 			log_detail = 1;
 			log_level = 3;
@@ -224,7 +227,7 @@ package cocktail
 		
 		/**
 		 * Get the reference for the Router instance.
-		 * @param	Reference to the router instance.
+		 * @param	Reference to the Router instance.
 		 */
 		public function get router () : Router
 		{
@@ -233,7 +236,7 @@ package cocktail
 		
 		/**
 		 * Get the reference for the Routes instance.
-		 * @param	Reference to the routes instance.
+		 * @param	Reference to the Routes instance.
 		 */
 		public function get routes() : RoutesTail
 		{
@@ -242,11 +245,20 @@ package cocktail
 		
 		/**
 		 * Get the reference for the Processes instance.
-		 * @param	Reference to the processes instance.
+		 * @param	Reference to the Processes instance.
 		 */
 		public function get processes () : Processes
 		{
 			return _processes;
+		}
+		
+		/**
+		 * Get the reference for the Factory instance.
+		 * @param	Reference to the Factory instance.
+		 */
+		public function get factory () : Factory
+		{
+			return _factory;
 		}
 	}
 }
