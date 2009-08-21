@@ -24,6 +24,7 @@
 
 package cocktail 
 {
+	import cocktail.core.bind.Bind;
 	import cocktail.core.config.Config;
 	import cocktail.core.embedder.EmbedderTail;
 	import cocktail.core.processes.Processes;
@@ -57,6 +58,8 @@ package cocktail
 		private var _routes : RoutesTail;
 		private var _processes : Processes;
 		
+		private var _bind : Bind; 
+		
 		
 		
 		/* ---------------------------------------------------------------------
@@ -87,6 +90,11 @@ package cocktail
 			_routes = routes;
 			_default_uri = default_uri;
 			
+			_bind = new Bind();
+			
+			log_detail = 1;
+			log_detail = 3;
+			
 			if( !_app.stage )
 				_app.addEventListener( Event.ADDED_TO_STAGE, _init );
 			else
@@ -105,6 +113,61 @@ package cocktail
 			_config = new Config( this );
 			_router = new Router( this );
 			_processes = new Processes( this );
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			LOGGER LEVEL and DETAIL
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Returns the Bind reference.
+		 * @return	The bind reference.
+		 */
+		public function get bind() : Bind
+		{
+			return _bind;
+		}
+		
+		
+		
+		/**
+		 * Returns the application log level.
+		 * @return	The application log level.
+		 */
+		public function get log_level() : int
+		{
+			return _bind.g( "log-level" );
+		}
+		
+		/**
+		 * Specify the application log level.
+		 * @param level	The application log level.
+		 */
+		public function set log_level( level : int ) : void
+		{
+			_bind.s( "log-level", level );
+		}
+		
+		
+		
+		/**
+		 * Returns the application log detail.
+		 * @return	The application log detail.
+		 */
+		public function get log_detail() : int
+		{
+			return _bind.g( "log-detail" );
+		}
+		
+		/**
+		 * Specify the application log detail.
+		 * @param detail	The application log detail.
+		 */
+		public function set log_detail( detail : int ) : void
+		{
+			_bind.s( "log-detail", detail );
 		}
 		
 		
