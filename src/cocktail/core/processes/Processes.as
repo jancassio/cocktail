@@ -1,5 +1,5 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
 	****************************************************************************
    
 		This library is free software; you can redistribute it and/or modify
@@ -28,8 +28,11 @@ package cocktail.core.processes
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
+	import cocktail.core.factory.Factory;
 	import cocktail.core.request.Request;
-	import cocktail.core.router.gunz.RouterBullet;	
+	import cocktail.core.router.Route;
+	import cocktail.core.router.gunz.RouterBullet;
+	import cocktail.lib.Controller;	
 
 	/**
 	 * Manage all processes.
@@ -41,7 +44,7 @@ package cocktail.core.processes
 			VARS
 		-------------------------------------------------------------------  */
 		
-		private var _controllers : Array;
+		private var _controllers : Object;
 		
 		
 		
@@ -56,7 +59,7 @@ package cocktail.core.processes
 		public function Processes( cocktail : Cocktail )
 		{
 			super( cocktail);
-			_controllers = [];
+			_controllers = {};
 			router.listen.update( _route );
 		}
 		
@@ -86,8 +89,26 @@ package cocktail.core.processes
 		 */
 		private function _route( bullet : RouterBullet ) : void
 		{
-			bullet;
-			// TODO: implement method
+			log.debug( "@@ Request" );
+			log.debug( "---------------" );
+			log.debug( "uri => "+ bullet.request.uri );
+			log.debug( "type => "+ bullet.request.type );
+			log.debug( "data => "+ bullet.request.data );
+			log.debug( "title => "+ bullet.request.title );
+			
+			log.debug( "@@ Route" );
+			log.debug( "---------------" );
+			log.debug( "route.locale => "+ bullet.request.route.locale );
+			log.debug( "route.mask => "+ bullet.request.route.mask );
+			log.debug( "route.target => "+ bullet.request.route.target );
+			
+			log.debug( "@@ API" );
+			log.debug( "---------------" );
+			log.debug( "route.api.controller => "+ bullet.request.route.api.controller );
+			log.debug( "route.api.action => "+ bullet.request.route.api.action );
+			log.debug( "route.api.params => "+ bullet.request.route.api.params );
+			
+			_run( bullet.request );
 		}
 		
 		
@@ -102,6 +123,8 @@ package cocktail.core.processes
 		 */
 		private function _run( request : Request  ) : void
 		{
+			controller( request.route.api.controller ).run( request );
+			
 			request;
 			// TODO: implement method
 		}
@@ -114,6 +137,31 @@ package cocktail.core.processes
 		{
 			request;
 			// TODO: implement method
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			CONTROLLERS
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Instantiate the requested Controller, or just return it if it was
+		 * already instatiated. In other words, its unique.
+		 * @param name	Controller name (CamelCased)
+		 */
+		public function controller( name : String ) : Controller
+		{
+			var controller : Controller;
+			
+			if( _controllers[ name ] )
+				controller = _controllers[ name ];
+			else
+				_controllers[ name ] = controller = new (
+					_cocktail.factory.controller( name )
+				)( _cocktail );
+			
+			return controller;
 		}
 	}
 }
