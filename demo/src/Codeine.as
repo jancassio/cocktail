@@ -30,13 +30,15 @@ package
 		 */
 		public function Codeine ()
 		{
+			var target_uri : String = "main/index/c/b/a";
+			var mask_uri : String = "mask1/a/b/c";
+			
 			_cocktail = new Cocktail (
 				this,
 				new Embedder(),
 				new Routes(),
 				"codeine",
-				"main/index/c/b/a"		// TARGET URI
-//				"mask1/a/b/c"			// MASK URI
+				mask_uri
 			);
 		}
 	}
