@@ -93,7 +93,7 @@ package cocktail.core.router
 			
 			// If URI hasn't a locale string prefix, then the current
 			// or default locale is used.
-			if ( ! ArrayUtil.has( config.locales, locale )  )
+			if ( !ArrayUtil.has( config.locales, locale )  )
 				locale = ( config.current_locale || config.default_locale );
 			
 			return locale;
