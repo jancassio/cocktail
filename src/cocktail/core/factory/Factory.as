@@ -28,128 +28,105 @@ package cocktail.core.factory
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.lib.Controller;
-	import cocktail.lib.Layout;
-	import cocktail.lib.Model;
 	
-	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;	
 
 	/**
 	 * Factory class.
 	 * @author hems | hems@codeine.it
+	 * @author nybras | nybras@codeine.it
 	 */
 	public class Factory extends Index
 	{
-		/* ---------------------------------------------------------------------
-			VARS
-		--------------------------------------------------------------------- */
-		
-		private var _uniques : Dictionary;
-		private var _app_id : String;
-		
-		
-		
 		/* ---------------------------------------------------------------------
 			INITIALIZING
 		--------------------------------------------------------------------- */
 
 		/**
-		 * @param app owner of the fabric
+		 * Helper to instantiate classes.
+		 * @param cocktail	Cocktail reference.
 		 */
 		public function Factory( cocktail : Cocktail )
 		{
 			super( cocktail );
-			_uniques = new Dictionary();
 		}
 		
 		
 		
 		/* ---------------------------------------------------------------------
-			CLASS GETTER
+			CLASS EVALUATOR
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Returns a class reference according the given classpath.
-		 * @param class_path	Classpath to return.
-		 * @return	The found class.
+		 * @param classpath	Desired classpath.
+		 * @return	The found class reference.
 		 */
-		public function get_class ( classpath : String ) : Class {
-			return getDefinitionByName( classpath ) as Class;
+		public function evaluate ( classpath : String ) : Class
+		{
+			return Class( getDefinitionByName( classpath ) );
 		}
 		
 		
 		
 		/* ---------------------------------------------------------------------
-			CONTROLLERS
+			MVCL
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Return a unique controller
-		 * @param process	ProcessDAO to get the controller search.
+		 * Evaluates classes for Model, View, Controller and Layout.
+		 * @param folder	Class folder name.
+		 * @param classname	Class name.
 		 */
-		public function controller( clean_class_name : String ) : Controller
+		private function _mvcl( folder : String, classname : String ) : Class
 		{
-			var cls : Class;
-			var ctrl : Controller;
+			var klass : Class;
 			var path : String;
 			
-			path = _app_id + ".controllers." + clean_class_name + "Controller";
-			
-			if( defined( _uniques, path ) )
-				cls = _uniques[ path ];
-			else
-			{
-				cls = get_class( path );
-				ctrl = new cls();
-				_uniques[ path ] = ctrl;
-			}
-			
-			return ctrl;
+			path = _cocktail.app_id + "." + folder + "." + classname;
+			return evaluate( path );
 		}
 		
 		
-		/* ---------------------------------------------------------------------
-			MODEL
-		--------------------------------------------------------------------- */
 		
 		/**
-		 * Return a unique model
-		 * @param process	ProcessDAO to get the controller search.
+		 * Evaluates the given Controller class by name and return it.
+		 * @param name	Controller name (CamelCased).
+		 * @return	Controller class to be instantiated.
 		 */
-		public function model( clean_class_name : String ) : Model
+		public function controller( name : String ) : Class
 		{
-			var cls : Class;
-			var model : Model;
-			var path : String;
-			
-			path = _app_id + ".models." + clean_class_name + "Model";
-			
-			if( defined( _uniques, path ) )
-				cls = _uniques[ path ];
-			else
-			{
-				cls = get_class( path );
-				model = new cls();
-				_uniques[ path ] = cls;
-			}
-			
-			return model;
+			return _mvcl( "controllers", name + "Controller" );
 		}
 		
-		
-		
-		/* ---------------------------------------------------------------------
-			VIEW
-		--------------------------------------------------------------------- */
-		
-		// TODO: write documentation
-		public function layout( clean_class_name : String ) : Layout
+		/**
+		 * Evaluates the given Model class by name and return it.
+		 * @param name	Model name (CamelCased).
+		 * @return	Model class to be instantiated.
+		 */
+		public function model( name : String ) : Class
 		{
-			var path : String;
-			path = _app_id + ".layouts." + clean_class_name + "Layout";
-			
-			return new ( get_class( path ) )();
+			return _mvcl( "models", name + "Model" );
+		}
+		
+		/**
+		 * Evaluates the given Layout class by name and return it.
+		 * @param name	Layout name (CamelCased).
+		 * @return	Layout class to be instantiated.
+		 */
+		public function layout( name : String ) : Class
+		{
+			return _mvcl( "layouts", name + "Layout" );
+		}
+		
+		/**
+		 * Evaluates the given View class by name and return it.
+		 * @param name	View name (CamelCased).
+		 * @return	View class to be instantiated.
+		 */
+		public function view( name : String ) : Class
+		{
+			return _mvcl( "views", name + "View" );
 		}
 	}
 }
