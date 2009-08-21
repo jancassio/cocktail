@@ -93,7 +93,7 @@ package cocktail
 			_bind = new Bind();
 			
 			log_detail = 1;
-			log_detail = 3;
+			log_level = 3;
 			
 			if( !_app.stage )
 				_app.addEventListener( Event.ADDED_TO_STAGE, _init );
@@ -142,8 +142,15 @@ package cocktail
 		}
 		
 		/**
-		 * Specify the application log level.
-		 * @param level	The application log level.
+		 * Sets the application log level.
+		 * @param level	Application log level (default=3).
+		 * 		<br/># 0=disable
+		 * 		<br/># 1=fatal
+		 * 		<br/># 2=fatal,error
+		 * 		<br/># 3=fatal,error,debug
+		 * 		<br/># 4=fatal,error,debug,warn
+		 * 		<br/># 5=fatal,error,debug,warn,notice
+		 * 		<br/># 6=fatal,error,debug,warn,notice,info
 		 */
 		public function set log_level( level : int ) : void
 		{
@@ -162,8 +169,11 @@ package cocktail
 		}
 		
 		/**
-		 * Specify the application log detail.
-		 * @param detail	The application log detail.
+		 * Sets the log detail.
+		 * @param logDetail	Application default log detail (default=1).
+		 * <br/># 0=Doesnt add any extra prefix besides the log level.
+		 * <br/># 1=Adds the 'ClassName' prefix to all log calls.
+		 * <br/># 2=Adds a 'packace.a.b.c..ClassName' prefix to all log calls.
 		 */
 		public function set log_detail( detail : int ) : void
 		{
