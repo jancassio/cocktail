@@ -29,6 +29,7 @@ package cocktail.core.router.gunz
 	import cocktail.core.gunz.Trigger;		
 
 	/**
+	 * TODO: add class description
 	 * @author hems | hems@codeine.it
 	 */
 	public class RouterTrigger extends Trigger
