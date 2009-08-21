@@ -1,4 +1,4 @@
-<project name="build" default="all" >
+<project name="build" default="all" basedir=".">
     <description>
         Shortcuts to some scaffold scripts
     </description>
@@ -11,7 +11,7 @@
 	
     <target name="embedder" >
         <exec executable="${ruby}" dir="." failonerror="true">
-            <arg line="../../shake/shake.rb" />
+            <arg line="demo/shake/shake.rb" />
 			<arg line="embedder" />
         </exec>
     </target>
