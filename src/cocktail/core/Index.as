@@ -238,7 +238,7 @@ package cocktail.core
 		}
 		
 		/**
-		 * Tries to execute some method, handling the possible error results.
+		 * Tries to execute some method, omitting the possible error results.
 		 * @param scope	Method scope.
 		 * @param method	Method name.
 		 * @param params	Method params
