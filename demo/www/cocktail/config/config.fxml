@@ -30,7 +30,7 @@
 	<!--  ROUTES -->
 	<routes>
 		<route mask="lets/take/a/look/*" target="main/index/$2/$1/$0"/>
-		<route mask="lets/edit/*" target="main/edit/$0/$2"/>
+		<route mask="lets/edit/*" target="main/edit/$1/$0"/>
 		<route mask="ok/its/ok/delete/it/*" target="main/del/$2/$2/$2"/>
 	</routes>
 	

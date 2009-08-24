@@ -25,18 +25,18 @@ package codeine.controllers
 			log.debug( "param 0 => "+ param0 );
 			log.debug( "param 1 => "+ param1 );
 			log.debug( "param 2 => "+ param2 );
+			log.debug( "------" );
 		}
 		
 		public function edit(
 			param0 : String,
-			param1 : String,
-			param2 : String
+			param1 : String
 		) : void
 		{
 			log.debug( "@@ EDIT" );
 			log.debug( "param 0 => "+ param0 );
 			log.debug( "param 1 => "+ param1 );
-			log.debug( "param 2 => "+ param2 );
+			log.debug( "------" );
 		}
 		
 		public function del(
@@ -49,6 +49,7 @@ package codeine.controllers
 			log.debug( "param 0 => "+ param0 );
 			log.debug( "param 1 => "+ param1 );
 			log.debug( "param 2 => "+ param2 );
+			log.debug( "------" );
 		}
 	}
 }

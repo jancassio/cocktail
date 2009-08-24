@@ -35,9 +35,9 @@ package
 		public function Codeine ()
 		{
 			_uris = [
-				new TestURI( "lets/take/a/look/a/b/c",	"main/index/a/b/c" ),
-				new TestURI( "lets/edit/a/b/c",			"main/edit/a/b/c" ),
-				new TestURI( "ok/its/ok/delete/a/b/c",	"main/del/a/b/c" )
+				"main/index/a/b/c",
+				"main/edit/a/b/c",
+				"main/del/a/b/c"
 			];
 			
 			_cocktail = new Cocktail (
@@ -45,7 +45,7 @@ package
 				new Embedder(),
 				new Routes(),
 				"codeine",
-				TestURI( _uris.shift() ).target
+				_uris.shift()
 			);
 			
 			addEventListener( Event.ADDED_TO_STAGE, _added);
@@ -62,24 +62,9 @@ package
 			switch( event.keyCode )
 			{
 				case Keyboard.RIGHT:
-					_cocktail.router.get( TestURI( _uris.shift() ).target );
+					_cocktail.router.get( _uris.shift() );
 				break;
 			}
 		}
-	}
-}
-
-
-internal class TestURI
-{
-	
-	public var mask : String;
-	public var target : String;
-	
-	
-	public function TestURI( mask : String, target : String )
-	{
-		this.mask = mask;
-		this.target = target;
 	}
 }
