@@ -243,7 +243,7 @@ package cocktail.core
 		 * @param method	Method name.
 		 * @param params	Method params
 		 */
-		final public function try_exec(
+		final public function exec(
 			scope : *,
 			method : String,
 			params : * = null

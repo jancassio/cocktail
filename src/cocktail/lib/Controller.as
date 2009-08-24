@@ -17,7 +17,7 @@ package cocktail.lib
 		
 		final public function run( request : Request ) : void
 		{
-			try_exec( this, request.route.api.action, request.route.api.params );
+			exec( this, request.route.api.action, request.route.api.params );
 		}
 	}
 }
