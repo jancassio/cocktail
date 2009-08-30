@@ -64,7 +64,7 @@ package cocktail.core.router
 		
 		
 		/* ---------------------------------------------------------------------
-			RESOLVE
+			RESOLVING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -76,7 +76,7 @@ package cocktail.core.router
 			_locale = _get_locale( uri );
 			_mask = routes.wrap( _purge_locale( uri ) );
 			_target = routes.unwrap( _purge_locale( uri ) );
-			_api = new API( _target );
+			_api = new API( _target, _cocktail );
 		}
 		
 		
@@ -152,26 +152,63 @@ package cocktail.core.router
 	}
 }
 
+import cocktail.Cocktail;
+import cocktail.core.Index;
+import cocktail.lib.Controller;
 import cocktail.utils.StringUtil;
 
 /**
  * Route API - stores system execution infos (controller, action, params).
  * @author nybras | nybras@codeine.it 
  */
-internal class API
+internal class API extends Index
 {
+	/* ---------------------------------------------------------------------
+		VARS
+	--------------------------------------------------------------------- */
+	
+	private var _index : Index;
+	
 	public var controller : String;
 	public var action : String;
 	public var params : *;
 	
-	public function API( uri : String )
+	
+	
+	/* ---------------------------------------------------------------------
+		INITIALIZING
+	--------------------------------------------------------------------- */
+	
+	/**
+	 * Translates the given uri to an API call.
+	 * @param uri	URI to be translated.
+	 * @param cocktail	Cocktail reference.
+	 */
+	public function API( uri : String, cocktail : Cocktail )
 	{
 		var parts : Array;
+		
+		super( cocktail );
 		
 		parts = uri.split( "/" );
 		
 		controller = StringUtil.cap( parts[ 0 ] );
 		action = parts[ 1 ];
 		params = [].concat( parts.slice( 2 ) );
+	}
+	
+	
+	
+	/* ---------------------------------------------------------------------
+		RUNNING
+	--------------------------------------------------------------------- */
+	
+	/**
+	 * Runs the API call into the given controller.
+	 * @param controller	Controller to run the API call.
+	 */
+	public function run( controller : Controller ) : void
+	{
+		_index.exec( controller, action, params );
 	}
 }
