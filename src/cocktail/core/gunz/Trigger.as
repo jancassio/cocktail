@@ -26,7 +26,7 @@
 
 package cocktail.core.gunz 
 {
-	import cocktail.core.gunz.Bullet;			
+	import cocktail.core.gunz.Bullet;							
 
 	/**
 	 * Base Trigger class.
@@ -35,11 +35,17 @@ package cocktail.core.gunz
 	public class Trigger 
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+			CONSTANTS
 		--------------------------------------------------------------------- */
 		
 		private static const LISTEN : String = "listen";
-		private static const UNLISTN : String = "unlisten";
+		private static const UNLISTEN : String = "unlisten";
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			VARS
+		--------------------------------------------------------------------- */
 		
 		private var _mode : String;
 		private var _cached : Array;
@@ -58,7 +64,7 @@ package cocktail.core.gunz
 		 * Crates a new Trigger for the given owner.
 		 * @param owner	Trigger owner.
 		 */
-		public function Trigger ( owner : * ) : void
+		public function Trigger( owner : * ) : void
 		{
 			_owner = owner;
 			_cached = [];
@@ -68,7 +74,7 @@ package cocktail.core.gunz
 		
 		
 		/* ---------------------------------------------------------------------
-			TIMES / LISTEN / UNLISTEN / HANDLE
+			TIMES / DIE / LISTEN / UNLISTEN / HANDLE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -79,14 +85,14 @@ package cocktail.core.gunz
 		 * and after that its automagicaly destroyed.
 		 * @return	The trigger reference for re-use.8
 		 */
-		public function times ( times : Number ) : Trigger
+		public function times( times : Number ) : Trigger
 		{
 			var i : uint;
 			
-			if ( _cached.length )
+			if( _cached.length )
 				do
 				{
-					Finger ( _cached[ i ] )._times = times;
+					Finger( _cached[ i ] )._times = times;
 				}
 				while( ++i < _cached.length );
 			
@@ -97,10 +103,22 @@ package cocktail.core.gunz
 		}
 		
 		/**
+		 * Auto destroy all previously listeners -- called after the last
+		 * "listen" or "time" call -- at the very first execution, it is, you
+		 * don't need to worry about removing listeners.
+		 * @return	The trigger reference for re-use.
+		 */
+		public function die() : Trigger
+		{
+			times( 1 );
+			return this;
+		}
+		
+		/**
 		 * Start listening.
 		 * @return	The trigger reference for re-use.
 		 */
-		public function get listen () : Trigger
+		public function get listen() : Trigger
 		{
 			_mode = LISTEN;
 			_times = -1;
@@ -112,9 +130,9 @@ package cocktail.core.gunz
 		 * Stop listening.
 		 * @return	The trigger reference for re-use.
 		 */
-		public function get unlisten () : Trigger
+		public function get unlisten() : Trigger
 		{
-			_mode = UNLISTN;
+			_mode = UNLISTEN;
 			return this;
 		}
 		
@@ -124,17 +142,17 @@ package cocktail.core.gunz
 		 * @param handler	Bullet handler.
 		 * @param params	Bullet params.
 		 */
-		public function handle (
+		public function handle(
 			type : String,
 			handler : Function,
 			params : * = null
 		) : void
 		{
 			params;
-			if ( _mode == LISTEN )
-				_collect ( type, handler, params );
-			else if ( _mode == UNLISTN )
-				_purge ( type, handler );
+			if( _mode == LISTEN )
+				_collect( type, handler, params );
+			else if( _mode == UNLISTEN )
+				_purge( type, handler );
 		}
 		
 		
@@ -156,7 +174,7 @@ package cocktail.core.gunz
 		) : void
 		{
 			 _cached[ _cached.length ] = _listeners[ _listeners.length ] = (
-			 	new Finger (
+			 	new Finger(
 					_listeners.length,
 					this,
 					type,
@@ -172,16 +190,16 @@ package cocktail.core.gunz
 		 * @param type	
 		 * @param handler	
 		 */
-		private function _purge ( type : String, handler : Function ) : void
+		private function _purge( type : String, handler : Function ) : void
 		{
 			var finger : Finger;
 			var i : uint;
 			
-			if ( _listeners.length )
+			if( _listeners.length )
 				do
 				{
-					finger = Finger ( _listeners[ i ] );
-					if ( finger._type == type && finger._handler == handler )
+					finger = Finger( _listeners[ i ] );
+					if( finger._type == type && finger._handler == handler )
 					{
 						finger.release();
 						break;
@@ -201,16 +219,16 @@ package cocktail.core.gunz
 		 * @param type	If informed, removes all ALL bullets of the given type,
 		 * otherwise <code>null</code> removes all bullets of all types.
 		 */
-		public function all ( type : String = null ) : void
+		public function all( type : String = null ) : void
 		{
 			var finger : Finger;
 			var i : uint;
 			
-			if ( _listeners.length )
+			if( _listeners.length && _mode == UNLISTEN )
 				do
 				{
-					finger = Finger ( _listeners[ i ] );
-					if ( type == null || finger._type == type )
+					finger = Finger( _listeners[ i ] );
+					if( type == null || finger._type == type )
 							finger.release();
 				}
 				while( ++i < _listeners.length );
@@ -225,7 +243,7 @@ package cocktail.core.gunz
 		 * just the given type.
 		 * @return	<code>true</code> if found, <code>false</code> otherwise.
 		 */
-		public function has (
+		public function has(
 			type : String,
 			handler : Function = null
 		) : Boolean
@@ -234,12 +252,12 @@ package cocktail.core.gunz
 			var found : Boolean;
 			var i : uint;
 			
-			if ( _listeners.length )
+			if( _listeners.length )
 				do
 				{
-					finger = Finger ( _listeners[ i ] );
-					if ( finger._type == type  )
-						if ( handler == null || handler == finger._handler )
+					finger = Finger( _listeners[ i ] );
+					if( finger._type == type  )
+						if( handler == null || handler == finger._handler )
 						{
 							found = true;
 							break;
@@ -261,16 +279,16 @@ package cocktail.core.gunz
 		 * Pull the trigger shooting the given bullet.
 		 * @param bullet	Bullet to be shoot.
 		 */
-		public function pull ( bullet : Bullet  ) : void
+		public function pull( bullet : Bullet  ) : void
 		{
 			var finger : Finger;
 			var i : uint;
 			
-			if ( _listeners.length )
+			if( _listeners.length )
 				do
 				{
-					finger = Finger ( _listeners[ i ] );
-					if ( finger._type == bullet.type )
+					finger = Finger( _listeners[ i ] );
+					if( finger._type == bullet.type )
 							finger.pull( bullet );
 				}
 				while( ++i < _listeners.length );
