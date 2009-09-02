@@ -11,7 +11,9 @@ package cocktail.lib
 			VARS
 		--------------------------------------------------------------------- */
 		
+		private var _booted : int;
 		private var _loaded : int;
+		
 		private var _model : Model;
 		private var _layout : Layout;
 		
@@ -29,8 +31,8 @@ package cocktail.lib
 			
 			name = classname.replace( "Controller", "" );
 			
-			_model = new ( cocktail.factory.model( name ) )( this );
-			_layout = new ( cocktail.factory.layout( name ) )( this );
+			_model = new ( _cocktail.factory.model( name) )( _cocktail );
+			_layout = new ( _cocktail.factory.layout( name ) )( _cocktail );
 			
 			_model.listen.boot( _boot ).die();
 			_layout.listen.boot( _boot ).die();
@@ -47,7 +49,7 @@ package cocktail.lib
 		 */
 		private function _boot() : void
 		{
-			if( ++_load == 2 )
+			if( ++_booted == 2 )
 			{
 				
 			}
@@ -61,7 +63,8 @@ package cocktail.lib
 		
 		public function before_run( request : Request ) : Boolean
 		{
-			request, return true;
+			request;
+			return true;
 		}
 		
 		final public function run( request : Request ) : void
@@ -95,7 +98,7 @@ package cocktail.lib
 		private function _after_load( bullet : Bullet ) : void
 		{
 			bullet;
-			if( ++_load == 2 )
+			if( ++_loaded == 2 )
 			{
 				
 			}
