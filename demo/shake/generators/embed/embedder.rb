@@ -69,7 +69,7 @@ class Embedder
     classes = Array.new
     
     find = File.join( @gen.APP_DIR, "/**/*.as" )
-    files = Dir[ find ].grep( %r[.*/(views|controllers|models)] )
+    files = Dir[ find ].grep( %r[.*/(views|controllers|models|layouts)] )
     
     files.each { |file|
       package = "\timport "+ @gen.PROJECT_NAME.downcase
