@@ -39,6 +39,27 @@ package cocktail.core.factory
 	public class Factory extends Index
 	{
 		/* ---------------------------------------------------------------------
+			ERROR MESSAGE TEMPLATE
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Formats an customized prefrix error message based on given name.
+		 * @param name	Class name not found.
+		 * @param kind	Base class name.
+		 */
+		private function _m( name : String, base : String ) : String
+		{
+			var message : String;
+			
+			message = "Class '"+ ( name ? name + base : "null" );
+			message += "' was not found, so the default "+ base +" was used.";
+			
+			return message;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
 			CLASS EVALUATOR
 		--------------------------------------------------------------------- */
 		
@@ -72,8 +93,6 @@ package cocktail.core.factory
 			return evaluate( path );
 		}
 		
-		
-		
 		/**
 		 * Evaluates the given Controller class by name and return it.
 		 * @param name	Controller name (CamelCased).
@@ -81,7 +100,14 @@ package cocktail.core.factory
 		 */
 		public function controller( name : String ) : Class
 		{
-			return _mvcl( "controllers", name + "Controller" );
+			try
+			{
+				return _mvcl( "controllers", name + "Controller" );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, "Controller" ) );
+			}
+			return evaluate( "cocktail.lib.Controller" );
 		}
 		
 		/**
@@ -91,7 +117,14 @@ package cocktail.core.factory
 		 */
 		public function model( name : String ) : Class
 		{
-			return _mvcl( "models", name + "Model" );
+			try
+			{
+				return _mvcl( "models", name + "Model" );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, "Model" ) );
+			}
+			return evaluate( "cocktail.lib.Model" );
 		}
 		
 		/**
@@ -101,7 +134,14 @@ package cocktail.core.factory
 		 */
 		public function layout( name : String ) : Class
 		{
-			return _mvcl( "layouts", name + "Layout" );
+			try
+			{
+				return _mvcl( "layouts", name + "Layout" );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, "Layout" ) );
+			}
+			return evaluate( "cocktail.lib.Layout" );
 		}
 		
 		/**
@@ -111,7 +151,14 @@ package cocktail.core.factory
 		 */
 		public function view( name : String ) : Class
 		{
-			return _mvcl( "views", name + "View" );
+			try
+			{
+				return _mvcl( "views", name + "View" );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, "View" ) );
+			}
+			return evaluate( "cocktail.lib.View" );
 		}
 	}
 }
