@@ -3,7 +3,8 @@ package cocktail.lib
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.request.Request;	
+	import cocktail.core.request.Request;
+	import cocktail.lib.Layout;	
 
 	public class Controller extends Index
 	{
@@ -32,13 +33,14 @@ package cocktail.lib
 			
 			name = classname.replace( "Controller", "" );
 			
-			Model( ( _model = new (
-				_cocktail.factory.model( name )
-			)() ).boot( _cocktail ) ).listen.boot( _boot ).die();
 			
-			Layout( ( _layout = new (
-				_cocktail.factory.layout( name )
-			)() ).boot( _cocktail ) ).listen.boot( _boot ).die();
+			_model = new ( _cocktail.factory.model( name ) )();
+			_model.listen.boot( _boot );
+			_model.boot( _cocktail );
+			
+			_layout = new ( _cocktail.factory.layout( name ) )();
+			_layout.listen.boot( _boot );
+			_layout.boot( _cocktail );
 			
 			return s;
 		}
