@@ -222,7 +222,7 @@ internal class API extends Index
 		var parts : Array;
 		var s : *;
 		
-		s = super.boot( cocktail ).s;
+		s = super.boot( cocktail );
 		
 		parts = _uri.split( "/" );
 		

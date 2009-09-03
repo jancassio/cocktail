@@ -93,7 +93,7 @@ package cocktail
 			_default_uri = default_uri;
 			
 			_bind = new Bind();
-			_factory = new Factory().boot( this ).s;
+			_factory = new Factory().boot( this );
 			
 			log_detail = 1;
 			log_level = 3;

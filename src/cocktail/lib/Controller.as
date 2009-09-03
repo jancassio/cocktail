@@ -28,17 +28,17 @@ package cocktail.lib
 			var name : String;
 			var s : *;
 		
-			s = super.boot( cocktail);
+			s = super.boot( cocktail );
 			
 			name = classname.replace( "Controller", "" );
 			
 			Model( ( _model = new (
 				_cocktail.factory.model( name )
-			)() ).boot( _cocktail ).s ).listen.boot( _boot ).die();
+			)() ).boot( _cocktail ) ).listen.boot( _boot ).die();
 			
 			Layout( ( _layout = new (
 				_cocktail.factory.layout( name )
-			)() ).boot( _cocktail ).s ).listen.boot( _boot ).die();
+			)() ).boot( _cocktail ) ).listen.boot( _boot ).die();
 			
 			return s;
 		}

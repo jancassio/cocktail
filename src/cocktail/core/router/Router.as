@@ -67,7 +67,7 @@ package cocktail.core.router
 		{
 			var s : *;
 			
-			s = super.boot( cocktail ).s;
+			s = super.boot( cocktail );
 			
 			_trigger = new RouterTrigger( this );
 			
@@ -258,7 +258,7 @@ package cocktail.core.router
 				new Request(
 					Request.GET,
 					(event.value == "/" ? config.default_uri : event.value )
-				).boot( _cocktail ).s
+				).boot( _cocktail )
 			));
 		}
 	}

@@ -162,7 +162,7 @@ package cocktail.core.processes
 			else
 				_controllers[ name ] = ( controller = new (
 					_cocktail.factory.controller( name )
-				)() ).boot( _cocktail ).s;
+				)() ).boot( _cocktail );
 			
 			return controller;
 		}

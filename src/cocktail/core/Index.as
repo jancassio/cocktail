@@ -88,15 +88,6 @@ package cocktail.core
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Returns the self reference.
-		 * @param	Self instance reference.
-		 */
-		public function get s() : *
-		{
-			return this;
-		}
-		
-		/**
 		 * Get the application config.
 		 * @return	The application config.
 		 */
