@@ -65,10 +65,11 @@ package cocktail.core
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Creates a new Index instance.
+		 * Boots the Index base class.
 		 * @param cocktail	Cocktail reference.
+		 * @return	Self reference for reuse.
 		 */
-		public function Index( cocktail : Cocktail )
+		public function boot( cocktail : Cocktail ) : *
 		{
 			_cocktail = cocktail;
 			_authorized = new Array();
@@ -76,6 +77,8 @@ package cocktail.core
 			
 			_cocktail.bind.plug( "log-level", _log, "level" );
 			_cocktail.bind.plug( "log-detail", _log, "detail" );
+			
+			return this;
 		}
 		
 		
@@ -83,6 +86,15 @@ package cocktail.core
 		/* ---------------------------------------------------------------------
 			GETTERS
 		--------------------------------------------------------------------- */
+		
+		/**
+		 * Returns the self reference.
+		 * @param	Self instance reference.
+		 */
+		public function get s() : *
+		{
+			return this;
+		}
 		
 		/**
 		 * Get the application config.

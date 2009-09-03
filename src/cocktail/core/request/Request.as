@@ -83,16 +83,33 @@ package cocktail.core.request
 		 * TODO: write docs
 		 */
 		public function Request(
-			cocktail : Cocktail,
 			type : String,
 			uri : String,
 			data : * = null
 		) : void
 		{
-			super( cocktail );
+			_uri = uri;
 			this.type = type;
-			this.uri = uri;
 			this.data = data;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			BOOTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Boots the Index base class.
+		 * @param cocktail	Cocktail reference.
+		 */
+		override public function boot( cocktail : Cocktail ) : *
+		{
+			var s : *;
+		
+			s = super.boot( cocktail );
+			uri = _uri;
+			return s;
 		}
 		
 		
@@ -115,7 +132,7 @@ package cocktail.core.request
 		public function set uri( uri : String ) : void
 		{
 			_uri = routes.clean_uri( uri );
-			_route = new Route( _cocktail, _uri );
+			( _route = new Route( _uri ) ).boot( _cocktail );
 		}
 		
 		

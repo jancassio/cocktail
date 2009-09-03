@@ -39,21 +39,6 @@ package cocktail.core.factory
 	public class Factory extends Index
 	{
 		/* ---------------------------------------------------------------------
-			INITIALIZING
-		--------------------------------------------------------------------- */
-
-		/**
-		 * Helper to instantiate classes.
-		 * @param cocktail	Cocktail reference.
-		 */
-		public function Factory( cocktail : Cocktail )
-		{
-			super( cocktail );
-		}
-		
-		
-		
-		/* ---------------------------------------------------------------------
 			CLASS EVALUATOR
 		--------------------------------------------------------------------- */
 		

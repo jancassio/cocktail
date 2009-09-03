@@ -56,21 +56,25 @@ package cocktail.core.router
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+			BOOTING
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Creates a new Router instance.
 		 * @param cocktail	Cocktail reference.
 		 */
-		public function Router( cocktail : Cocktail )
+		override public function boot( cocktail : Cocktail ) : *
 		{
-			super( cocktail );
+			var s : *;
+			
+			s = super.boot( cocktail ).s;
 			
 			_trigger = new RouterTrigger( this );
 			
 			_history = new Array();
 			_index = -1;
+			
+			return s;
 		}
 		
 		
@@ -204,7 +208,7 @@ package cocktail.core.router
 		{
 			var request : Request;
 			
-			request = new Request( _cocktail, Request.GET, uri );
+			request = new Request( Request.GET, uri ).boot( _cocktail ).s;
 			history.push( request );
 			_index++;
 			
@@ -225,7 +229,7 @@ package cocktail.core.router
 		public function post( uri : String, data : * ) : RequestAsync
 		{
 			// TODO: implement method
-			return new RequestAsync( _cocktail, uri, data );
+			return new RequestAsync( uri, data ).boot( _cocktail ).s;
 		}
 		
 		
@@ -252,10 +256,9 @@ package cocktail.core.router
 			_trigger.pull( new RouterBullet(
 				RouterTrigger.UPDATE,
 				new Request(
-					_cocktail,
 					Request.GET,
 					(event.value == "/" ? config.default_uri : event.value )
-				)
+				).boot( _cocktail ).s
 			));
 		}
 	}

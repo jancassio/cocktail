@@ -49,18 +49,21 @@ package cocktail.core.processes
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIAZING
+			BOOTING
 		-------------------------------------------------------------------  */
 		
 		/**
 		 * Creates a new Processes instance.
 		 * @param cocktail	Cocktail reference.
 		 */
-		public function Processes( cocktail : Cocktail )
+		override public function boot( cocktail : Cocktail ) : *
 		{
-			super( cocktail);
+			var s : *;
+		
+			s = super.boot( cocktail);
 			_controllers = {};
 			router.listen.update( _route );
+			return s;
 		}
 		
 		
@@ -157,9 +160,9 @@ package cocktail.core.processes
 			if( _controllers[ name ] )
 				controller = _controllers[ name ];
 			else
-				_controllers[ name ] = controller = new (
+				_controllers[ name ] = ( controller = new (
 					_cocktail.factory.controller( name )
-				)( _cocktail );
+				)() ).boot( _cocktail ).s;
 			
 			return controller;
 		}

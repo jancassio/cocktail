@@ -22,10 +22,13 @@ package cocktail.lib
 		/**
 		 * 
 		 */
-		public function Model( cocktail : Cocktail )
+		override public function boot( cocktail : Cocktail ) : *
 		{
-			super( cocktail);
+			var s : *;
+		
+			s = super.boot( cocktail );
 			_trigger = new ModelTrigger( this );
+			return s;
 		}
 
 		

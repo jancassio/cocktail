@@ -20,22 +20,27 @@ package cocktail.lib
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+			BOOTING
 		--------------------------------------------------------------------- */
 		
-		public function Controller( cocktail : Cocktail )
+		override public function boot( cocktail : Cocktail ) : *
 		{
 			var name : String;
-			
-			super( cocktail);
+			var s : *;
+		
+			s = super.boot( cocktail);
 			
 			name = classname.replace( "Controller", "" );
 			
-			_model = new ( _cocktail.factory.model( name) )( _cocktail );
-			_layout = new ( _cocktail.factory.layout( name ) )( _cocktail );
+			Model( ( _model = new (
+				_cocktail.factory.model( name )
+			)() ).boot( _cocktail ).s ).listen.boot( _boot ).die();
 			
-			_model.listen.boot( _boot ).die();
-			_layout.listen.boot( _boot ).die();
+			Layout( ( _layout = new (
+				_cocktail.factory.layout( name )
+			)() ).boot( _cocktail ).s ).listen.boot( _boot ).die();
+			
+			return s;
 		}
 		
 		
@@ -89,7 +94,7 @@ package cocktail.lib
 		{
 			_loaded = 0;
 			_model.load( request ).listen.complete( _after_load ).die();
-			_layout.load( request ).listen.complete( _after_load );
+			_layout.load( request ).listen.complete( _after_load ).die();
 		}
 		
 		/**

@@ -56,16 +56,18 @@ package cocktail.core.config
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+			BOOTING
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Creates a new Config instance.
 		 * @param cocktail	Cocktail reference.
 		 */
-		public function Config( cocktail : Cocktail )
+		override public function boot( cocktail : Cocktail ) : *
 		{
-			super( cocktail );
+			var s : *;
+		
+			s = super.boot( cocktail );
 			
 			_cocktail = cocktail;
 			
@@ -79,6 +81,8 @@ package cocktail.core.config
 			_tmp_loader = new URLLoader();
 			_tmp_loader.addEventListener( Event.COMPLETE, _init);
 			_tmp_loader.load( new URLRequest( _config_path ) );
+			
+			return s;
 		}
 
 		

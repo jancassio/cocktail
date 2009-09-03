@@ -41,9 +41,11 @@ package cocktail.core.router
 		--------------------------------------------------------------------- */
 		
 		private var _api : API;
+		private var _uri : String;
 		private var _mask : String;
 		private var _target : String;
 		private var _locale : String;
+		
 		
 		
 		/* ---------------------------------------------------------------------
@@ -52,13 +54,30 @@ package cocktail.core.router
 		
 		/**
 		 * Creates a new Route instance.
-		 * @param cocktail	Cocktail reference..
 		 * @param uri	Request URI.
 		 */
-		public function Route( cocktail : Cocktail, uri : String )
+		public function Route( uri : String )
 		{
-			super( cocktail );
-			_resolve( uri );
+			_uri = uri;
+		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			BOOTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Boots the Index base class.
+		 * @param cocktail	Cocktail reference.
+		 */
+		override public function boot( cocktail : Cocktail ) : *
+		{
+			var s : *;
+		
+			s = super.boot( cocktail );
+			_resolve();
+			return s;
 		}
 		
 		
@@ -68,15 +87,14 @@ package cocktail.core.router
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Resolves the route for the given URI.
-		 * @param uri	URI to resolve.
+		 * Resolves the route.
 		 */
-		private function _resolve( uri : String ) : void
+		private function _resolve() : void
 		{
-			_locale = _get_locale( uri );
-			_mask = routes.wrap( _purge_locale( uri ) );
-			_target = routes.unwrap( _purge_locale( uri ) );
-			_api = new API( _target, _cocktail );
+			_locale = _get_locale( _uri );
+			_mask = routes.wrap( _purge_locale( _uri ) );
+			_target = routes.unwrap( _purge_locale( _uri ) );
+			( _api = new API( _target ) ).boot( _cocktail );
 		}
 		
 		
@@ -167,6 +185,7 @@ internal class API extends Index
 		VARS
 	--------------------------------------------------------------------- */
 	
+	private var _uri : String;
 	private var _index : Index;
 	
 	public var controller : String;
@@ -182,19 +201,36 @@ internal class API extends Index
 	/**
 	 * Translates the given uri to an API call.
 	 * @param uri	URI to be translated.
+	 */
+	public function API( uri : String )
+	{
+		_uri = uri;
+	}
+	
+	
+	
+	/* ---------------------------------------------------------------------
+		BOOTING
+	--------------------------------------------------------------------- */
+	
+	/**
+	 * Boots the Index base class.
 	 * @param cocktail	Cocktail reference.
 	 */
-	public function API( uri : String, cocktail : Cocktail )
+	override public function boot( cocktail : Cocktail ) : *
 	{
 		var parts : Array;
+		var s : *;
 		
-		super( cocktail );
+		s = super.boot( cocktail ).s;
 		
-		parts = uri.split( "/" );
+		parts = _uri.split( "/" );
 		
 		controller = StringUtil.cap( parts[ 0 ] );
 		action = parts[ 1 ];
 		params = [].concat( parts.slice( 2 ) );
+		
+		return s;
 	}
 	
 	

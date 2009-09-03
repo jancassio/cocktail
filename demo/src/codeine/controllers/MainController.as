@@ -1,7 +1,5 @@
 package codeine.controllers 
 {
-	import cocktail.Cocktail;
-	
 	import codeine.AppController;	
 
 	/**
@@ -10,11 +8,6 @@ package codeine.controllers
 	 */
 	public class MainController extends AppController 
 	{
-		public function MainController(cocktail : Cocktail)
-		{
-			super( cocktail );
-		}
-		
 		public function index(
 			param0 : String,
 			param1 : String,

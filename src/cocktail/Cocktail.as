@@ -93,7 +93,7 @@ package cocktail
 			_default_uri = default_uri;
 			
 			_bind = new Bind();
-			_factory = new Factory( this );
+			_factory = new Factory().boot( this ).s;
 			
 			log_detail = 1;
 			log_level = 3;
@@ -113,9 +113,9 @@ package cocktail
 			if ( event != null )
 				_app.removeEventListener( Event.ADDED_TO_STAGE , _init );
 			
-			_config = new Config( this );
-			_router = new Router( this );
-			_processes = new Processes( this );
+			_config = new Config().boot( this );
+			_router = new Router().boot( this );
+			_processes = new Processes().boot( this );
 		}
 		
 		

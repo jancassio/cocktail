@@ -52,13 +52,29 @@ package cocktail.core.request
 		 * TODO: write docs
 		 */
 		public function RequestAsync(
-			cocktail : Cocktail,
 			uri : String,
 			data : *
 		)
 		{
-			super( cocktail, Request.POST, uri, data );
+			super( Request.POST, uri, data );
+		}
+		
+		
+		/* ---------------------------------------------------------------------
+			BOOTING
+		--------------------------------------------------------------------- */
+		
+		/**
+		 * Boots the Index base class.
+		 * @param cocktail	Cocktail reference.
+		 */
+		override public function boot( cocktail : Cocktail ) : *
+		{
+			var s : *;
+			
+			s = super.boot( cocktail );
 			_trigger = new RequestAsyncTrigger( this );
+			return s;
 		}
 		
 		
