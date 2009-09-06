@@ -33,14 +33,11 @@ package cocktail.lib
 			
 			name = classname.replace( "Controller", "" );
 			
-			
 			_model = new ( _cocktail.factory.model( name ) )();
-			_model.listen.boot( _boot );
-			_model.boot( _cocktail );
+			_model.boot( _cocktail ).listen.boot( _boot );
 			
 			_layout = new ( _cocktail.factory.layout( name ) )();
-			_layout.listen.boot( _boot );
-			_layout.boot( _cocktail );
+			_layout.boot( _cocktail ).listen.boot( _boot );;
 			
 			return s;
 		}
