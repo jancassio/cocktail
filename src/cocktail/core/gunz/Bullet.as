@@ -1,5 +1,5 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
 	****************************************************************************
    
 		This library is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@ package cocktail.core.gunz
 		 * Creates a new Bullet with the given type.
 		 * @param type	Event type to be created.
 		 */
-		public function Bullet ( type : String ) : void
+		public function Bullet( type : String ) : void
 		{
 			_type = type;
 		}
@@ -67,7 +67,7 @@ package cocktail.core.gunz
 		 * Get the bullet type.
 		 * @return	The bullet type.
 		 */
-		public function get type () : String
+		public function get type() : String
 		{
 			return _type;	
 		}
@@ -76,7 +76,7 @@ package cocktail.core.gunz
 		 * Get the event params.
 		 * @return	The event params.
 		 */
-		public function get params () : *
+		public function get params() : *
 		{
 			return _params;
 		}
@@ -85,7 +85,7 @@ package cocktail.core.gunz
 		 * Get the event owner.
 		 * @return	The target where bullets is dispatched from.
 		 */
-		public function get owner () : *
+		public function get owner() : *
 		{
 			return _owner;
 		}
@@ -100,7 +100,7 @@ package cocktail.core.gunz
 		 * Set the event params.
 		 * @param params	Params to be added into the event.
 		 */
-		internal function set_params ( params : * ) : void
+		internal function set_params( params : * ) : void
 		{
 			_params = params;
 		}
@@ -109,7 +109,7 @@ package cocktail.core.gunz
 		 * Set the event owner.
 		 * @param owner	The target where bullets is dispatched from.
 		 */
-		internal function set_owner ( owner : * ) : void
+		internal function set_owner( owner : * ) : void
 		{
 			_owner = owner; 
 		}

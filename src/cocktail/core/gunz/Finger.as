@@ -1,5 +1,5 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
 	****************************************************************************
    
 		This library is free software; you can redistribute it and/or modify
@@ -66,7 +66,7 @@ package cocktail.core.gunz
 		 * the listener will work just for the given number of times and after
 		 * that its automagicaly-destroyed.
 		 */
-		public function Finger (
+		public function Finger(
 			id : uint,
 			trigger : Trigger,
 			type : String,
@@ -93,28 +93,28 @@ package cocktail.core.gunz
 		 * Pull the Trigger, shooting the given bullet w/ params/owner injected.
 		 * @param bullet	Bullet to be pulled.
 		 */
-		internal function pull ( bullet : Bullet ) : void
+		internal function pull( bullet : Bullet ) : void
 		{
 			bullet.set_params( _params );
 			bullet.set_owner( _trigger._owner );
 			_handler( bullet );
 			
-			if ( _times != -1 && ++_pulled == _times )
+			if( _times != -1 && ++_pulled == _times )
 				release();
 		}
 		
 		/**
 		 * Release the Finger, disabling it from pulling again.
 		 */
-		internal function release () : void
+		internal function release() : void
 		{
 			_trigger._listeners.splice( _id, 1 );
 			
-			if ( _id < ( _trigger._listeners.length - 1) )
+			if( _id < ( _trigger._listeners.length - 1) )
 				do
 				{
-					Finger ( _trigger._listeners [ _id ] )._id--;
-				} while ( ++_id < _trigger._listeners.length );
+					Finger( _trigger._listeners [ _id ] )._id--;
+				} while( ++_id < _trigger._listeners.length );
 			
 			_id = undefined;
 			_trigger = undefined;

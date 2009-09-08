@@ -1,5 +1,5 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
 	****************************************************************************
    
 		This library is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 
 package cocktail.core.gunz 
 {
-	import cocktail.core.gunz.Bullet;							
+	import cocktail.core.gunz.Bullet;			
 
 	/**
 	 * Base Trigger class.
@@ -74,7 +74,7 @@ package cocktail.core.gunz
 		
 		
 		/* ---------------------------------------------------------------------
-			TIMES / DIE / LISTEN / UNLISTEN / HANDLE
+			TIMES / ONCE / LISTEN / UNLISTEN / HANDLE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -104,11 +104,11 @@ package cocktail.core.gunz
 		
 		/**
 		 * Auto destroy all previously listeners -- called after the last
-		 * "listen" or "time" call -- at the very first execution, it is, you
+		 * "listen" or "time" call -- after its first execution, it is, you
 		 * don't need to worry about removing listeners.
 		 * @return	The trigger reference for re-use.
 		 */
-		public function die() : Trigger
+		public function once() : Trigger
 		{
 			times( 1 );
 			return this;
@@ -224,7 +224,7 @@ package cocktail.core.gunz
 			var finger : Finger;
 			var i : uint;
 			
-			if( _listeners.length && _mode == UNLISTEN )
+			if( _listeners.length )
 				do
 				{
 					finger = Finger( _listeners[ i ] );
