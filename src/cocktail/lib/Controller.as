@@ -92,8 +92,8 @@ package cocktail.lib
 		private function _load( request : Request ) : void
 		{
 			_loaded = 0;
-			_model.load( request ).listen.complete( _after_load ).die();
-			_layout.load( request ).listen.complete( _after_load ).die();
+			_model.load( request ).listen.complete( _after_load ).once();
+			_layout.load( request ).listen.complete( _after_load ).once();
 		}
 		
 		/**
