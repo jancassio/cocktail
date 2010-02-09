@@ -26,10 +26,9 @@
 
 package cocktail.core.factory 
 {
-	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	
-	import flash.utils.getDefinitionByName;	
+
+	import flash.utils.getDefinitionByName;
 
 	/**
 	 * Factory class.

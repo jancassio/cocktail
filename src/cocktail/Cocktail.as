@@ -31,10 +31,9 @@ package cocktail
 	import cocktail.core.processes.Processes;
 	import cocktail.core.router.Router;
 	import cocktail.core.router.RoutesTail;
-	
-	import flash.display.DisplayObject;
+
 	import flash.display.Sprite;
-	import flash.events.Event;	
+	import flash.events.Event;
 
 	/**
 	 * Cocktail class is the framework first class to be initialized. It's
