@@ -1,39 +1,40 @@
- /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
-	****************************************************************************
+/*	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core 
 {
 	import cocktail.Cocktail;
 	import cocktail.core.config.Config;
+	import cocktail.core.gunz.Gunz;
 	import cocktail.core.logger.Logger;
 	import cocktail.core.router.Router;
 	import cocktail.core.router.RoutesTail;
-	
+
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;	
+	import flash.utils.getQualifiedClassName;
 
 	/**
 	 * Index class is the base class for almost every class inside cocktail.
@@ -41,27 +42,38 @@ package cocktail.core
 	 */
 	public class Index 
 	{
+		/* ===== GUNZ ======================================================= */
+
+		public var gunz : Gunz; 
+
+		private function _init_gunz() : void
+		{
+			gunz = new Gunz( this );
+		}
+		
+		
 		
 		/* ---------------------------------------------------------------------
 			ACCESS RESCRICTIONS
 		--------------------------------------------------------------------- */
 		
 		protected namespace _restricted;
+
 		protected var _authorized : Array;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		protected var _cocktail : Cocktail;
 		private var _log : Logger;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -72,19 +84,21 @@ package cocktail.core
 		public function boot( cocktail : Cocktail ) : *
 		{
 			_cocktail = cocktail;
-			_authorized = new Array();
+			_authorized = new Array( );
 			_log = new Logger( classpath );
 			
 			_cocktail.bind.plug( "log-level", _log, "level" );
 			_cocktail.bind.plug( "log-detail", _log, "detail" );
 			
+			_init_gunz( );
+			
 			return this;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			GETTERS
+		GETTERS
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -95,7 +109,7 @@ package cocktail.core
 		{
 			return _cocktail.config;
 		}
-		
+
 		/**
 		 * Get the application router.
 		 * @return	The application router.
@@ -104,7 +118,7 @@ package cocktail.core
 		{
 			return _cocktail.router;
 		}
-		
+
 		/**
 		 * Get the application routes.
 		 * @return	The application routes.
@@ -113,7 +127,7 @@ package cocktail.core
 		{
 			return _cocktail.routes;
 		}
-		
+
 		/**
 		 * Get the application logger.
 		 * @return	The application logger.
@@ -126,7 +140,7 @@ package cocktail.core
 		
 		
 		/* ---------------------------------------------------------------------
-			FUNCTION & DEBUG UTILS
+		FUNCTION & DEBUG UTILS
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -143,11 +157,11 @@ package cocktail.core
 				method.apply( method.prototype, params.concat( innerParams ) );
 			} );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			AUTH UTILS( restricted access control )
+		AUTH UTILS( restricted access control )
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -165,33 +179,35 @@ package cocktail.core
 			
 			return null;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			CLASS DETAILS
+		CLASS DETAILS
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Gets the classname.
 		 * @return	The class name, without the package notation.
 		 */
-		final public function get classname() : String {
-			return classpath.split( "." ).pop();
+		final public function get classname() : String 
+		{
+			return classpath.split( "." ).pop( );
 		}
-		
+
 		/**
 		 * Gets the classpath.
 		 * @return	The class path, with the package notation.
 		 */
-		final public function get classpath() : String {
+		final public function get classpath() : String 
+		{
 			return getQualifiedClassName( this ).replace( "::", "." );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			UTILS
+		UTILS
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -208,13 +224,13 @@ package cocktail.core
 			}
 			catch( e : Error )
 			{
-				_log.warn( "Cannot describe item "+ name +"''." );
+				_log.warn( "Cannot describe item " + name + "''." );
 				_log.warn( e );
 			}
 			
 			return described;
 		}
-		
+
 		/**
 		 * Check if some property/method/variabel is defined in the given scope.
 		 * @param scope	Scope to evaluate.
@@ -239,7 +255,7 @@ package cocktail.core
 			
 			return result;
 		}
-		
+
 		/**
 		 * Tries to execute some method, omitting the possible error results.
 		 * @param scope	Method scope.
@@ -253,15 +269,15 @@ package cocktail.core
 		) : void
 		{
 			if( defined( scope, method ) )
-				scope[ method ].apply( scope,(
+				scope[ method ].apply( scope, (
 					params != null ? [].concat( params ) : []
 				) );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			CASTING VALUES
+		CASTING VALUES
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -273,7 +289,7 @@ package cocktail.core
 		{
 			return Number( value );
 		}
-		
+
 		/**
 		 * Cast the given value as <code>int</code>.
 		 * @param value	Value to be casted.
@@ -283,7 +299,7 @@ package cocktail.core
 		{
 			return int( value );
 		}
-		
+
 		/**
 		 * Cast the given value as <code>uint</code>.
 		 * @param value	Value to be casted.
@@ -293,7 +309,7 @@ package cocktail.core
 		{
 			return uint( value );
 		}
-		
+
 		/**
 		 * Cast the given value as <code>Boolean</code>.
 		 * @param value	Value to be casted.

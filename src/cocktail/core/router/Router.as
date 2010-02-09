@@ -28,14 +28,14 @@ package cocktail.core.router
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.core.gunz.Trigger;
+	import cocktail.core.gunz.Gun;
+	import cocktail.core.gunz.Gunz;
 	import cocktail.core.request.Request;
 	import cocktail.core.request.RequestAsync;
 	import cocktail.core.router.gunz.RouterBullet;
-	import cocktail.core.router.gunz.RouterTrigger;
-	
+
 	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;	
+	import swfaddress.SWFAddressEvent;
 
 	/**
 	 * Handles all routing operations.
@@ -47,11 +47,22 @@ package cocktail.core.router
 			VARS
 		--------------------------------------------------------------------- */
 		
-		private var _trigger : RouterTrigger;
-		
 		private var _initialized : Boolean;
 		private var _history : Array;
 		private var _index : Number;
+		
+		
+		
+		/* ===== GUNZ ======================================================= */
+		
+		public var gunz : Gunz; 
+		public var update : Gun; 
+		
+		private function _init_gunz() : void
+		{
+			gunz = new Gunz( this );
+			update = new Gun( gunz, this, "update" );
+		}
 		
 		
 		
@@ -69,7 +80,7 @@ package cocktail.core.router
 			
 			s = super.boot( cocktail );
 			
-			_trigger = new RouterTrigger( this );
+			_init_gunz();
 			
 			_history = new Array();
 			_index = -1;
@@ -93,41 +104,6 @@ package cocktail.core.router
 					SWFAddressEvent.CHANGE, _addressbar_change
 				);
 		}
-		
-		
-		/* ---------------------------------------------------------------------
-			BULLET/TRIGGER IMPLEMENTATION( listen/unlisten )
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Trigger reference.
-		 * @return	The <code>RouterTrigger</code> reference.
-		 */
-		public function get trigger() : RouterTrigger
-		{
-			return _trigger;
-		}
-		
-		
-		
-		/**
-		 * Start listening.
-		 * @return	The <code>UserTrigger</code> reference.
-		 */
-		public function get listen() : RouterTrigger
-		{
-			return RouterTrigger( _trigger.listen );
-		}
-		
-		/**
-		 * Stop listening.
-		 * @return	The <code>UserTrigger</code> reference.
-		 */
-		public function get unlisten() : RouterTrigger
-		{
-			return RouterTrigger( _trigger.unlisten );
-		}
-		
 		
 		
 		
@@ -218,9 +194,7 @@ package cocktail.core.router
 					SWFAddress.setValue( request.route.mask );
 			}
 			else
-				trigger.pull( new RouterBullet( 
-					RouterTrigger.UPDATE, request
-				));
+				update.pull( new RouterBullet( update.type, request ) );
 		}
 		
 		/*
@@ -253,13 +227,13 @@ package cocktail.core.router
 		 */
 		private function _addressbar_change( event : SWFAddressEvent ) : void 
 		{
-			_trigger.pull( new RouterBullet(
-				RouterTrigger.UPDATE,
-				new Request(
-					Request.GET,
-					(event.value == "/" ? config.default_uri : event.value )
-				).boot( _cocktail )
-			));
+			var request : Request;
+			var uri : String;
+			
+			uri = (event.value == "/" ? config.default_uri : event.value );
+			request = new Request( Request.GET, uri ).boot( _cocktail );
+			
+			update.pull( new RouterBullet( update.type, request ) );
 		}
 	}
 }

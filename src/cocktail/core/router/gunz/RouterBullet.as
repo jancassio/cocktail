@@ -27,7 +27,7 @@
 package cocktail.core.router.gunz 
 {
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.request.Request;	
+	import cocktail.core.request.Request;
 
 	/**
 	 * TODO: add class description

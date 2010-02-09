@@ -28,7 +28,6 @@ package cocktail.core.request
 {
 	import cocktail.Cocktail;
 	import cocktail.core.request.Request;
-	import cocktail.core.request.gunz.RequestAsyncTrigger;	
 
 	/**
 	 * Handles all async requests.
@@ -36,14 +35,6 @@ package cocktail.core.request
 	 */
 	public class RequestAsync extends Request 
 	{
-		/* ---------------------------------------------------------------------
-			VARS
-		--------------------------------------------------------------------- */
-		
-		private var _trigger : RequestAsyncTrigger;
-		
-		
-		
 		/* ---------------------------------------------------------------------
 			INITIALIZING
 		--------------------------------------------------------------------- */
@@ -73,43 +64,7 @@ package cocktail.core.request
 			var s : *;
 			
 			s = super.boot( cocktail );
-			_trigger = new RequestAsyncTrigger( this );
 			return s;
-		}
-		
-		
-		
-		/* ---------------------------------------------------------------------
-			BULLET/TRIGGER IMPLEMENTATION( listen/unlisten )
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Trigger refernce.
-		 * @return	RouterTrigger reference.
-		 */
-		public function get trigger() : RequestAsyncTrigger
-		{
-			return _trigger;
-		}
-		
-		
-		
-		/**
-		 * Start listening.
-		 * @return	The <code>RequestAsyncTrigger</code> reference.
-		 */
-		public function get listen() : RequestAsyncTrigger
-		{
-			return RequestAsyncTrigger( _trigger.listen );
-		}
-		
-		/**
-		 * Stop listening.
-		 * @return	The <code>RequestAsyncTrigger</code> reference.
-		 */
-		public function get unlisten() : RequestAsyncTrigger
-		{
-			return RequestAsyncTrigger( _trigger.unlisten );
 		}
 	}
 }

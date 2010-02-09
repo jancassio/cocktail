@@ -1,124 +1,82 @@
-/*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
-   
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
-		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
-
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
-	
-*******************************************************************************/
-
 package cocktail.core.gunz 
 {
-	import flash.utils.describeType;	
-	
+	import flash.events.Event;
+	import flash.utils.describeType;
+
 	/**
-	 * Base Bullet class.
-	 * @author nybras | nybras@codeine.it
+	 * @author nybras | me@nybras.com
 	 */
 	public class Bullet 
 	{
-		/* ---------------------------------------------------------------------
-			VARS
-		--------------------------------------------------------------------- */
+		/* ===== VARS ======================================================= */
+
+		internal var _type : String;
+		internal var _params : *;
+		internal var _owner : *;
+
+		internal var _now : Date;
+		internal var _time : int;
+		internal var _times : int;
+
+		internal var _event : Event;
+
 		
-		private var _type : String;
-		private var _params : *;
-		private var _owner : *;
 		
-		
-		
-		/* ---------------------------------------------------------------------
-			INITIALIZING
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Creates a new Bullet with the given type.
-		 * @param type	Event type to be created.
-		 */
+		/* ===== INITIALIZING =============================================== */
+
 		public function Bullet( type : String ) : void
 		{
 			_type = type;
+			_times = -1;
 		}
+
 		
 		
-		
-		/* ---------------------------------------------------------------------
-			PUBLIC GETTERS
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Get the bullet type.
-		 * @return	The bullet type.
-		 */
+		/* ===== PUBLI GETTERS ============================================== */
+
 		public function get type() : String
 		{
 			return _type;	
 		}
-		
-		/**
-		 * Get the event params.
-		 * @return	The event params.
-		 */
+
+		public function get now() : Date 
+		{
+			return _now;
+		}
+
+		public function get times() : int 
+		{
+			return _times;
+		}
+
+		public function get time() : int 
+		{
+			return _time;
+		}
+
 		public function get params() : *
 		{
 			return _params;
 		}
-		
-		/**
-		 * Get the event owner.
-		 * @return	The target where bullets is dispatched from.
-		 */
+
 		public function get owner() : *
 		{
 			return _owner;
 		}
-		
-		
-		
-		/* ---------------------------------------------------------------------
-			INTERNAL SETTERS
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Set the event params.
-		 * @param params	Params to be added into the event.
-		 */
-		internal function set_params( params : * ) : void
+
+		public function get event() : Event
 		{
-			_params = params;
+			return _event;
 		}
-		
-		/**
-		 * Set the event owner.
-		 * @param owner	The target where bullets is dispatched from.
-		 */
-		internal function set_owner( owner : * ) : void
+
+		public function set event( event : Event ) : void
 		{
-			_owner = owner; 
+			_event = event;
 		}
+
 		
 		
-		
-		/* ---------------------------------------------------------------------
-			TO STRING CONVERSION
-		--------------------------------------------------------------------- */
+		/* ===== TO STRING CONVERSION ======================================= */
 		
 		/**
 		 * Format all public properties to String.
@@ -126,23 +84,34 @@ package cocktail.core.gunz
 		 */
 		public function toString() : String
 		{
+			var obj_type : String;
 			var output : String;
 			var described : XML;
 			var props : XMLList;
 			var prop : XML;
 			
 			described = describeType( this );
-			output = "[object "+ described.@name.split( "::" ).pop() +"]\n{\n";
-			props = described..variable; 
+			obj_type = String( described.@name ).split( "::" ).pop( );
+			
+			output = "[object " + obj_type + "]\n{\n";
+			props = described[ "variable" ]; 
+			
+			output += "\ttype : String = " + type + ";\n";
+			output += "\ttimes : Number = " + times + ";\n";
+			output += "\ttime : Number = " + time + ";\n";
+			output += "\tnow : Number = " + now + ";\n";
+			output += "\towner : * = " + owner + ";\n";
+			output += "\tparams : * = " + params + ";\n";
+			output += "\n\t>>>>> VARIABLES:\n\t-----\n";
 			
 			for each( prop in props )
 			{
-				output += "\t"+ prop.@name +" : ";
-				output += prop.@type.split( "::" ).pop() +" = ";
-				output += this[ prop.@name ];
+				output += "\t" + prop.@name + " : ";
+				output += String( prop.@type ).split( "::" ).pop( ) + " = ";
+				output += this[ prop.@name ] + ";\n";
 			}
 			
-			return output +"\n}";
+			return output + "}";
 		}
 	}
 }
