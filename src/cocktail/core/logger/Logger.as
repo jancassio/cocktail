@@ -77,7 +77,6 @@ package cocktail.core.logger
 		{
 			var output : String;
 			var tabs : String;
-			var child : *;
 			var data : *;
 			var i : int;
 			
@@ -87,7 +86,7 @@ package cocktail.core.logger
 			while ( i++ < cycle )
 				tabs += "\t";
 			
-			for ( child in params )
+			for ( var child : * in params )
 			{
 				data = params[ child ];
 			    buffer += tabs +"["+ child +"] => ";
