@@ -1,10 +1,9 @@
-package cocktail.lib 
-{
+package cocktail.lib {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.request.Request;
-	import cocktail.lib.Layout;	
+	import cocktail.core.processes.Process;
+	import cocktail.lib.Layout;
 
 	public class Controller extends Index
 	{
@@ -65,18 +64,18 @@ package cocktail.lib
 			RUNNING
 		--------------------------------------------------------------------- */
 		
-		public function before_run( request : Request ) : Boolean
+		public function before_run( process : Process ) : Boolean
 		{
-			request;
+			process;
 			return true;
 		}
 		
-		final public function run( request : Request ) : void
+		final public function run( process : Process ) : void
 		{
-			if( before_run( request ) )
-				_load( request );
+			if( before_run( process ) )
+				_load( process );
 			
-//				request.route.api.run( this );
+//				process.route.api.run( this );
 		}
 		
 		
@@ -87,13 +86,13 @@ package cocktail.lib
 		
 		/**
 		 * Load Model and Layout.
-		 * @param request	Request to load. 
+		 * @param process	Process to load. 
 		 */
-		private function _load( request : Request ) : void
+		private function _load( process : Process ) : void
 		{
 			_loaded = 0;
-			_model.load( request ).listen.complete( _after_load ).once();
-			_layout.load( request ).listen.complete( _after_load ).once();
+			_model.load( process ).listen.complete( _after_load ).once();
+			_layout.load( process ).listen.complete( _after_load ).once();
 		}
 		
 		/**
@@ -113,15 +112,15 @@ package cocktail.lib
 			RENDERING
 		--------------------------------------------------------------------- */
 		
-		final public function before_render( request : Request ) : Boolean
+		final public function before_render( process : Process ) : Boolean
 		{
-			request;
+			process;
 			return true;
 		}
 		
-		final public function after_render( request : Request ) : void
+		final public function after_render( process : Process ) : void
 		{
-			request;
+			process;
 		}
 	}
 }

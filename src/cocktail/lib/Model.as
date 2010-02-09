@@ -1,9 +1,8 @@
-package cocktail.lib 
-{
+package cocktail.lib {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.core.request.Request;
-	import cocktail.lib.gunz.ModelTrigger;	
+	import cocktail.core.processes.Process;
+	import cocktail.lib.gunz.ModelTrigger;
 
 	public class Model extends Index
 	{
@@ -73,9 +72,9 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( request : Request ) : Model
+		public function load( process : Process ) : Model
 		{
-			request;
+			process;
 			return this;
 		}
 	}

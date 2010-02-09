@@ -1,9 +1,8 @@
-package cocktail.lib 
-{
+package cocktail.lib {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.core.request.Request;
-	import cocktail.lib.gunz.LayoutTrigger;	
+	import cocktail.core.processes.Process;
+	import cocktail.lib.gunz.LayoutTrigger;
 
 	public class Layout extends Index
 	{
@@ -73,9 +72,9 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( request : Request ) : Layout
+		public function load( process : Process ) : Layout
 		{
-			request;
+			process;
 			return this;
 		}
 	}
