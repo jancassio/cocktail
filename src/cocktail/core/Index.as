@@ -54,16 +54,6 @@ package cocktail.core
 		
 		
 		/* ---------------------------------------------------------------------
-			ACCESS RESCRICTIONS
-		--------------------------------------------------------------------- */
-		
-		protected namespace _restricted;
-
-		protected var _authorized : Array;
-
-		
-		
-		/* ---------------------------------------------------------------------
 		VARS
 		--------------------------------------------------------------------- */
 
@@ -84,7 +74,6 @@ package cocktail.core
 		public function boot( cocktail : Cocktail ) : *
 		{
 			_cocktail = cocktail;
-			_authorized = new Array( );
 			_log = new Logger( classpath );
 			
 			_cocktail.bind.plug( "log-level", _log, "level" );
@@ -157,29 +146,7 @@ package cocktail.core
 				method.apply( method.prototype, params.concat( innerParams ) );
 			} );
 		}
-
 		
-		
-		/* ---------------------------------------------------------------------
-		AUTH UTILS( restricted access control )
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Authenticates classes for restricted/protected access.
-		 * @return	If auth suceed sucessfully returns the restricted namespace,
-		 * otherwise return <code>null</code>.
-		 */
-		final public function auth( caller : * ) : Namespace
-		{
-			var cls : Class;
-			
-			for each( cls in _authorized )
-				if( caller is cls )
-					return _restricted;
-			
-			return null;
-		}
-
 		
 		
 		/* ---------------------------------------------------------------------
@@ -269,7 +236,7 @@ package cocktail.core
 		) : void
 		{
 			if( defined( scope, method ) )
-				scope[ method ].apply( scope, (
+				Function( scope[ method ] ).apply( scope, (
 					params != null ? [].concat( params ) : []
 				) );
 		}
