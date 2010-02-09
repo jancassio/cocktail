@@ -24,15 +24,11 @@
 	
 *******************************************************************************/
 
-package cocktail.core.processes
-{
+package cocktail.core.processes {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.core.factory.Factory;
-	import cocktail.core.request.Request;
-	import cocktail.core.router.Route;
 	import cocktail.core.router.gunz.RouterBullet;
-	import cocktail.lib.Controller;	
+	import cocktail.lib.Controller;
 
 	/**
 	 * Manage all processes.
@@ -46,6 +42,16 @@ package cocktail.core.processes
 		
 		private var _controllers : Object;
 		
+		private var _current_process : Process;
+		private var _last_routed_process : Process;
+		
+		private var _pending_processes : Array;
+		private var _running_processes : Array;
+		private var _iddle_processes : Array;
+		private var _dead_processes : Array;
+		
+		private var _current_processes : Processes;
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -92,27 +98,31 @@ package cocktail.core.processes
 		 */
 		private function _route( bullet : RouterBullet ) : void
 		{
-			log.debug( "@@ Request" );
-			log.debug( "---------------" );
-			log.debug( "uri => "+ bullet.request.uri );
-			log.debug( "type => "+ bullet.request.type );
-			log.debug( "data => "+ bullet.request.data );
-			log.debug( "title => "+ bullet.request.title );
+//			log.debug( "@@ Request" );
+//			log.debug( "---------------" );
+//			log.debug( "uri => "+ bullet.request.uri );
+//			log.debug( "type => "+ bullet.request.type );
+//			log.debug( "data => "+ bullet.request.data );
+//			log.debug( "title => "+ bullet.request.title );
+//			
+//			log.debug( "@@ Route" );
+//			log.debug( "---------------" );
+//			log.debug( "route.locale => "+ bullet.request.route.locale );
+//			log.debug( "route.mask => "+ bullet.request.route.mask );
+//			log.debug( "route.target => "+ bullet.request.route.target );
+//			
+//			log.debug( "@@ API" );
+//			log.debug( "---------------" );
+//			log.debug( "route.api.controller => "+ bullet.request.route.api.controller );
+//			log.debug( "route.api.action => "+ bullet.request.route.api.action );
+//			log.debug( "route.api.params => "+ bullet.request.route.api.params );
 			
-			log.debug( "@@ Route" );
-			log.debug( "---------------" );
-			log.debug( "route.locale => "+ bullet.request.route.locale );
-			log.debug( "route.mask => "+ bullet.request.route.mask );
-			log.debug( "route.target => "+ bullet.request.route.target );
+			_last_routed_process = new Process( this, bullet.request );
 			
-			log.debug( "@@ API" );
-			log.debug( "---------------" );
-			log.debug( "route.api.controller => "+ bullet.request.route.api.controller );
-			log.debug( "route.api.action => "+ bullet.request.route.api.action );
-			log.debug( "route.api.params => "+ bullet.request.route.api.params );
-			
-			_run( bullet.request );
+			_filter(  );
+			_destroy();
 		}
+		
 		
 		
 		
@@ -121,26 +131,78 @@ package cocktail.core.processes
 		--------------------------------------------------------------------- */
 		
 		/**
-		 * Run process based on the given request.
-		 * @param request	Request to run.
+		 * Destroy all dead processes.
 		 */
-		private function _run( request : Request  ) : void
+		private function _destroy() : void
 		{
-			controller( request.route.api.controller ).run( request );
+			var process : Process;
 			
-			request;
-			// TODO: implement method
+			if( ! _dead_processes.length )
+			{
+				log.info( "All process was destroyed!" );
+				_run();
+				return;
+			}
+			
+			log.info( "Destroying process..." );
+			process = _dead_processes.shift();
+			process.destroy().listen.destroyed( _destroy ).once();
 		}
 		
-		/**
-		 * Destroy process based on the given request.
-		 * @param request	Request to destroy.
-		 */
-		private function _destroy( request : Request ) : void
+		private function _run() : void
 		{
-			request;
-			// TODO: implement method
+			var process : Process;
+			
+			if( ! _pending_processes.length )
+			{
+				trace( "All process was ran!" );
+				return;
+			}
+			
+			log.info( "Running process..." );
+			_running_processes.push( process = _pending_processes.shift() );
+			process.run().listen.ran( _run ).once();
 		}
+		
+		
+		
+		/* ---------------------------------------------------------------------
+			FILTERING
+		--------------------------------------------------------------------- */
+		
+		private function _filter() : void
+		{
+			_filter_deads();
+			_filter_survivors();
+			_filter_pendings();
+			
+			// _current_process
+		}
+		
+		private function _filter_deads() : void
+		{
+			// TODO: implement method
+			
+			// _current_process
+			_dead_processes = [];
+		}
+		
+		private function _filter_pendings() : void
+		{
+			// TODO: implement method
+			
+			// _current_process
+			_pending_processes = [];
+		}
+
+		private function _filter_survivors() : void
+		{
+			// TODO: implement method
+			
+			// _current_process
+			_running_processes = [];
+		}
+
 		
 		
 		
@@ -153,7 +215,7 @@ package cocktail.core.processes
 		 * already instatiated. In other words, its unique.
 		 * @param name	Controller name (CamelCased)
 		 */
-		public function controller( name : String ) : Controller
+		internal function _controller( name : String ) : Controller
 		{
 			var controller : Controller;
 			
