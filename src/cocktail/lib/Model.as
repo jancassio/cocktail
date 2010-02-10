@@ -1,16 +1,19 @@
-package cocktail.lib {
+package cocktail.lib 
+{
 	import cocktail.Cocktail;
-	import cocktail.core.Index;
+	import cocktail.core.gunz.Gun;
 	import cocktail.core.processes.Process;
-	import cocktail.lib.gunz.ModelTrigger;
 
-	public class Model extends Index
+	public class Model extends BaseMVCL
 	{
-		/* ---------------------------------------------------------------------
-			VARS
-		--------------------------------------------------------------------- */
-		
-		private var _trigger : ModelTrigger;
+		/* ===== GUNZ ======================================================= */
+
+		public var gunz_scheme_loaded : Gun; 
+
+		private function _init_gunz() : void
+		{
+			gunz_scheme_loaded = new Gun( gunz, this, "shcheme_loaded" );
+		}
 		
 		
 		
@@ -26,41 +29,9 @@ package cocktail.lib {
 			var s : *;
 		
 			s = super.boot( cocktail );
-			_trigger = new ModelTrigger( this );
+			_init_gunz();
+			
 			return s;
-		}
-
-		
-		
-		/* ---------------------------------------------------------------------
-			BULLET/TRIGGER IMPLEMENTATION( listen/unlisten )
-		--------------------------------------------------------------------- */
-		
-		/**
-		 * Trigger reference.
-		 * @return	The <code>RouterTrigger</code> reference.
-		 */
-		public function get trigger() : ModelTrigger
-		{
-			return _trigger;
-		}
-		
-		/**
-		 * Start listening.
-		 * @return	The <code>UserTrigger</code> reference.
-		 */
-		public function get listen() : ModelTrigger
-		{
-			return ModelTrigger( _trigger.listen );
-		}
-		
-		/**
-		 * Stop listening.
-		 * @return	The <code>UserTrigger</code> reference.
-		 */
-		public function get unlisten() : ModelTrigger
-		{
-			return ModelTrigger( _trigger.unlisten );
 		}
 		
 		
