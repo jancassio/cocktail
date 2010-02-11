@@ -205,7 +205,7 @@ package cocktail.core
 		 * @return	<code>true</code> 'if scope[ property ]' is defined,
 		 * otherwise return <code>false</code>. 
 		 */
-		final public function defined( scope : *, property : String ) : Boolean
+		final public function is_defined( scope : *, property : String ) : Boolean
 		{
 			var result : Boolean;
 			
@@ -235,7 +235,7 @@ package cocktail.core
 			params : * = null
 		) : void
 		{
-			if( defined( scope, method ) )
+			if( is_defined( scope, method ) )
 				Function( scope[ method ] ).apply( scope, (
 					params != null ? [].concat( params ) : []
 				) );
