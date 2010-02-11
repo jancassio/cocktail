@@ -90,7 +90,7 @@ package cocktail.lib
 			}
 			
 			_model.load( process ).gunz_complete.add( _after_load ).once( );
-			_layout.load( process ).gunz_complete.rm( _after_load ).once( );
+			_layout.load( process ).gunz_complete.rm( _after_load );
 		}
 
 		/**
