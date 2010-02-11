@@ -10,14 +10,14 @@ package cocktail.lib
 		/** Contains and indexes all the childs **/
 		public var childs : ViewStack;
 
-		/** The string identifier on the ViewStack **/
+		/** The string identifier on parent's ViewStack **/
 		public var identifier : String;
 
 		/** The view node on the ViewStack DLinkedList **/
 		public var node : DListNode;
 
-		/** Reference to the view container **/
-		private var parent : View;
+		/** Reference to the parent view container **/
+		private var up : View;
 
 		/**
 		 * Initializes the view
@@ -31,10 +31,10 @@ package cocktail.lib
 		 * Adds a view to the view stack
 		 * @param id The child
 		 */
-		public function add( id : String ) : View
+		public function add( id : String, path : String ) : View
 		{
 			if( !childs.has( id ) )
-				childs.add( create( id ) );
+				childs.add( create( id, path ) );
 			
 			return childs.by_id( id );
 		}
@@ -50,13 +50,13 @@ package cocktail.lib
 		/**
 		 * Creates a view from id
 		 */
-		private function create( id : String ) : View
+		private function create( id : String, path : String ) : View
 		{
 			var view : View;
-			
-			view = new View( );
+
+			view = View( new _cocktail.factory.view( path ) );
 			view.boot( _cocktail );
-			view.parent = this;
+			view.up = this;
 			view.identifier = id;
 			
 			return view;
