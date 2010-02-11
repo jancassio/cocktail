@@ -4,7 +4,7 @@ package cocktail.lib
 
 	import de.polygonal.ds.DListNode;
 
-	public class View extends BaseMVCL 
+	public class View extends MVC 
 	{
 
 		/** Contains and indexes all the childs **/

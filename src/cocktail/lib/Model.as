@@ -2,9 +2,9 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
-	import cocktail.core.processes.Process;
+	import cocktail.core.request.Request;
 
-	public class Model extends BaseMVCL
+	public class Model extends MVC
 	{
 		/* ===== GUNZ ======================================================= */
 
@@ -43,7 +43,7 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( process : Process ) : Model
+		public function load( process : Request ) : Model
 		{
 			process;
 			return this;

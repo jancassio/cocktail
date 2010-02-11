@@ -56,12 +56,12 @@ package cocktail.core.router
 		/* ===== GUNZ ======================================================= */
 
 		public var gunz : Gunz; 
-		public var update : Gun; 
+		public var gunz_update : Gun; 
 
 		private function _init_gunz() : void
 		{
 			gunz = new Gunz( this );
-			update = new Gun( gunz, this, "update" );
+			gunz_update = new Gun( gunz, this, "update" );
 		}
 
 		
@@ -192,7 +192,7 @@ package cocktail.core.router
 					SWFAddress.setValue( request.route.mask );
 			}
 			else
-				update.pull( new RouterBullet( update.type, request ) );
+				gunz_update.pull( new RouterBullet( gunz_update.type, request ) );
 		}
 
 		/*
@@ -231,7 +231,7 @@ package cocktail.core.router
 			uri = (event.value == "/" ? config.default_uri : event.value );
 			request = new Request( Request.GET, uri ).boot( _cocktail );
 			
-			update.pull( new RouterBullet( update.type, request ) );
+			gunz_update.pull( new RouterBullet( gunz_update.type, request ) );
 		}
 	}
 }

@@ -8,7 +8,7 @@ package cocktail.lib
 	/**
 	 * @author nybras | me@nybras.com
 	 */
-	public class BaseMVCL extends Index 
+	public class MVC extends Index 
 	{
 
 		/* ===== BOOTING ==================================================== */

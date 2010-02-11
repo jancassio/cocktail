@@ -28,7 +28,7 @@ package cocktail
 	import cocktail.core.config.Config;
 	import cocktail.core.embedder.EmbedderTail;
 	import cocktail.core.factory.Factory;
-	import cocktail.core.processes.Processes;
+	import cocktail.core.process.Process;
 	import cocktail.core.router.Router;
 	import cocktail.core.router.RoutesTail;
 
@@ -56,7 +56,7 @@ package cocktail
 		private var _config : Config;
 		private var _router : Router;
 		private var _routes : RoutesTail;
-		private var _processes : Processes;
+		private var _processes : Process;
 
 		private var _bind : Bind;
 		private var _factory : Factory;
@@ -114,7 +114,7 @@ package cocktail
 			
 			_config = new Config( ).boot( this );
 			_router = new Router( ).boot( this );
-			_processes = new Processes( ).boot( this );
+			_processes = new Process( ).boot( this );
 		}
 
 		
@@ -246,7 +246,7 @@ package cocktail
 		 * Get the reference for the Processes instance.
 		 * @param	Reference to the Processes instance.
 		 */
-		public function get processes() : Processes
+		public function get processes() : Process
 		{
 			return _processes;
 		}

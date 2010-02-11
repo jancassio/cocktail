@@ -3,10 +3,10 @@ package cocktail.lib
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
-	import cocktail.core.processes.Process;
+	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
 
-	public class Controller extends BaseMVCL
+	public class Controller extends MVC
 	{
 		/* ---------------------------------------------------------------------
 		VARS
@@ -17,7 +17,7 @@ package cocktail.lib
 		private var _model : Model;
 		private var _layout : Layout;
 
-		private var _scheme_is_loaded : Boolean;
+		private var _is_scheme_loaded : Boolean;
 
 		
 		
@@ -43,29 +43,21 @@ package cocktail.lib
 			return s;
 		}
 
-		private function _after_boot() : void
-		{
-			trace( "After oot!" );
-		}
-
 		
 		
 		/* ---------------------------------------------------------------------
 		RUNNING
 		--------------------------------------------------------------------- */
 
-		public function before_run( process : Process ) : Boolean
+		public function before_run( request : Request ) : Boolean
 		{
-			process;
+			request;
 			return true;
 		}
 
-		final public function run( process : Process ) : void
+		final public function run( request : Request ) : void
 		{
-			if( before_run( process ) )
-				_load( process );
-			
-//				process.route.api.run( this );
+			_load( request );
 		}
 
 		
@@ -78,9 +70,9 @@ package cocktail.lib
 		 * Load Model and Layout.
 		 * @param process	Process to load. 
 		 */
-		private function _load( process : Process ) : void
+		private function _load( request : Request ) : void
 		{
-			if( _scheme_is_loaded )
+			if( _is_scheme_loaded )
 			{
 				_group = new GunzGroup( );
 				_group.add( _layout.gunz_scheme_loaded );
@@ -89,8 +81,8 @@ package cocktail.lib
 				return;
 			}
 			
-			_model.load( process ).gunz_complete.add( _after_load ).once( );
-			_layout.load( process ).gunz_complete.rm( _after_load );
+			_model.load( request ).gunz_complete.add( _after_load ).once( );
+			_layout.load( request ).gunz_complete.rm( _after_load );
 		}
 
 		/**
@@ -116,7 +108,7 @@ package cocktail.lib
 		private function _after_load_scheme( bullet : Bullet ) : void
 		{
 			bullet;
-			_scheme_is_loaded = true;
+			_is_scheme_loaded = true;
 //			_load();
 		}
 

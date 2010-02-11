@@ -2,7 +2,7 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
-	import cocktail.core.processes.Process;
+	import cocktail.core.request.Request;
 
 	public class Layout extends View
 	{
@@ -43,9 +43,9 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( process : Process ) : Layout
+		public function load( request : Request ) : Layout
 		{
-			process;
+			request;
 			return this;
 		}
 	}
