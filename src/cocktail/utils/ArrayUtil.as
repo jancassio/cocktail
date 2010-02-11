@@ -1,31 +1,32 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.utils 
 {
+
 	/**
 	 * Utilities for array manipulation.
 	 * @author nybras | nybras@codeine.it
@@ -46,18 +47,19 @@ package cocktail.utils
 		{
 			var i : int;
 			
-			if ( array1.length  != array2.length )
+			if ( array1.length != array2.length )
 				return false;
 			
 			i = 0;
-			do {
+			do 
+			{
 				if ( array1[ i ] != array2[ i ] )
 					return false;
 			} while ( ++i < array1.length );
 			
 			return true;
 		}
-		
+
 		
 		/**
 		 * Deletes some item of the given array.
@@ -92,7 +94,7 @@ package cocktail.utils
 			
 			return array;
 		}
-		
+
 		/**
 		 * Search the given array for the given value/key.
 		 * @param array	Array source.
@@ -126,7 +128,7 @@ package cocktail.utils
 			
 			return null;
 		}
-		
+
 		/**
 		 * Check if the array has some item or not.
 		 * @param array	Array source.
@@ -151,13 +153,13 @@ package cocktail.utils
 			
 			return false;
 		}
-		
+
 		/**
 		 * Clones the given array and return it.
 		 * @param array	Source array to be cloned
 		 * @return	Cloned array.
 		 */
-		public static function clone ( array : Array ) : Array
+		public static function clone( array : Array ) : Array
 		{
 			var item : *;
 			var clone : Array = new Array;

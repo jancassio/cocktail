@@ -7,7 +7,7 @@ package cocktail.core.gunz
 	public class Gunz
 	{
 		/* ===== VARS ======================================================= */
-		
+
 		internal var _owner : *;
 		internal var _gunz : Array;
 
@@ -19,7 +19,7 @@ package cocktail.core.gunz
 			_owner = owner;
 			_gunz = [];
 		}
-		
+
 		/* ===== KEEP / RM_ALL / DESTROY ==================================== */
 
 		internal function _keep( gun : Gun ) : void

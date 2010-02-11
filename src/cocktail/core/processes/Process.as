@@ -1,4 +1,5 @@
-package cocktail.core.processes {
+package cocktail.core.processes 
+{
 	import cocktail.core.Index;
 	import cocktail.core.request.Request;
 	import cocktail.lib.Controller;
@@ -9,16 +10,17 @@ package cocktail.core.processes {
 	public class Process extends Index
 	{
 		private var _processes : Processes;
-		
-		private var _controller: Controller;
-		private var _request: Request;
-		
 
+		private var _controller : Controller;
+		private var _request : Request;
+
+		
 		
 		public function Process(
 			processes : Processes,
 			request : Request
-		) {
+		) 
+		{
 			var controller_name : String;
 			
 			controller_name = request.route.api.controller;
@@ -27,7 +29,7 @@ package cocktail.core.processes {
 			_controller = _processes._controller( controller_name );
 			_request = request;
 		}
-		
+
 		
 		
 		public function get listen() : Process
@@ -35,13 +37,13 @@ package cocktail.core.processes {
 			
 			return this;
 		}
-		
+
 		public function get unlisten() : Process
 		{
 			
 			return this;
 		}
-		
+
 		
 		
 		public function ran( handler : Function ) : Process
@@ -49,18 +51,18 @@ package cocktail.core.processes {
 			handler;
 			return this;
 		}
-		
+
 		public function destroyed( handler : Function ) : Process
 		{
 			handler;
 			return this;
 		}
-		
+
 		public function once() : Process
 		{
 			return this;
 		}
-		
+
 		
 		
 		
@@ -69,20 +71,22 @@ package cocktail.core.processes {
 			_controller.run( this );
 			return this;
 		}
-		
+
 		public function destroy() : Process
 		{
 			_controller.run( this );
 			return this;
 		}
+
 		
 		
-		
-		public function get controller() : Controller {
+		public function get controller() : Controller 
+		{
 			return _controller;
 		}
-		
-		public function get request() : Request {
+
+		public function get request() : Request 
+		{
 			return _request;
 		}
 	}

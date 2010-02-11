@@ -1,28 +1,28 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core.request 
 {
@@ -37,12 +37,12 @@ package cocktail.core.request
 	public class Request extends Index
 	{
 		/* ---------------------------------------------------------------------
-			CONSTANTS (+public getters)
+		CONSTANTS (+public getters)
 		--------------------------------------------------------------------- */
-		
+
 		private static const _GET : String = "get";
 		private static const _POST : String = "post";
-		
+
 		/**
 		 * Returns a GET request type.
 		 */
@@ -50,7 +50,7 @@ package cocktail.core.request
 		{
 			return _GET;
 		}
-		
+
 		/**
 		 * Returns a GET request type.
 		 */
@@ -58,25 +58,25 @@ package cocktail.core.request
 		{
 			return _POST;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		private var _type : String;
-		
+
 		private var _uri : String;
 		private var _route : Route;
-		
+
 		private var _title : String;
 		private var _data : String;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -92,11 +92,11 @@ package cocktail.core.request
 			this.type = type;
 			this.data = data;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			BOOTING
+		BOOTING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -111,11 +111,11 @@ package cocktail.core.request
 			uri = _uri;
 			return s;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			GETTERS / SETTERS
+		GETTERS / SETTERS
 		--------------------------------------------------------------------- */
 		
 		/*
@@ -125,7 +125,7 @@ package cocktail.core.request
 		{
 			return _uri;
 		}
-		
+
 		/*
 		 * TODO: write docs
 		 */
@@ -134,7 +134,7 @@ package cocktail.core.request
 			_uri = routes.clean_uri( uri );
 			( _route = new Route( _uri ) ).boot( _cocktail );
 		}
-		
+
 		
 		
 		/*
@@ -144,7 +144,7 @@ package cocktail.core.request
 		{
 			return _title;
 		}
-		
+
 		/*
 		 * TODO: write docs
 		 */
@@ -152,7 +152,7 @@ package cocktail.core.request
 		{
 			_title = title;
 		}
-		
+
 		
 		
 		/*
@@ -162,7 +162,7 @@ package cocktail.core.request
 		{
 			return _type;
 		}
-		
+
 		/*
 		 * TODO: write docs
 		 */
@@ -170,7 +170,7 @@ package cocktail.core.request
 		{
 			_type = type;
 		}
-		
+
 		
 		
 		/*
@@ -180,7 +180,7 @@ package cocktail.core.request
 		{
 			return _data;
 		}
-		
+
 		/*
 		 * TODO: write docs
 		 */
@@ -188,7 +188,7 @@ package cocktail.core.request
 		{
 			_data = data;
 		}
-		
+
 		
 		
 		/*

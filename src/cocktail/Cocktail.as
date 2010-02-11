@@ -1,26 +1,26 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 	
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
-*******************************************************************************/
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
+ *******************************************************************************/
 
 package cocktail 
 {
@@ -44,27 +44,27 @@ package cocktail
 	public class Cocktail
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		private var _app : Sprite;
 		private var _app_id : String;
-		
+
 		private var _embedder : EmbedderTail;
 		private var _default_uri : String; 
-		
+
 		private var _config : Config;
 		private var _router : Router;
 		private var _routes : RoutesTail;
 		private var _processes : Processes;
-		
+
 		private var _bind : Bind;
 		private var _factory : Factory;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -91,8 +91,8 @@ package cocktail
 			_routes = routes;
 			_default_uri = default_uri;
 			
-			_bind = new Bind();
-			_factory = new Factory().boot( this );
+			_bind = new Bind( );
+			_factory = new Factory( ).boot( this );
 			
 			log_detail = 1;
 			log_level = 3;
@@ -100,27 +100,27 @@ package cocktail
 			if( !_app.stage )
 				_app.addEventListener( Event.ADDED_TO_STAGE, _init );
 			else
-				_init ();
+				_init( );
 		}
-		
+
 		/**
 		 * Initializes the cocktail.
 		 * @param event	Event.ADDED_TO_STAGE.
 		 */
-		public function _init ( event : Event = null ) : void
+		public function _init( event : Event = null ) : void
 		{
 			if ( event != null )
-				_app.removeEventListener( Event.ADDED_TO_STAGE , _init );
+				_app.removeEventListener( Event.ADDED_TO_STAGE, _init );
 			
-			_config = new Config().boot( this );
-			_router = new Router().boot( this );
-			_processes = new Processes().boot( this );
+			_config = new Config( ).boot( this );
+			_router = new Router( ).boot( this );
+			_processes = new Processes( ).boot( this );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			LOGGER LEVEL and DETAIL
+		LOGGER LEVEL and DETAIL
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -131,7 +131,7 @@ package cocktail
 		{
 			return _bind;
 		}
-		
+
 		
 		
 		/**
@@ -142,7 +142,7 @@ package cocktail
 		{
 			return _bind.g( "log-level" );
 		}
-		
+
 		/**
 		 * Sets the application log level.
 		 * @param level	Application log level (default=3).
@@ -158,7 +158,7 @@ package cocktail
 		{
 			_bind.s( "log-level", level );
 		}
-		
+
 		
 		
 		/**
@@ -169,7 +169,7 @@ package cocktail
 		{
 			return _bind.g( "log-detail" );
 		}
-		
+
 		/**
 		 * Sets the log detail.
 		 * @param logDetail	Application default log detail (default=1).
@@ -181,58 +181,58 @@ package cocktail
 		{
 			_bind.s( "log-detail", detail );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			GENERAL GETTERS
+		GENERAL GETTERS
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Get the reference for the app (document_class:Sprite) instance.
 		 * @param	Reference to the app instance.
 		 */
-		public function get app () : Sprite
+		public function get app() : Sprite
 		{
 			return _app;
 		}
-		
+
 		/**
 		 * Get the app id.
 		 * @param	The app id.
 		 */
-		public function get app_id () : String
+		public function get app_id() : String
 		{
 			return _app_id;
 		}
-		
+
 		/**
 		 * Get the app default URI.
 		 * @param	The app default URI.
 		 */
-		public function get default_uri () : String
+		public function get default_uri() : String
 		{
 			return _default_uri;
 		}
-		
+
 		/**
 		 * Get the reference for the Config instance.
 		 * @param	Reference to the Config instance.
 		 */
-		public function get config () : Config
+		public function get config() : Config
 		{
 			return _config;
 		}
-		
+
 		/**
 		 * Get the reference for the Router instance.
 		 * @param	Reference to the Router instance.
 		 */
-		public function get router () : Router
+		public function get router() : Router
 		{
 			return _router;
 		}
-		
+
 		/**
 		 * Get the reference for the Routes instance.
 		 * @param	Reference to the Routes instance.
@@ -241,21 +241,21 @@ package cocktail
 		{
 			return _routes;
 		}
-		
+
 		/**
 		 * Get the reference for the Processes instance.
 		 * @param	Reference to the Processes instance.
 		 */
-		public function get processes () : Processes
+		public function get processes() : Processes
 		{
 			return _processes;
 		}
-		
+
 		/**
 		 * Get the reference for the Factory instance.
 		 * @param	Reference to the Factory instance.
 		 */
-		public function get factory () : Factory
+		public function get factory() : Factory
 		{
 			return _factory;
 		}

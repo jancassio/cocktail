@@ -5,6 +5,8 @@ package cocktail.lib.model.datasources
 	internal class DataSource extends Index
 	{
 
-		public function DataSource(){}
+		public function DataSource()
+		{
+		}
 	}
 }

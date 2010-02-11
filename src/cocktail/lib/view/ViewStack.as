@@ -10,19 +10,19 @@ package cocktail.lib.view
 	 */
 	public class ViewStack extends Index
 	{
-		public var ids: Object;
-		public var list: DLinkedList;
-		
+		public var ids : Object;
+		public var list : DLinkedList;
+
 		public function ViewStack()
 		{
-			ids  = {};
-			list = new DLinkedList();
+			ids = {};
+			list = new DLinkedList( );
 		}
 
 		/**
 		 * Adds a view to the view stack
 		 */
-		public function add( view: View ) : View
+		public function add( view : View ) : View
 		{
 			if( has( view.identifier ) )
 			{
@@ -38,7 +38,7 @@ package cocktail.lib.view
 			
 			return view;
 		}
-		
+
 		/**
 		 * Remove a view from the index
 		 */
@@ -46,34 +46,30 @@ package cocktail.lib.view
 		{
 			if( !has( id ) )
 			{
-				log.error( 
-					"Requested identifier ( " + id + " ) isnt in the ViewStack" 
-				);
+				log.error( "Requested identifier ( " + id + " ) isnt in the ViewStack" );
 				
 				return null;
 			}
 			
 			//removing from child index
-			list.remove( 
-				list.nodeOf( by_id( id ) ) 
-			);
+			list.remove( list.nodeOf( by_id( id ) ) );
 			ids[ id ] = null;
 			
 			return null;
 		}
-		
+
 		/**
 		 * @return True if the identifier is already in the view stack
 		 */
-		public function has( id: String ) : Boolean
+		public function has( id : String ) : Boolean
 		{
 			return ids[ id ] != null;
 		}
-		
+
 		/**
 		 * Get a view by id on the viewStack
 		 */
-		public function by_id( id: String ) : View
+		public function by_id( id : String ) : View
 		{
 			if( has( id ) ) 
 				return ids[ id ];

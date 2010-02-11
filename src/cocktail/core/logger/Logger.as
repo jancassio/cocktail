@@ -1,28 +1,28 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core.logger
 {
@@ -34,32 +34,32 @@ package cocktail.core.logger
 	public class Logger
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		protected var _target_class : String;
 		protected var _level : uint;
 		protected var _detail : uint;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Creates a new Logger instance.
 		 * @param class_name	Class name to be logged with all log calls.
 		 */
-		public function Logger ( class_name : String )
+		public function Logger( class_name : String )
 		{
 			_target_class = class_name;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			TREE UTIL
+		TREE UTIL
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -69,7 +69,7 @@ package cocktail.core.logger
 		 * @param level	Sweep cycle.
 		 * @param buffer	Sweep buffer.
 		 */
-		public function tree (
+		public function tree(
 			params : *,
 			cycle : int = 0,
 			buffer : String = ""
@@ -89,23 +89,23 @@ package cocktail.core.logger
 			for ( var child : * in params )
 			{
 				data = params[ child ];
-			    buffer += tabs +"["+ child +"] => ";
-			    buffer += ( data is Array ? "[object Array]" : data );
-			    output = tree( data, ( cycle + 1 ) );
+				buffer += tabs + "[" + child + "] => ";
+				buffer += ( data is Array ? "[object Array]" : data );
+				output = tree( data, ( cycle + 1 ) );
 				
-			    if ( output != "" )
-			    	buffer += " {\n"+ output + tabs +"}";
+				if ( output != "" )
+			    	buffer += " {\n" + output + tabs + "}";
 				
 				buffer += "\n";
 			}
 			
 			return buffer;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			LEVEL & DETAIL (getter / setter )
+		LEVEL & DETAIL (getter / setter )
 		--------------------------------------------------------------------- */
 		 
 		/**
@@ -119,11 +119,11 @@ package cocktail.core.logger
 		 * 		<br/># 5=fatal,error,debug,warn,notice
 		 * 		<br/># 6=fatal,error,debug,warn,notice,info
 		 */
-		public function set level ( log_level : uint ) : void
+		public function set level( log_level : uint ) : void
 		{
 			_level = log_level;
 		}
-		
+
 		/**
 		 * Returns the log level.
 		 */
@@ -131,7 +131,7 @@ package cocktail.core.logger
 		{
 			return _level;
 		}
-		
+
 		
 		
 		/**
@@ -141,11 +141,11 @@ package cocktail.core.logger
 		 * <br/># 1=Adds the 'ClassName' prefix to all log calls.
 		 * <br/># 2=Adds a 'packace.a.b.c..ClassName' prefix to all log calls.
 		 */
-		public function set detail ( logDetail : uint ) : void
+		public function set detail( logDetail : uint ) : void
 		{
 			_detail = logDetail;
 		}
-		
+
 		/**
 		 * Returns the log detail.
 		 */
@@ -153,112 +153,112 @@ package cocktail.core.logger
 		{
 			return _detail;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			MAIN LOG ( template )
+		MAIN LOG ( template )
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Shows/log every kind of message, following a common template.
 		 */
-		public function log ( ...params ) : void
+		public function log( ...params ) : void
 		{
 			var output : String;
 			
-			output = "["+ params[ 0 ] +"] {";
+			output = "[" + params[ 0 ] + "] {";
 			params = params.slice( 1 );
 			
 			if ( _detail == 1 )
-				output += _target_class.split( "." ).pop() +"} ~: "+ params;
+				output += _target_class.split( "." ).pop( ) + "} ~: " + params;
 			else if ( _detail == 2)
-				output = _target_class +"} ~: "+ params;
+				output = _target_class + "} ~: " + params;
 			else
 				output += params;
 			
-			trace ( output );
+			trace( output );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			LOG METHODS
+		LOG METHODS
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Show/log info's messages.
 		 * @param params	FATAL message to be logged.
 		 */
-		public final function fatal ( ...params ) : Logger
+		public final function fatal( ...params ) : Logger
 		{
 			if ( _level > 0 )
 			{
-				log ( "FATAL", params );
+				log( "FATAL", params );
 				throw new Error( "Check the errors described above." );
 			}
 			
 			return this;
 		}
-		
+
 		/**
 		 * Show/log info's messages.
 		 * @param params	ERROR message to be logged.
 		 */
-		public final function error ( ...params ) : Logger
+		public final function error( ...params ) : Logger
 		{
 			if ( _level > 1 )
-				log ( "ERROR", params );
+				log( "ERROR", params );
 			
 			return this;
 		}
-		
+
 		/**
 		 * Show/log debugs's messages.
 		 * @param params	DEBUG message to be logged.
 		 */
-		public final function debug ( ...params ) : Logger
+		public final function debug( ...params ) : Logger
 		{
 			if ( _level > 2 )
-				log ( "DEBUG", params );
+				log( "DEBUG", params );
 			
 			return this;
- 		}
- 		
- 		/**
+		}
+
+		/**
 		 * Show/log info's messages.
 		 * @param params	WARN message to be logged.
 		 */
-		public final function warn ( ...params ) : Logger
+		public final function warn( ...params ) : Logger
 		{
 			if ( _level > 3 )
 			{
-				log ( "WARN", params );
+				log( "WARN", params );
 			}
 			
 			return this;
 		}
-		
+
 		/**
 		 * Show/log notice's messages.
 		 * @param params	NOTICE message to be logged.
 		 */
-		public final function notice ( ...params ) : Logger
+		public final function notice( ...params ) : Logger
 		{
 			if ( _level > 4 )
-				log ( "NOTICE", params );
+				log( "NOTICE", params );
 			
 			return this;
 		}
-		
+
 		/**
 		 * Show/log info's messages.
 		 * @param params	INFO message to be logged.
 		 */
-		public final function info ( ...params ) : Logger
+		public final function info( ...params ) : Logger
 		{
 			if ( _level > 5 )
-				log ( "INFO", params );
+				log( "INFO", params );
 			
 			return this;
 		}
