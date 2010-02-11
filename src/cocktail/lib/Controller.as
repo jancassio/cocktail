@@ -53,13 +53,13 @@ package cocktail.lib
 		/* ---------------------------------------------------------------------
 		RUNNING
 		--------------------------------------------------------------------- */
-		
+
 		public function before_run( process : Process ) : Boolean
 		{
 			process;
 			return true;
 		}
-		
+
 		final public function run( process : Process ) : void
 		{
 			if( before_run( process ) )
@@ -130,7 +130,7 @@ package cocktail.lib
 			process;
 			return true;
 		}
-		
+
 		final public function after_render( process : Process ) : void
 		{
 			process;

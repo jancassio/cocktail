@@ -50,7 +50,7 @@ package cocktail.core
 		{
 			gunz = new Gunz( this );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
@@ -146,7 +146,7 @@ package cocktail.core
 				method.apply( method.prototype, params.concat( innerParams ) );
 			} );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------

@@ -1,28 +1,28 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core.bind 
 {
@@ -34,38 +34,38 @@ package cocktail.core.bind
 	 */
 	public class Bind 
 	{
-		
+
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		private var _binded : Array;
 		private var _touched : Array;
 		private var _data : Object;
 		private var _length : uint;
 		private var _all : Boolean;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
 		 * Creates a new Bind instance.
 		 */
-		public function Bind ()
+		public function Bind()
 		{
-			_binded = new Array();
-			_touched = new Array();
-			_data = new Object();
+			_binded = new Array( );
+			_touched = new Array( );
+			_data = new Object( );
 			_length = 0;
 		}
 
 		
 		
 		/* ---------------------------------------------------------------------
-			GETTER & SETTER
+		GETTER & SETTER
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -84,7 +84,7 @@ package cocktail.core.bind
 			_data[ key ] = value;
 			update( key, value );
 		}
-		
+
 		/**
 		 * Get the key value.
 		 * @param key	Key to get the value.
@@ -94,7 +94,7 @@ package cocktail.core.bind
 		{
 			return _data[ key ];
 		}
-		
+
 		/**
 		 * Delete the key entry.
 		 * @param key	Key to be deleted.
@@ -108,11 +108,11 @@ package cocktail.core.bind
 				_length--;
 			}
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			GETTER & SETTER
+		GETTER & SETTER
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -120,7 +120,7 @@ package cocktail.core.bind
 		 * @param key	Updated key.
 		 * @param value	Updated value.
 		 */
-		private function update ( key : String, value : * ) : void
+		private function update( key : String, value : * ) : void
 		{
 			var binded : Binded;
 			var touched : Touched;
@@ -133,13 +133,13 @@ package cocktail.core.bind
 			// touched
 			for each ( touched in _touched )
 				if ( touched.key == key || touched._all )
-					touched.update();
+					touched.update( );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			PLUG / UNPLUG & TOUCH / UNTOUCH
+		PLUG / UNPLUG & TOUCH / UNTOUCH
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -149,9 +149,9 @@ package cocktail.core.bind
 		 * @param setter	If informed, the <code>change</code> param is
 		 * handled as a scope, otherwise its handled as a method.
 		 */
-		public function plug (
+		public function plug(
 			key : String,
-			change  : *,
+			change : *,
 			setter : String = null
 		) : Binded
 		{
@@ -165,7 +165,7 @@ package cocktail.core.bind
 			
 			return item;
 		}
-		
+
 		/**
 		 * Unplug some key.
 		 * @param key	Key to be unplugged.
@@ -175,9 +175,9 @@ package cocktail.core.bind
 		 * @return	<code>true</code> if the key is unplugged successfully,
 		 * <code>false</code> otherwise.
 		 */
-		public function unplug (
+		public function unplug(
 			key : String,
-			change  : *,
+			change : *,
 			setter : String = null
 		) : Boolean
 		{
@@ -185,18 +185,16 @@ package cocktail.core.bind
 			
 			for each ( item in _binded )
 			{
-				if (	item.key == key			&&
-						item.change == change	&&
-						item.setter == setter	)
+				if (	item.key == key && item.change == change && item.setter == setter	)
 				{
-					ArrayUtil.del( _binded , item );
+					ArrayUtil.del( _binded, item );
 					return true;
 				}
 			}
 			
 			return false;
 		}
-		
+
 		
 		
 		/**
@@ -205,20 +203,20 @@ package cocktail.core.bind
 		 * @param methods	Methods to be touched when the key value changes, it
 		 * can be just a single method or an array with many methods.
 		 */
-		public function touch (
+		public function touch(
 			key : String,
-			methods  : *
+			methods : *
 		) : void
 		{
 			var item : Touched;
 			
-			untouch ( key, methods );
+			untouch( key, methods );
 			_touched.push( item = new Touched( key, methods ) );
 			
 			if ( _data[ key ] != undefined )
-				item.update();
+				item.update( );
 		}
-		
+
 		/**
 		 * Untouch some key.
 		 * @param key	Key to untouched.
@@ -227,9 +225,9 @@ package cocktail.core.bind
 		 * @return	<code>true</code> if the key is untouched successfully,
 		 * <code>false</code> otherwise.
 		 */
-		public function untouch (
+		public function untouch(
 			key : String,
-			methods  : *
+			methods : *
 		) : Boolean
 		{
 			var item : Touched;
@@ -241,7 +239,7 @@ package cocktail.core.bind
 				
 				if ( methods is Array && item.methods is Array )
 				{
-					if ( ArrayUtil.compare( methods , item.methods ) )
+					if ( ArrayUtil.compare( methods, item.methods ) )
 					{
 						ArrayUtil.del( _touched, item );
 						return true;

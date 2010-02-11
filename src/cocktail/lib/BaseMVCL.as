@@ -10,28 +10,28 @@ package cocktail.lib
 	 */
 	public class BaseMVCL extends Index 
 	{
-		
+
 		/* ===== BOOTING ==================================================== */
-		
+
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var s : *;
 			
 			s = super.boot( cocktail );
 			
-			_init_gunz();
+			_init_gunz( );
 			
 			return s;
 		}
-		
+
 		
 		
 		/* ===== INITIALIZING =============================================== */
-		
+
 		public var gunz : Gunz; 
 		public var gunz_boot : Gun; 
 		public var gunz_complete : Gun; 
-		
+
 		private function _init_gunz() : void
 		{
 			gunz = new Gunz( this );

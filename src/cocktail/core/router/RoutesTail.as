@@ -1,27 +1,27 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 	
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
-*******************************************************************************/
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
+ *******************************************************************************/
 
 package cocktail.core.router
 {
@@ -34,15 +34,15 @@ package cocktail.core.router
 	public class RoutesTail 
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		private var _mappings : Array = [];
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			CLEANING UP DIRTY URI
+		CLEANING UP DIRTY URI
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -59,11 +59,11 @@ package cocktail.core.router
 			
 			return uri;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			MAPPING
+		MAPPING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -74,13 +74,13 @@ package cocktail.core.router
 		public function map( mask : String, target : String ) : void
 		{
 			ArrayUtil.del( _mappings, mask, "mask" );
-			_mappings.push( new MapVO( clean_uri( mask ), clean_uri( target )));
+			_mappings.push( new MapVO( clean_uri( mask ), clean_uri( target ) ) );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			WRAP / UNWRAP / LOCALE
+		WRAP / UNWRAP / LOCALE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -93,12 +93,12 @@ package cocktail.core.router
 			var map : MapVO;
 			
 			for each( map in _mappings )
-				if( map.target_rgx.test(uri ) )
+				if( map.target_rgx.test( uri ) )
 					return _mask( map, uri );
 			
 			return uri;
 		}
-		
+
 		/**
 		 * Unwraps a mask URI into it's target URI.
 		 * @param target	Mask URI to unwrap.
@@ -114,11 +114,11 @@ package cocktail.core.router
 			
 			return uri;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			COMPARISON
+		COMPARISON
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -139,7 +139,7 @@ package cocktail.core.router
 			
 			return map.mask.replace( "*", params.join( "/" ) );
 		}
-		
+
 		/**
 		 * Computes the target URI for the given mask URI.
 		 * @param map	MapVO instance.
@@ -170,10 +170,10 @@ internal class MapVO
 {
 	public var mask : String;
 	public var target : String;
-	
+
 	public var target_rgx : RegExp;
 	public var mask_rgx : RegExp;
-	
+
 	/**
 	 * Creates a new MapVO instance.
 	 * @param mask	Url mask.

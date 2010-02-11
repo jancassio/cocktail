@@ -1,28 +1,28 @@
- /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
-	****************************************************************************
+/*	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core.factory 
 {
@@ -38,7 +38,7 @@ package cocktail.core.factory
 	public class Factory extends Index
 	{
 		/* ---------------------------------------------------------------------
-			ERROR MESSAGE TEMPLATE
+		ERROR MESSAGE TEMPLATE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -50,16 +50,16 @@ package cocktail.core.factory
 		{
 			var message : String;
 			
-			message = "Class '"+ ( name ? name + base : "null" );
-			message += "' was not found, so the default "+ base +" was used.";
+			message = "Class '" + ( name ? name + base : "null" );
+			message += "' was not found, so the default " + base + " was used.";
 			
 			return message;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			CLASS EVALUATOR
+		CLASS EVALUATOR
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -67,15 +67,15 @@ package cocktail.core.factory
 		 * @param classpath	Desired classpath.
 		 * @return	The found class reference.
 		 */
-		public function evaluate ( classpath : String ) : Class
+		public function evaluate( classpath : String ) : Class
 		{
 			return Class( getDefinitionByName( classpath ) );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			MVCL
+		MVCL
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -91,7 +91,7 @@ package cocktail.core.factory
 			path = _cocktail.app_id + "." + folder + "." + classname;
 			return evaluate( path );
 		}
-		
+
 		/**
 		 * Evaluates the given Controller class by name and return it.
 		 * @param name	Controller name (CamelCased).
@@ -108,7 +108,7 @@ package cocktail.core.factory
 			}
 			return evaluate( "cocktail.lib.Controller" );
 		}
-		
+
 		/**
 		 * Evaluates the given Model class by name and return it.
 		 * @param name	Model name (CamelCased).
@@ -125,7 +125,7 @@ package cocktail.core.factory
 			}
 			return evaluate( "cocktail.lib.Model" );
 		}
-		
+
 		/**
 		 * Evaluates the given Layout class by name and return it.
 		 * @param name	Layout name (CamelCased).
@@ -142,7 +142,7 @@ package cocktail.core.factory
 			}
 			return evaluate( "cocktail.lib.Layout" );
 		}
-		
+
 		/**
 		 * Evaluates the given View class by name and return it.
 		 * @param name	View name (CamelCased).

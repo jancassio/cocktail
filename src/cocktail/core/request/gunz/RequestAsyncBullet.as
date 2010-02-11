@@ -1,7 +1,7 @@
 package cocktail.core.request.gunz 
 {
 	import cocktail.core.gunz.Bullet;
-	
+
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
@@ -9,7 +9,7 @@ package cocktail.core.request.gunz
 	{
 		public function RequestAsyncBullet(type : String)
 		{
-			super(type);
+			super( type );
 		}
 	}
 }

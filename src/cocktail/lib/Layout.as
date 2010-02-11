@@ -4,7 +4,7 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.processes.Process;
 
-	public class Layout extends BaseMVCL
+	public class Layout extends View
 	{
 		/* ===== GUNZ ======================================================= */
 
@@ -14,11 +14,11 @@ package cocktail.lib
 		{
 			gunz_scheme_loaded = new Gun( gunz, this, "shcheme_loaded" );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			INITIALIZING
+		INITIALIZING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -28,16 +28,16 @@ package cocktail.lib
 		{
 			var s : *;
 		
-			s = super.boot( cocktail);
-			_init_gunz();
+			s = super.boot( cocktail );
+			_init_gunz( );
 			
 			return s;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			LOAD
+		LOAD
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -48,9 +48,5 @@ package cocktail.lib
 			process;
 			return this;
 		}
-		
-		
-		
-		
 	}
 }

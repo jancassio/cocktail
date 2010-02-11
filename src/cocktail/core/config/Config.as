@@ -1,36 +1,36 @@
 /*	****************************************************************************
-		Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
-	****************************************************************************
+Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
+ ****************************************************************************
    
-		This library is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published
-	by the Free Software Foundation; either version 2.1 of the License, or
-	(at your option) any later version.
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 		
-		This library is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-	License for more details.
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+License for more details.
 
-		You should have received a copy of the GNU Lesser General Public License
-	along with this library; if not, write to the Free Software Foundation,
-	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-	-------------------------
-		Codeine
-		http://codeine.it
-		contact@codeine.it
-	-------------------------
+-------------------------
+Codeine
+http://codeine.it
+contact@codeine.it
+-------------------------
 	
-*******************************************************************************/
+ *******************************************************************************/
 
 package cocktail.core.config
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	
+
 	import swfaddress.SWFAddress;
-	
+
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -44,19 +44,19 @@ package cocktail.core.config
 	public class Config extends Index
 	{
 		/* ---------------------------------------------------------------------
-			VARS
+		VARS
 		--------------------------------------------------------------------- */
-		
+
 		private var _raw : XML;
 		private var _current_locale : String;
-		
+
 		
 		private var _tmp_loader : URLLoader;
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			BOOTING
+		BOOTING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -72,14 +72,14 @@ package cocktail.core.config
 			_cocktail = cocktail;
 			
 			/*
-		 		TODO: 	REPLACE ALL THE LOADING PROCESS WITH THE NEW LOADING
-		 		  		ENGINE, POWERED BY GUNZ
+			TODO: 	REPLACE ALL THE LOADING PROCESS WITH THE NEW LOADING
+			ENGINE, POWERED BY GUNZ
 		 				
-		 					ie.: load( _config_path ).listen( _init );
+			ie.: load( _config_path ).listen( _init );
 			 */
-			 
-			_tmp_loader = new URLLoader();
-			_tmp_loader.addEventListener( Event.COMPLETE, _init);
+
+			_tmp_loader = new URLLoader( );
+			_tmp_loader.addEventListener( Event.COMPLETE, _init );
 			_tmp_loader.load( new URLRequest( _config_path ) );
 			
 			return s;
@@ -88,7 +88,7 @@ package cocktail.core.config
 		
 		
 		/* ---------------------------------------------------------------------
-			LOADING
+		LOADING
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -100,23 +100,24 @@ package cocktail.core.config
 			var stage : Stage;
 			var route : XML;
 			 
-			_raw = new XML( _tmp_loader.data.toString() );
+			_raw = new XML( _tmp_loader.data.toString( ) );
 			
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
-			stage.align = _movie( "align" );;
+			stage.align = _movie( "align" );
+			;
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
 			
 			for each( route in _raw..route )
 				routes.map( route.@mask, route.@target );
 			
-			router.init();
+			router.init( );
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			ENVIORNMENT
+		ENVIORNMENT
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -128,28 +129,26 @@ package cocktail.core.config
 		{
 			return _cocktail.app_id;
 		}
-		
+
 		/**
 		 * Gets the current external url location.
 		 * @return	The current external url location.
 		 */
 		public function get location() : String
 		{
-			return SWFAddress.getValue();
+			return SWFAddress.getValue( );
 		}
-		
+
 		/**
 		 * Evaluates the path for the config file.
 		 * @return	The path to the config file.
 		 */
 		private function get _config_path() : String
 		{
-			return	( (	plugin ? "" : "." )
-						+ "./cocktail/config/config.fxml"
-						+ "?v="+ Math.random()
+			return	( (	plugin ? "" : "." ) + "./cocktail/config/config.fxml" + "?v=" + Math.random( )
 					);
 		}
-		
+
 		/**
 		 * Evaluates the document cache control for the given environment,
 		 * if no environment is given, the default is used.
@@ -160,10 +159,10 @@ package cocktail.core.config
 		 */
 		public function cache( environment : String = null ) : Boolean
 		{
-			environment =( environment || _raw..paths.@default );
+			environment = ( environment || _raw..paths.@default );
 			return( _raw..cache.@[ environment ] == "true" );
 		}
-		
+
 		/**
 		 * Evaluates the document root path for given environment, if no
 		 * environment is given, the default is used.
@@ -176,7 +175,7 @@ package cocktail.core.config
 			environment = ( environment || _raw..paths.@default );
 			return _raw..paths.path.( @name == environment ).@url;
 		}
-		
+
 		/**
 		 * Checks the player type.
 		 * @return <code>true</code> if movie is inside a browser,
@@ -186,7 +185,7 @@ package cocktail.core.config
 		{
 			return( "PlugInActiveX".indexOf( Capabilities.playerType ) != -1 );
 		}
-		
+
 		/**
 		 * Get the application default URI.
 		 * @return The application default URI.
@@ -195,17 +194,16 @@ package cocktail.core.config
 		{
 			return _cocktail.default_uri;
 		}
-		
+
 		/**
 		 * Evaluates the required path, based on the given extension.
 		 * @param extension	File extension you want to evaluate the path.
 		 */
 		public function path( extension : String ) : String
 		{
-			return	root() +
-					_raw..path.( attribute( "ext" ) == extension ).@folder;
+			return	root( ) + _raw..path.( attribute( "ext" ) == extension ).@folder;
 		}
-		
+
 		/**
 		 * Evaluates the required gateway based on the given name.
 		 * @param name	Gateway name you want to evaluate. If null, gets the
@@ -217,11 +215,11 @@ package cocktail.core.config
 			if( name == null ) name = _raw..gateways.@default;
 			return _raw..gateway.( attribute( "name" ) == name ).@url;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			LOCALE
+		LOCALE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -233,13 +231,13 @@ package cocktail.core.config
 			var locales : Array;
 			var locale : XML;
 			
-			locales = new Array();
+			locales = new Array( );
 			for each( locale in _raw..languages.* )
-				locales.push( locale.localName() );
+				locales.push( locale.localName( ) );
 			
 			return locales;
 		}
-		
+
 		/**
 		 * Returns the default locale.
 		 * @return	Default locale.
@@ -248,7 +246,7 @@ package cocktail.core.config
 		{
 			return _raw..languages.@default;
 		}
-		
+
 		/**
 		 * Get the current locale.
 		 * @return	The locales array.
@@ -257,7 +255,7 @@ package cocktail.core.config
 		{
 			return _current_locale;
 		}
-		
+
 		/**
 		 * Set the current locale.
 		 * @return	The locales array.
@@ -266,11 +264,11 @@ package cocktail.core.config
 		{
 			_current_locale = locale;
 		}
-		
+
 		
 		
 		/* ---------------------------------------------------------------------
-			MOVIE / STAGE
+		MOVIE / STAGE
 		--------------------------------------------------------------------- */
 		
 		/**
@@ -281,7 +279,7 @@ package cocktail.core.config
 		{
 			return _raw..movie.@[ property ];
 		}
-		
+
 		/**
 		 * Get the default movie width.
 		 * @return	The default movie width.
@@ -290,7 +288,7 @@ package cocktail.core.config
 		{
 			return _movie( "width" );
 		}
-		
+
 		/**
 		 * Get the default movie height.
 		 * @return	The default movie height.
@@ -299,7 +297,7 @@ package cocktail.core.config
 		{
 			return _movie( "height" );
 		}
-		
+
 		/**
 		 * Get the current stage width.
 		 * @return	The current stage width.
