@@ -35,9 +35,7 @@ package cocktail.core.bind
 	public class Bind 
 	{
 
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _binded : Array;
 		private var _touched : Array;
@@ -47,9 +45,7 @@ package cocktail.core.bind
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Bind instance.
@@ -64,9 +60,7 @@ package cocktail.core.bind
 
 		
 		
-		/* ---------------------------------------------------------------------
-		GETTER & SETTER
-		--------------------------------------------------------------------- */
+		/* GETTER & SETTER */
 		
 		/**
 		 * Set the key value.
@@ -111,9 +105,7 @@ package cocktail.core.bind
 
 		
 		
-		/* ---------------------------------------------------------------------
-		GETTER & SETTER
-		--------------------------------------------------------------------- */
+		/* GETTER & SETTER */
 		
 		/**
 		 * Updates some key and "ping" all plugged items.
@@ -138,9 +130,7 @@ package cocktail.core.bind
 
 		
 		
-		/* ---------------------------------------------------------------------
-		PLUG / UNPLUG & TOUCH / UNTOUCH
-		--------------------------------------------------------------------- */
+		/* PLUG / UNPLUG & TOUCH / UNTOUCH */
 		
 		/**
 		 * Plug some key.
@@ -260,9 +250,7 @@ package cocktail.core.bind
 		
 		
 		
-		/* ---------------------------------------------------------------------
-			PLUG / UNPLUG & TOUCH / UNTOUCH - ALL
-		--------------------------------------------------------------------- */
+		/* 	PLUG / UNPLUG & TOUCH / UNTOUCH - ALL */
 		
 //		IMPROVE THE IDEA AND THINK ABOUT THE IMPROVEMENTS BEFORE IMPLEMENT
 //		

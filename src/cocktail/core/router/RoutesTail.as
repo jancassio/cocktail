@@ -33,17 +33,13 @@ package cocktail.core.router
 	 */
 	public class RoutesTail 
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _mappings : Array = [];
 
 		
 		
-		/* ---------------------------------------------------------------------
-		CLEANING UP DIRTY URI
-		--------------------------------------------------------------------- */
+		/* CLEANING UP DIRTY URI */
 		
 		/**
 		 * Do a soft clean up on the given URI removing useless slashes.
@@ -62,9 +58,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		MAPPING
-		--------------------------------------------------------------------- */
+		/* MAPPING */
 		
 		/**
 		 * Adds a mapping routine.
@@ -79,9 +73,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		WRAP / UNWRAP / LOCALE
-		--------------------------------------------------------------------- */
+		/* WRAP / UNWRAP / LOCALE */
 		
 		/**
 		 * Wraps a target URI into it's mask URI.
@@ -117,9 +109,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		COMPARISON
-		--------------------------------------------------------------------- */
+		/* COMPARISON */
 		
 		/**
 		 * Computes the mask URI for the given target URI.

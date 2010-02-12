@@ -36,9 +36,7 @@ package cocktail.core.request
 	 */
 	public class Request extends Index
 	{
-		/* ---------------------------------------------------------------------
-		CONSTANTS (+public getters)
-		--------------------------------------------------------------------- */
+		/* CONSTANTS (+public getters) */
 
 		private static const _GET : String = "get";
 		private static const _POST : String = "post";
@@ -61,9 +59,7 @@ package cocktail.core.request
 
 		
 		
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _type : String;
 
@@ -75,9 +71,7 @@ package cocktail.core.request
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * TODO: write docs
@@ -95,9 +89,7 @@ package cocktail.core.request
 
 		
 		
-		/* ---------------------------------------------------------------------
-		BOOTING
-		--------------------------------------------------------------------- */
+		/* BOOTING */
 		
 		/**
 		 * Boots the Index base class.
@@ -114,9 +106,7 @@ package cocktail.core.request
 
 		
 		
-		/* ---------------------------------------------------------------------
-		GETTERS / SETTERS
-		--------------------------------------------------------------------- */
+		/* GETTERS / SETTERS */
 		
 		/*
 		 * TODO: write docs

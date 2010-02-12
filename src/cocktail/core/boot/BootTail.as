@@ -12,17 +12,13 @@ package cocktail.core.boot
 	 */
 	public class BootTail extends Sprite 
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _loader : Loader;
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new BootTail instance.
@@ -36,9 +32,7 @@ package cocktail.core.boot
 
 		
 		
-		/* ---------------------------------------------------------------------
-		BOOTING APPLICATION
-		--------------------------------------------------------------------- */
+		/* BOOTING APPLICATION */
 		
 		/**
 		 * Loader application.
@@ -63,9 +57,7 @@ package cocktail.core.boot
 
 		
 		
-		/* ---------------------------------------------------------------------
-		APPLICATION PATH
-		--------------------------------------------------------------------- */
+		/* APPLICATION PATH */
 		
 		/**
 		 * Returns the computed application 'core.swf' path, adding a random

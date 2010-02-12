@@ -34,17 +34,13 @@ package cocktail.lib.gunz
 	 */
 	public class ModelBullet extends Bullet
 	{
-		/* ---------------------------------------------------------------------
-		BULLET PROPERTIES
-		--------------------------------------------------------------------- */
+		/* BULLET PROPERTIES */
 		
 		// something...
 		
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Model Bullet.

@@ -35,17 +35,13 @@ package cocktail.core.router.gunz
 	 */
 	public class RouterBullet extends Bullet
 	{
-		/* ---------------------------------------------------------------------
-		BULLET PROPERTIES
-		--------------------------------------------------------------------- */
+		/* BULLET PROPERTIES */
 
 		public var request : Request;
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new RouterBullet.

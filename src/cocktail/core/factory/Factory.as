@@ -37,9 +37,7 @@ package cocktail.core.factory
 	 */
 	public class Factory extends Index
 	{
-		/* ---------------------------------------------------------------------
-		ERROR MESSAGE TEMPLATE
-		--------------------------------------------------------------------- */
+		/* ERROR MESSAGE TEMPLATE */
 		
 		/**
 		 * Formats an customized prefrix error message based on given name.
@@ -58,9 +56,7 @@ package cocktail.core.factory
 
 		
 		
-		/* ---------------------------------------------------------------------
-		CLASS EVALUATOR
-		--------------------------------------------------------------------- */
+		/* CLASS EVALUATOR */
 		
 		/**
 		 * Returns a class reference according the given classpath.
@@ -74,9 +70,7 @@ package cocktail.core.factory
 
 		
 		
-		/* ---------------------------------------------------------------------
-		MVCL
-		--------------------------------------------------------------------- */
+		/* MVCL */
 		
 		/**
 		 * Evaluates classes for Model, View, Controller and Layout.

@@ -34,9 +34,7 @@ package cocktail.core.logger.interfaces
 	 */
 	public interface ILogger 
 	{
-		/* ---------------------------------------------------------------------
-		LOG METHODS
-		--------------------------------------------------------------------- */
+		/* LOG METHODS */
 		
 		/**
 		 * Shows/log every kind of message, following a common template.

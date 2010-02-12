@@ -37,8 +37,7 @@ package cocktail.core.process
 	 */
 	public class Process extends Index 
 	{
-		/* ---------------------------------------------------------------------
-		VARS
+		/* VARS
 		-------------------------------------------------------------------  */
 
 		private var _controllers : Object;
@@ -46,8 +45,7 @@ package cocktail.core.process
 
 		
 		
-		/* ---------------------------------------------------------------------
-		BOOTING
+		/* BOOTING
 		-------------------------------------------------------------------  */
 		
 		/**
@@ -66,9 +64,7 @@ package cocktail.core.process
 
 		
 		
-		/* ---------------------------------------------------------------------
-		ROUTING ADDRESS BAR CALLS
-		--------------------------------------------------------------------- */
+		/* ROUTING ADDRESS BAR CALLS */
 		
 		/**
 		 * Route the application according the Router.UPDATE trigger.
@@ -103,9 +99,7 @@ package cocktail.core.process
 
 		
 		
-		/* ---------------------------------------------------------------------
-		CONTROLLERS
-		--------------------------------------------------------------------- */
+		/* CONTROLLERS */
 		
 		/**
 		 * Instantiate the requested Controller, or just return it if it was

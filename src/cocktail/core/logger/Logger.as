@@ -33,9 +33,7 @@ package cocktail.core.logger
 	 */
 	public class Logger
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		protected var _target_class : String;
 		protected var _level : uint;
@@ -43,9 +41,7 @@ package cocktail.core.logger
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Logger instance.
@@ -58,9 +54,7 @@ package cocktail.core.logger
 
 		
 		
-		/* ---------------------------------------------------------------------
-		TREE UTIL
-		--------------------------------------------------------------------- */
+		/* TREE UTIL */
 		
 		/**
 		 * Sweep the entire object, return a formated-string with all object
@@ -104,9 +98,7 @@ package cocktail.core.logger
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LEVEL & DETAIL (getter / setter )
-		--------------------------------------------------------------------- */
+		/* LEVEL & DETAIL (getter / setter ) */
 		 
 		/**
 		 * Sets the log level.
@@ -156,9 +148,7 @@ package cocktail.core.logger
 
 		
 		
-		/* ---------------------------------------------------------------------
-		MAIN LOG ( template )
-		--------------------------------------------------------------------- */
+		/* MAIN LOG ( template ) */
 		
 		/**
 		 * Shows/log every kind of message, following a common template.
@@ -182,9 +172,7 @@ package cocktail.core.logger
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LOG METHODS
-		--------------------------------------------------------------------- */
+		/* LOG METHODS */
 		
 		/**
 		 * Show/log info's messages.

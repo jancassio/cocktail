@@ -43,9 +43,7 @@ package cocktail.core.config
 	 */
 	public class Config extends Index
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _raw : XML;
 		private var _current_locale : String;
@@ -55,9 +53,7 @@ package cocktail.core.config
 
 		
 		
-		/* ---------------------------------------------------------------------
-		BOOTING
-		--------------------------------------------------------------------- */
+		/* BOOTING */
 		
 		/**
 		 * Creates a new Config instance.
@@ -87,9 +83,7 @@ package cocktail.core.config
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LOADING
-		--------------------------------------------------------------------- */
+		/* LOADING */
 		
 		/**
 		 * Keep the configuration file contents.
@@ -116,9 +110,7 @@ package cocktail.core.config
 
 		
 		
-		/* ---------------------------------------------------------------------
-		ENVIORNMENT
-		--------------------------------------------------------------------- */
+		/* ENVIORNMENT */
 		
 		/**
 		 * Gets the app id, use it to build the classpath's when dynamically
@@ -218,9 +210,7 @@ package cocktail.core.config
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LOCALE
-		--------------------------------------------------------------------- */
+		/* LOCALE */
 		
 		/**
 		 * Returns an array with all available locales.
@@ -267,9 +257,7 @@ package cocktail.core.config
 
 		
 		
-		/* ---------------------------------------------------------------------
-		MOVIE / STAGE
-		--------------------------------------------------------------------- */
+		/* MOVIE / STAGE */
 		
 		/**
 		 * Get the gien property in xml, inside the movie config block.

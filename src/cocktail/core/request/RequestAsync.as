@@ -35,9 +35,7 @@ package cocktail.core.request
 	 */
 	public class RequestAsync extends Request 
 	{
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * TODO: write docs
@@ -51,9 +49,7 @@ package cocktail.core.request
 		}
 
 		
-		/* ---------------------------------------------------------------------
-		BOOTING
-		--------------------------------------------------------------------- */
+		/* BOOTING */
 		
 		/**
 		 * Boots the Index base class.

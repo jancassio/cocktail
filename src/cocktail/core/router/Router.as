@@ -43,9 +43,7 @@ package cocktail.core.router
 	 */
 	public class Router extends Index
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _initialized : Boolean;
 		private var _history : Array;
@@ -66,9 +64,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		BOOTING
-		--------------------------------------------------------------------- */
+		/* BOOTING */
 		
 		/**
 		 * Creates a new Router instance.
@@ -105,9 +101,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		HISTORY HANDLERS
-		--------------------------------------------------------------------- */
+		/* HISTORY HANDLERS */
 		
 		/**
 		 * Check if theres external pages enough to perform a "back" operation.
@@ -170,9 +164,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		REQUEST HANDLERS
-		--------------------------------------------------------------------- */
+		/* REQUEST HANDLERS */
 		
 		/**
 		 * Redirects the application to the given request.
@@ -206,9 +198,7 @@ package cocktail.core.router
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LOCATION HANDLERS
-		--------------------------------------------------------------------- */
+		/* LOCATION HANDLERS */
 		
 		/**
 		 * Gets the current external url location.

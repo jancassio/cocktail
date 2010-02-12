@@ -34,17 +34,13 @@ package cocktail.lib.gunz
 	 */
 	public class LayoutBullet extends Bullet
 	{
-		/* ---------------------------------------------------------------------
-		BULLET PROPERTIES
-		--------------------------------------------------------------------- */
+		/* BULLET PROPERTIES */
 		
 		// something...
 		
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Layout Bullet.

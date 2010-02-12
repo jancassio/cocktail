@@ -43,9 +43,7 @@ package cocktail
 	 */
 	public class Cocktail
 	{
-		/* ---------------------------------------------------------------------
-		VARS
-		--------------------------------------------------------------------- */
+		/* VARS */
 
 		private var _app : Sprite;
 		private var _app_id : String;
@@ -63,9 +61,7 @@ package cocktail
 
 		
 		
-		/* ---------------------------------------------------------------------
-		INITIALIZING
-		--------------------------------------------------------------------- */
+		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Cocktail instance.
@@ -119,9 +115,7 @@ package cocktail
 
 		
 		
-		/* ---------------------------------------------------------------------
-		LOGGER LEVEL and DETAIL
-		--------------------------------------------------------------------- */
+		/* LOGGER LEVEL and DETAIL */
 		
 		/**
 		 * Returns the Bind reference.
@@ -184,9 +178,7 @@ package cocktail
 
 		
 		
-		/* ---------------------------------------------------------------------
-		GENERAL GETTERS
-		--------------------------------------------------------------------- */
+		/* GENERAL GETTERS */
 		
 		/**
 		 * Get the reference for the app (document_class:Sprite) instance.
