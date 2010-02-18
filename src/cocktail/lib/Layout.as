@@ -7,7 +7,6 @@ package cocktail.lib
 	public class Layout extends View
 	{
 		/* ===== GUNZ ======================================================= */
-
 		public var gunz_scheme_loaded : Gun; 
 
 		private function _init_gunz() : void
@@ -15,8 +14,6 @@ package cocktail.lib
 			gunz_scheme_loaded = new Gun( gunz, this, "shcheme_loaded" );
 		}
 
-		
-		
 		/* INITIALIZING */
 		
 		/**
@@ -32,8 +29,6 @@ package cocktail.lib
 			return s;
 		}
 
-		
-		
 		/* LOAD */
 		
 		/**

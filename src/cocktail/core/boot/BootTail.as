@@ -13,11 +13,8 @@ package cocktail.core.boot
 	public class BootTail extends Sprite 
 	{
 		/* VARS */
-
 		private var _loader : Loader;
 
-		
-		
 		/* INITIALIZING */
 		
 		/**
@@ -30,8 +27,6 @@ package cocktail.core.boot
 			_load( );
 		}
 
-		
-		
 		/* BOOTING APPLICATION */
 		
 		/**
@@ -55,8 +50,6 @@ package cocktail.core.boot
 			_loader = null;
 		}
 
-		
-		
 		/* APPLICATION PATH */
 		
 		/**

@@ -9,18 +9,12 @@ package cocktail.lib
 	public class Controller extends MVC
 	{
 		/* VARS */
-
 		private var _group : GunzGroup;
-
 		private var _model : Model;
 		private var _layout : Layout;
-
 		private var _is_scheme_loaded : Boolean;
 
-		
-		
 		/* BOOTING */
-
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var name : String;
@@ -39,10 +33,7 @@ package cocktail.lib
 			return s;
 		}
 
-		
-		
 		/* RUNNING */
-
 		public function before_run( request : Request ) : Boolean
 		{
 			request;
@@ -54,8 +45,6 @@ package cocktail.lib
 			_load( request );
 		}
 
-		
-		
 		/* LOADING */
 		
 		/**
@@ -102,9 +91,7 @@ package cocktail.lib
 //			_load();
 		}
 
-		
 		/* RENDERING */
-
 		final public function before_render( process : Process ) : Boolean
 		{
 			process;

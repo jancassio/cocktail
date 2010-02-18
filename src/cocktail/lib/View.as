@@ -6,16 +6,12 @@ package cocktail.lib
 
 	public class View extends MVC 
 	{
-
 		/** Contains and indexes all the childs **/
 		public var childs : ViewStack;
-
 		/** The string identifier on the ViewStack **/
 		public var identifier : String;
-
 		/** The view node on the ViewStack DLinkedList **/
 		public var node : DListNode;
-
 		/** Reference to the view container **/
 		private var parent : View;
 

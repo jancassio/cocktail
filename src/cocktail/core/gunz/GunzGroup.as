@@ -8,11 +8,9 @@ package cocktail.core.gunz
 	{
 		private var _fired : int;
 		private var _items : Array;
-
 		public var gunz : Gunz;
 		public var gunz_complete : Gun;
 
-		
 		public function GunzGroup()
 		{
 			gunz = new Gunz( this );

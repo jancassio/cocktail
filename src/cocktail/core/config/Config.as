@@ -1,29 +1,3 @@
-/*	****************************************************************************
-Cocktail ActionScript Full Stack Framework. Copyright (C) 2009 Codeine.
- ****************************************************************************
-   
-This library is free software; you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published
-by the Free Software Foundation; either version 2.1 of the License, or
-(at your option) any later version.
-		
-This library is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with this library; if not, write to the Free Software Foundation,
-Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
--------------------------
-Codeine
-http://codeine.it
-contact@codeine.it
--------------------------
-	
- *******************************************************************************/
-
 package cocktail.core.config
 {
 	import cocktail.Cocktail;
@@ -44,15 +18,10 @@ package cocktail.core.config
 	public class Config extends Index
 	{
 		/* VARS */
-
 		private var _raw : XML;
 		private var _current_locale : String;
-
-		
 		private var _tmp_loader : URLLoader;
 
-		
-		
 		/* BOOTING */
 		
 		/**
@@ -73,7 +42,6 @@ package cocktail.core.config
 		 				
 			ie.: load( _config_path ).listen( _init );
 			 */
-
 			_tmp_loader = new URLLoader( );
 			_tmp_loader.addEventListener( Event.COMPLETE, _init );
 			_tmp_loader.load( new URLRequest( _config_path ) );
@@ -81,8 +49,6 @@ package cocktail.core.config
 			return s;
 		}
 
-		
-		
 		/* LOADING */
 		
 		/**
@@ -99,7 +65,6 @@ package cocktail.core.config
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );
-			;
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
 			
 			for each( route in _raw..route )
@@ -108,8 +73,6 @@ package cocktail.core.config
 			router.init( );
 		}
 
-		
-		
 		/* ENVIORNMENT */
 		
 		/**
@@ -208,8 +171,6 @@ package cocktail.core.config
 			return _raw..gateway.( attribute( "name" ) == name ).@url;
 		}
 
-		
-		
 		/* LOCALE */
 		
 		/**
@@ -255,8 +216,6 @@ package cocktail.core.config
 			_current_locale = locale;
 		}
 
-		
-		
 		/* MOVIE / STAGE */
 		
 		/**

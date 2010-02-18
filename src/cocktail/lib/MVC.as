@@ -10,9 +10,7 @@ package cocktail.lib
 	 */
 	public class MVC extends Index 
 	{
-
 		/* ===== BOOTING ==================================================== */
-
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var s : *;
@@ -24,10 +22,7 @@ package cocktail.lib
 			return s;
 		}
 
-		
-		
 		/* ===== INITIALIZING =============================================== */
-
 		public var gunz : Gunz; 
 		public var gunz_boot : Gun; 
 		public var gunz_complete : Gun; 

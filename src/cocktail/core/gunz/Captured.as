@@ -9,17 +9,12 @@ package cocktail.core.gunz
 	internal class Captured
 	{
 		/* ===== VARS ======================================================= */
-
 		private var _gun : Gun;
 		private var _bullet_feed : Function;
-
 		private var _target : DisplayObject;
 		private var _type : String;
 
-		
-		
 		/* ===== INITIALIZING =============================================== */
-
 		public function Captured(
 			gun : Gun,
 			target : DisplayObject,
@@ -33,10 +28,7 @@ package cocktail.core.gunz
 			_target.addEventListener( _type, _proxy );
 		}
 
-		
-		
 		/* ===== PROXY ====================================================== */
-
 		private function _proxy( event : Event ) : void 
 		{
 			var bullet : Bullet;
@@ -47,19 +39,13 @@ package cocktail.core.gunz
 			_gun.pull( bullet );
 		}
 
-		
-		
 		/* ===== BULLET FEED ================================================ */
-
 		public final function feed( handler : Function ) : void
 		{
 			_bullet_feed = handler;
 		}
 
-		
-		
 		/* ===== DESTROY ==================================================== */
-
 		internal function _destroy() : void
 		{
 			_target.removeEventListener( _type, _proxy );

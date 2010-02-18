@@ -1,29 +1,3 @@
-/*	****************************************************************************
-Cocktail ActionScript Full Stack Framework. Copyright(C) 2009 Codeine.
- ****************************************************************************
-   
-This library is free software; you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published
-by the Free Software Foundation; either version 2.1 of the License, or
-(at your option) any later version.
-		
-This library is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with this library; if not, write to the Free Software Foundation,
-Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
--------------------------
-Codeine
-http://codeine.it
-contact@codeine.it
--------------------------
-	
- *******************************************************************************/
-
 package cocktail.core.router 
 {
 	import cocktail.Cocktail;
@@ -44,15 +18,10 @@ package cocktail.core.router
 	public class Router extends Index
 	{
 		/* VARS */
-
 		private var _initialized : Boolean;
 		private var _history : Array;
 		private var _index : Number;
-
-		
-		
 		/* ===== GUNZ ======================================================= */
-
 		public var gunz : Gunz; 
 		public var gunz_update : Gun; 
 
@@ -62,8 +31,6 @@ package cocktail.core.router
 			gunz_update = new Gun( gunz, this, "update" );
 		}
 
-		
-		
 		/* BOOTING */
 		
 		/**
@@ -84,7 +51,6 @@ package cocktail.core.router
 			return s;
 		}
 
-		
 		/**
 		 * Initializes the router, listening for SWFAddress.
 		 */
@@ -99,8 +65,6 @@ package cocktail.core.router
 				SWFAddress.addEventListener( SWFAddressEvent.CHANGE, _addressbar_change );
 		}
 
-		
-		
 		/* HISTORY HANDLERS */
 		
 		/**
@@ -122,8 +86,6 @@ package cocktail.core.router
 			return( index < history.length );
 		}
 
-		
-		
 		/**
 		 * Go forward one page.
 		 */
@@ -142,8 +104,6 @@ package cocktail.core.router
 			SWFAddress.back( );
 		}
 
-		
-		
 		/**
 		 * Gets the history.
 		 * @return	The history array.
@@ -162,8 +122,6 @@ package cocktail.core.router
 			return _index;
 		}
 
-		
-		
 		/* REQUEST HANDLERS */
 		
 		/**
@@ -196,8 +154,6 @@ package cocktail.core.router
 			return new RequestAsync( uri, data ).boot( _cocktail ).s;
 		}
 
-		
-		
 		/* LOCATION HANDLERS */
 		
 		/**
