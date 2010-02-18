@@ -16,7 +16,7 @@ package cocktail.core
 	 */
 	public class Index 
 	{
-		/* ===== GUNZ ======================================================= */
+		/* GUNZ */
 		public var gunz : Gunz; 
 
 		private function _init_gunz() : void

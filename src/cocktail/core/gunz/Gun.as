@@ -7,14 +7,14 @@ package cocktail.core.gunz
 	 */
 	public class Gun 
 	{
-		/* ===== VARS ======================================================= */
+		/* VARS */
 		internal var _gunz : Gunz;
 		internal var _owner : *;
 		internal var _type : String;
 		internal var _fingers : Array;
 		internal var _captured : Array;
 
-		/* ===== INITIALIZING =============================================== */
+		/* INITIALIZING */
 		public function Gun( gunz : Gunz, owner : *, type : String ) : void
 		{
 			( _gunz = gunz )._keep( this );
@@ -26,7 +26,7 @@ package cocktail.core.gunz
 			_captured = [];
 		}
 
-		/* ===== LISTEN / UNLISTEN / DESTROY ================================ */
+		/* LISTEN / UNLISTEN / DESTROY */
 		public final function add(
 			handler : Function,
 			params : * = null
@@ -56,7 +56,7 @@ package cocktail.core.gunz
 			_fingers = [];
 		}
 
-		/* ===== DESTROY ==================================================== */
+		/* DESTROY */
 		public final function destroy() : void
 		{
 			var captured : Captured;
@@ -66,7 +66,7 @@ package cocktail.core.gunz
 				captured._destroy( );
 		}
 
-		/* ===== PULLING ==================================================== */
+		/* PULLING */
 		public final function pull( bullet : Bullet = null ) : void
 		{
 			for each( var finger : Finger in _fingers )
@@ -77,7 +77,7 @@ package cocktail.core.gunz
 			}
 		}
 
-		/* ===== CAPTURING ================================================== */
+		/* CAPTURING */
 		public final function capture(
 			target : DisplayObject,
 			event_type : String
@@ -89,7 +89,7 @@ package cocktail.core.gunz
 			return captured;
 		}
 
-		/* ===== GETTERS ==================================================== */
+		/* GETTERS */
 		public final function get type() : String
 		{
 			return _type;

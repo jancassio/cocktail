@@ -8,7 +8,7 @@ package cocktail.core.gunz
 	 */
 	public class Bullet 
 	{
-		/* ===== VARS ======================================================= */
+		/* VARS */
 		internal var _type : String;
 		internal var _params : *;
 		internal var _owner : *;
@@ -17,14 +17,14 @@ package cocktail.core.gunz
 		internal var _times : int;
 		internal var _event : Event;
 
-		/* ===== INITIALIZING =============================================== */
+		/* INITIALIZING */
 		public function Bullet( type : String ) : void
 		{
 			_type = type;
 			_times = -1;
 		}
 
-		/* ===== PUBLI GETTERS ============================================== */
+		/* PUBLI GETTERS */
 		public function get type() : String
 		{
 			return _type;	
@@ -65,7 +65,7 @@ package cocktail.core.gunz
 			_event = event;
 		}
 
-		/* ===== TO STRING CONVERSION ======================================= */
+		/* TO STRING CONVERSION */
 		
 		/**
 		 * Format all public properties to String.

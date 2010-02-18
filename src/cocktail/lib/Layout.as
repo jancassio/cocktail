@@ -6,7 +6,7 @@ package cocktail.lib
 
 	public class Layout extends View
 	{
-		/* ===== GUNZ ======================================================= */
+		/* GUNZ */
 		public var gunz_scheme_loaded : Gun; 
 
 		private function _init_gunz() : void

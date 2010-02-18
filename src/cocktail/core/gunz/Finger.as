@@ -6,7 +6,7 @@ package cocktail.core.gunz
 	 */
 	public class Finger 
 	{
-		/* ===== VARS ======================================================= */
+		/* VARS */
 		internal var _id : int;
 		internal var _gun : Gun;
 		internal var _handler : Function;
@@ -14,7 +14,7 @@ package cocktail.core.gunz
 		internal var _times : int;
 		internal var _time : int;
 
-		/* ===== INITIALIZING =============================================== */
+		/* INITIALIZING */
 		public function Finger(
 			gun : Gun,
 			handler : Function,
@@ -28,7 +28,7 @@ package cocktail.core.gunz
 			_params = params;
 		}
 
-		/* ===== TIMES / ONCE =============================================== */
+		/* TIMES / ONCE */
 		public final function times( number : int ) : Finger
 		{
 			_times = number;
@@ -41,7 +41,7 @@ package cocktail.core.gunz
 			return this;
 		}
 
-		/* ===== PULL / RELEASE ============================================= */
+		/* PULL / RELEASE */
 		internal function pull( bullet : Bullet ) : Finger
 		{
 			_time++;
