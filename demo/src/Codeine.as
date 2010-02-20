@@ -58,7 +58,8 @@ package
 			switch( event.keyCode )
 			{
 				case Keyboard.RIGHT:
-					_cocktail.router.get( _uris.shift() );
+					if( _uris.length )
+						_cocktail.router.get( _uris.shift() );
 				break;
 			}
 		}
