@@ -50,7 +50,7 @@ package cocktail.lib
 		{
 			var view : View;
 
-			view = View( new _cocktail.factory.view( path ) );
+			view = View( new ( _cocktail.factory.view( path ) ) );
 			view.boot( _cocktail );
 			view.up = this;
 			view.identifier = id;
