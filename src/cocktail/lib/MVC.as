@@ -23,7 +23,6 @@ package cocktail.lib
 		}
 
 		/* INITIALIZING */
-		public var gunz : Gunz; 
 		public var gunz_boot : Gun; 
 		public var gunz_complete : Gun; 
 
