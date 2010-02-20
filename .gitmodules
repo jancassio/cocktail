@@ -1,0 +1,3 @@
+[submodule "src/cocktail/core/gunz"]
+	path = src/cocktail/core/gunz
+	url = git@github.com:nybras/cocktail-gunz.git
