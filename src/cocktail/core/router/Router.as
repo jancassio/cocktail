@@ -22,7 +22,6 @@ package cocktail.core.router
 		private var _history : Array;
 		private var _index : Number;
 		/* GUNZ */
-		public var gunz : Gunz; 
 		public var gunz_update : Gun; 
 
 		private function _init_gunz() : void
@@ -132,7 +131,7 @@ package cocktail.core.router
 		{
 			var request : Request;
 			
-			request = new Request( Request.GET, uri ).boot( _cocktail ).s;
+			request = new Request( Request.GET, uri ).boot( _cocktail );
 			history.push( request );
 			_index++;
 			
