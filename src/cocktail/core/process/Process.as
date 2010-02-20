@@ -11,13 +11,11 @@ package cocktail.core.process
 	 */
 	public class Process extends Index 
 	{
-		/* VARS
-		-------------------------------------------------------------------  */
+		/* VARS */
 		private var _controllers : Object;
 		private var _current_controller : Controller;
 
-		/* BOOTING
-		-------------------------------------------------------------------  */
+		/* BOOTING */
 		
 		/**
 		 * Creates a new Processes instance.
