@@ -141,7 +141,7 @@ package cocktail.core.router
 					SWFAddress.setValue( request.route.mask );
 			}
 			else
-				gunz_update.pull( new RouterBullet( gunz_update.type, request ) );
+				gunz_update.shoot( new RouterBullet( gunz_update.type, request ) );
 		}
 
 		/*
@@ -176,7 +176,7 @@ package cocktail.core.router
 			uri = (event.value == "/" ? config.default_uri : event.value );
 			request = new Request( Request.GET, uri ).boot( _cocktail );
 			
-			gunz_update.pull( new RouterBullet( gunz_update.type, request ) );
+			gunz_update.shoot( new RouterBullet( gunz_update.type, request ) );
 		}
 	}
 }
