@@ -1,11 +1,14 @@
-package cocktail.lib 
-{
+package cocktail.lib {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
 
+	/**
+	 * @author hems
+	 * @author nybras
+	 */
 	public class Controller extends MVC
 	{
 		/* VARS */
@@ -34,12 +37,19 @@ package cocktail.lib
 		}
 
 		/* RUNNING */
+		
+		/**
+		 * Run filtering. If returns false, wont run the action
+		 */
 		public function before_run( request : Request ) : Boolean
 		{
 			request;
 			return true;
 		}
 
+		/**
+		 * Run the desired request
+		 */
 		final public function run( request : Request ) : void
 		{
 			_load( request );
@@ -53,52 +63,75 @@ package cocktail.lib
 		 */
 		private function _load( request : Request ) : void
 		{
-			if( _is_scheme_loaded )
+			if( !_is_scheme_loaded ) 
 			{
-				_group = new GunzGroup( );
-				_group.add( _layout.gunz_scheme_loaded );
-				_group.add( _model.gunz_scheme_loaded );
-				_group.gunz_complete.add( _after_load_scheme );
+				_load_scheme( request );
 				return;
 			}
 			
-			_model.load( request ).gunz_complete.add( _after_load ).once( );
-			_layout.load( request ).gunz_complete.rm( _after_load );
+			_group = new GunzGroup( );
+			_group.add( _layout.gunz_complete );
+			_group.add( _model.gunz_complete );
+			_group.gunz_complete.add( _after_load, request );
+			
+			_model.load( request );
+			_layout.load( request );
 		}
 
 		/**
-		 * TODO: write docs
+		 * Called after loading needed data to render the request
 		 */
-		private function _after_load( bullet : Bullet ) : void
+		private function _after_load( bullet : Bullet, request: Request ) : void
 		{
 			bullet;
+			request;
 		}
 
 		/* LOADING SCHEME */
 		
 		/**
-		 * Load Model and Layout.
-		 * @param request	Request to load. 
+		 * Load Model and Layout scheme.
+		 * @param request	Request that will be loaded after load scheme. 
 		 */
 		private function _load_scheme( request : Request ) : void
 		{
+			_group = new GunzGroup( );
+			_group.add( _layout.gunz_scheme_loaded );
+			_group.add( _model.gunz_scheme_loaded );
+			_group.gunz_complete.add( _after_load_scheme, request );
+			
+			_model.load( request );
+			_layout.load( request );
 		}
 
-		private function _after_load_scheme( bullet : Bullet ) : void
+		/**
+		 * Triggered after load  model and layout scheme
+		 */
+		private function _after_load_scheme( 
+			bullet : Bullet, 
+			request: Request 
+		) : void
 		{
 			bullet;
 			_is_scheme_loaded = true;
-//			_load();
+			_load( request );
 		}
 
 		/* RENDERING */
-		final public function before_render( process : Process ) : Boolean
+		
+		/**
+		 * Rendering filter. If returns false, wont render
+		 */
+		public function before_render( process : Process ) : Boolean
 		{
 			process;
 			return true;
 		}
 
-		final public function after_render( process : Process ) : void
+		/**
+		 * Called after process completes
+		 */
+		public function after_render( process : Process ) : void
 		{
 			process;
 		}
