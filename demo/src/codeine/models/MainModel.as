@@ -6,5 +6,7 @@ package codeine.models
 	 * Handles the main Model behaviors.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class MainModel extends AppModel{}
+	public class MainModel extends AppModel
+	{
+	}
 }

@@ -6,5 +6,7 @@ package codeine.layouts
 	 * Handles the main Layout behaviors.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class MainLayout extends AppLayout {}
+	public class MainLayout extends AppLayout 
+	{
+	}
 }

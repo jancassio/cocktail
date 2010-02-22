@@ -6,5 +6,7 @@ package codeine.views
 	 * Handles the main View behaviors.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class MainView extends AppView{}
+	public class MainView extends AppView
+	{
+	}
 }

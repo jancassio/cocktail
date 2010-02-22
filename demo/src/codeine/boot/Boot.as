@@ -1,7 +1,7 @@
 package codeine.boot 
 {
 	import cocktail.core.boot.BootTail;
-	
+
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
@@ -9,7 +9,7 @@ package codeine.boot
 	{
 		public function Boot()
 		{
-			super();
+			super( );
 		}
 	}
 }

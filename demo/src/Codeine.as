@@ -1,14 +1,13 @@
 package  
 {
 	import cocktail.Cocktail;
-	
-	import codeine.boot.Embedder;
+
 	import codeine.boot.Routes;
-	
+
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;	
+	import flash.ui.Keyboard;
 
 	/**
 	 * Document class.
