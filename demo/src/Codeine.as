@@ -2,6 +2,7 @@ package
 {
 	import cocktail.Cocktail;
 
+	import codeine.boot.Embedder;
 	import codeine.boot.Routes;
 
 	import flash.display.Sprite;
