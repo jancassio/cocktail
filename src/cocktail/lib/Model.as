@@ -4,6 +4,10 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 
+	/**
+	 * @author hems
+	 * @author nybras
+	 */
 	public class Model extends MVC
 	{
 		/* GUNZ */
@@ -32,12 +36,37 @@ package cocktail.lib
 		/* LOAD */
 		
 		/**
-		 * TODO: write docs
+		 * Filtering load action, if returns false, no load will occur
+		 */
+		public function before_load(): Boolean
+		{
+			return true;
+		}
+		
+		/**
+		 * Load all datasources needed for the request
 		 */
 		public function load( process : Request ) : Model
 		{
 			process;
 			return this;
 		}
+		
+		/**
+		 * Filtering load action, if returns false, no load will occur
+		 */
+		public function after_load(): void
+		{
+		}
+		
+		/**
+		 * Evaluates the path for the xml file.
+		 * @return	The path to the xml file.
+		 */
+		public function get xmlPath () : String
+		{
+			return ( config.path( ".xml" ) + "models/" + classname.toLowerCase( ) ) + ".xml";
+		}
+		
 	}
 }
