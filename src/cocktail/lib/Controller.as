@@ -1,9 +1,11 @@
-package cocktail.lib {
+package cocktail.lib 
+{
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
+	import cocktail.lib.gunz.ControllerBullet;
 
 	/**
 	 * @author hems
@@ -39,7 +41,7 @@ package cocktail.lib {
 		/* RUNNING */
 		
 		/**
-		 * Run filtering. If returns false, wont run the action
+		 * Run filtering. If returns false, wont run the action.
 		 */
 		public function before_run( request : Request ) : Boolean
 		{
@@ -48,7 +50,7 @@ package cocktail.lib {
 		}
 
 		/**
-		 * Run the desired request
+		 * Run the desired request.
 		 */
 		final public function run( request : Request ) : void
 		{
@@ -70,21 +72,22 @@ package cocktail.lib {
 			}
 			
 			_group = new GunzGroup( );
-			_group.add( _layout.gunz_complete );
-			_group.add( _model.gunz_complete );
+			_group.add( _layout.gunz_load_complete );
+			_group.add( _model.gunz_load_complete );
 			_group.gunz_complete.add( _after_load, request );
 			
-			_model.load( request );
-			_layout.load( request );
+			_model.load_data( request );
+			_layout.load_assets( request );
 		}
 
 		/**
-		 * Called after loading needed data to render the request
+		 * Called after loading needed data to render the request.
 		 */
-		private function _after_load( bullet : Bullet, request: Request ) : void
+		private function _after_load( bullet : Bullet ) : void
 		{
 			bullet;
-			request;
+			bullet.params;
+			gunz_load_complete.shoot( new ControllerBullet() );
 		}
 
 		/* LOADING SCHEME */
@@ -100,27 +103,24 @@ package cocktail.lib {
 			_group.add( _model.gunz_scheme_loaded );
 			_group.gunz_complete.add( _after_load_scheme, request );
 			
-			_model.load( request );
-			_layout.load( request );
+			_model.load_scheme( request );
+			_layout.load_scheme( request );
 		}
 
 		/**
-		 * Triggered after load  model and layout scheme
+		 * Triggered after load  model and layout scheme.
 		 */
-		private function _after_load_scheme( 
-			bullet : Bullet, 
-			request: Request 
-		) : void
+		private function _after_load_scheme( bullet : Bullet ) : void
 		{
 			bullet;
 			_is_scheme_loaded = true;
-			_load( request );
+			_load( bullet.params );
 		}
 
 		/* RENDERING */
 		
 		/**
-		 * Rendering filter. If returns false, wont render
+		 * Rendering filter. If returns false, wont render.
 		 */
 		public function before_render( process : Process ) : Boolean
 		{
@@ -129,7 +129,7 @@ package cocktail.lib {
 		}
 
 		/**
-		 * Called after process completes
+		 * Called after render process completes.
 		 */
 		public function after_render( process : Process ) : void
 		{

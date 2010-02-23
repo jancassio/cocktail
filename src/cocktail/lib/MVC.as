@@ -10,6 +10,21 @@ package cocktail.lib
 	 */
 	public class MVC extends Index 
 	{
+		/* GUNZ */
+		public var gunz_boot : Gun; 
+		public var gunz_load_start : Gun; 
+		public var gunz_load_progress : Gun; 
+		public var gunz_load_complete : Gun; 
+
+		private function _init_gunz() : void
+		{
+			gunz = new Gunz( this );
+			gunz_boot = new Gun( gunz, this, "boot" );
+			gunz_load_start = new Gun( gunz, this, "load_start" );
+			gunz_load_progress = new Gun( gunz, this, "load_progress" );
+			gunz_load_complete = new Gun( gunz, this, "load_complete" );
+		}
+
 		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
 		{
@@ -20,17 +35,6 @@ package cocktail.lib
 			_init_gunz( );
 			
 			return s;
-		}
-
-		/* INITIALIZING */
-		public var gunz_boot : Gun; 
-		public var gunz_complete : Gun; 
-
-		private function _init_gunz() : void
-		{
-			gunz = new Gunz( this );
-			gunz_boot = new Gun( gunz, this, "boot" );
-			gunz_complete = new Gun( gunz, this, "complete" );
 		}
 	}
 }
