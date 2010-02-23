@@ -16,15 +16,11 @@ package cocktail.core.router.gunz
 		
 		/**
 		 * Creates a new RouterBullet.
-		 * @param type	Bullet type.
 		 * @param request	Request instance.
 		 */
-		public function RouterBullet(
-			type : String,
-			request : Request
-		) : void
+		public function RouterBullet( request : Request ) : void
 		{
-			super( type );
+			super( );
 			this.request = request;
 		}
 	}

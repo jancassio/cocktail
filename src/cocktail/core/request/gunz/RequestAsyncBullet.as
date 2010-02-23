@@ -7,9 +7,9 @@ package cocktail.core.request.gunz
 	 */
 	public class RequestAsyncBullet extends Bullet 
 	{
-		public function RequestAsyncBullet(type : String)
+		public function RequestAsyncBullet()
 		{
-			super( type );
+			super( );
 		}
 	}
 }
