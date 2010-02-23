@@ -1,30 +1,14 @@
 package cocktail.lib.gunz 
 {
-	import cocktail.core.gunz.Bullet;	
 
 	/**
-	 * Bullet for layout.
-	 * @author nybras | nybras@codeine.it
+	 * @author nybras | me@nybras.com
 	 */
-	public class LayoutBullet extends Bullet
+	public class LayoutBullet extends MVCBullet 
 	{
-		/* BULLET PROPERTIES */
-		
-		// something...
-		
-		
-		
-		/* INITIALIZING */
-		
-		/**
-		 * Creates a new Layout Bullet.
-		 * @param type	Bullet type.
-		 */
-		public function LayoutBullet(
-			type : String
-		) : void
+		public function LayoutBullet()
 		{
-			super( type );
+			super( );
 		}
 	}
 }
