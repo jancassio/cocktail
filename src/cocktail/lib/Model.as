@@ -44,9 +44,18 @@ package cocktail.lib
 		}
 		
 		/**
-		 * Load all datasources needed for the request
+		 * Load model scheme.
 		 */
-		public function load( process : Request ) : Model
+		public function load_scheme( process : Request ) : Model
+		{
+			process;
+			return this;
+		}
+		
+		/**
+		 * Load all datasources needed for the request.
+		 */
+		public function load_data( process : Request ) : Model
 		{
 			process;
 			return this;

@@ -34,7 +34,16 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( request : Request ) : Layout
+		public function load_assets( request : Request ) : Layout
+		{
+			request;
+			return this;
+		}
+		
+		/**
+		 * TODO: write docs
+		 */
+		public function load_scheme( request : Request ) : Layout
 		{
 			request;
 			return this;
