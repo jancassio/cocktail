@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="GunzGroup,cocktail.core.gunz.GunzGroup,gunz,gunz_complete,add,destroy" name="keywords">
+<title>cocktail.core.gunz.GunzGroup</title>
+<script type="text/javascript" src="../../../AC_OETags.js"></script>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'GunzGroup - Gunz Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">Gunz Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?cocktail/core/gunz/GunzGroup.html&amp;cocktail/core/gunz/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;GunzGroup</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#includeExamplesSummary">Examples</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class GunzGroup"); titleBar_setSubNav(false,true,false,false,false,false,true,true,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">cocktail.core.gunz</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class GunzGroup</td>
+</tr>
+</table>
+<p></p>
+  Groups multiple Gun's, listens to every single one, and fires the
+  "complete" Gun (gunz_complete) when all Gun's have being shot.
+  
+  <p></p>
+<p>
+<a href="#includeExamplesSummary">View the examples.</a>
+</p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="Gun.html" target="">Gun</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#gunz">gunz</a> : <a href="../gunz/Gunz.html">Gunz</a>
+<div class="summaryTableDescription"> Gunz to store <code>gunz_complete</code>.</div>
+</td><td class="summaryTableOwnerCol">GunzGroup</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#gunz_complete">gunz_complete</a> : <a href="../gunz/Gun.html">Gun</a>
+<div class="summaryTableDescription"> Gun complete.</div>
+</td><td class="summaryTableOwnerCol">GunzGroup</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#GunzGroup()">GunzGroup</a>()</div>
+<div class="summaryTableDescription">
+   Creates a new GunzGroup instance.</div>
+</td><td class="summaryTableOwnerCol">GunzGroup</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#add()">add</a>(gun:<a href="Gun.html">Gun</a>):<a href="../gunz/GunzGroup.html">GunzGroup</a>
+</div>
+<div class="summaryTableDescription">
+   Adds a new Gun to the queue list and listens to its shots.</div>
+</td><td class="summaryTableOwnerCol">GunzGroup</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
+<div class="summaryTableDescription">
+   Destroys everything in GunzGroup and all Gun's in the list.</div>
+</td><td class="summaryTableOwnerCol">GunzGroup</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="gunz"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gunz</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var gunz:<a href="../gunz/Gunz.html">Gunz</a></code><p> Gunz to store <code>gunz_complete</code>. </p></div>
+<a name="gunz_complete"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gunz_complete</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var gunz_complete:<a href="../gunz/Gun.html">Gun</a></code><p> Gun complete. </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="GunzGroup()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">GunzGroup</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function GunzGroup()</code><p>
+   Creates a new GunzGroup instance.
+   </p></div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="add()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">add</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function add(gun:<a href="Gun.html">Gun</a>):<a href="../gunz/GunzGroup.html">GunzGroup</a></code><p>
+   Adds a new Gun to the queue list and listens to its shots.
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">gun</span>:<a href="Gun.html">Gun</a></code> &mdash; Gun to be added.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../gunz/GunzGroup.html">GunzGroup</a></code> &mdash; 
+                        Self reference for reuse.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="destroy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public final function destroy():void</code><p>
+   Destroys everything in GunzGroup and all Gun's in the list.
+   </p></div>
+<a name="includeExamplesSummary"></a>
+<div class="detailSectionHeader">Examples</div>
+<br>
+<div class="detailBody">Creating a GunzGroup and listening for completion.
+ <div class="listing">
+<pre>
+ 
+// creates a Gunz list
+var gunz : Gunz = new Gunz( this );
+  
+ // creates some Gun's
+var gun1 : Gun = new Gun( gunz, this, "type1" );
+var gun2 : Gun = new Gun( gunz, this, "type2" );
+var gun3 : Gun = new Gun( gunz, this, "type3" );
+
+// creates a group
+var group : new GunzGroup();
+
+// add Gun's to this group
+group.add( gun1 );
+group.add( gun2 );
+group.add( gun3 );
+
+// listens to when all Gun events completion
+group.gunz_complete.add( all_events_shot, request );
+
+// called when all Gun events were dispatched (shot)
+function all_events_shot( bullet : Bullet ) : void
+{
+    trace( bullet.params );
+}</pre>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+				AC_FL_RunContent(
+					"src", "GunzGroup",
+					"width", "100%",
+					"height", "400px",
+					"align", "middle",
+					"id", "example1",
+					"quality", "high",
+					"bgcolor", "",
+					"name", "example1",
+					"flashvars","",
+					"allowScriptAccess","sameDomain",
+					"type", "application/x-shockwave-flash",
+					"pluginspage", "http://www.macromedia.com/go/getflashplayer"
+				);
+			--></script>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
