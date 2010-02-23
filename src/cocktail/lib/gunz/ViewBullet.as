@@ -4,9 +4,9 @@ package cocktail.lib.gunz
 	/**
 	 * @author nybras | me@nybras.com
 	 */
-	public class ModelBullet extends MVCBullet 
+	public class ViewBullet extends MVCBullet 
 	{
-		public function ModelBullet()
+		public function ViewBullet()
 		{
 			super();
 		}
