@@ -35,9 +35,9 @@ package cocktail.lib
 			var name : String;
 			var s : *;
 		
+			s = super.boot( cocktail );
 			_init_gunz( );
 			
-			s = super.boot( cocktail );
 			name = classname.replace( "Controller", "" );
 			
 			_model = new ( _cocktail.factory.model( name ) )( );
@@ -146,7 +146,7 @@ package cocktail.lib
 		 */
 		public function render( process : Process ) : void
 		{
-			if( before_render )
+			if( before_render( process ) )
 			{
 				_layout.gunz_render_complete.add( after_render, process );
 				_layout.render( process );
