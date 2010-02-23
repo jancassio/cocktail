@@ -58,9 +58,7 @@ package cocktail.core.process
 			//			log.debug( "route.api.action => " + bullet.request.route.api.action );
 			//			log.debug( "route.api.params => " + bullet.request.route.api.params );
 			_current_controller = _controller( bullet.request.route.api.controller );
-			
-			if( _current_controller.before_run( bullet.request ) )
-				_current_controller.run( bullet.request );
+			_current_controller.run( bullet.request );
 		}
 
 		/* CONTROLLERS */

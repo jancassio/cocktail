@@ -1,81 +1,71 @@
 package cocktail.lib 
 {
-	import cocktail.Cocktail;
-	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.gunz.SlaveBullet;
+	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.lib.base.MVL;
+	import cocktail.lib.gunz.ModelBullet;
 
 	/**
 	 * @author hems
 	 * @author nybras
 	 */
-	public class Model extends MVC
+	public class Model extends MVL
 	{
-		/* GUNZ */
-		public var gunz_scheme_loaded : Gun; 
-
-		private function _init_gunz() : void
-		{
-			gunz_scheme_loaded = new Gun( gunz, this, "shcheme_loaded" );
-		}
-
-		/* INITIALIZING */
-		
-		/**
-		 * 
-		 */
-		override public function boot( cocktail : Cocktail ) : *
-		{
-			var s : *;
-		
-			s = super.boot( cocktail );
-			_init_gunz( );
-			
-			return s;
-		}
-
 		/* LOAD */
 		
 		/**
 		 * Filtering load action, if returns false, no load will occur
 		 */
-		public function before_load(): Boolean
+		public function before_load() : Boolean
 		{
 			return true;
 		}
-		
+
 		/**
 		 * Load model scheme.
 		 */
 		public function load_scheme( process : Request ) : Model
 		{
 			process;
+			load_uri( xml_path ).gunz_complete.add( after_load );
 			return this;
 		}
-		
+
 		/**
 		 * Load all datasources needed for the request.
 		 */
 		public function load_data( process : Request ) : Model
 		{
 			process;
+			// load datasources
 			return this;
 		}
-		
+
 		/**
 		 * Filtering load action, if returns false, no load will occur
 		 */
-		public function after_load(): void
+		public function after_load( bullet : SlaveBullet ) : void
 		{
+			gunz_load_complete.shoot( new ModelBullet() );
+			
+			if( ! _scheme )
+				_scheme = new XML( TextSlave( bullet.owner ).data );
+			
+			log.debug( "Model loaded!" );
 		}
 		
 		/**
 		 * Evaluates the path for the xml file.
 		 * @return	The path to the xml file.
 		 */
-		public function get xmlPath () : String
+		public function get xml_path() : String
 		{
-			return ( config.path( ".xml" ) + "models/" + classname.toLowerCase( ) ) + ".xml";
+			var path : String;
+			path = config.path( ".xml" ) + "models/";
+			path += classname.toLowerCase( ) + ".xml";
+			
+			return path;
 		}
-		
 	}
 }

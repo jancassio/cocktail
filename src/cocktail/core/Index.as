@@ -37,13 +37,13 @@ package cocktail.core
 		 */
 		public function boot( cocktail : Cocktail ) : *
 		{
+			_init_gunz( );
+			
 			_cocktail = cocktail;
 			_log = new Logger( classpath );
 			
 			_cocktail.bind.plug( "log-level", _log, "level" );
 			_cocktail.bind.plug( "log-detail", _log, "detail" );
-			
-			_init_gunz( );
 			
 			return this;
 		}

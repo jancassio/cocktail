@@ -1,10 +1,11 @@
 package cocktail.lib 
 {
+	import cocktail.lib.base.MVCL;
 	import cocktail.lib.view.ViewStack;
 
 	import de.polygonal.ds.DListNode;
 
-	public class View extends MVC 
+	public class View extends MVCL 
 	{
 		/** Contains and indexes all the childs **/
 		public var childs : ViewStack;

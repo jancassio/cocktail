@@ -2,16 +2,17 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
+	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
 
 	public class Layout extends View
 	{
 		/* GUNZ */
-		public var gunz_scheme_loaded : Gun; 
+		public var gunz_render_complete : Gun;
 
 		private function _init_gunz() : void
 		{
-			gunz_scheme_loaded = new Gun( gunz, this, "shcheme_loaded" );
+			gunz_render_complete = new Gun( gunz, this, "render_complete" );
 		}
 
 		/* INITIALIZING */
@@ -39,7 +40,7 @@ package cocktail.lib
 			request;
 			return this;
 		}
-		
+
 		/**
 		 * TODO: write docs
 		 */
@@ -47,6 +48,11 @@ package cocktail.lib
 		{
 			request;
 			return this;
+		}
+
+		public function render( process : Process ) : void 
+		{
+			process;
 		}
 	}
 }
