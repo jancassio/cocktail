@@ -47,14 +47,15 @@ package cocktail.lib
 		 */
 		public function after_load( bullet : SlaveBullet ) : void
 		{
-			gunz_load_complete.shoot( new ModelBullet() );
+			gunz_load_complete.shoot( new ModelBullet( ) );
 			
-			if( ! _scheme )
+			if( !_scheme )
 				_scheme = new XML( TextSlave( bullet.owner ).data );
 			
-			log.debug( "Model loaded!" );
+//			log.debug( "Model scheme loaded!" );
+//			log.debug( _scheme.toXMLString() );		
 		}
-		
+
 		/**
 		 * Evaluates the path for the xml file.
 		 * @return	The path to the xml file.
@@ -63,7 +64,7 @@ package cocktail.lib
 		{
 			var path : String;
 			path = config.path( ".xml" ) + "models/";
-			path += classname.toLowerCase( ) + ".xml";
+			path += classname.toLowerCase( ).replace( "model", "" ) + ".xml";
 			
 			return path;
 		}
