@@ -1,4 +1,4 @@
 <layout>
 	<action id="base" require="base.xml" />
 	<action id="home" require="home.xml" target="main/base:clip_holder" />
-<layout>
+</layout>
