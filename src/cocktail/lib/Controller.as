@@ -103,13 +103,21 @@ package cocktail.lib
 				return;
 			}
 			
-			_group = new GunzGroup( );
-			_group.add( _layout.gunz_load_complete );
-			_group.add( _model.gunz_load_complete );
+			var will_load_layout: Boolean;
+			var will_load_model: Boolean;
+			
+			will_load_layout = _layout.before_load( request );
+			will_load_model  = _model.before_load( request );
+			 
+			_group = new GunzGroup();
+			
+			if( will_load_model )  _group.add( _model.gunz_load_complete );
+			if( will_load_layout ) _group.add( _layout.gunz_load_complete );
+			
 			_group.gunz_complete.add( _after_load, request );
 			
-			_model.load_data( request );
-			_layout.load_assets( request );
+			if( will_load_model )  _model.load( request );
+			if( will_load_layout ) _layout.load( request );
 		}
 
 		/**

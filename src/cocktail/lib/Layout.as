@@ -33,10 +33,15 @@ package cocktail.lib
 
 		/* LOAD */
 		
+		public function before_load( request: Request ): Boolean
+		{
+			return true;
+		}
+		
 		/**
 		 * TODO: write docs
 		 */
-		public function load_assets( request : Request ) : Layout
+		public function load( request : Request ) : Layout
 		{
 			request;
 			return this;
