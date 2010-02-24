@@ -17,50 +17,49 @@ package
 	public class Codeine extends Sprite 
 	{
 		/* 	VARS */
-		
 		private var _cocktail : Cocktail;
 		private var _uris : Array;
-		
-		
-		
+
 		/* 	INITIALIZING */
 		
 		/**
 		 * Initializes App & Cocktail.
 		 */
-		public function Codeine ()
+		public function Codeine()
 		{
-			_uris = [
-				"main/index/a/b/c",
-				"main/edit/a/b/c",
-				"main/del/a/b/c"
-			];
+			var embedder : Embedder;
+			var routes : Routes;
+			var app_id : String;
+			var url : String;
 			
-			_cocktail = new Cocktail (
-				this,
-				new Embedder(),
-				new Routes(),
-				"codeine",
-				_uris.shift()
-			);
+			_uris = [ "main/index/a/b/c", "main/edit/a/b/c", "main/del/a/b/c" ];
 			
-			addEventListener( Event.ADDED_TO_STAGE, _added);
+			embedder = new Embedder();
+			routes = new Routes();
+			app_id = "codeine";
+			url = _uris.shift();
+			
+			_cocktail = new Cocktail( this, embedder, routes, app_id, url );
+			
+			_cocktail.log_level = 6;
+			_cocktail.log_detail = 2;
+			
+			addEventListener( Event.ADDED_TO_STAGE, _added );
 		}
-		
+
 		private function _added( event : Event ) : void
 		{
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, _keydown );
 		}
 
-		
 		private function _keydown( event : KeyboardEvent ) : void
 		{
 			switch( event.keyCode )
 			{
 				case Keyboard.RIGHT:
 					if( _uris.length )
-						_cocktail.router.get( _uris.shift() );
-				break;
+						_cocktail.router.get( _uris.shift( ) );
+					break;
 			}
 		}
 	}
