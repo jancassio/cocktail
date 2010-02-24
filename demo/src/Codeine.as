@@ -43,6 +43,8 @@ package
 				"codeine",
 				_uris.shift()
 			);
+			_cocktail.log_level  = 6;
+			_cocktail.log_detail = 2;
 			
 			addEventListener( Event.ADDED_TO_STAGE, _added);
 		}
