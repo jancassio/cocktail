@@ -41,10 +41,11 @@ package cocktail.lib
 		/**
 		 * TODO: write docs
 		 */
-		public function load( request : Request ) : Layout
+		public function load( request : Request ) : Boolean
 		{
 			request;
-			return this;
+			if( !before_load( request ) ) return false;
+			return true;
 		}
 
 		/**
