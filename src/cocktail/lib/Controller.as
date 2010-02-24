@@ -70,9 +70,11 @@ package cocktail.lib
 		 */
 		final public function run( request : Request ) : void
 		{
+			if( !before_run( request ) ) return;
+			
 			log.info( "Running..." );
-			if( before_run( request ) )
-				_load( request );
+			
+			_load( request );
 		}
 
 		/* LOADING */
@@ -93,10 +95,9 @@ package cocktail.lib
 		 */
 		private function _load( request : Request ) : void
 		{
-			log.info( "Running..." );
+			if( !before_load( request ) ) return;
 			
-			if( !before_load( request ) )
-				return;
+			log.info( "Running..." );
 			
 			if( !_is_scheme_loaded ) 
 			{
@@ -172,12 +173,11 @@ package cocktail.lib
 		 */
 		public function render( process : Process ) : void
 		{
+			if( !before_render( process ) ) return;
 			log.info( "Running..." );
-			if( before_render( process ) )
-			{
-				_layout.gunz_render_complete.add( after_render, process );
-				_layout.render( process );
-			}
+			
+			_layout.gunz_render_complete.add( after_render, process );
+			_layout.render( process );
 		}
 
 		/**
