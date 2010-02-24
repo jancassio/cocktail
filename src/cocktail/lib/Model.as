@@ -20,11 +20,11 @@ package cocktail.lib
 		
 		/**
 		 * Load model scheme.
-		 * @param process	Running process.
+		 * @param request	Running request.
 		 */
-		public function load_scheme( process : Request ) : Model
+		public function load_scheme( request : Request ) : Model
 		{
-			process;
+			request;
 			log.info( "Running..." );
 			gunz_scheme_load_start.shoot( new ModelBullet( ) );
 			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme );
@@ -65,17 +65,17 @@ package cocktail.lib
 		/**
 		 * Filtering load action, if returns false, no load will occur
 		 */
-		public function before_load( request: Request ) : Boolean
+		public function before_load( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
 			return true;
 		}
-		
+
 		/**
 		 * Load all datasources needed for the request.
-		 * @param process	Running process.
+		 * @param request	Running request.
 		 */
-		public function load( process : Request ) : Model
+		public function load( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
 			var i : int;
@@ -83,7 +83,9 @@ package cocktail.lib
 			var ds_list : Array;
 			var ds : ADataSource;
 			
-			if( ( ds_list = _parse_datasources( process ) ).length )
+			if( !before_load( request ) ) return false;
+			
+			if( ( ds_list = _parse_datasources( request ) ).length )
 			{
 				group = new GunzGroup( );
 				do
@@ -94,15 +96,15 @@ package cocktail.lib
 				} while( i++ < ds_list.length );
 			}
 			
-			return this;
+			return true;
 		}
 
 		/**
-		 * Parses all necessary Datasources for given Process.
-		 * @param process	Running process.
+		 * Parses all necessary Datasources for given request.
+		 * @param request	Running request.
 		 * @return	An array with all Datasources, properly instantiated. 
 		 */
-		private function _parse_datasources( process : Request ) : Array
+		private function _parse_datasources( request : Request ) : Array
 		{
 			log.info( "Running..." );
 			var i : int;
@@ -112,7 +114,7 @@ package cocktail.lib
 			var inject : String;
 			
 			ds = []; 
-			action = process.route.api.action;
+			action = request.route.api.action;
 			
 			do
 			{
