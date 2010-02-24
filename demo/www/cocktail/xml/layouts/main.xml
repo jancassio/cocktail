@@ -1,4 +1,10 @@
 <layout>
-	<action id="base" require="base.xml" />
-	<action id="home" require="home.xml" target="main/base:clip_holder" />
+	<action id="base" require="base.xml">
+		<sprite id="clip_holder" />
+	</action>
+	
+	<action id="index" require="home.xml" target="main/base:clip_holder">
+		<sprite x="50" y="50" class="Rect" />
+		<movie_clip radius="100" class="Ball" />
+	</action>
 </layout>
