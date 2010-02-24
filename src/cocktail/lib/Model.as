@@ -15,15 +15,6 @@ package cocktail.lib
 	public class Model extends MVL
 	{
 		/* LOADING */
-		
-		/**
-		 * Filtering load action, if returns false, no load will occur
-		 */
-		public function before_load( request: Request ) : Boolean
-		{
-			log.info( "Running..." );
-			return true;
-		}
 
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
@@ -70,11 +61,21 @@ package cocktail.lib
 
 		/* LOADING DATA */
 
+		
+		/**
+		 * Filtering load action, if returns false, no load will occur
+		 */
+		public function before_load( request: Request ) : Boolean
+		{
+			log.info( "Running..." );
+			return true;
+		}
+		
 		/**
 		 * Load all datasources needed for the request.
 		 * @param process	Running process.
 		 */
-		public function load_data( process : Request ) : Model
+		public function load( process : Request ) : Model
 		{
 			log.info( "Running..." );
 			var i : int;

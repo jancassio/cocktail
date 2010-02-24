@@ -116,7 +116,7 @@ package cocktail.lib
 			
 			_group.gunz_complete.add( _after_load, request );
 			
-			if( will_load_model )  _model.load_data( request );
+			if( will_load_model )  _model.load( request );
 			if( will_load_layout ) _layout.load( request );
 		}
 
