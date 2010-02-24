@@ -1,5 +1,5 @@
-package cocktail.core.factory 
-{
+package cocktail.core.factory {
+	import cocktail.lib.view.assets.AAsset;
 	import cocktail.core.Index;
 	import cocktail.utils.StringUtil;
 
@@ -41,8 +41,6 @@ package cocktail.core.factory
 			return Class( getDefinitionByName( classpath ) );
 		}
 
-		/* MODEL, VIEW, LAYOUT AND CONTROLLER EVALUATIONS */
-		
 		/**
 		 * Evaluates classes for Model, View, Controller and Layout.
 		 * @param folder	Class folder name.
@@ -125,8 +123,6 @@ package cocktail.core.factory
 			return evaluate( "cocktail.lib.View" );
 		}
 
-		/* DATASOURCES EVALUATION */
-		
 		/**
 		 * Evaluates the desired DataSource class based on the given type.
 		 * @param type	Datasource type to be evaluated.
@@ -136,6 +132,17 @@ package cocktail.core.factory
 			var path : String;
 			
 			path = "cocktail.lib.model.datasources.";
+			path += StringUtil.ucasef( type );
+			path += "DataSource";
+			
+			return evaluate( path );
+		}
+
+		public function asset( node : * ) : Class 
+		{
+			var path : String;
+			
+			path = "cocktail.lib.view.assets.";
 			path += StringUtil.ucasef( type );
 			path += "DataSource";
 			
