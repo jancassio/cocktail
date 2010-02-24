@@ -92,18 +92,13 @@ package cocktail.lib
 			 
 			_group = new GunzGroup();
 			
-			if( will_load_layout )
-				_group.add( _layout.gunz_load_complete );
-			
-			if( will_load_model )
-				_group.add( _model.gunz_load_complete );
+			if( will_load_model )  _group.add( _model.gunz_load_complete );
+			if( will_load_layout ) _group.add( _layout.gunz_load_complete );
 			
 			_group.gunz_complete.add( _after_load, request );
 			
-			if( will_load_model )
-				_model.load_data( request );
-			if( will_load_layout )
-				_layout.load( request );
+			if( will_load_model )  _model.load_data( request );
+			if( will_load_layout ) _layout.load( request );
 		}
 
 		/**
