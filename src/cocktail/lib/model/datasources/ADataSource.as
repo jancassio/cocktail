@@ -4,8 +4,6 @@ package cocktail.lib.model.datasources
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
 
-	import flash.events.Event;
-
 	public class ADataSource extends Index
 	{
 		/* GUNZ */

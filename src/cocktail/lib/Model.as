@@ -2,7 +2,7 @@ package cocktail.lib
 {
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
-	import cocktail.core.slave.gunz.SlaveBullet;
+	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.base.MVL;
 	import cocktail.lib.gunz.ModelBullet;
@@ -44,7 +44,7 @@ package cocktail.lib
 		 * Parsing model xml scheme.
 		 * @param bullet	SlaveBullet.
 		 */
-		public function _after_load_scheme( bullet : SlaveBullet ) : void
+		public function _after_load_scheme( bullet : ASlaveBullet ) : void
 		{
 			log.info( "Running..." );
 			
