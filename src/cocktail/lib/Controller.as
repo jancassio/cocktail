@@ -108,7 +108,13 @@ package cocktail.lib
 			
 			will_load_layout = _layout.before_load( request );
 			will_load_model  = _model.before_load( request );
-			 
+			
+			if( !will_load_model && !will_load_layout )
+			{
+				_after_load( null )
+				return; 
+			}
+			
 			_group = new GunzGroup();
 			
 			if( will_load_model )  _group.add( _model.gunz_load_complete );
@@ -123,7 +129,7 @@ package cocktail.lib
 		/**
 		 * Called after loading needed data to render the request.
 		 */
-		private function _after_load( bullet : Bullet ) : void
+		private function _after_load( bullet : Bullet = null ) : void
 		{
 			log.info( "Running..." );
 			gunz_load_complete.shoot( new ControllerBullet( ) );
