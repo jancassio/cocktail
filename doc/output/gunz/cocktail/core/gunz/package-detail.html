@@ -49,13 +49,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Pa
   
   <p>A Gun always need to be registered in a Gunz list, this is 
   accomplished by the Gun constructor when it executes the method 
-  <code>keep</code> from Gunz</p>
+  <code>keep</code> from Gunz.</p>
   
-  <p>The Gun <code>shoot</code> at the Victim's (listeners) and the 
-  Victim <code>scream</code> when it receives the shot, 
-  dispatching the event</p>
+  <p>The Gun <code>shoot</code> at the Victim's (listeners) passing a 
+  Bullet and the Victim <code>scream</code> when it receives the shot, 
+  dispatching the event and repassing the Bullet.</p>
   
-  </td>
+  <p>The properties of the Bullet class carry basic information about an 
+  event, such as the event's type.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Gunz.html">Gunz</a></td><td class="summaryTableLastCol">
@@ -64,7 +65,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Pa
 <tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="GunzGroup.html">GunzGroup</a></td><td class="summaryTableLastCol">
   Groups multiple Gun's, listens to every single one, and fires the
-  "complete" Gun (gunz_complete) when all Gun's have being shot.</td>
+  "complete" Gun (gunz_complete) when all Gun's have shot.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Victim.html">Victim</a></td><td class="summaryTableLastCol">

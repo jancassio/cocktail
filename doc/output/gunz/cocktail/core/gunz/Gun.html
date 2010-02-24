@@ -45,11 +45,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   
   <p>A Gun always need to be registered in a Gunz list, this is 
   accomplished by the Gun constructor when it executes the method 
-  <code>keep</code> from Gunz</p>
+  <code>keep</code> from Gunz.</p>
   
-  <p>The Gun <code>shoot</code> at the Victim's (listeners) and the 
-  Victim <code>scream</code> when it receives the shot, 
-  dispatching the event</p>
+  <p>The Gun <code>shoot</code> at the Victim's (listeners) passing a 
+  Bullet and the Victim <code>scream</code> when it receives the shot, 
+  dispatching the event and repassing the Bullet.</p>
+  
+  <p>The properties of the Bullet class carry basic information about an 
+  event, such as the event's type. You may require more detailed 
+  information and you can pass such additional information to Bullet 
+  listeners by extending the Bullet class.</p>
   
   <p></p>
 <p>

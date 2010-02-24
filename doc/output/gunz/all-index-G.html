@@ -44,13 +44,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
   
   <p>A Gun always need to be registered in a Gunz list, this is 
   accomplished by the Gun constructor when it executes the method 
-  <code>keep</code> from Gunz</p>
+  <code>keep</code> from Gunz.</p>
   
-  <p>The Gun <code>shoot</code> at the Victim's (listeners) and the 
-  Victim <code>scream</code> when it receives the shot, 
-  dispatching the event</p>
+  <p>The Gun <code>shoot</code> at the Victim's (listeners) passing a 
+  Bullet and the Victim <code>scream</code> when it receives the shot, 
+  dispatching the event and repassing the Bullet.</p>
   
-  </td>
+  <p>The properties of the Bullet class carry basic information about an 
+  event, such as the event's type.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/Gun.html#Gun()">Gun</a>(gunz:<a href="cocktail/core/gunz/Gunz.html" onclick="javascript:loadClassListFrame('cocktail/core/gunz./class-list.html');">cocktail.core.gunz:Gunz</a>, owner, type) &mdash; Constructor in class cocktail.core.gunz.<a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/Gun.html">Gun</a></td>
@@ -63,7 +64,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html#gunz">gunz</a> &mdash; Property in class cocktail.core.gunz.<a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html">GunzGroup</a></td>
 </tr>
 <tr>
-<td width="20"></td><td> Gunz to store <code>gunz_complete</code>.</td>
+<td width="20"></td><td> Gunz list.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/Gunz.html">Gunz</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td>
@@ -83,7 +84,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html#gunz_complete">gunz_complete</a> &mdash; Property in class cocktail.core.gunz.<a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html">GunzGroup</a></td>
 </tr>
 <tr>
-<td width="20"></td><td> Gun complete.</td>
+<td width="20"></td><td> Gunz complete event.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html">GunzGroup</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td>
@@ -91,14 +92,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
 <tr>
 <td width="20"></td><td>
   Groups multiple Gun's, listens to every single one, and fires the
-  "complete" Gun (gunz_complete) when all Gun's have being shot.</td>
+  "complete" Gun (gunz_complete) when all Gun's have shot.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html#GunzGroup()">GunzGroup</a>() &mdash; Constructor in class cocktail.core.gunz.<a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/GunzGroup.html">GunzGroup</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   Creates a new GunzGroup instance.</td>
+   Initializes the module.</td>
 </tr>
 <tr>
 <td style="padding-bottom:20px" colspan="2"></td>

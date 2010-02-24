@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="GunzGroup,cocktail.core.gunz.GunzGroup,gunz,gunz_complete,add,destroy" name="keywords">
+<meta content="GunzGroup,cocktail.core.gunz.GunzGroup,gunz,gunz_complete,add" name="keywords">
 <title>cocktail.core.gunz.GunzGroup</title>
 <script type="text/javascript" src="../../../AC_OETags.js"></script>
 </head>
@@ -41,7 +41,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </table>
 <p></p>
   Groups multiple Gun's, listens to every single one, and fires the
-  "complete" Gun (gunz_complete) when all Gun's have being shot.
+  "complete" Gun (gunz_complete) when all Gun's have shot.
   
   <p></p>
 <p>
@@ -65,12 +65,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#gunz">gunz</a> : <a href="../gunz/Gunz.html">Gunz</a>
-<div class="summaryTableDescription"> Gunz to store <code>gunz_complete</code>.</div>
+<div class="summaryTableDescription"> Gunz list.</div>
 </td><td class="summaryTableOwnerCol">GunzGroup</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#gunz_complete">gunz_complete</a> : <a href="../gunz/Gun.html">Gun</a>
-<div class="summaryTableDescription"> Gun complete.</div>
+<div class="summaryTableDescription"> Gunz complete event.</div>
 </td><td class="summaryTableOwnerCol">GunzGroup</td>
 </tr>
 </table>
@@ -87,7 +87,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#GunzGroup()">GunzGroup</a>()</div>
 <div class="summaryTableDescription">
-   Creates a new GunzGroup instance.</div>
+   Initializes the module.</div>
 </td><td class="summaryTableOwnerCol">GunzGroup</td>
 </tr>
 <tr class="">
@@ -96,15 +96,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#add()">add</a>(gun:<a href="Gun.html">Gun</a>):<a href="../gunz/GunzGroup.html">GunzGroup</a>
 </div>
 <div class="summaryTableDescription">
-   Adds a new Gun to the queue list and listens to its shots.</div>
-</td><td class="summaryTableOwnerCol">GunzGroup</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
-<div class="summaryTableDescription">
-   Destroys everything in GunzGroup and all Gun's in the list.</div>
+   Adds a new Gun to the queue list and listen to its shots.</div>
 </td><td class="summaryTableOwnerCol">GunzGroup</td>
 </tr>
 </table>
@@ -123,7 +115,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public var gunz:<a href="../gunz/Gunz.html">Gunz</a></code><p> Gunz to store <code>gunz_complete</code>. </p></div>
+<code>public var gunz:<a href="../gunz/Gunz.html">Gunz</a></code><p> Gunz list. </p></div>
 <a name="gunz_complete"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -131,7 +123,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public var gunz_complete:<a href="../gunz/Gun.html">Gun</a></code><p> Gun complete. </p></div>
+<code>public var gunz_complete:<a href="../gunz/Gun.html">Gun</a></code><p> Gunz complete event. </p></div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
 <a name="GunzGroup()"></a>
@@ -142,7 +134,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function GunzGroup()</code><p>
-   Creates a new GunzGroup instance.
+   Initializes the module.
    </p></div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
@@ -154,7 +146,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function add(gun:<a href="Gun.html">Gun</a>):<a href="../gunz/GunzGroup.html">GunzGroup</a></code><p>
-   Adds a new Gun to the queue list and listens to its shots.
+   Adds a new Gun to the queue list and listen to its shots.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -174,16 +166,6 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="destroy()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public final function destroy():void</code><p>
-   Destroys everything in GunzGroup and all Gun's in the list.
-   </p></div>
 <a name="includeExamplesSummary"></a>
 <div class="detailSectionHeader">Examples</div>
 <br>
