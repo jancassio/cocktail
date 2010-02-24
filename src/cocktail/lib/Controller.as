@@ -20,6 +20,7 @@ package cocktail.lib
 
 		private function _init_gunz() : void
 		{
+			log.info( "Running..." );
 			gunz_load_change_phase = new Gun( gunz, this, "load_change_phase" );
 		}
 
@@ -36,6 +37,8 @@ package cocktail.lib
 			var s : *;
 		
 			s = super.boot( cocktail );
+			log.info( "Running..." );
+			
 			_init_gunz( );
 			
 			name = classname.replace( "Controller", "" );
@@ -56,6 +59,7 @@ package cocktail.lib
 		 */
 		public function before_run( request : Request ) : Boolean
 		{
+			log.info( "Running..." );
 			request;
 			return true;
 		}
@@ -65,6 +69,7 @@ package cocktail.lib
 		 */
 		final public function run( request : Request ) : void
 		{
+			log.info( "Running..." );
 			if( before_run( request ) )
 				_load( request );
 		}
@@ -72,11 +77,25 @@ package cocktail.lib
 		/* LOADING */
 		
 		/**
+		 * Load filtering. If returns false, wont load anything.
+		 */
+		public function before_load( request : Request ) : Boolean
+		{
+			log.info( "Running..." );
+			request;
+			return true;
+		}
+
+		/**
 		 * Load Model and Layout.
 		 * @param process	Process to load. 
 		 */
 		private function _load( request : Request ) : void
 		{
+			if( !before_load( request ) )
+				return;
+			
+			log.info( "Running..." );
 			if( !_is_scheme_loaded ) 
 			{
 				_load_scheme( request );
@@ -98,6 +117,7 @@ package cocktail.lib
 		 */
 		private function _after_load( bullet : Bullet ) : void
 		{
+			log.info( "Running..." );
 			gunz_load_complete.shoot( new ControllerBullet( ) );
 			render( bullet.params ) ;
 		}
@@ -110,9 +130,10 @@ package cocktail.lib
 		 */
 		private function _load_scheme( request : Request ) : void
 		{
+			
 			_group = new GunzGroup( );
-			_group.add( _layout.gunz_load_complete );
-			_group.add( _model.gunz_load_complete );
+			_group.add( _layout.gunz_scheme_load_complete );
+			_group.add( _model.gunz_scheme_load_complete );
 			_group.gunz_complete.add( _after_load_scheme, request );
 			
 			_model.load_scheme( request );
@@ -124,6 +145,7 @@ package cocktail.lib
 		 */
 		private function _after_load_scheme( bullet : Bullet ) : void
 		{
+			log.info( "Running..." );
 			bullet;
 			_is_scheme_loaded = true;
 			gunz_load_change_phase.shoot( new ControllerBullet( ) );
@@ -137,6 +159,7 @@ package cocktail.lib
 		 */
 		public function before_render( process : Process ) : Boolean
 		{
+			log.info( "Running..." );
 			process;
 			return true;
 		}
@@ -146,6 +169,7 @@ package cocktail.lib
 		 */
 		public function render( process : Process ) : void
 		{
+			log.info( "Running..." );
 			if( before_render( process ) )
 			{
 				_layout.gunz_render_complete.add( after_render, process );
@@ -158,7 +182,7 @@ package cocktail.lib
 		 */
 		public function after_render( process : Process ) : void
 		{
-			log.debug( "Process rendered!!!" );
+			log.info( "Running..." );
 			process;
 		}
 	}
