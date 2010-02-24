@@ -1,15 +1,45 @@
 package cocktail.lib.base 
 {
+	import cocktail.Cocktail;
+	import cocktail.core.gunz.Gun;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
 
+	/**
+	 * Contains some preloading proxy utils for Model, Layout and View, and
+	 * some another core functionality usefull only for these classes.
+	 */
 	public class MVL extends MVCL
 	{
+		/* GUNZ */
+		public var gunz_scheme_load_start : Gun; 
+		public var gunz_scheme_load_complete : Gun; 
+
+		private function _init_gunz() : void
+		{
+			gunz_scheme_load_start = new Gun( gunz, this, "load_start" );
+			gunz_scheme_load_complete = new Gun( gunz, this, "load_complete" );
+		}
+
+		/* BOOTING */
+		override public function boot( cocktail : Cocktail ) : *
+		{
+			var s : *;
+			
+			s = super.boot( cocktail );
+			
+			_init_gunz( );
+			
+			return s;
+		}
+
 		/* VARS */
+		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
+		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;
 		private var _is_queue_opened : Boolean;
 
@@ -21,7 +51,7 @@ package cocktail.lib.base
 			if( opening )
 			{
 				_is_queue_opened = true;
-				_load_queue = new Slave( false );
+				return ( _load_queue = new Slave( false ) );
 			}
 			else
 				_is_queue_opened = false;

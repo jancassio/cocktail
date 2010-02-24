@@ -1,6 +1,7 @@
 package cocktail.core.factory 
 {
 	import cocktail.core.Index;
+	import cocktail.utils.StringUtil;
 
 	import flash.utils.getDefinitionByName;
 
@@ -40,7 +41,7 @@ package cocktail.core.factory
 			return Class( getDefinitionByName( classpath ) );
 		}
 
-		/* MVCL */
+		/* MODEL, VIEW, LAYOUT AND CONTROLLER EVALUATIONS */
 		
 		/**
 		 * Evaluates classes for Model, View, Controller and Layout.
@@ -122,6 +123,23 @@ package cocktail.core.factory
 				log.warn( _m( name, "View" ) );
 			}
 			return evaluate( "cocktail.lib.View" );
+		}
+
+		/* DATASOURCES EVALUATION */
+		
+		/**
+		 * Evaluates the desired DataSource class based on the given type.
+		 * @param type	Datasource type to be evaluated.
+		 */
+		public function datasource( type : String ) : Class
+		{
+			var path : String;
+			
+			path = "cocktail.lib.model.datasources.";
+			path += StringUtil.ucasef( type );
+			path += "DataSource";
+			
+			return evaluate( path );
 		}
 	}
 }
