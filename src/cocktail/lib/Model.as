@@ -17,7 +17,7 @@ package cocktail.lib
 		/**
 		 * Filtering load action, if returns false, no load will occur
 		 */
-		public function before_load() : Boolean
+		public function before_load( request: Request ) : Boolean
 		{
 			return true;
 		}
