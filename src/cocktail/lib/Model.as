@@ -1,7 +1,7 @@
 package cocktail.lib 
 {
 	import cocktail.core.request.Request;
-	import cocktail.core.slave.gunz.SlaveBullet;
+	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.base.MVL;
 	import cocktail.lib.gunz.ModelBullet;
@@ -45,7 +45,7 @@ package cocktail.lib
 		/**
 		 * Filtering load action, if returns false, no load will occur
 		 */
-		public function after_load( bullet : SlaveBullet ) : void
+		public function after_load( bullet : ASlaveBullet ) : void
 		{
 			gunz_load_complete.shoot( new ModelBullet( ) );
 			
