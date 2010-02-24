@@ -1,5 +1,5 @@
 <model>
 	<ds id="index" locale="pt" type="inline">
-		
+		<inject actions="main,home" />
 	</ds>
 </model>
