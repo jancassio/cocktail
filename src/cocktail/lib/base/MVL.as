@@ -1,6 +1,7 @@
 package cocktail.lib.base 
 {
 	import cocktail.core.slave.ASlave;
+	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
@@ -25,7 +26,7 @@ package cocktail.lib.base
 			else
 				_is_queue_opened = false;
 			
-			return Slave( _load_queue.load() );
+			return Slave( _load_queue.load( ) );
 		}
 
 		/**
@@ -35,18 +36,26 @@ package cocktail.lib.base
 		{
 			var slave : ASlave;
 			
-			switch( uri.toLowerCase().split( "." ).join( "" ) )
+			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
-				case "jpg": slave = new GraphSlave( uri, _is_queue_opened );
-				case "jpeg": slave = new GraphSlave( uri, _is_queue_opened );
-				case "png": slave = new GraphSlave( uri, _is_queue_opened );
-				case "gif": slave = new GraphSlave( uri, _is_queue_opened );
-				case "swf": slave = new GraphSlave( uri, _is_queue_opened );
-				case "xml": slave = new TextSlave( uri, _is_queue_opened );
+				case "jpg": 
+					slave = new GraphSlave( uri, _is_queue_opened );
+				case "jpeg": 
+					slave = new GraphSlave( uri, _is_queue_opened );
+				case "png": 
+					slave = new GraphSlave( uri, _is_queue_opened );
+				case "gif": 
+					slave = new GraphSlave( uri, _is_queue_opened );
+				case "swf": 
+					slave = new GraphSlave( uri, _is_queue_opened );
+				case "xml": 
+					slave = new TextSlave( uri, _is_queue_opened );
 			}
 			
 			if( _is_queue_opened )
 				_load_queue.append( slave );
+			else
+				ISlave( slave ).load( );
 			
 			return slave;
 		}
