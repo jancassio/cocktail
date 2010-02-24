@@ -1,5 +1,6 @@
 package cocktail.core.logger
 {
+	import flash.utils.getTimer;
 
 	/**
 	 * Log class is only a simple class for tracing messages, and nothing more.
@@ -9,6 +10,7 @@ package cocktail.core.logger
 	{
 		/* VARS */
 		protected var _target_class : String;
+		protected var _target_class_name : String;
 		protected var _level : uint;
 		protected var _detail : uint;
 
@@ -21,6 +23,7 @@ package cocktail.core.logger
 		public function Logger( class_name : String )
 		{
 			_target_class = class_name;
+			_target_class_name = _target_class.split( "." ).pop( );
 		}
 
 		/* TREE UTIL */
@@ -118,19 +121,83 @@ package cocktail.core.logger
 		 */
 		public function log( ...params ) : void
 		{
-			var output : String;
+			var base : String;
+			var tmpl1 : String;
+			var tmpl2 : String;
+			var msg : String;
 			
-			output = "[" + params[ 0 ] + "] {";
-			params = params.slice( 1 );
+			base = "[" + params[ 0 ] + "] ";
+			tmpl1 = base + "{$class} ~: ";
+			tmpl2 = base + "#$line {$class/$method} ~: ";
 			
-			if ( _detail == 1 )
-				output += _target_class.split( "." ).pop( ) + "} ~: " + params;
-			else if ( _detail == 2)
-				output = _target_class + "} ~: " + params;
+			msg = "";
+			if ( detail == 1 )
+				msg = tmpl1.replace( "$class", _target_class_name );
+			else if ( detail > 1 )
+			{
+				msg = tmpl2.replace( "$method", _find_method_name );
+				msg = msg.replace( "$line", _find_method_line );
+				
+				if( detail == 2 )
+					msg = msg.replace( "$class", _target_class_name );
+				else if( detail == 3 )
+					msg = msg.replace( "$class", _target_class );
+			}
 			else
-				output += params;
+				msg += "~: ";
 			
-			trace( output );
+			trace( msg + params.slice( 1 ) );
+		}
+
+		/* FINDER UTILS */
+		
+		/**
+		 * Gets the caller method name
+		 */
+		private function get _find_method_name() : String
+		{
+			var reg : RegExp;
+			var name : String;
+			
+			reg = /[$a-zA-Z_]+\(/g;
+			
+			try
+			{
+				this[ getTimer( ) ].length;
+			}
+			catch( e : Error )
+			{
+				name = e.getStackTrace( ).match( reg )[ 3 ].match( reg );
+				return name.substr( 0, -1 );
+			}
+			
+			return "";
+		}
+
+		/**
+		 * Gets the caller method line
+		 */
+		private function get _find_method_line() : String
+		{
+			var reg1 : RegExp;
+			var reg2 : RegExp;
+			var line : String;
+			
+			reg1 = /\.as\:([0-9]+)\]/g;
+			reg2 = /[0-9]+/g;
+			
+			try
+			{
+				this[ getTimer( ) ].length;
+			}
+			catch( e : Error )
+			{
+				line = e.getStackTrace( ).match( reg1 )[ 3 ].match( reg2 );
+				line += " " + ( ".....".substr( 0, ( 5 - line.length ) ) );
+				return line; 
+			}
+			
+			return "";
 		}
 
 		/* LOG METHODS */

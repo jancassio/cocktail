@@ -4,6 +4,7 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
+	import cocktail.lib.gunz.LayoutBullet;
 
 	public class Layout extends View
 	{
@@ -52,6 +53,10 @@ package cocktail.lib
 		public function load_scheme( request : Request ) : Layout
 		{
 			request;
+			
+			// TODO: remove this call and implement in the right time!
+			gunz_scheme_load_complete.shoot( new LayoutBullet() );
+			
 			return this;
 		}
 
