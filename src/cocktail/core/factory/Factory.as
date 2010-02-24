@@ -143,7 +143,7 @@ package cocktail.core.factory {
 			var path : String;
 			
 			path = "cocktail.lib.view.assets.";
-			path += StringUtil.ucasef( type );
+			path += StringUtil.ucasef( '' );
 			path += "DataSource";
 			
 			return evaluate( path );

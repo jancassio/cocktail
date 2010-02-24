@@ -41,8 +41,11 @@ package cocktail.lib {
 		/**
 		 * TODO: write docs
 		 */
-		public function load( request : Request ) : Layout {
+		public function load( request : Request ) : Boolean {
 			log.info("Running...");
+			
+			if( !before_load( request ) ) return false;
+
 			var i : int;
 			var group : GunzGroup;
 			var assets : Array;
@@ -57,9 +60,9 @@ package cocktail.lib {
 				} while( i++ < assets.length );
 			}
 			
-			return this;
+			return true;
 		}
-
+		
 		/**
 		 * Parses all necessary Datasources for given Process.
 		 * @param process	Running process.
@@ -74,7 +77,6 @@ package cocktail.lib {
 			var inject : String;
 			var xml_nodes : XMLList;
 			
-			ds = []; 
 			action = process.route.api.action;
 			
 			xml_nodes = _scheme[ "action" ].( @id == action || @id == "*" );

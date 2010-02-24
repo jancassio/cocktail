@@ -8,6 +8,7 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MVCL;
 	import cocktail.lib.gunz.ControllerBullet;
+	import cocktail.lib.gunz.ModelBullet;
 
 	/**
 	 * @author hems
@@ -92,10 +93,11 @@ package cocktail.lib
 		 */
 		private function _load( request : Request ) : void
 		{
+			log.info( "Running..." );
+			
 			if( !before_load( request ) )
 				return;
 			
-			log.info( "Running..." );
 			if( !_is_scheme_loaded ) 
 			{
 				_load_scheme( request );
@@ -103,27 +105,14 @@ package cocktail.lib
 				return;
 			}
 			
-			var will_load_layout: Boolean;
-			var will_load_model: Boolean;
-			
-			will_load_layout = _layout.before_load( request );
-			will_load_model  = _model.before_load( request );
-			
-			if( !will_load_model && !will_load_layout )
-			{
-				_after_load( null )
-				return; 
-			}
-			
-			_group = new GunzGroup();
-			
-			if( will_load_model )  _group.add( _model.gunz_load_complete );
-			if( will_load_layout ) _group.add( _layout.gunz_load_complete );
-			
-			_group.gunz_complete.add( _after_load, request );
-			
-			if( will_load_model )  _model.load( request );
-			if( will_load_layout ) _layout.load( request );
+			if( _model.load( request ) )
+				_model.gunz_load_complete.add( _after_load_model, request );
+		}
+		
+		private function _after_load_model( bullet : ModelBullet ) : void
+		{
+			if( _layout.load( bullet.params ) )
+				_layout.gunz_load_complete.add( _after_load );
 		}
 
 		/**
