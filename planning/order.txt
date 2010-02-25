@@ -1,0 +1,21 @@
+
+
+PROCESS:
+	Controller.before_run();
+	Controller.run();
+		Model.before_load();
+			Model.load();
+		Layout.before_load();
+			Layout.load();
+		...
+			Model.after_load();
+			Layout.after_load();
+		...
+		Controller.before_render();
+		Controller.render();
+			+++ Controller[ACTION](); +++ 
+			Layout.before_render();
+			Layout.render();
+			+++ Layout[ACTION](); +++ 
+			Layout.after_render();
+	Controller.after_run();
