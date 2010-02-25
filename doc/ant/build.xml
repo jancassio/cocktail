@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project name="Cocktail Documentation Routine" default="all">
+	<!-- import the settings -->
+	<property file="${basedir}/build_project.properties"/>
+ 
+	<!-- ALL -->
+	<target name="all">
+		<antcall target="gunz" />
+	</target>
+	
+	<!-- GUNZ -->
+	<target name="gunz">
+		<!-- delete all files in the doc dir -->
+		<delete includeemptydirs="true">
+			<fileset dir="${project.doc-gunz}" includes="**/*" />
+		</delete>
+		<!-- create docs -->
+		<exec executable="${common.asdoc}"> 
+		    <arg line="	-doc-sources '${project.src-gunz}' 
+		    		-output '${project.doc-gunz}'
+		    		-examples-path '${project.examples}'
+		    		-main-title 'Gunz Documentation' 
+		    		-window-title 'Gunz Documentation'" /> 
+		</exec>
+	</target>
+ 
+</project>

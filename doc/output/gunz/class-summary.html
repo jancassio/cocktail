@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>All Classes</title>
+<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="print.css" type="text/css" media="print">
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="asdoc.js"></script><script type="text/javascript" language="javascript" src="cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'All Classes - Gunz Documentation';
+				var baseRef = '';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">Gunz Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('all-classes.html')" href="package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('index-list.html')" href="all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="index.html?class-summary.html&amp;all-classes.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">All&nbsp;Classes</td><td align="right" id="subNav" class="titleTableSubNav"></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("All Classes"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<br>
+<p>Documentation for classes includes syntax, usage information, and code samples for methods, properties, and event handlers and listeners for those APIs that belong to a specific class in ActionScript. The classes are listed alphabetically. If you are not sure to which class a certain method or property belongs, you can look it up in the Index.</p>
+<br>
+<table class="summaryTable" cellspacing="0" cellpadding="3">
+<tr>
+<th>&nbsp;</th><th width="20%">Class</th><th width="20%">Package</th><th width="60%">Description</th>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="cocktail/core/gunz/Bullet.html">Bullet</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td><td class="summaryTableLastCol">
+  Stores all necessary and maybe useful info.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="cocktail/core/gunz/Gun.html">Gun</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td><td class="summaryTableLastCol">
+  <p>The Gun class is the base class for dispatching events without having 
+  to use EventDispatcher.</p>
+  
+  <p>A Gun always need to be registered in a Gunz list, this is 
+  accomplished by the Gun constructor when it executes the method 
+  <code>keep</code> from Gunz.</p>
+  
+  <p>The Gun <code>shoot</code> at the Victim's (listeners) passing a 
+  Bullet and the Victim <code>scream</code> when it receives the shot, 
+  dispatching the event and repassing the Bullet.</p>
+  
+  <p>The properties of the Bullet class carry basic information about an 
+  event, such as the event's type.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="cocktail/core/gunz/Gunz.html">Gunz</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td><td class="summaryTableLastCol">
+  <p>The Gunz class is a list of Gun's.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="cocktail/core/gunz/GunzGroup.html">GunzGroup</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td><td class="summaryTableLastCol">
+  Groups multiple Gun's, listens to every single one, and fires the
+  "complete" Gun (gunz_complete) when all Gun's have shot.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="cocktail/core/gunz/Victim.html">Victim</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('cocktail/core/gunz/class-list.html');" href="cocktail/core/gunz/package-detail.html">cocktail.core.gunz</a></td><td class="summaryTableLastCol">
+  A Victim listens to Gun.shoot().</td>
+</tr>
+</table>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
