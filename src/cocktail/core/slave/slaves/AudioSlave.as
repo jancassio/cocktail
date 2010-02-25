@@ -18,7 +18,6 @@ package cocktail.core.slave.slaves
 	{
 		private var _request : URLRequest;
 		private var _sound : Sound;
-		private var _uri : String;
 
 		public function AudioSlave( 
 			uri : String,
