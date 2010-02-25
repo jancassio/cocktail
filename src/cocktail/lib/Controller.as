@@ -8,6 +8,7 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MVCL;
 	import cocktail.lib.gunz.ControllerBullet;
+	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
 
 	/**
@@ -105,27 +106,20 @@ package cocktail.lib
 				return;
 			}
 			
-			if( _model.load( request ) )
-				_model.gunz_load_complete.add( _after_load_model, request );
-		}
-		
-		private function _after_load_model( bullet : ModelBullet ) : void
-		{
-			if( _layout.load( bullet.params ) )
-				_layout.gunz_load_complete.add( _after_load );
+			_load_model( request );
 		}
 
 		/**
 		 * Called after loading needed data to render the request.
 		 */
-		private function _after_load( bullet : Bullet = null ) : void
+		private function _after_load( bullet : Bullet ) : void
 		{
 			log.info( "Running..." );
 			gunz_load_complete.shoot( new ControllerBullet( ) );
 			render( bullet.params ) ;
 		}
 
-		/* LOADING SCHEME */
+		/* LOADING - SCHEME */
 		
 		/**
 		 * Load Model and Layout scheme.
@@ -153,6 +147,41 @@ package cocktail.lib
 			_is_scheme_loaded = true;
 			gunz_load_change_phase.shoot( new ControllerBullet( ) );
 			_load( bullet.params );
+		}
+
+		/* LOADING - MODEL */
+		private function _load_model( request : Request ) : void
+		{
+			if( _model.load( request ) )
+				_model.gunz_load_complete.add( _after_load_model, request );
+			else
+				_load_layout( request );
+		}
+
+		private function _after_load_model( bullet : ModelBullet ) : void
+		{
+			_load_layout( bullet.params );
+		}
+
+		/* LOADING - LAYOUT */
+		private function _load_layout( request : Request ) : void
+		{
+			var bullet : Bullet;
+			
+			if( _layout.load( request ) )
+				_layout.gunz_load_complete.add( _after_load_layout, request );
+			else
+			{
+				bullet = new LayoutBullet( );
+				bullet.params = request;
+				_after_load( bullet );
+			}
+		}
+
+		private function _after_load_layout( bullet : LayoutBullet ) : void
+		{
+			if( _layout.load( bullet.params ) )
+				_layout.gunz_load_complete.add( _after_load );
 		}
 
 		/* RENDERING */
