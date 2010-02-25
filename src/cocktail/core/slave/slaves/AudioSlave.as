@@ -145,5 +145,23 @@ package cocktail.core.slave.slaves
 		{
 			return _sound;
 		}
+		
+		public function unload() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
+		}
+		
+		public function close() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
+		}
+		
+		public function destroy() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
+		}
 	}
 }

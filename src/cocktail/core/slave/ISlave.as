@@ -14,5 +14,11 @@ package cocktail.core.slave
 		function get status() : String;
 
 		function load() : ISlave;
+		
+		function unload() : ISlave;
+		
+		function close() : ISlave;
+		
+		function destroy() : ISlave;
 	}
 }
