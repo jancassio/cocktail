@@ -102,7 +102,7 @@ package cocktail.lib
 		{
 			var full_path : Array;
 			
-			full_path = String( xml_node['target'] ).split( ":" ); 
+			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
 			//controller - full_path.split( '/' )[ 0 ]
 			//action - full_path.split( '/' )[ 1 ]
