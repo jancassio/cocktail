@@ -27,8 +27,11 @@ package cocktail.lib
 
 		/* VARS */
 		private var _model : Model;
+
 		private var _layout : Layout;
+
 		private var _group : GunzGroup;
+
 		private var _is_scheme_loaded : Boolean;
 
 		/* BOOTING */
@@ -106,10 +109,15 @@ package cocktail.lib
 				return;
 			}
 			
+			//TODO: TEMP: testing layout load
+
+			_layout.load( request );
+			return;	
+			
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 		}
-		
+
 		private function _after_load_model( bullet : ModelBullet ) : void
 		{
 			if( _layout.load( bullet.params ) )
@@ -161,7 +169,7 @@ package cocktail.lib
 		/**
 		 * Rendering filter. If returns false, wont render.
 		 */
-		public function before_render( process : Process ) : Boolean
+		public function before_render( process : Request ) : Boolean
 		{
 			log.info( "Running..." );
 			process;
@@ -171,9 +179,10 @@ package cocktail.lib
 		/**
 		 * Called after render process completes.
 		 */
-		public function render( process : Process ) : void
+		public function render( process : Request ) : void
 		{
 			if( !before_render( process ) ) return;
+			
 			log.info( "Running..." );
 			
 			_layout.gunz_render_complete.add( after_render, process );
@@ -183,7 +192,7 @@ package cocktail.lib
 		/**
 		 * Called after render process completes.
 		 */
-		public function after_render( process : Process ) : void
+		public function after_render( process : Request ) : void
 		{
 			log.info( "Running..." );
 			process;

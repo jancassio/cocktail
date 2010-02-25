@@ -1,8 +1,9 @@
 package cocktail.core.factory {
-	import cocktail.lib.view.assets.AAsset;
 	import cocktail.core.Index;
+	import cocktail.lib.view.assets.AAsset;
 	import cocktail.utils.StringUtil;
 
+	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 
 	/**
@@ -138,7 +139,7 @@ package cocktail.core.factory {
 			return evaluate( path );
 		}
 
-		public function asset( node : * ) : Class 
+		public function asset( node : XML ) : Class 
 		{
 			var path : String;
 			
@@ -146,7 +147,9 @@ package cocktail.core.factory {
 			path += StringUtil.ucasef( '' );
 			path += "DataSource";
 			
-			return evaluate( path );
+			trace( node.localName() );
+			
+			return AAsset;
 		}
 	}
 }

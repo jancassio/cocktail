@@ -4,7 +4,9 @@
 	</action>
 	
 	<action id="index" require="home.xml" target="main/base:clip_holder">
-		<sprite x="50" y="50" class="Rect" />
+		<sprite x="50" y="50" class="Rect">
+			<uh></uh>
+		</sprite>
 		<movie_clip radius="100" class="Ball" />
 	</action>
 </layout>
