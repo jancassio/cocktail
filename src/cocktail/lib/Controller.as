@@ -182,9 +182,10 @@ package cocktail.lib
 				_layout.gunz_load_complete.add( _after_load_layout, request );
 			else
 			{
-				bullet = new LayoutBullet( );
-				bullet.params = request;
-				_after_load( bullet );
+				//bullet = new LayoutBullet( );
+				//bullet.params = request;
+				//_after_load( bullet );
+				log.error( "dead end, needs to corret lines before this" );
 			}
 		}
 
