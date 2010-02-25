@@ -1,6 +1,0 @@
-[submodule "src/cocktail/core/gunz"]
-	path = src/cocktail/core/gunz
-	url = git://github.com/nybras/cocktail-gunz.git
-[submodule "src/cocktail/core/slave"]
-	path = src/cocktail/core/slave
-	url = git://github.com/nybras/cocktail-slave.git
