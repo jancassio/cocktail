@@ -1,6 +1,7 @@
 package cocktail.lib 
 {
 	import cocktail.Cocktail;
+	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
@@ -31,6 +32,7 @@ package cocktail.lib
 		private var _layout : Layout;
 		private var _group : GunzGroup;
 		private var _is_scheme_loaded : Boolean;
+		internal var _bind : Bind;
 
 		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
@@ -47,6 +49,7 @@ package cocktail.lib
 			
 			_model = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
+			_bind = new Bind();
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
@@ -152,6 +155,7 @@ package cocktail.lib
 		/* LOADING - MODEL */
 		private function _load_model( request : Request ) : void
 		{
+			log.info( "Running..." );
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 			else
@@ -160,6 +164,7 @@ package cocktail.lib
 
 		private function _after_load_model( bullet : ModelBullet ) : void
 		{
+			log.info( "Running..." );
 			_load_layout( bullet.params );
 		}
 
@@ -167,6 +172,8 @@ package cocktail.lib
 		private function _load_layout( request : Request ) : void
 		{
 			var bullet : Bullet;
+			
+			log.info( "Running..." );
 			
 			if( _layout.load( request ) )
 				_layout.gunz_load_complete.add( _after_load_layout, request );
@@ -180,6 +187,7 @@ package cocktail.lib
 
 		private function _after_load_layout( bullet : LayoutBullet ) : void
 		{
+			log.info( "Running..." );
 			if( _layout.load( bullet.params ) )
 				_layout.gunz_load_complete.add( _after_load );
 		}
