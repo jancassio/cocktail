@@ -9,7 +9,8 @@ package cocktail.lib.model.datasources
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
 		public var gunz_load_progress : Gun; 
-		public var gunz_load_complete : Gun; 
+		public var gunz_load_complete : Gun;
+		protected var _scheme : XML; 
 
 		private function _init_gunz() : void
 		{
@@ -34,8 +35,9 @@ package cocktail.lib.model.datasources
 						return s;
 		}
 
-		public function ADataSource()
+		public function ADataSource( scheme : XML = null )
 		{
+			_scheme = scheme;
 		}
 
 		public function load() : ADataSource
