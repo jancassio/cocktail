@@ -49,7 +49,7 @@ package cocktail.core.slave
 		 * 
 		 * @return Self return;
 		 */
-		public function load() : ISlave
+		public function load( uri : String = null ) : ISlave
 		{
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
@@ -315,16 +315,24 @@ package cocktail.core.slave
 			return loaded;
 		}
 		
-		public function unload() : ISlave
+		public function stop_loading () : void
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			if ( _status == _LOADING )
+			{
+				dlist.clear();
+			}
 		}
 		
-		public function close() : ISlave
+		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			
+			var i : DListIterator;
+			
+			i = DListIterator( dlist.getIterator( ) );
+			while( i.hasNext( ) )
+				DListNode( i.next( ) ).data[ "load" ]( );
+			
+			return this;
 		}
 		
 		public function destroy() : ISlave

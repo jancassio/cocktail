@@ -151,7 +151,7 @@ package cocktail.core.slave.slaves
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		final public function load() : ISlave
+		final public function load( uri : String = null ) : ISlave
 		{
 			if( _status != ASlave._QUEUED )
 				return this;
