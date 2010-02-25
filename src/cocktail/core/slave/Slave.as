@@ -1,8 +1,10 @@
 package cocktail.core.slave 
 {
 	import cocktail.core.slave.gunz.ASlaveBullet;
+	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.core.slave.slaves.VideoSlave;
 
 	import de.polygonal.ds.DListIterator;
 	import de.polygonal.ds.DListNode;
@@ -14,8 +16,9 @@ package cocktail.core.slave
 	 */
 	public class Slave extends ASlave implements ISlave
 	{
-		/* VARS */
+		/* VARS */	
 		private var _auto_load : Boolean;
+		private var _parallelized : Boolean;
 		private var _started : int;
 		private var _completed : int;
 
@@ -26,24 +29,57 @@ package cocktail.core.slave
 		 * @param auto_load	If <code>true</code> all subsequent loading calls
 		 * will start loading immediatelly, otherwise <code>false</code> you'll
 		 * need to call the "load" method to start the loading process.
+		 * @param parallelized	If <code>true</code> all queue objects are 
+		 * started to load in the same time, otherwise <code>false</code> the 
+		 * loading process is sequentially managed, where the object is started
+		 * only when the prev object is quite and done.
 		 */
-		public function Slave( auto_load : Boolean = false )
+		public function Slave( 	auto_load : Boolean = false, 
+								parallelized : Boolean = false )
 		{
 			super( );
 			_auto_load = auto_load;
+			_parallelized = parallelized;
 		}
 
 		/* LOADING */
 		
 		/**
 		 * Start the loading process.
+		 * 
+		 * @return Self return;
 		 */
-		public function load() : ISlave
+		public function load( uri : String = null ) : ISlave
 		{
+			//if the loading is started, lets keep safe from new inputs;
+			if ( _status == _LOADING )
+			{
+				return this;
+			}
+			
+			return _load();
+		}
+		
+		/**
+		 * Really start the loading process.
+		 * Set as private to keep the loading proccess safe.
+		 * 
+		 * @return Self return;
+		 */
+		private function _load () : ISlave
+		{
+			_status = _LOADING;
+			
 			var i : DListIterator;
 			
 			if( _auto_load )
 				return this;
+			
+			if ( !_parallelized )
+			{
+				dlist.removeHead()[ "data" ][ "load" ]();
+				return this; 
+			}
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
@@ -73,41 +109,28 @@ package cocktail.core.slave
 		{
 			return _queue( new TextSlave( uri, _auto_load ) );
 		}
+		
+		/**
+		 * Loads any video request (.flv).
+		 * @param uri	Uniform Resource Identifier to be loaded.
+		 * @return	The created and appended VideoSlave instance.
+		 */
+		public function video( uri : String ) : VideoSlave
+		{
+			return _queue( new VideoSlave( uri, _auto_load ) );
+		}
+		
+		/**
+		 * Loads any audio request (.mp3).
+		 * @param uri	Uniform Resource Identifier to be loaded.
+		 * @return	The created and appended AudioSlave instance.
+		 */
+		public function audio( uri : String ) : AudioSlave
+		{
+			return _queue( new AudioSlave( uri, _auto_load ) );
+		}
 
-		//		/**
-		//		 * TODO: write docs
-		//		 */
-		//		public function au( uri : String ) : AudioSlave
-		//		{
-		//			return _queue( new AudioSlave( uri, _auto_load ) );
-		//		}
-		//
-		//		/**
-		//		 * TODO: write docs
-		//		 */		
-		//		public function vi( uri : String ) : VideoSlave
-		//		{
-		//			 return _queue( new VideoSlave( uri, _auto_load ) );
-		//		}
-		//
-		//		/**
-		//		 * TODO: write docs
-		//		 */
-		//		public function amf( uri : String ) : AmfSlave
-		//		{
-		//			return _queue( new AmfSlave( uri, _auto_load ) );
-		//		}
-		//
-		//		/**
-		//		 * TODO: write docs
-		//		 */
-		//		public function collada( uri : String ) : ColladaSlave
-		//		{
-		//			return _queue( new ColladaSlave( uri, _auto_load ) );
-		//		}
-		
-		
-		
+
 		/* QUEUE */
 		
 		/**
@@ -157,8 +180,19 @@ package cocktail.core.slave
 		{
 			ASlave( bullet.owner ).gunz_progress.rm( _progress );
 			ASlave( bullet.owner ).gunz_complete.rm( _progress );
-			if( ++_completed == length )
-				gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+			
+			if ( _parallelized )
+			{
+				if ( ++_completed == length )
+					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+			}
+			else
+			{
+				if ( length )
+					_load();
+				else
+					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+			}
 		}
 
 		/**
@@ -180,6 +214,12 @@ package cocktail.core.slave
 		 */
 		public function append( slave : ASlave ) : ASlave
 		{
+			//if the loading is started, lets keep safe from new inputs;
+			if ( _status == _LOADING )
+			{
+				return this;
+			}
+			
 			var i : Iterator;
 			var node : ASlave;
 			
@@ -273,6 +313,31 @@ package cocktail.core.slave
 			}
 			
 			return loaded;
+		}
+		
+		public function stop_loading () : void
+		{
+			if ( _status == _LOADING )
+			{
+				dlist.clear();
+			}
+		}
+		
+		public function unload() : ISlave
+		{
+			var i : DListIterator;
+			
+			i = DListIterator( dlist.getIterator( ) );
+			while( i.hasNext( ) )
+				DListNode( i.next( ) ).data[ "unload" ]( );
+			
+			return this;
+		}
+		
+		public function destroy() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
 		}
 	}
 }
