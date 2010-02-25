@@ -1,9 +1,10 @@
 package cocktail.core.slave 
 {
-	import cocktail.core.slave.slaves.VideoSlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
+	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.core.slave.slaves.VideoSlave;
 
 	import de.polygonal.ds.DListIterator;
 	import de.polygonal.ds.DListNode;
@@ -83,6 +84,16 @@ package cocktail.core.slave
 		public function video( uri : String ) : VideoSlave
 		{
 			return _queue( new VideoSlave( uri, _auto_load ) );
+		}
+		
+		/**
+		 * Loads any audio request (.mp3).
+		 * @param uri	Uniform Resource Identifier to be loaded.
+		 * @return	The created and appended AudioSlave instance.
+		 */
+		public function audio( uri : String ) : AudioSlave
+		{
+			return _queue( new AudioSlave( uri, _auto_load ) );
 		}
 
 		//		/**
