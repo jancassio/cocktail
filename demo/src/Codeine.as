@@ -32,12 +32,10 @@ package
 			var app_id : String;
 			var url : String;
 			
-			_uris = [ "main/index/a/b/c", "main/edit/a/b/c", "main/del/a/b/c" ];
-			
 			embedder = new Embedder();
 			routes = new Routes();
 			app_id = "codeine";
-			url = _uris.shift();
+			url = "main/home";
 			
 			_cocktail = new Cocktail( this, embedder, routes, app_id, url );
 			
@@ -46,7 +44,7 @@ package
 			
 			addEventListener( Event.ADDED_TO_STAGE, _added );
 		}
-
+		
 		private function _added( event : Event ) : void
 		{
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, _keydown );
