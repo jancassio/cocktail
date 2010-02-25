@@ -17,8 +17,6 @@ package cocktail.core.slave
 		
 		function unload() : ISlave;
 		
-		function close() : ISlave;
-		
 		function destroy() : ISlave;
 	}
 }

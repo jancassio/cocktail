@@ -4,9 +4,7 @@ package cocktail.core.slave.slaves
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.gunz.AudioSlaveBullet;
-	import cocktail.core.slave.gunz.GraphSlaveBullet;
 
-	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -20,6 +18,7 @@ package cocktail.core.slave.slaves
 	{
 		private var _request : URLRequest;
 		private var _sound : Sound;
+		private var _uri : String;
 
 		public function AudioSlave( 
 			uri : String,
@@ -28,19 +27,21 @@ package cocktail.core.slave.slaves
 		{
 			super( uri );
 			
-			_request = new URLRequest( uri );			
-			_sound = new Sound();
-			_sound.addEventListener( Event.OPEN, _start );
-			_sound.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_sound.addEventListener( IOErrorEvent.IO_ERROR, _error );
-			_sound.addEventListener( Event.COMPLETE, _complete );
+			_uri = uri;
 			
-			_request = new URLRequest( uri );
+			_init();
 			
 			if( auto_load )
 				load( );
 		}
 		
+		private function _init() : void
+		{
+			_request = new URLRequest( _uri );
+			_sound = new Sound();
+			
+			_set_triggers();
+		}
 		
 		/* LISTENERS */
 		
@@ -74,10 +75,7 @@ package cocktail.core.slave.slaves
 			// pull the trigger
 			gunz_complete.shoot( new AudioSlaveBullet( loaded, total, sound ) );
 			
-			_sound.removeEventListener( Event.OPEN, _start );
-			_sound.removeEventListener( ProgressEvent.PROGRESS, _progress );
-			_sound.removeEventListener( Event.INIT, _complete );
-			_sound.removeEventListener( IOErrorEvent.IO_ERROR, _error );
+			_unset_triggers();
 		}
 
 		/**
@@ -96,25 +94,41 @@ package cocktail.core.slave.slaves
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		final public function load() : ISlave
+		final public function load( uri : String = null ) : ISlave
 		{
+			if ( uri )
+				_uri = uri;
+				
 			if( _status != ASlave._QUEUED )
 				return this;
 			
 			// updating status
 			_status = ASlave._LOADING;
+            
+			if ( !_sound || !_request )
+				_init();
 			
-			try 
-			{
-				// start loading
-                _sound.load( _request );
-            }
-            catch ( err:Error )
-            {
-                trace( err.message );
-            }
+			_sound.load( _request );
 			
 			return this;
+		}
+		
+		/* TRIGGERS */
+		
+		private function _set_triggers() : void
+		{
+			_sound.addEventListener( Event.OPEN, _start );
+			_sound.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_sound.addEventListener( IOErrorEvent.IO_ERROR, _error );
+			_sound.addEventListener( Event.COMPLETE, _complete );
+		}
+		
+		private function _unset_triggers() : void
+		{
+			_sound.removeEventListener( Event.OPEN, _start );
+			_sound.removeEventListener( ProgressEvent.PROGRESS, _progress );
+			_sound.removeEventListener( Event.INIT, _complete );
+			_sound.removeEventListener( IOErrorEvent.IO_ERROR, _error );
 		}
 		
 		/* GETTERS */
@@ -146,21 +160,34 @@ package cocktail.core.slave.slaves
 			return _sound;
 		}
 		
+		/**
+		 * Unload content.
+		 * @return	ISlave.
+		 */
 		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
+			_unset_triggers();
+			
+			try { _sound.close(); } catch ( e : Error ) { trace ( e ); };
+			
+			_sound = null;
+			_request = null;
+			
 			return null;
 		}
 		
-		public function close() : ISlave
-		{
-			// TODO: Auto-generated method stub
-			return null;
-		}
-		
+		/**
+		 * Unload content and remove gunz listeners.
+		 * @return	ISlave.
+		 */
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
+			unload( );
+			
+			gunz_complete.rm_all();
+			gunz_progress.rm_all();
+			gunz_start.rm_all();
+			
 			return null;
 		}
 	}
