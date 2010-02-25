@@ -117,6 +117,14 @@ package cocktail.core.gunz
 		{
 			return _params;
 		}
+		
+		/**
+		 * Specifies the bullet params.
+		 */
+		public function set params( params : * ) : void
+		{
+			_params = params;
+		}
 
 		/**
 		 * Returns the bullet owner.
