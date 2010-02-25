@@ -6,7 +6,6 @@ package cocktail.core.gunz
 	/**
 	 * Captures any Adobe AS3 Event, and proxy it in a gracefully and painless
 	 * way with the Gunz system.
-	 * 
 	 * @author nybras | me@nybras.com
 	 */
 	internal class Captured
@@ -15,13 +14,10 @@ package cocktail.core.gunz
 		
 		/** Gun bind to proxy all events. */
 		private var _gun : Gun;
-
 		/** Keeps the method that generates any specific gun type. */
 		private var _bullet_feed : Function;
-
 		/** Target to be listened. */
 		private var _target : IEventDispatcher;
-
 		/** Event type to listen. */
 		private var _type : String;
 

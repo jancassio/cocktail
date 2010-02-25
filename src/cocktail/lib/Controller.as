@@ -29,8 +29,11 @@ package cocktail.lib
 
 		/* VARS */
 		private var _model : Model;
+
 		private var _layout : Layout;
+
 		private var _group : GunzGroup;
+
 		private var _is_scheme_loaded : Boolean;
 		internal var _bind : Bind;
 
@@ -74,9 +77,11 @@ package cocktail.lib
 		 */
 		final public function run( request : Request ) : void
 		{
+			if( !before_run( request ) ) return;
+			
 			log.info( "Running..." );
-			if( before_run( request ) )
-				_load( request );
+			
+			_load( request );
 		}
 
 		/* LOADING */
@@ -97,10 +102,9 @@ package cocktail.lib
 		 */
 		private function _load( request : Request ) : void
 		{
-			log.info( "Running..." );
+			if( !before_load( request ) ) return;
 			
-			if( !before_load( request ) )
-				return;
+			log.info( "Running..." );
 			
 			if( !_is_scheme_loaded ) 
 			{
@@ -109,6 +113,12 @@ package cocktail.lib
 				return;
 			}
 			
+			/*
+			 * 
+			_layout.load( request );
+			return;
+			 * 	
+			 */
 			_load_model( request );
 		}
 
@@ -179,9 +189,10 @@ package cocktail.lib
 				_layout.gunz_load_complete.add( _after_load_layout, request );
 			else
 			{
-				bullet = new LayoutBullet( );
-				bullet.params = request;
-				_after_load( bullet );
+				//bullet = new LayoutBullet( );
+				//bullet.params = request;
+				//_after_load( bullet );
+				log.error( "dead end, needs to corret lines before this" );
 			}
 		}
 
@@ -197,7 +208,7 @@ package cocktail.lib
 		/**
 		 * Rendering filter. If returns false, wont render.
 		 */
-		public function before_render( process : Process ) : Boolean
+		public function before_render( process : Request ) : Boolean
 		{
 			log.info( "Running..." );
 			process;
@@ -207,20 +218,20 @@ package cocktail.lib
 		/**
 		 * Called after render process completes.
 		 */
-		public function render( process : Process ) : void
+		public function render( process : Request ) : void
 		{
+			if( !before_render( process ) ) return;
+			
 			log.info( "Running..." );
-			if( before_render( process ) )
-			{
-				_layout.gunz_render_complete.add( after_render, process );
-				_layout.render( process );
-			}
+			
+			_layout.gunz_render_complete.add( after_render, process );
+			_layout.render( process );
 		}
 
 		/**
 		 * Called after render process completes.
 		 */
-		public function after_render( process : Process ) : void
+		public function after_render( process : Request ) : void
 		{
 			log.info( "Running..." );
 			process;

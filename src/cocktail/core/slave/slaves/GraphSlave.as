@@ -63,7 +63,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new GraphSlaveBullet( loaded, total ) );
+			gunz_start.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -72,7 +72,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _progress( ev : ProgressEvent ) : void
 		{
-			gunz_progress.shoot( new GraphSlaveBullet( loaded, total ) );
+			gunz_progress.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -173,7 +173,7 @@ package cocktail.core.slave.slaves
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		final public function load() : ISlave
+		final public function load( uri : String = null ) : ISlave
 		{
 			if( _status != ASlave._QUEUED )
 				return this;
@@ -184,6 +184,25 @@ package cocktail.core.slave.slaves
 			// start loading
 			_loader.load( _request );
 			
+			return this;
+		}
+		
+		/* DESTROY */
+		
+		public function unload() : ISlave
+		{
+			_loader.unload();
+			return this;
+		}
+		
+		public function close() : ISlave
+		{
+			_loader.close();
+			return this;
+		}
+		
+		public function destroy() : ISlave
+		{
 			return this;
 		}
 	}

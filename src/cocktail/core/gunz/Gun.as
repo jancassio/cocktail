@@ -3,63 +3,36 @@ package cocktail.core.gunz
 	import flash.events.IEventDispatcher;
 
 	/**
-	 * <p>The Gun class is the base class for dispatching events without having 
-	 * to use EventDispatcher.</p>
-	 * 
-	 * <p>A Gun always need to be registered in a Gunz list, this is 
-	 * accomplished by the Gun constructor when it executes the method 
-	 * <code>keep</code> from Gunz.</p>
-	 * 
-	 * <p>The Gun <code>shoot</code> at the Victim's (listeners) passing a 
-	 * Bullet and the Victim <code>scream</code> when it receives the shot, 
-	 * dispatching the event and repassing the Bullet.</p>
-	 * 
-	 * <p>The properties of the Bullet class carry basic information about an 
-	 * event, such as the event's type. You may require more detailed 
-	 * information and you can pass such additional information to Bullet 
-	 * listeners by extending the Bullet class.</p>
-	 * 
-	 * @see Gunz
-	 * @see Gun#shoot()
-	 * @see Victim
-	 * @see Victim#scream()
-	 * 
-	 * @includeExample Gunshoot.as
-	 * @includeExample GunListening.as
-	 * 
+	 * Has the main functionality for adding and removing gunz victim listeners.
 	 * @author nybras | me@nybras.com
 	 */
-	public class Gun
+	public class Gun 
 	{
 		/* VARS */
 		
-		/** Gun owner. */
-		private var _owner : *;
-
 		/** Gunz list. */
-		private var _gunz : Gunz;
-
+		internal var _gunz : Gunz;
+		/** Gun owner. */
+		internal var _owner : *;
 		/** Gun type. */
-		private var _type : String;
-
+		internal var _type : String;
 		/** Gun victims listeners. */
-		private var _victims : Array;
-
+		internal var _victims : Array;
 		/** Captured items list. */
-		private var _captured : Array;
+		internal var _captured : Array;
 
 		/* INITIALIZING */
 		
 		/**
-		 * Creates a new Gun instance pointing to a Gunz list reference.
+		 * Creates a new Gun, with an onwer and type, pointing to a Gunz list
+		 * reference.
 		 * @param gunz	Gunz list, where this Gun will be stored.
 		 * @param owner	Gun owner (any instance or object you want to use).
 		 * @param type	Gun type.
 		 */
 		public function Gun( gunz : Gunz, owner : *, type : String ) : void
 		{
-			_gunz = gunz;
-			_gunz.keep( this );
+			( _gunz = gunz )._keep( this );
 			
 			_owner = owner;
 			_type = type;
@@ -71,9 +44,9 @@ package cocktail.core.gunz
 		/* ADDING VICTIM LISTENERS */
 		
 		/**
-		 * Adds a new Victim listener to the Gun.
+		 * Adds a new victim listener to the Gun.
 		 * @param handler	Listener handler.
-		 * @param params	Listener params - get it with
+		 * @param params	Listener params--get it with
 		 * <code>bullet.params</code>.
 		 * @return	Self reference for reuse.
 		 */
@@ -103,11 +76,11 @@ package cocktail.core.gunz
 			if( bullet )
 				bullet._type = _type;
 			
-			if( ( i = _victims.length ) ) do
+			if( _victims.length ) do
 			{
-				victim = Victim( _victims[ --i ] );
+				victim = Victim( _victims[ i ] );
 				victim.scream( bullet || new Bullet() );
-			} while( i > 0 );
+			} while( ++i < _victims.length );
 			
 			return bullet;
 		}
@@ -120,8 +93,6 @@ package cocktail.core.gunz
 		 * @param target	Target to be captured.
 		 * @param event_type Event type to captured on the target.
 		 * @return	Capured item instance.
-		 * 
-		 * @private
 		 */
 		public final function capture(
 			target : IEventDispatcher,
@@ -157,9 +128,7 @@ package cocktail.core.gunz
 		}
 
 		/**
-		 * Removes all previously added Victim listeners.
-		 * 
-		 * @see Victim
+		 * Removes all previously added victim listeners.
 		 */
 		public final function rm_all() : void
 		{
@@ -176,7 +145,8 @@ package cocktail.core.gunz
 		}
 
 		/**
-		 * Destroys the Gun unlistening everything.
+		 * Destroys the Gun unlistening everything and doing some 
+		 * garbage collection. 
 		 */
 		public final function destroy() : void
 		{
@@ -200,26 +170,11 @@ package cocktail.core.gunz
 		
 		/**
 		 * Returns the Gun type.
+		 * @return	The gun type.
 		 */
-		internal function get type() : String
+		public final function get type() : String
 		{
 			return _type;
-		}
-
-		/**
-		 * Returns the victims list.
-		 */
-		internal function get victims() : Array
-		{
-			return _victims;
-		}
-
-		/**
-		 * Returns the owner.
-		 */
-		public final function get owner() : *
-		{
-			return _owner;
 		}
 	}
 }

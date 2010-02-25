@@ -65,7 +65,7 @@ package cocktail.core.slave.slaves
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		public function load() : ISlave
+		public function load( uri : String = null ) : ISlave
 		{
 			if( _status != ASlave._QUEUED )
 				return this;
@@ -188,6 +188,24 @@ package cocktail.core.slave.slaves
 		public function get net_stream () : NetStream
 		{
 			return _netstream;
+		}
+		
+		public function unload() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
+		}
+		
+		public function close() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
+		}
+		
+		public function destroy() : ISlave
+		{
+			// TODO: Auto-generated method stub
+			return null;
 		}
 		
 		
