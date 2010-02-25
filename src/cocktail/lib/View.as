@@ -66,6 +66,8 @@ package cocktail.lib
 			var assets : Array;
 			var view : View;
 			
+			childs.clear_render_poll();
+			
 			if( !( assets = _parse_assets( request ) ).length )
 				_after_load_assets( );
 			else
@@ -75,8 +77,12 @@ package cocktail.lib
 				do 
 				{
 					view = assets[ i ];
+					
 					group.add( view.gunz_load_complete );
+					
 					view.load( request );
+					
+					childs.add_to_render_pool( view );
 				} while( ++i < assets.length );
 				
 				group.gunz_complete.add( _after_load_assets );
@@ -108,7 +114,6 @@ package cocktail.lib
 				xml_node = XML( list.toXMLString() );
 				
 				list = list.children();
-				
 				trace( 'list -> ' + list );
 				trace( 'xml_node ->' + xml_node );
 			}
@@ -164,16 +169,46 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			request;
-			return false;
+			return true;
 		}
 
 		public function render( request : Request ) : Boolean
 		{
 			if( !before_render( request ) ) return false;
 			
+			childs.render( request );
+			
+			after_render( request );
+			
 			return true;
 		}
 
+		public function after_render( request: Request ): void
+		{
+			
+		}
+
+		public function before_destroy( request: Request ): Boolean
+		{
+			log.info( "Running..." );
+			request;
+			return true;
+		}
+		
+		public function destroy( request : Request ) : Boolean 
+		{
+			if( !before_destroy( request ) ) return false;
+			log.info( "Running..." );
+			
+			return true;
+		}
+		
+		public function after_destroy( request : Request ) : void 
+		{
+			log.info( "Running..." );
+			request;
+		}
+		
 		/** GETTERS / SETTERS **/
 		
 		/**
@@ -203,5 +238,6 @@ package cocktail.lib
 		{
 			return _childs != null ? _childs : ( _childs = new ViewStack( ) );
 		}
+
 	}
 }
