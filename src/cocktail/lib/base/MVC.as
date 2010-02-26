@@ -7,7 +7,7 @@ package cocktail.lib.base
 	/**
 	 * @author nybras | me@nybras.com
 	 */
-	public class MVCL extends Index 
+	public class MVC extends Index 
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 

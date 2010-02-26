@@ -5,9 +5,8 @@ package cocktail.lib
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
-	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVCL;
+	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
 	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
@@ -16,12 +15,10 @@ package cocktail.lib
 	 * @author hems
 	 * @author nybras
 	 */
-	public class Controller extends MVCL
+	public class Controller extends MVC
 	{
 		/* GUNZ */
 		private var gunz_load_change_phase : Gun;
-
-		internal var process : Process;
 
 		private function _init_gunz() : void
 		{

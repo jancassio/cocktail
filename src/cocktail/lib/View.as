@@ -3,13 +3,14 @@ package cocktail.lib
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVL;
+	import cocktail.lib.base.MV;
 	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.view.ViewStack;
+	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
-	public class View extends MVL 
+	public class View extends MV 
 	{
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
@@ -72,22 +73,30 @@ package cocktail.lib
 			childs.clear_render_poll( );
 			
 			if( !( assets = _parse_assets( request ) ).length )
-				_after_load_assets( new LayoutBullet( ) );
+			{
+				var bullet: LayoutBullet;
+				
+				bullet = new LayoutBullet();
+				bullet.params = request;
+				
+				new Timeout( _after_load_assets, 1, bullet );
+			}
 			else
 			{
 				_loading_group = new GunzGroup( );
-				_loading_group.gunz_complete.add( _after_load_assets );
+				_loading_group.gunz_complete.add( _after_load_assets, request );
 
-				//TODO: user a lambda to run all selected assets				
+				//TODO: use a lambda to run all selected assets				
 				do 
 				{
 					view = assets[ i ];
 					_loading_group.add( view.gunz_load_complete );
 				} while( ++i < assets.length );
 				
-				i =0;
+				i = 0;
 				do 
 				{
+					view = assets[ i ];
 					view.load( request );
 					childs.add_to_render_pool( view );
 				} while( ++i < assets.length );
@@ -135,6 +144,16 @@ package cocktail.lib
 			return assets;
 		}
 
+		/**
+		 * Triggered after all views have loaded its content
+		 */
+		private function _after_load_assets( bullet : Bullet ) : void 
+		{
+			log.info( "Running..." );
+			bullet;
+			gunz_load_complete.shoot( new LayoutBullet( ) );
+		}
+		
 		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
@@ -216,16 +235,6 @@ package cocktail.lib
 
 		/** GETTERS / SETTERS **/
 		
-		/**
-		 * Triggered after all views have loaded its content
-		 */
-		private function _after_load_assets( bullet : Bullet ) : void 
-		{
-			log.info( "Running..." );
-			bullet;
-			gunz_load_complete.shoot( new LayoutBullet( ) );
-		}
-
 		public function get xml_node() : XML  
 		{
 			return _xml_node;
@@ -245,5 +254,6 @@ package cocktail.lib
 		{
 			return _childs != null ? _childs : ( _childs = new ViewStack( ) );
 		}
+
 	}
 }
