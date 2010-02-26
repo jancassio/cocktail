@@ -121,5 +121,33 @@ package cocktail.utils
 				string = string.replace( obj, '$1' );
 			return string;
 		}
+
+		/**
+		 * lowercase_underscored to CamelCase
+		 */
+		public static function toCamel( string : String ) : String
+		{
+			var parts : Array;
+			var result : String;
+			var i : int;
+			
+			//TODO: check if i need really 
+			result = '';
+			parts = string.split( '_' );
+			do
+			{
+				result += ucasef( parts[ i ] );
+			}while( ++i < parts.length );
+			
+			return result;
+		}
+		
+		public static function toUnderscore( string: String ): String
+		{
+			string = string.replace(/(.)([A-Z])/,'$1_$2');
+			string = string.toLowerCase();
+			
+			return string;
+		}
 	}
 }
