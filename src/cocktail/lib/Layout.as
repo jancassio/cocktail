@@ -78,11 +78,6 @@ package cocktail.lib
 
 		/* GETTERS */
 
-		public function get name() : String
-		{
-			return classname.toLowerCase().replace("layout", "");
-		}
-
 		/**
 		 * Evaluates the path for the xml file.
 		 * @return	The path to the xml file.
@@ -104,6 +99,7 @@ package cocktail.lib
 			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
+			controller(name)
 			//controller - full_path.split( '/' )[ 0 ]
 			//action - full_path.split( '/' )[ 1 ]
 			//asset - full_path[ 1 ]
