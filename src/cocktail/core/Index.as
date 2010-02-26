@@ -153,10 +153,12 @@ package cocktail.core
 		 * @return	<code>true</code> 'if scope[ property ]' is defined,
 		 * otherwise return <code>false</code>. 
 		 */
-		final public function is_defined( scope : *, property : String ) : Boolean
+		final public function is_defined( property : String, scope : * = null ) : Boolean
 		{
 			var result : Boolean;
-			
+
+			scope = ( scope == null ) ? this : scope;
+						
 			try
 			{
 				scope[ property ];
