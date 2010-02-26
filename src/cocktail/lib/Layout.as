@@ -1,7 +1,5 @@
 package cocktail.lib 
 {
-	import cocktail.Cocktail;
-	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
@@ -11,28 +9,6 @@ package cocktail.lib
 
 	public class Layout extends View 
 	{
-		/* GUNZ */
-		public var gunz_render_complete : Gun;
-
-		private function _init_gunz() : void 
-		{
-			gunz_render_complete = new Gun( gunz, this, "render_complete" );
-		}
-
-		/* INITIALIZING */
-		
-		/**
-		 * 
-		 */
-		override public function boot( cocktail : Cocktail ) : * 
-		{
-			var s : *;
-		
-			s = super.boot( cocktail );
-			_init_gunz( );
-			
-			return s;
-		}
 
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
@@ -76,7 +52,7 @@ package cocktail.lib
 			return true;
 		}
 
-		/* GETTERS */
+		/* PRIVATE GETTERS */
 
 		/**
 		 * Evaluates the path for the xml file.
@@ -99,12 +75,17 @@ package cocktail.lib
 			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
-			controller(name)
+			controller( name )
 			//controller - full_path.split( '/' )[ 0 ]
 			//action - full_path.split( '/' )[ 1 ]
 			//asset - full_path[ 1 ]
 
 			return new DisplayObjectContainer( );
+		}
+
+		public function is_rendered( request : Request ) : Boolean
+		{
+			return childs.request == request; 
 		}
 	}
 }

@@ -8,8 +8,8 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
-	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
+	import cocktail.lib.gunz.ViewBullet;
 
 	/**
 	 * @author hems
@@ -25,20 +25,29 @@ package cocktail.lib
 		 */
 		private var _auto_render : Boolean;
 
+		/**
+		 * Last runned _request. 
+		 * ATTENTION: Doesnt means the request is rendered
+		 */
+		private var _request : Request;
+
 		private function _init_gunz() : void
 		{
 			log.info( "Running..." );
 			gunz_load_change_phase = new Gun( gunz, this, "load_change_phase" );
 		}
 
-		/* VARS */
+		/* Quite explainatory name, huh? */
 		private var _model : Model;
 
+		/* Quite explainatory name, huh? */
 		private var _layout : Layout;
 
 		private var _group : GunzGroup;
 
+		/** Has model and view loaded theirs schemes? **/
 		private var _is_scheme_loaded : Boolean;
+
 		internal var _bind : Bind;
 
 		/* BOOTING */
@@ -56,7 +65,7 @@ package cocktail.lib
 			
 			_model = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
-			_bind = new Bind();
+			_bind = new Bind( );
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
@@ -190,7 +199,7 @@ package cocktail.lib
 			_layout.load( request );
 		}
 
-		private function _after_load_layout( bullet : LayoutBullet ) : void
+		private function _after_load_layout( bullet : ViewBullet ) : void
 		{
 			log.info( "Running..." );
 			
@@ -223,12 +232,12 @@ package cocktail.lib
 			//_auto_render
 			if( is_defined( request.route.api.action ) )
 			{
-				this[ request.route.api.action ](); 
+				this[ request.route.api.action ]( ); 
 			}
 			
 			if( _auto_render == false ) return;
-				_layout.gunz_render_complete.add( after_render, request ).once();
-				_layout.render( request );
+			_layout.gunz_render_done.add( after_render, request ).once( );
+			_layout.render( request );
 		}
 
 		/**

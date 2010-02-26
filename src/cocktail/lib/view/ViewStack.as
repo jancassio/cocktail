@@ -1,19 +1,33 @@
 package cocktail.lib.view 
 {
 	import cocktail.core.Index;
+	import cocktail.core.gunz.Gun;
+	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.lib.View;
+	import cocktail.lib.gunz.ViewBullet;
 
 	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListNode;
+
+	import flash.utils.Dictionary;
 
 	/**
 	 * @author hems - hems@henriquematias.com
 	 */
 	public class ViewStack extends Index
 	{
-		public var ids : Object;
+		// XXX: This will be very usefull when coding different view transitions
 		
+		/** Self explainatory name **/ 
+		public var WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE: Boolean;
+		
+		public var gunz_render_complete : Gun;
+
+		private var _rendering_group : GunzGroup;
+
+		public var ids : Dictionary;
+
 		/** Double linked list of view childs **/
 		public var list : DLinkedList;
 
@@ -27,11 +41,22 @@ package cocktail.lib.view
 		/** The holder of the view stack **/
 		private var _view : View;
 
-		public function ViewStack( view: View )
+		
+		/** Last rendered request **/
+		private var _request : Request;
+
+		private var _after_render_views : *;
+
+		
+		public function ViewStack( view : View )
 		{
-			ids = {};
-			list = new DLinkedList( );
+			ids = new Dictionary( true );
 			_view = view;
+			
+			list = new DLinkedList( );
+			gunz_render_complete = new Gun( gunz, this, "render_complete" );
+			
+			WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE = false;
 		}
 
 		/**
@@ -66,11 +91,23 @@ package cocktail.lib.view
 				return null;
 			}
 			
-			//removing from child index
-			list.remove( list.nodeOf( by_id( id ) ) );
-			ids[ id ] = null;
+			by_id( id ).gunz_destroy_done.add( _after_child_destroy );
+			by_id( id ).destroy( _request );
 			
 			return null;
+		}
+
+		private function _after_child_destroy( bullet: ViewBullet ) : void 
+		{
+			var view: View;
+			
+			view = bullet.owner;
+			//removing from child index
+			list.remove( list.nodeOf( view.identifier ) );
+			ids[ view.identifier ] = null;
+			
+			if( _will_render.hasOwnProperty( view.identifier ) )
+				_will_render[ view.identifier ] = null;
 		}
 
 		/**
@@ -91,19 +128,19 @@ package cocktail.lib.view
 			
 			return null;
 		}
-	
+
 		/**
 		 * The method name is self explainatory
 		 */
-		public function clear_render_poll(): void
+		public function clear_render_poll() : void
 		{
 			_will_render = {};
 		}
-		
+
 		/**
 		 * Mark the view as renderable
 		 */
-		public function mark_as_alive( view: View ): View
+		public function mark_as_alive( view : View ) : View
 		{
 			_will_render[ view.identifier ] = true;
 			
@@ -113,11 +150,31 @@ package cocktail.lib.view
 		/**
 		 * Will execute render on alive views and destroy on dead views
 		 */
-		public function render( request: Request ) : void 
+		public function render( request : Request ) : void 
 		{
-			var node: DListNode;
-			var view: View;
+			var node : DListNode;
+			var view : View;
 			
+			_request = request;
+			_rendering_group = new GunzGroup( );
+			_rendering_group.gunz_complete.add( _after_render );
+			
+			//populating group	
+			node = list.head;
+			while ( node )
+			{
+				view = node.data;
+				
+				if( _will_render[ view.identifier ] )
+					_rendering_group.add( view.gunz_render_done );
+				else
+					if( WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE )
+						_rendering_group.add( view.gunz_destroy_done );
+					
+				node = node.next;
+			}
+			
+			//rendering
 			node = list.head;
 			while ( node )
 			{
@@ -135,12 +192,23 @@ package cocktail.lib.view
 			_will_render = {};
 		}
 
+		/**
+		 * Triggered after all the visual render process is done
+		 */
+		private function _after_render() : void 
+		{
+			gunz_render_complete.shoot( new ViewBullet() );
+		}
+
+		/**
+		 * Instantiate a view based on a xml_node
+		 */
 		public function create( xml_node : XML ) : View 
 		{
-			var view: View;
-			var path: String;
+			var view : View;
+			var path : String;
 			
-			path = parent.root.name + '.' + xml_node.attribute( 'class' );
+			path = view.root.name + '.' + xml_node.attribute( 'class' );
 			
 			view = View( new ( _cocktail.factory.view( path ) ) );
 			view.boot( _cocktail );
@@ -149,10 +217,21 @@ package cocktail.lib.view
 			
 			return view;
 		}
-		
-		public function get parent() : View
+
+		/**
+		 * Reference to the stack owner
+		 */		
+		public function get view() : View
 		{
 			return _view;
+		}
+
+		/** 
+		 * Last rendered request 
+		 **/
+		public function get request() : Request
+		{
+			return _request;
 		}
 	}
 }

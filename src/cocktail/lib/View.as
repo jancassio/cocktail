@@ -2,10 +2,11 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
+	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MV;
-	import cocktail.lib.gunz.LayoutBullet;
+	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.view.ViewStack;
 	import cocktail.utils.Timeout;
 
@@ -13,6 +14,13 @@ package cocktail.lib
 
 	public class View extends MV 
 	{
+
+		/* GUNZ */
+		public var gunz_render_done : Gun;
+
+		/* GUNZ */
+		public var gunz_destroy_done : Gun;
+
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
 
@@ -31,12 +39,28 @@ package cocktail.lib
 		/** Current loading group **/ 
 		private var _loading_group : GunzGroup;
 
-		
-		override public function boot(cocktail : Cocktail) : * 
+		private function _init_gunz() : void 
 		{
+			gunz_render_done = new Gun( gunz, this, "render_done" );
+			gunz_destroy_done = new Gun( gunz, this, "destroy_done" );
+		}
+
+		/* INITIALIZING */
+		
+		/**
+		 * 
+		 */
+		override public function boot( cocktail : Cocktail ) : * 
+		{
+			var s : *;
+		
+			s = super.boot( cocktail );
+			
+			_init_gunz( );
+			
 			_childs = new ViewStack( this );
 			
-			return super.boot( cocktail );
+			return s;
 		}
 
 		/**
@@ -75,9 +99,9 @@ package cocktail.lib
 			
 			if( !( assets = _parse_assets( request ) ).length )
 			{
-				var bullet : LayoutBullet;
+				var bullet : ViewBullet;
 				
-				bullet = new LayoutBullet( );
+				bullet = new ViewBullet( );
 				bullet.params = request;
 				
 				new Timeout( _after_load_assets, 1, bullet );
@@ -152,7 +176,7 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			bullet;
-			gunz_load_complete.shoot( new LayoutBullet( ) );
+			gunz_load_complete.shoot( new ViewBullet( ) );
 		}
 
 		/**
@@ -161,7 +185,7 @@ package cocktail.lib
 		 */
 		internal function _instantiate_view( xml_node : XML ) : View 
 		{
-			var view: View;
+			var view : View;
 			
 			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
@@ -204,13 +228,14 @@ package cocktail.lib
 		public function before_destroy( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
-			request;
+			//request;
 			return true;
 		}
 
 		public function destroy( request : Request ) : Boolean 
 		{
 			if( !before_destroy( request ) ) return false;
+			
 			log.info( "Running..." );
 			
 			return true;
@@ -243,7 +268,7 @@ package cocktail.lib
 		{
 			return _childs;
 		}
-		
+
 		public function get up() : View
 		{
 			return _up;
