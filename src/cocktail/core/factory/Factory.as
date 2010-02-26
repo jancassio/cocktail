@@ -147,8 +147,6 @@ package cocktail.core.factory
 			path += StringUtil.ucasef( '' );
 			path += "DataSource";
 			
-			trace( node.localName() );
-			
 			return AAsset;
 		}
 	}
