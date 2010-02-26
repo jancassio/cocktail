@@ -155,8 +155,11 @@ package cocktail.lib
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
+			
+			//FIXME: Remove this hardcoded call to load layout, and let the code flow
 			_load_layout( request );
 			return;
+			
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 			else
