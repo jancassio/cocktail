@@ -1,14 +1,16 @@
 package cocktail.lib 
 {
+	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVL;
+	import cocktail.lib.base.MV;
 	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.view.ViewStack;
+	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
-	public class View extends MVL 
+	public class View extends MV 
 	{
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
@@ -24,6 +26,9 @@ package cocktail.lib
 
 		/** When created trought xml, this will hold the xml node**/
 		private var _xml_node : XML;
+
+		/** Current loading group **/ 
+		private var _loading_group : GunzGroup;
 
 		/**
 		 * Initializes the view
@@ -62,30 +67,39 @@ package cocktail.lib
 			log.info( "Running..." );
 			
 			var i : int;
-			var group : GunzGroup;
 			var assets : Array;
 			var view : View;
 			
-			childs.clear_render_poll();
+			childs.clear_render_poll( );
 			
 			if( !( assets = _parse_assets( request ) ).length )
-				_after_load_assets( );
+			{
+				var bullet: LayoutBullet;
+				
+				bullet = new LayoutBullet();
+				bullet.params = request;
+				
+				new Timeout( _after_load_assets, 1, bullet );
+			}
 			else
 			{
-				group = new GunzGroup( );
-				
+				_loading_group = new GunzGroup( );
+				_loading_group.gunz_complete.add( _after_load_assets, request );
+
+				//TODO: use a lambda to run all selected assets				
 				do 
 				{
 					view = assets[ i ];
-					
-					group.add( view.gunz_load_complete );
-					
-					view.load( request );
-					
-					childs.add_to_render_pool( view );
+					_loading_group.add( view.gunz_load_complete );
 				} while( ++i < assets.length );
 				
-				group.gunz_complete.add( _after_load_assets );
+				i = 0;
+				do 
+				{
+					view = assets[ i ];
+					view.load( request );
+					childs.add_to_render_pool( view );
+				} while( ++i < assets.length );
 			}
 			
 			return true;
@@ -108,19 +122,16 @@ package cocktail.lib
 			action = process.route.api.action;
 			assets = [];
 			
+			//layout will work just if it finds 1 action.
 			if( this is Layout )
 			{
-				list = _scheme[ "action" ].( @id == action || @id == "*" );
-				xml_node = XML( list.toXMLString() );
+				list = _scheme..action.( @id == action || @id == "*" );
 				
-				list = list.children();
-				trace( 'list -> ' + list );
-				trace( 'xml_node ->' + xml_node );
+				xml_node = XML( list.toXMLString( ) );
 			}
-			else
-			{
-				list = XMLList( xml_node.toXMLString() );
-			}
+			
+			list = xml_node.children( );
+			
 			if( !list || !list.length( ) ) return assets;
 			
 			do 
@@ -134,6 +145,16 @@ package cocktail.lib
 		}
 
 		/**
+		 * Triggered after all views have loaded its content
+		 */
+		private function _after_load_assets( bullet : Bullet ) : void 
+		{
+			log.info( "Running..." );
+			bullet;
+			gunz_load_complete.shoot( new LayoutBullet( ) );
+		}
+		
+		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
 		 */
@@ -142,9 +163,10 @@ package cocktail.lib
 			var view : View;
 			var path : String;
 			
-			if( !xml_node.hasOwnProperty( 'id' ) )
+			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
 				log.warn( "Your view needs to have and id" );
+				//FIXME: this ['id'] is becoming a child, not a prop
 				xml_node[ 'id' ] = Math.random( ) * 100000000000;
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
@@ -155,7 +177,10 @@ package cocktail.lib
 			}
 			
 			path = root.name + '.' + xml_node.attribute( 'class' );
-				
+			
+
+			log.info( path + ' will receive : ' + xml_node );
+			
 			view = View( new ( _cocktail.factory.view( path ) ) );
 			view.boot( _cocktail );
 			view.up = this;
@@ -183,18 +208,17 @@ package cocktail.lib
 			return true;
 		}
 
-		public function after_render( request: Request ): void
+		public function after_render( request : Request ) : void
 		{
-			
 		}
 
-		public function before_destroy( request: Request ): Boolean
+		public function before_destroy( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
 			request;
 			return true;
 		}
-		
+
 		public function destroy( request : Request ) : Boolean 
 		{
 			if( !before_destroy( request ) ) return false;
@@ -202,23 +226,15 @@ package cocktail.lib
 			
 			return true;
 		}
-		
+
 		public function after_destroy( request : Request ) : void 
 		{
 			log.info( "Running..." );
 			request;
 		}
-		
+
 		/** GETTERS / SETTERS **/
 		
-		/**
-		 * Triggered after all views have loaded its content
-		 */
-		private function _after_load_assets() : void 
-		{
-			gunz_load_complete.shoot( new LayoutBullet( ) );
-		}
-
 		public function get xml_node() : XML  
 		{
 			return _xml_node;

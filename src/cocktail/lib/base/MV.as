@@ -13,7 +13,7 @@ package cocktail.lib.base
 	 * Contains some preloading proxy utils for Model, Layout and View, and
 	 * some another core functionality usefull only for these classes.
 	 */
-	public class MVL extends MVCL
+	public class MV extends MVC
 	{
 		/* GUNZ */
 		public var gunz_scheme_load_start : Gun; 
@@ -91,6 +91,15 @@ package cocktail.lib.base
 				ISlave( slave ).load( );
 			
 			return slave;
+		}
+		
+		/**
+		 * Returns a controller instance by name 
+		 * ( unique per cocktail instance )
+		 */
+		public function controller( name: String ): Controller
+		{
+			return _cocktail.processes.controller( name );
 		}
 	}
 }

@@ -1,9 +1,9 @@
-package cocktail.core.factory {
+package cocktail.core.factory 
+{
 	import cocktail.core.Index;
 	import cocktail.lib.view.assets.AAsset;
 	import cocktail.utils.StringUtil;
 
-	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 
 	/**

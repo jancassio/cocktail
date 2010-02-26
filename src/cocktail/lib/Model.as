@@ -5,7 +5,7 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
-	import cocktail.lib.base.MVL;
+	import cocktail.lib.base.MV;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.model.datasources.ADataSource;
 
@@ -13,7 +13,7 @@ package cocktail.lib
 	 * @author hems
 	 * @author nybras
 	 */
-	public class Model extends MVL
+	public class Model extends MV
 	{
 		/* GETTERS */
 		public var bind : Bind;

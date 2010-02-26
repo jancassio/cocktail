@@ -115,6 +115,13 @@ package cocktail.core.gunz
 			_event = event;
 		}
 
+		/* PUBLIC SETTERS */
+		
+		public function set params(params : *) : void
+		{
+			_params = params;
+		}
+		
 		/* TO STRING CONVERSION */
 		
 		/**
@@ -155,5 +162,6 @@ package cocktail.core.gunz
 			
 			return output + "}";
 		}
+
 	}
 }

@@ -5,9 +5,8 @@ package cocktail.lib
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
-	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVCL;
+	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
 	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
@@ -16,7 +15,7 @@ package cocktail.lib
 	 * @author hems
 	 * @author nybras
 	 */
-	public class Controller extends MVCL
+	public class Controller extends MVC
 	{
 		/* GUNZ */
 		private var gunz_load_change_phase : Gun;
@@ -122,16 +121,6 @@ package cocktail.lib
 			_load_model( request );
 		}
 
-		/**
-		 * Called after loading needed data to render the request.
-		 */
-		private function _after_load( bullet : Bullet ) : void
-		{
-			log.info( "Running..." );
-			gunz_load_complete.shoot( new ControllerBullet( ) );
-			render( bullet.params ) ;
-		}
-
 		/* LOADING - SCHEME */
 		
 		/**
@@ -166,6 +155,11 @@ package cocktail.lib
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
+			
+			//FIXME: Remove this hardcoded call to load layout, and let the code flow
+			_load_layout( request );
+			return;
+			
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 			else
@@ -175,32 +169,24 @@ package cocktail.lib
 		private function _after_load_model( bullet : ModelBullet ) : void
 		{
 			log.info( "Running..." );
+			
 			_load_layout( bullet.params );
 		}
 
 		/* LOADING - LAYOUT */
 		private function _load_layout( request : Request ) : void
 		{
-			var bullet : Bullet;
-			
 			log.info( "Running..." );
 			
-			if( _layout.load( request ) )
-				_layout.gunz_load_complete.add( _after_load_layout, request );
-			else
-			{
-				//bullet = new LayoutBullet( );
-				//bullet.params = request;
-				//_after_load( bullet );
-				log.error( "dead end, needs to corret lines before this" );
-			}
+			_layout.gunz_load_complete.add( _after_load_layout, request );
+			
+			_layout.load( request );
 		}
 
 		private function _after_load_layout( bullet : LayoutBullet ) : void
 		{
 			log.info( "Running..." );
-			if( _layout.load( bullet.params ) )
-				_layout.gunz_load_complete.add( _after_load );
+			render( bullet.params );
 		}
 
 		/* RENDERING */
