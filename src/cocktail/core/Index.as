@@ -232,5 +232,10 @@ package cocktail.core
 		{
 			return Boolean( value );
 		}
+		
+		public function get cocktail() : Cocktail
+		{
+			return _cocktail;
+		}
 	}
 }
