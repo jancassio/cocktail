@@ -39,6 +39,8 @@ package cocktail.lib.base
 		}
 
 		/* VARS */
+		internal var _controller : Controller;  
+		
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
 
