@@ -12,6 +12,8 @@ package cocktail.lib
 
 	import de.polygonal.ds.DListNode;
 
+	import flash.display.Sprite;
+
 	public class View extends MV 
 	{
 
@@ -39,9 +41,12 @@ package cocktail.lib
 		/** Current loading group **/ 
 		private var _loading_group : GunzGroup;
 
+		/** View sprite **/
+		public var sprite: Sprite;
+		
 		private function _init_gunz() : void 
 		{
-			gunz_render_done = new Gun( gunz, this, "render_done" );
+			gunz_render_done  = new Gun( gunz, this, "render_done" );
 			gunz_destroy_done = new Gun( gunz, this, "destroy_done" );
 		}
 
@@ -59,7 +64,7 @@ package cocktail.lib
 			_init_gunz( );
 			
 			_childs = new ViewStack( this );
-			
+			_childs.boot( cocktail );
 			return s;
 		}
 
@@ -112,19 +117,21 @@ package cocktail.lib
 				_loading_group.gunz_complete.add( _after_load_assets, request );
 
 				//TODO: use a lambda to run all selected assets				
-				while( i++ < assets.length ) 
+				do 
 				{
 					view = assets[ i ];
 					_loading_group.add( view.gunz_load_complete );
-				}
+				} while( ++i < assets.length );
+				
 				
 				i = 0; 
-				while( i++ < assets.length ) 
+				do 
 				{
 					view = assets[ i ];
 					view.load( request );
 					childs.mark_as_alive( view );
-				}
+				} while( ++i < assets.length );
+				
 			}
 			
 			return true;
@@ -159,12 +166,13 @@ package cocktail.lib
 			
 			if( !list || !list.length( ) ) return assets;
 			
-			while( i++ < list.length( ) )
+			do
 			{
 				node = list[i];
 					
 				assets.push( _instantiate_view( node ) );
-			}
+			} while( ++i < list.length( ) );
+			
 			
 			return assets;
 		}
@@ -195,7 +203,7 @@ package cocktail.lib
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
 			
-			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) = null ) 
+			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) != null ) 
 			{
 				childs.mark_as_alive( view );
 				return childs.by_id( xml_node.attribute( 'id' ) );
@@ -215,20 +223,44 @@ package cocktail.lib
 		{
 			if( !before_render( request ) ) return false;
 			
-			childs.gunz_render_complete.add( after_render, request );
+			log.info( "Running..." );
+			
+			if( !sprite )
+			{
+				sprite = new Sprite();
+				
+				if( this is Layout )
+					Layout( this ).target.addChild( sprite );
+				else
+					up.add( this );
+			}
+			
+			
 			childs.render( request );
+			
+			after_render( request );
 			
 			return true;
 		}
 
-		public function after_render( request : Request ) : void
+		private function add(view : View) : void 
 		{
+			view._up = this;
+			sprite.addChild( view.sprite );
 		}
 
+		public function after_render( request : Request ) : void
+		{
+			log.info( "Running..." );
+		}
+
+		/**
+		 * Destroy filter, if returns false, wont destroy
+		 */
 		public function before_destroy( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
-			//request;
+			request;
 			return true;
 		}
 

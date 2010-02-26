@@ -1,5 +1,6 @@
 package cocktail.lib.view 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
@@ -24,7 +25,7 @@ package cocktail.lib.view
 		
 		public var gunz_render_complete : Gun;
 
-		private var _rendering_group : GunzGroup;
+		private var _group_rendering : GunzGroup;
 
 		public var ids : Dictionary;
 
@@ -44,9 +45,6 @@ package cocktail.lib.view
 		
 		/** Last rendered request **/
 		private var _request : Request;
-
-		private var _after_render_views : *;
-
 		
 		public function ViewStack( view : View )
 		{
@@ -54,7 +52,7 @@ package cocktail.lib.view
 			_view = view;
 			
 			list = new DLinkedList( );
-			gunz_render_complete = new Gun( gunz, this, "render_complete" );
+			gunz_render_complete = new Gun( view.gunz, this, "render_complete" );
 			
 			WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE = false;
 		}
@@ -156,8 +154,8 @@ package cocktail.lib.view
 			var view : View;
 			
 			_request = request;
-			_rendering_group = new GunzGroup( );
-			_rendering_group.gunz_complete.add( _after_render );
+			_group_rendering = new GunzGroup( );
+			_group_rendering.gunz_complete.add( _after_render );
 			
 			//populating group	
 			node = list.head;
@@ -166,10 +164,10 @@ package cocktail.lib.view
 				view = node.data;
 				
 				if( _will_render[ view.identifier ] )
-					_rendering_group.add( view.gunz_render_done );
+					_group_rendering.add( view.gunz_render_done );
 				else
 					if( WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE )
-						_rendering_group.add( view.gunz_destroy_done );
+						_group_rendering.add( view.gunz_destroy_done );
 					
 				node = node.next;
 			}
@@ -193,10 +191,15 @@ package cocktail.lib.view
 		}
 
 		/**
-		 * Triggered after all the visual render process is done
+		 * Victim of _group_rendering
+		 * @see	ViewStack#render
+		 * //TODO: verify how docs will behave with this link to private
+		 * @see	ViewStack#_group_rendering
 		 */
 		private function _after_render() : void 
 		{
+			log.info( "Running..." );
+			
 			gunz_render_complete.shoot( new ViewBullet() );
 		}
 
@@ -205,17 +208,18 @@ package cocktail.lib.view
 		 */
 		public function create( xml_node : XML ) : View 
 		{
-			var view : View;
+			var created : View;
 			var path : String;
 			
-			path = view.root.name + '.' + xml_node.attribute( 'class' );
+			path = StringUtil.toUnderscore( view.root.name ) + '.';
+			path = path + '' + StringUtil.toCamel( xml_node.localName() );
 			
-			view = View( new ( _cocktail.factory.view( path ) ) );
-			view.boot( _cocktail );
-			view.identifier = xml_node.attribute( 'id' );
-			view.xml_node = xml_node;
+			created = View( new ( _cocktail.factory.view( path ) ) );
+			created.boot( _cocktail );
+			created.identifier = xml_node.localName();
+			created.xml_node = xml_node;
 			
-			return view;
+			return created;
 		}
 
 		/**
@@ -225,6 +229,7 @@ package cocktail.lib.view
 		{
 			return _view;
 		}
+
 
 		/** 
 		 * Last rendered request 
