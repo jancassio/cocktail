@@ -7,6 +7,7 @@ package cocktail.lib.base
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.lib.Controller;
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
@@ -37,6 +38,8 @@ package cocktail.lib.base
 		}
 
 		/* VARS */
+		internal var _controller : Controller;  
+		
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
 		/** Queue holders for loading shorcuts. */
