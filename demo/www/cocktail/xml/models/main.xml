@@ -5,7 +5,7 @@
 
 	<inline id="inline-test" inject="main,home" locale="pt">
 		<name>nybras</name>
-		<gender>25</gender>
+		<gender>male</gender>
 		<age>25</age>
 	</inline>
 
