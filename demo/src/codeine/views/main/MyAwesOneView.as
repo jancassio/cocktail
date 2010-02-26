@@ -5,7 +5,10 @@ package codeine.views.main
 	/**
 	 * @author hems | dev@henriquematias.com
 	 */
-	public class RectView extends AppView
+	public class MyAwesOneView extends AppView 
 	{
+		public function MyAwesOneView()
+		{
+		}
 	}
 }
