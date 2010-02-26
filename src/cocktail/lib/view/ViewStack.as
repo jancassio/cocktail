@@ -150,6 +150,8 @@ package cocktail.lib.view
 		 */
 		public function render( request : Request ) : void 
 		{
+			log.info( "Running..." );
+			
 			var node : DListNode;
 			var view : View;
 			

@@ -83,6 +83,11 @@ package cocktail.lib
 			var action_name: String;
 			var asset_id: String;
 			
+			if( !xml_node.hasOwnProperty( 'target' ) )
+			{
+				return cocktail.app;
+			}
+			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
 			controller_name = full_path[ 0 ].split( '/' )[ 0 ];
