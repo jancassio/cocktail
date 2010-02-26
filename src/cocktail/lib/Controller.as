@@ -166,6 +166,8 @@ package cocktail.lib
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
+			_load_layout( request );
+			return;
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 			else
@@ -185,22 +187,22 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			if( _layout.load( request ) )
-				_layout.gunz_load_complete.add( _after_load_layout, request );
-			else
+			_layout.gunz_load_complete.add( _after_load_layout, request );
+			
+			if( !_layout.load( request ) )
 			{
+				_layout.gunz_load_complete.rm( _after_load_layout );
 				//bullet = new LayoutBullet( );
 				//bullet.params = request;
 				//_after_load( bullet );
-				log.error( "dead end, needs to corret lines before this" );
+				log.error( "dead end" );
 			}
 		}
 
 		private function _after_load_layout( bullet : LayoutBullet ) : void
 		{
 			log.info( "Running..." );
-			if( _layout.load( bullet.params ) )
-				_layout.gunz_load_complete.add( _after_load );
+			render( bullet.params );
 		}
 
 		/* RENDERING */
