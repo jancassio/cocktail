@@ -1,7 +1,7 @@
 package cocktail.lib.view 
 {
-	import cocktail.core.request.Request;
 	import cocktail.core.Index;
+	import cocktail.core.request.Request;
 	import cocktail.lib.View;
 
 	import de.polygonal.ds.DLinkedList;
@@ -13,6 +13,8 @@ package cocktail.lib.view
 	public class ViewStack extends Index
 	{
 		public var ids : Object;
+		
+		/** Double linked list of view childs **/
 		public var list : DLinkedList;
 
 		/** 
@@ -22,10 +24,14 @@ package cocktail.lib.view
 		 */
 		private var _will_render : Object;
 
-		public function ViewStack()
+		/** The holder of the view stack **/
+		private var _view : View;
+
+		public function ViewStack( view: View )
 		{
 			ids = {};
 			list = new DLinkedList( );
+			_view = view;
 		}
 
 		/**
@@ -95,22 +101,24 @@ package cocktail.lib.view
 		}
 		
 		/**
-		 * Just mark the view as renderable
+		 * Mark the view as renderable
 		 */
-		public function add_to_render_pool( view: View ): View
+		public function mark_as_alive( view: View ): View
 		{
 			_will_render[ view.identifier ] = true;
 			
 			return view;
 		}
 
+		/**
+		 * Will execute render on alive views and destroy on dead views
+		 */
 		public function render( request: Request ) : void 
 		{
 			var node: DListNode;
 			var view: View;
 			
 			node = list.head;
-			
 			while ( node )
 			{
 				view = node.data;
@@ -119,8 +127,32 @@ package cocktail.lib.view
 					view.render( request );
 				else
 					view.destroy( request );
+					
 				node = node.next;
 			}
+			
+			//reset render flags
+			_will_render = {};
+		}
+
+		public function create( xml_node : XML ) : View 
+		{
+			var view: View;
+			var path: String;
+			
+			path = parent.root.name + '.' + xml_node.attribute( 'class' );
+			
+			view = View( new ( _cocktail.factory.view( path ) ) );
+			view.boot( _cocktail );
+			view.identifier = xml_node.attribute( 'id' );
+			view.xml_node = xml_node;
+			
+			return view;
+		}
+		
+		public function get parent() : View
+		{
+			return _view;
 		}
 	}
 }

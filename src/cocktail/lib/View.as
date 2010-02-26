@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
@@ -22,7 +23,7 @@ package cocktail.lib
 		public var node : DListNode;
 
 		/** Reference to the parent view container **/
-		private var up : View;
+		internal var _up : View;
 
 		/** When created trought xml, this will hold the xml node**/
 		private var _xml_node : XML;
@@ -30,12 +31,12 @@ package cocktail.lib
 		/** Current loading group **/ 
 		private var _loading_group : GunzGroup;
 
-		/**
-		 * Initializes the view
-		 */
-		public function init( id : String ) : void 
+		
+		override public function boot(cocktail : Cocktail) : * 
 		{
-			identifier = id;
+			_childs = new ViewStack( this );
+			
+			return super.boot( cocktail );
 		}
 
 		/**
@@ -74,9 +75,9 @@ package cocktail.lib
 			
 			if( !( assets = _parse_assets( request ) ).length )
 			{
-				var bullet: LayoutBullet;
+				var bullet : LayoutBullet;
 				
-				bullet = new LayoutBullet();
+				bullet = new LayoutBullet( );
 				bullet.params = request;
 				
 				new Timeout( _after_load_assets, 1, bullet );
@@ -87,19 +88,19 @@ package cocktail.lib
 				_loading_group.gunz_complete.add( _after_load_assets, request );
 
 				//TODO: use a lambda to run all selected assets				
-				do 
+				while( i++ < assets.length ) 
 				{
 					view = assets[ i ];
 					_loading_group.add( view.gunz_load_complete );
-				} while( ++i < assets.length );
+				}
 				
-				i = 0;
-				do 
+				i = 0; 
+				while( i++ < assets.length ) 
 				{
 					view = assets[ i ];
 					view.load( request );
-					childs.add_to_render_pool( view );
-				} while( ++i < assets.length );
+					childs.mark_as_alive( view );
+				}
 			}
 			
 			return true;
@@ -134,12 +135,12 @@ package cocktail.lib
 			
 			if( !list || !list.length( ) ) return assets;
 			
-			do 
+			while( i++ < list.length( ) )
 			{
 				node = list[i];
 					
 				assets.push( _instantiate_view( node ) );
-			} while( ++i < list.length( ) );
+			}
 			
 			return assets;
 		}
@@ -153,15 +154,14 @@ package cocktail.lib
 			bullet;
 			gunz_load_complete.shoot( new LayoutBullet( ) );
 		}
-		
+
 		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
 		 */
 		internal function _instantiate_view( xml_node : XML ) : View 
 		{
-			var view : View;
-			var path : String;
+			var view: View;
 			
 			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
@@ -171,23 +171,13 @@ package cocktail.lib
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
 			
-			if( childs.has( xml_node.attribute( 'id' ) ) ) 
+			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) = null ) 
 			{
+				childs.mark_as_alive( view );
 				return childs.by_id( xml_node.attribute( 'id' ) );
 			}
 			
-			path = root.name + '.' + xml_node.attribute( 'class' );
-			
-
-			log.info( path + ' will receive : ' + xml_node );
-			
-			view = View( new ( _cocktail.factory.view( path ) ) );
-			view.boot( _cocktail );
-			view.up = this;
-			view.identifier = xml_node.attribute( 'id' );
-			view.xml_node = xml_node;
-			
-			return view;
+			return childs.create( xml_node );
 		}
 
 		private function before_render( request : Request ) : Boolean 
@@ -201,9 +191,8 @@ package cocktail.lib
 		{
 			if( !before_render( request ) ) return false;
 			
+			childs.gunz_render_complete.add( after_render, request );
 			childs.render( request );
-			
-			after_render( request );
 			
 			return true;
 		}
@@ -234,7 +223,7 @@ package cocktail.lib
 		}
 
 		/** GETTERS / SETTERS **/
-		
+
 		public function get xml_node() : XML  
 		{
 			return _xml_node;
@@ -252,8 +241,12 @@ package cocktail.lib
 
 		public function get childs() : ViewStack
 		{
-			return _childs != null ? _childs : ( _childs = new ViewStack( ) );
+			return _childs;
 		}
-
+		
+		public function get up() : View
+		{
+			return _up;
+		}
 	}
 }
