@@ -28,8 +28,6 @@ package cocktail.core.slave.slaves
 			
 			_uri = uri;
 			
-			_init();
-			
 			if( auto_load )
 				load( );
 		}
@@ -104,8 +102,7 @@ package cocktail.core.slave.slaves
 			// updating status
 			_status = ASlave._LOADING;
             
-			if ( !_sound || !_request )
-				_init();
+			_init();
 			
 			_sound.load( _request );
 			
@@ -171,6 +168,7 @@ package cocktail.core.slave.slaves
 			
 			_sound = null;
 			_request = null;
+			_status = ASlave._QUEUED;
 			
 			return null;
 		}
