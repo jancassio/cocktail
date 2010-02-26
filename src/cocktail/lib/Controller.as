@@ -21,6 +21,8 @@ package cocktail.lib
 		/* GUNZ */
 		private var gunz_load_change_phase : Gun;
 
+		internal var process : Process;
+
 		private function _init_gunz() : void
 		{
 			log.info( "Running..." );
@@ -120,16 +122,6 @@ package cocktail.lib
 			 * 	
 			 */
 			_load_model( request );
-		}
-
-		/**
-		 * Called after loading needed data to render the request.
-		 */
-		private function _after_load( bullet : Bullet ) : void
-		{
-			log.info( "Running..." );
-			gunz_load_complete.shoot( new ControllerBullet( ) );
-			render( bullet.params ) ;
 		}
 
 		/* LOADING - SCHEME */
