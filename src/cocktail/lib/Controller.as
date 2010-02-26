@@ -169,26 +169,18 @@ package cocktail.lib
 		private function _after_load_model( bullet : ModelBullet ) : void
 		{
 			log.info( "Running..." );
+			
 			_load_layout( bullet.params );
 		}
 
 		/* LOADING - LAYOUT */
 		private function _load_layout( request : Request ) : void
 		{
-			var bullet : Bullet;
-			
 			log.info( "Running..." );
 			
 			_layout.gunz_load_complete.add( _after_load_layout, request );
 			
-			if( !_layout.load( request ) )
-			{
-				_layout.gunz_load_complete.rm( _after_load_layout );
-				//bullet = new LayoutBullet( );
-				//bullet.params = request;
-				//_after_load( bullet );
-				log.error( "dead end" );
-			}
+			_layout.load( request );
 		}
 
 		private function _after_load_layout( bullet : LayoutBullet ) : void
