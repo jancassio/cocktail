@@ -69,23 +69,28 @@ package cocktail.lib
 			return path;
 		}
 
-		private function get _target() : DisplayObjectContainer 
-		{
-			var full_path : Array;
-			
-			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
-			
-			controller( name )
-			//controller - full_path.split( '/' )[ 0 ]
-			//action - full_path.split( '/' )[ 1 ]
-			//asset - full_path[ 1 ]
-
-			return new DisplayObjectContainer( );
-		}
-
 		public function is_rendered( request : Request ) : Boolean
 		{
 			return childs.request == request; 
 		}
+		
+		/* PUBLIC GETTERS */
+		
+		public function get target() : DisplayObjectContainer 
+		{
+			var full_path : Array;
+			var controller_name: String;
+			var action_name: String;
+			var asset_id: String;
+			
+			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
+			
+			controller_name = full_path[ 0 ].split( '/' )[ 0 ];
+			action_name = full_path[ 0 ].split( '/' )[ 1 ];
+			asset_id = full_path[ 1 ];
+
+			return controller( name ).layout.childs.by_id( asset_id ).sprite;
+		}
+		
 	}
 }
