@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -14,6 +15,9 @@ package cocktail.lib
 	 */
 	public class Model extends MVL
 	{
+		/* GETTERS */
+		public var bind : Bind;
+
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
 		/**
@@ -97,17 +101,17 @@ package cocktail.lib
 			
 			return true;
 		}
-		
+
 		public function _after_load( ...n /* bullet : Bullet */ ) : void
 		{
 			log.info( "Running..." );
-			gunz_load_complete.shoot( new ModelBullet() );
+			gunz_load_complete.shoot( new ModelBullet( ) );
 		}
-		
+
 		public function after_load( ...n /* request : Request */ ) : void
 		{
 			log.info( "Running..." );
-			gunz_load_complete.shoot( new ModelBullet() );
+			gunz_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		/**
@@ -130,7 +134,7 @@ package cocktail.lib
 			do
 			{
 				node = _scheme.children( )[ i ];
-				inject = ( node.inject.@actions + "," );
+				inject = ( node.@inject + "," );
 				if( inject == "*," || inject.indexOf( action + "," ) > 0 )
 					ds.push( _instantiate_datasource( node ) );
 			} while( ++i < _scheme.length( ) );
@@ -143,12 +147,15 @@ package cocktail.lib
 		 * @param node	XML Scheme representation of the Datasource to be
 		 * instantiated.
 		 */
-		private function _instantiate_datasource( node : XML ) : ADataSource
+		private function _instantiate_datasource( scheme : XML ) : ADataSource
 		{
 			log.info( "Running..." );
 			var ds : ADataSource;
+			var name : String;
 			
-			ds = new ( _cocktail.factory.datasource( node.@type ) )( node );
+			name = scheme.localName( );
+			
+			ds = new ( _cocktail.factory.datasource( name ) )( this, scheme );
 			ds.boot( _cocktail );
 			
 			return ds;
