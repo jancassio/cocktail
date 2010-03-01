@@ -7,12 +7,15 @@ package cocktail.lib.base
 	/**
 	 * @author nybras | me@nybras.com
 	 */
-	public class MVCL extends Index 
+	public class MVC extends Index 
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
 		public var gunz_load_progress : Gun; 
 		public var gunz_load_complete : Gun; 
+
+		/*Clean class name */
+		private var _name : String;
 
 		private function _init_gunz() : void
 		{
@@ -25,12 +28,22 @@ package cocktail.lib.base
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var s : *;
+			var regexp : RegExp;
 			
 			s = super.boot( cocktail );
 			
 			_init_gunz( );
 			
+			regexp = /(Model|View|Controller|Layout$)/;
+			_name = classname.replace( regexp, '' );
+			
 			return s;
+		}
+		
+		/*Clean class name */
+		public function get name(): String
+		{
+			return _name;
 		}
 	}
 }

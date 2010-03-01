@@ -1,6 +1,5 @@
 package cocktail.core.slave.slaves 
 {
-	import cocktail.core.slave.gunz.TextSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -58,7 +57,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new TextSlaveBullet( loaded, total ) );
+			gunz_start.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -67,7 +66,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _progress( ev : ProgressEvent ) : void
 		{
-			gunz_progress.shoot( new TextSlaveBullet( loaded, total ) );
+			gunz_progress.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -79,13 +78,8 @@ package cocktail.core.slave.slaves
 			// updating status
 			_status = ASlave._LOADED;
 			
-			_loader.removeEventListener( Event.OPEN, _start );
-			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader.removeEventListener( Event.COMPLETE, _complete );
-			_loader.removeEventListener( IOErrorEvent.IO_ERROR, _error );
-			
 			// pull the trigger
-			gunz_complete.shoot( new TextSlaveBullet( loaded, total, _loader.data ) );
+			gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**

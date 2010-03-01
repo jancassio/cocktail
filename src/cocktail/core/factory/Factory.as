@@ -1,6 +1,7 @@
 package cocktail.core.factory 
 {
 	import cocktail.core.Index;
+	import cocktail.lib.view.assets.AAsset;
 	import cocktail.utils.StringUtil;
 
 	import flash.utils.getDefinitionByName;
@@ -41,8 +42,6 @@ package cocktail.core.factory
 			return Class( getDefinitionByName( classpath ) );
 		}
 
-		/* MODEL, VIEW, LAYOUT AND CONTROLLER EVALUATIONS */
-		
 		/**
 		 * Evaluates classes for Model, View, Controller and Layout.
 		 * @param folder	Class folder name.
@@ -125,8 +124,6 @@ package cocktail.core.factory
 			return evaluate( "cocktail.lib.View" );
 		}
 
-		/* DATASOURCES EVALUATION */
-		
 		/**
 		 * Evaluates the desired DataSource class based on the given type.
 		 * @param type	Datasource type to be evaluated.
@@ -141,5 +138,6 @@ package cocktail.core.factory
 			
 			return evaluate( path );
 		}
+
 	}
 }

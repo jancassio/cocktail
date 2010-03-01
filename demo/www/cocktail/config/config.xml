@@ -29,9 +29,7 @@
 	
 	<!--  ROUTES -->
 	<routes>
-		<route mask="lets/take/a/look/*" target="main/index/$2/$1/$0"/>
-		<route mask="lets/edit/*" target="main/edit/$1/$0"/>
-		<route mask="ok/its/ok/delete/it/*" target="main/del/$2/$2/$2"/>
+		<route mask="cocktail-demo/*" target="main/home/"/>
 	</routes>
 	
 	

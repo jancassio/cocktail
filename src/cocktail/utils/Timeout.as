@@ -11,7 +11,7 @@ package cocktail.utils
 		private var _timer : Timer;
 		private var _handler : Function;
 		private var _params : *;
-		
+
 		public function Timeout(
 			handler : Function,
 			delay : int,
@@ -52,7 +52,10 @@ package cocktail.utils
 
 		private function _complete(event : TimerEvent) : void
 		{
-			_handler.apply( _handler.prototype, [].concat( _params ) );
+			if( _params == null )
+				_handler( );
+			else
+				_handler.apply( _handler.prototype, [].concat( _params ) );
 			_destroy( );
 		}
 	}

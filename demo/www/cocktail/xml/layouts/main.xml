@@ -1,4 +1,10 @@
 <layout>
-	<action id="base" require="base.xml" />
-	<action id="home" require="home.xml" target="main/base:clip_holder" />
-<layout>
+	<action id="base" require="base.xml">
+		<sprite id="clip_holder" />
+	</action>
+	
+	<action id="home" require="home.xml" >
+		<my_awesome id="awesome" x="50" y="50" />
+		<another_one id="another" x="200" y="200" />
+	</action>
+</layout>

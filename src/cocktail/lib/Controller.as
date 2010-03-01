@@ -1,24 +1,35 @@
 package cocktail.lib 
 {
 	import cocktail.Cocktail;
+	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
-	import cocktail.core.process.Process;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVCL;
+	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
-	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
+	import cocktail.lib.gunz.ViewBullet;
 
 	/**
 	 * @author hems
 	 * @author nybras
 	 */
-	public class Controller extends MVCL
+	public class Controller extends MVC
 	{
 		/* GUNZ */
 		private var gunz_load_change_phase : Gun;
+
+		/** Each render, this flag turns true.
+		 * If your action turns this to false, _layout_render wont occur
+		 */
+		private var _auto_render : Boolean;
+
+		/**
+		 * Last runned _request. 
+		 * ATTENTION: Doesnt means the request is rendered
+		 */
+		private var _request : Request;
 
 		private function _init_gunz() : void
 		{
@@ -26,11 +37,18 @@ package cocktail.lib
 			gunz_load_change_phase = new Gun( gunz, this, "load_change_phase" );
 		}
 
-		/* VARS */
+		/* Quite explainatory name, huh? */
 		private var _model : Model;
+
+		/* Quite explainatory name, huh? */
 		private var _layout : Layout;
+
 		private var _group : GunzGroup;
+
+		/** Has model and view loaded theirs schemes? **/
 		private var _is_scheme_loaded : Boolean;
+
+		internal var _bind : Bind;
 
 		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
@@ -47,6 +65,7 @@ package cocktail.lib
 			
 			_model = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
+			_bind = new Bind( );
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
@@ -71,9 +90,13 @@ package cocktail.lib
 		 */
 		final public function run( request : Request ) : void
 		{
+			if( !before_run( request ) ) return;
+			
 			log.info( "Running..." );
-			if( before_run( request ) )
-				_load( request );
+			
+			_request = request;
+			
+			_load( request );
 		}
 
 		/* LOADING */
@@ -90,14 +113,13 @@ package cocktail.lib
 
 		/**
 		 * Load Model and Layout.
-		 * @param process	Process to load. 
+		 * @param request	Process to load. 
 		 */
 		private function _load( request : Request ) : void
 		{
-			log.info( "Running..." );
+			if( !before_load( request ) ) return;
 			
-			if( !before_load( request ) )
-				return;
+			log.info( "Running..." );
 			
 			if( !_is_scheme_loaded ) 
 			{
@@ -106,17 +128,13 @@ package cocktail.lib
 				return;
 			}
 			
+			/*
+			 * 
+			_layout.load( request );
+			return;
+			 * 	
+			 */
 			_load_model( request );
-		}
-
-		/**
-		 * Called after loading needed data to render the request.
-		 */
-		private function _after_load( bullet : Bullet ) : void
-		{
-			log.info( "Running..." );
-			gunz_load_complete.shoot( new ControllerBullet( ) );
-			render( bullet.params ) ;
 		}
 
 		/* LOADING - SCHEME */
@@ -152,6 +170,12 @@ package cocktail.lib
 		/* LOADING - MODEL */
 		private function _load_model( request : Request ) : void
 		{
+			log.info( "Running..." );
+			
+			//FIXME: Remove this hardcoded call to load layout, and let the code flow
+			_load_layout( request );
+			return;
+			
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
 			else
@@ -160,28 +184,26 @@ package cocktail.lib
 
 		private function _after_load_model( bullet : ModelBullet ) : void
 		{
+			log.info( "Running..." );
+			
 			_load_layout( bullet.params );
 		}
 
 		/* LOADING - LAYOUT */
 		private function _load_layout( request : Request ) : void
 		{
-			var bullet : Bullet;
+			log.info( "Running..." );
 			
-			if( _layout.load( request ) )
-				_layout.gunz_load_complete.add( _after_load_layout, request );
-			else
-			{
-				bullet = new LayoutBullet( );
-				bullet.params = request;
-				_after_load( bullet );
-			}
+			_layout.gunz_load_complete.add( _after_load_layout, request );
+			
+			_layout.load( request );
 		}
 
-		private function _after_load_layout( bullet : LayoutBullet ) : void
+		private function _after_load_layout( bullet : ViewBullet ) : void
 		{
-			if( _layout.load( bullet.params ) )
-				_layout.gunz_load_complete.add( _after_load );
+			log.info( "Running..." );
+			
+			render( bullet.params );
 		}
 
 		/* RENDERING */
@@ -189,33 +211,49 @@ package cocktail.lib
 		/**
 		 * Rendering filter. If returns false, wont render.
 		 */
-		public function before_render( process : Process ) : Boolean
+		public function before_render( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
-			process;
+			request;
 			return true;
 		}
 
 		/**
-		 * Called after render process completes.
+		 * Called after render request completes.
 		 */
-		public function render( process : Process ) : void
+		public function render( request : Request ) : void
 		{
+			if( !before_render( request ) ) return;
+			
 			log.info( "Running..." );
-			if( before_render( process ) )
+			
+			_auto_render = true;
+			
+			//_auto_render
+			if( is_defined( request.route.api.action ) )
 			{
-				_layout.gunz_render_complete.add( after_render, process );
-				_layout.render( process );
+				this[ request.route.api.action ]( ); 
 			}
+			
+			if( _auto_render == false ) return;
+			_layout.gunz_render_done.add( after_render, request ).once( );
+			_layout.render( request );
 		}
 
 		/**
-		 * Called after render process completes.
+		 * Called after render request completes.
 		 */
-		public function after_render( process : Process ) : void
+		public function after_render( request : Request ) : void
 		{
 			log.info( "Running..." );
-			process;
+			request;
+		}
+		
+		/** GETTERS **/
+		
+		public function get layout() : Layout
+		{
+			return _layout;
 		}
 	}
 }

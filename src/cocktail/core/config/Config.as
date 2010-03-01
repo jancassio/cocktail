@@ -100,7 +100,7 @@ package cocktail.core.config
 		 */
 		private function get _config_path() : String
 		{
-			return	( (	plugin ? "" : "." ) + "./cocktail/config/config.fxml" + "?v=" + Math.random( )
+			return	( (	plugin ? "" : "." ) + "./cocktail/config/config.xml" + "?v=" + Math.random( )
 					);
 		}
 

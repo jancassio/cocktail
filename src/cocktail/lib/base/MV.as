@@ -7,15 +7,17 @@ package cocktail.lib.base
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.lib.Controller;
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
 	 * some another core functionality usefull only for these classes.
 	 */
-	public class MVL extends MVCL
+	public class MV extends MVC
 	{
 		/* GUNZ */
 		public var gunz_scheme_load_start : Gun; 
+
 		public var gunz_scheme_load_complete : Gun; 
 
 		private function _init_gunz() : void
@@ -37,10 +39,15 @@ package cocktail.lib.base
 		}
 
 		/* VARS */
+		internal var _controller : Controller;  
+		
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
+
 		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;
+
+		/** Quite explainatory name, huh? **/
 		private var _is_queue_opened : Boolean;
 
 		/**
@@ -88,6 +95,15 @@ package cocktail.lib.base
 				ISlave( slave ).load( );
 			
 			return slave;
+		}
+
+		/**
+		 * Returns a controller instance by name 
+		 * ( unique per cocktail instance )
+		 */
+		public function controller( name : String ) : Controller
+		{
+			return _cocktail.processes.controller( name );
 		}
 	}
 }

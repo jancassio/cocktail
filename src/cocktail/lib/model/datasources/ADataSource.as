@@ -3,13 +3,14 @@ package cocktail.lib.model.datasources
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
+	import cocktail.lib.Model;
 
 	public class ADataSource extends Index
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
 		public var gunz_load_progress : Gun; 
-		public var gunz_load_complete : Gun; 
+		public var gunz_load_complete : Gun;
 
 		private function _init_gunz() : void
 		{
@@ -19,8 +20,16 @@ package cocktail.lib.model.datasources
 		}
 
 		/* VARS */
+		public var id : String; 
+		public var inject : String; 
+		public var locale : String; 
+		public var src : String; 
 		
-		public var raw : *;
+		protected var _raw : *;
+		protected var _model : Model;
+		protected var _scheme : XML; 
+		
+		protected var _binds : XMLList;
 		
 		
 		
@@ -31,46 +40,21 @@ package cocktail.lib.model.datasources
 			
 			s = super.boot( cocktail );
 			_init_gunz( );
-						return s;
-		}
-
-		public function ADataSource()
+			
+			return s;		}
+		
+		public function ADataSource( model : Model, scheme : XML = null )
 		{
-		}
-
-		public function load() : ADataSource
-		{
-			_after_load;
-			return this;
-		}
-
-		private function _after_load() : void
-		{
-			// ...
+			_model = model;
+			_scheme = scheme;
 		}
 		
-//		/**
-//		 * Loads the data source.
-//		 */
-//		public function load() : IDataSource
-//		{
-////			raw = info.children();
-////			return this;
-//		}
-//		
-//		
-//		
-//		/* ---------------------------------------------------------------------
-//			CACHING & PLUGGING
-//		--------------------------------------------------------------------- */
-//		
-//		/**
-//		 * Caches the loaded data into the <code>raw</code> property.
-//		 */
-//		private function load_complete ( event : RequestEvent = null ) : void
-//		{
-//			plug();
-//			dispatch( Event.COMPLETE );
-//		}
+		/* LOADING */
+		
+		public function load() : ADataSource
+		{
+			log.fatal( "You need to override the 'ADataSource.load' method" );
+			return this;
+		}
 	}
 }

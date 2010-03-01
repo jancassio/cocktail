@@ -325,12 +325,11 @@ package cocktail.core.slave
 		
 		public function unload() : ISlave
 		{
-			
 			var i : DListIterator;
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				DListNode( i.next( ) ).data[ "load" ]( );
+				DListNode( i.next( ) ).data[ "unload" ]( );
 			
 			return this;
 		}

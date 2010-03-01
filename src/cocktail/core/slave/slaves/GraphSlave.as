@@ -64,7 +64,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new GraphSlaveBullet( loaded, total ) );
+			gunz_start.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -73,7 +73,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _progress( ev : ProgressEvent ) : void
 		{
-			gunz_progress.shoot( new GraphSlaveBullet( loaded, total ) );
+			gunz_progress.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
