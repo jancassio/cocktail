@@ -1,7 +1,5 @@
 package cocktail.lib 
 {
-	import cocktail.Cocktail;
-	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
@@ -11,28 +9,6 @@ package cocktail.lib
 
 	public class Layout extends View 
 	{
-		/* GUNZ */
-		public var gunz_render_complete : Gun;
-
-		private function _init_gunz() : void 
-		{
-			gunz_render_complete = new Gun( gunz, this, "render_complete" );
-		}
-
-		/* INITIALIZING */
-		
-		/**
-		 * 
-		 */
-		override public function boot( cocktail : Cocktail ) : * 
-		{
-			var s : *;
-		
-			s = super.boot( cocktail );
-			_init_gunz( );
-			
-			return s;
-		}
 
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
@@ -76,12 +52,7 @@ package cocktail.lib
 			return true;
 		}
 
-		/* GETTERS */
-
-		public function get name() : String
-		{
-			return classname.toLowerCase().replace("layout", "");
-		}
+		/* PRIVATE GETTERS */
 
 		/**
 		 * Evaluates the path for the xml file.
@@ -98,17 +69,33 @@ package cocktail.lib
 			return path;
 		}
 
-		private function get _target() : DisplayObjectContainer 
+		public function is_rendered( request : Request ) : Boolean
+		{
+			return childs.request == request; 
+		}
+		
+		/* PUBLIC GETTERS */
+		
+		public function get target() : DisplayObjectContainer 
 		{
 			var full_path : Array;
+			var controller_name: String;
+			var action_name: String;
+			var asset_id: String;
+			
+			if( !xml_node.hasOwnProperty( 'target' ) )
+			{
+				return cocktail.app;
+			}
 			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
-			//controller - full_path.split( '/' )[ 0 ]
-			//action - full_path.split( '/' )[ 1 ]
-			//asset - full_path[ 1 ]
+			controller_name = full_path[ 0 ].split( '/' )[ 0 ];
+			action_name = full_path[ 0 ].split( '/' )[ 1 ];
+			asset_id = full_path[ 1 ];
 
-			return new DisplayObjectContainer( );
+			return controller( name ).layout.childs.by_id( asset_id ).sprite;
 		}
+		
 	}
 }

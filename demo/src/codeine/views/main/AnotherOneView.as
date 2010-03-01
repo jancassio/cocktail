@@ -5,10 +5,7 @@ package codeine.views.main
 	/**
 	 * @author hems | dev@henriquematias.com
 	 */
-	public class BallView extends AppView 
+	public class AnotherOneView extends AppView
 	{
-		public function BallView()
-		{
-		}
 	}
 }

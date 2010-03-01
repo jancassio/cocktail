@@ -3,9 +3,8 @@
 		<sprite id="clip_holder" />
 	</action>
 	
-	<action id="home" require="home.xml" target="main/base:clip_holder">
-		<sprite id="rect" class="Rect" x="50" y="50">
-		</sprite>
-		<movie_clip id="ball" class="Ball" radius="100" />
+	<action id="home" require="home.xml" >
+		<my_awesome id="awesome" x="50" y="50" />
+		<another_one id="another" x="200" y="200" />
 	</action>
 </layout>

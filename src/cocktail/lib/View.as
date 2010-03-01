@@ -1,17 +1,28 @@
 package cocktail.lib 
 {
+	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
+	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MV;
-	import cocktail.lib.gunz.LayoutBullet;
+	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.view.ViewStack;
 	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
+	import flash.display.Sprite;
+
 	public class View extends MV 
 	{
+
+		/* GUNZ */
+		public var gunz_render_done : Gun;
+
+		/* GUNZ */
+		public var gunz_destroy_done : Gun;
+
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
 
@@ -22,7 +33,7 @@ package cocktail.lib
 		public var node : DListNode;
 
 		/** Reference to the parent view container **/
-		private var up : View;
+		internal var _up : View;
 
 		/** When created trought xml, this will hold the xml node**/
 		private var _xml_node : XML;
@@ -30,12 +41,31 @@ package cocktail.lib
 		/** Current loading group **/ 
 		private var _loading_group : GunzGroup;
 
-		/**
-		 * Initializes the view
-		 */
-		public function init( id : String ) : void 
+		/** View sprite **/
+		public var sprite: Sprite;
+		
+		private function _init_gunz() : void 
 		{
-			identifier = id;
+			gunz_render_done  = new Gun( gunz, this, "render_done" );
+			gunz_destroy_done = new Gun( gunz, this, "destroy_done" );
+		}
+
+		/* INITIALIZING */
+		
+		/**
+		 * 
+		 */
+		override public function boot( cocktail : Cocktail ) : * 
+		{
+			var s : *;
+		
+			s = super.boot( cocktail );
+			
+			_init_gunz( );
+			
+			_childs = new ViewStack( this );
+			_childs.boot( cocktail );
+			return s;
 		}
 
 		/**
@@ -74,9 +104,9 @@ package cocktail.lib
 			
 			if( !( assets = _parse_assets( request ) ).length )
 			{
-				var bullet: LayoutBullet;
+				var bullet : ViewBullet;
 				
-				bullet = new LayoutBullet();
+				bullet = new ViewBullet( );
 				bullet.params = request;
 				
 				new Timeout( _after_load_assets, 1, bullet );
@@ -93,13 +123,15 @@ package cocktail.lib
 					_loading_group.add( view.gunz_load_complete );
 				} while( ++i < assets.length );
 				
-				i = 0;
+				
+				i = 0; 
 				do 
 				{
 					view = assets[ i ];
 					view.load( request );
-					childs.add_to_render_pool( view );
+					childs.mark_as_alive( view );
 				} while( ++i < assets.length );
+				
 			}
 			
 			return true;
@@ -134,12 +166,13 @@ package cocktail.lib
 			
 			if( !list || !list.length( ) ) return assets;
 			
-			do 
+			do
 			{
 				node = list[i];
 					
 				assets.push( _instantiate_view( node ) );
 			} while( ++i < list.length( ) );
+			
 			
 			return assets;
 		}
@@ -151,9 +184,9 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			bullet;
-			gunz_load_complete.shoot( new LayoutBullet( ) );
+			gunz_load_complete.shoot( new ViewBullet( ) );
 		}
-		
+
 		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
@@ -161,7 +194,6 @@ package cocktail.lib
 		internal function _instantiate_view( xml_node : XML ) : View 
 		{
 			var view : View;
-			var path : String;
 			
 			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
@@ -171,23 +203,13 @@ package cocktail.lib
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
 			
-			if( childs.has( xml_node.attribute( 'id' ) ) ) 
+			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) != null ) 
 			{
+				childs.mark_as_alive( view );
 				return childs.by_id( xml_node.attribute( 'id' ) );
 			}
 			
-			path = root.name + '.' + xml_node.attribute( 'class' );
-			
-
-			log.info( path + ' will receive : ' + xml_node );
-			
-			view = View( new ( _cocktail.factory.view( path ) ) );
-			view.boot( _cocktail );
-			view.up = this;
-			view.identifier = xml_node.attribute( 'id' );
-			view.xml_node = xml_node;
-			
-			return view;
+			return childs.create( xml_node );
 		}
 
 		private function before_render( request : Request ) : Boolean 
@@ -201,6 +223,19 @@ package cocktail.lib
 		{
 			if( !before_render( request ) ) return false;
 			
+			log.info( "Running..." );
+			
+			if( !sprite )
+			{
+				sprite = new Sprite();
+				
+				if( this is Layout )
+					Layout( this ).target.addChild( sprite );
+				else
+					up.add( this );
+			}
+			
+			
 			childs.render( request );
 			
 			after_render( request );
@@ -208,10 +243,20 @@ package cocktail.lib
 			return true;
 		}
 
-		public function after_render( request : Request ) : void
+		private function add(view : View) : void 
 		{
+			view._up = this;
+			sprite.addChild( view.sprite );
 		}
 
+		public function after_render( request : Request ) : void
+		{
+			log.info( "Running..." );
+		}
+
+		/**
+		 * Destroy filter, if returns false, wont destroy
+		 */
 		public function before_destroy( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
@@ -222,6 +267,7 @@ package cocktail.lib
 		public function destroy( request : Request ) : Boolean 
 		{
 			if( !before_destroy( request ) ) return false;
+			
 			log.info( "Running..." );
 			
 			return true;
@@ -234,7 +280,7 @@ package cocktail.lib
 		}
 
 		/** GETTERS / SETTERS **/
-		
+
 		public function get xml_node() : XML  
 		{
 			return _xml_node;
@@ -252,8 +298,12 @@ package cocktail.lib
 
 		public function get childs() : ViewStack
 		{
-			return _childs != null ? _childs : ( _childs = new ViewStack( ) );
+			return _childs;
 		}
 
+		public function get up() : View
+		{
+			return _up;
+		}
 	}
 }

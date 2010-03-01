@@ -8,8 +8,8 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
-	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ModelBullet;
+	import cocktail.lib.gunz.ViewBullet;
 
 	/**
 	 * @author hems
@@ -20,20 +20,34 @@ package cocktail.lib
 		/* GUNZ */
 		private var gunz_load_change_phase : Gun;
 
+		/** Each render, this flag turns true.
+		 * If your action turns this to false, _layout_render wont occur
+		 */
+		private var _auto_render : Boolean;
+
+		/**
+		 * Last runned _request. 
+		 * ATTENTION: Doesnt means the request is rendered
+		 */
+		private var _request : Request;
+
 		private function _init_gunz() : void
 		{
 			log.info( "Running..." );
 			gunz_load_change_phase = new Gun( gunz, this, "load_change_phase" );
 		}
 
-		/* VARS */
+		/* Quite explainatory name, huh? */
 		private var _model : Model;
 
+		/* Quite explainatory name, huh? */
 		private var _layout : Layout;
 
 		private var _group : GunzGroup;
 
+		/** Has model and view loaded theirs schemes? **/
 		private var _is_scheme_loaded : Boolean;
+
 		internal var _bind : Bind;
 
 		/* BOOTING */
@@ -51,7 +65,7 @@ package cocktail.lib
 			
 			_model = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
-			_bind = new Bind();
+			_bind = new Bind( );
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
@@ -80,6 +94,8 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
+			_request = request;
+			
 			_load( request );
 		}
 
@@ -97,7 +113,7 @@ package cocktail.lib
 
 		/**
 		 * Load Model and Layout.
-		 * @param process	Process to load. 
+		 * @param request	Process to load. 
 		 */
 		private function _load( request : Request ) : void
 		{
@@ -183,9 +199,10 @@ package cocktail.lib
 			_layout.load( request );
 		}
 
-		private function _after_load_layout( bullet : LayoutBullet ) : void
+		private function _after_load_layout( bullet : ViewBullet ) : void
 		{
 			log.info( "Running..." );
+			
 			render( bullet.params );
 		}
 
@@ -194,33 +211,49 @@ package cocktail.lib
 		/**
 		 * Rendering filter. If returns false, wont render.
 		 */
-		public function before_render( process : Request ) : Boolean
+		public function before_render( request : Request ) : Boolean
 		{
 			log.info( "Running..." );
-			process;
+			request;
 			return true;
 		}
 
 		/**
-		 * Called after render process completes.
+		 * Called after render request completes.
 		 */
-		public function render( process : Request ) : void
+		public function render( request : Request ) : void
 		{
-			if( !before_render( process ) ) return;
+			if( !before_render( request ) ) return;
 			
 			log.info( "Running..." );
 			
-			_layout.gunz_render_complete.add( after_render, process );
-			_layout.render( process );
+			_auto_render = true;
+			
+			//_auto_render
+			if( is_defined( request.route.api.action ) )
+			{
+				this[ request.route.api.action ]( ); 
+			}
+			
+			if( _auto_render == false ) return;
+			_layout.gunz_render_done.add( after_render, request ).once( );
+			_layout.render( request );
 		}
 
 		/**
-		 * Called after render process completes.
+		 * Called after render request completes.
 		 */
-		public function after_render( process : Request ) : void
+		public function after_render( request : Request ) : void
 		{
 			log.info( "Running..." );
-			process;
+			request;
+		}
+		
+		/** GETTERS **/
+		
+		public function get layout() : Layout
+		{
+			return _layout;
 		}
 	}
 }

@@ -139,17 +139,5 @@ package cocktail.core.factory
 			return evaluate( path );
 		}
 
-		public function asset( node : XML ) : Class 
-		{
-			var path : String;
-			
-			path = "cocktail.lib.view.assets.";
-			path += StringUtil.ucasef( '' );
-			path += "DataSource";
-			
-			trace( node.localName() );
-			
-			return AAsset;
-		}
 	}
 }
