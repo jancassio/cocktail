@@ -154,7 +154,7 @@ package cocktail.lib
 			
 			list = xml_node.children( );
 			
-			if( !list || !list.length( ) ) return assets;
+			if( list == null || !list.length( ) ) return assets;
 			
 			do
 			{
