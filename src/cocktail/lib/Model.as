@@ -1,11 +1,9 @@
 package cocktail.lib 
 {
-	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
-	import cocktail.lib.base.MV;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.model.datasources.ADataSource;
 
@@ -15,9 +13,6 @@ package cocktail.lib
 	 */
 	public class Model extends MV
 	{
-		/* GETTERS */
-		public var bind : Bind;
-
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
 		/**
@@ -152,7 +147,6 @@ package cocktail.lib
 			log.info( "Running..." );
 			var ds : ADataSource;
 			var name : String;
-			
 			name = scheme.localName( );
 			
 			ds = new ( _cocktail.factory.datasource( name ) )( this, scheme );

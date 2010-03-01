@@ -1,13 +1,14 @@
-package cocktail.lib.base 
+package cocktail.lib 
 {
 	import cocktail.Cocktail;
+	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
-	import cocktail.lib.Controller;
+	
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
@@ -49,6 +50,7 @@ package cocktail.lib.base
 
 		/** Quite explainatory name, huh? **/
 		private var _is_queue_opened : Boolean;
+		
 
 		/**
 		 * 
@@ -104,6 +106,13 @@ package cocktail.lib.base
 		public function controller( name : String ) : Controller
 		{
 			return _cocktail.processes.controller( name );
+		}
+		
+		/* GETTERS */
+		
+		public function get bind() : Bind
+		{
+			return _controller._bind;
 		}
 	}
 }

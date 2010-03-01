@@ -5,7 +5,7 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MV;
+	
 	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.view.ViewStack;
 	import cocktail.utils.Timeout;
