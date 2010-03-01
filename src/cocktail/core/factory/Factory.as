@@ -1,7 +1,6 @@
 package cocktail.core.factory 
 {
 	import cocktail.core.Index;
-	import cocktail.lib.view.assets.AAsset;
 	import cocktail.utils.StringUtil;
 
 	import flash.utils.getDefinitionByName;
@@ -13,6 +12,22 @@ package cocktail.core.factory
 	 */
 	public class Factory extends Index
 	{
+		public static const VIEWS : String = "views";
+
+		public static const LAYOUTS : String = "layouts";
+
+		public static const MODELS : String = "models";
+
+		public static const CONTROLLERS : String = "controllers";
+
+		public static const VIEW_SUFIX : String = 'View';
+
+		public static const LAYOUT_SUFIX : String = 'Layout';
+
+		public static const MODEL_SUFIX : String = 'Model';
+
+		public static const COONTROLLER_SUFIX : String = 'Controller';
+
 		/* ERROR MESSAGE TEMPLATE */
 		
 		/**
@@ -65,10 +80,10 @@ package cocktail.core.factory
 		{
 			try
 			{
-				return _mvcl( "controllers", name + "Controller" );
+				return _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
 			} catch( e : Error )
 			{
-				log.warn( _m( name, "Controller" ) );
+				log.warn( _m( name, COONTROLLER_SUFIX ) );
 			}
 			return evaluate( "cocktail.lib.Controller" );
 		}
@@ -82,10 +97,10 @@ package cocktail.core.factory
 		{
 			try
 			{
-				return _mvcl( "models", name + "Model" );
+				return _mvcl( MODELS, name + MODEL_SUFIX );
 			} catch( e : Error )
 			{
-				log.warn( _m( name, "Model" ) );
+				log.warn( _m( name, MODEL_SUFIX ) );
 			}
 			return evaluate( "cocktail.lib.Model" );
 		}
@@ -99,10 +114,10 @@ package cocktail.core.factory
 		{
 			try
 			{
-				return _mvcl( "layouts", name + "Layout" );
+				return _mvcl( LAYOUTS, name + LAYOUT_SUFIX );
 			} catch( e : Error )
 			{
-				log.warn( _m( name, "Layout" ) );
+				log.warn( _m( name, LAYOUT_SUFIX ) );
 			}
 			return evaluate( "cocktail.lib.Layout" );
 		}
@@ -116,10 +131,10 @@ package cocktail.core.factory
 		{
 			try
 			{
-				return _mvcl( "views", name + "View" );
+				return _mvcl( VIEWS, name + VIEW_SUFIX );
 			} catch( e : Error )
 			{
-				log.warn( _m( name, "View" ) );
+				log.warn( _m( name, VIEW_SUFIX ) );
 			}
 			return evaluate( "cocktail.lib.View" );
 		}
@@ -138,6 +153,5 @@ package cocktail.core.factory
 			
 			return evaluate( path );
 		}
-
 	}
 }

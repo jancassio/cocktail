@@ -20,7 +20,7 @@ package codeine.views.main
 			log.info( "Running..." );
 			
 			sprite.graphics.beginFill( 0xFF0000 );
-			sprite.graphics.drawCircle( 50, 50, 50 );
+			sprite.graphics.drawCircle( 0, 0, 50 );
 			sprite.graphics.endFill();
 			
 			cocktail.app.addChild( sprite );
