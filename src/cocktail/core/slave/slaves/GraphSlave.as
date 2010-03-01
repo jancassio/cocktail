@@ -37,23 +37,13 @@ package cocktail.core.slave.slaves
 		 * will start loading immediatelly, otherwise <code>false</code> you'll
 		 * need to call the "load" method to start the loading process.
 		 */
-		public function GraphSlave(
-			uri : String,
-			auto_load : Boolean = false
-		) : void
+		public function GraphSlave() : void
 		{
-			super( uri );
-			
 			_loader_info = ( _loader = new Loader( ) ).contentLoaderInfo;
 			_loader_info.addEventListener( Event.OPEN, _start );
 			_loader_info.addEventListener( ProgressEvent.PROGRESS, _progress );
 			_loader_info.addEventListener( Event.INIT, _complete );
 			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
-			
-			_request = new URLRequest( uri );
-			
-			if( auto_load )
-				load( );
 		}
 
 		/* LISTENERS */
@@ -178,6 +168,8 @@ package cocktail.core.slave.slaves
 		{
 			if( _status != ASlave._QUEUED )
 				return this;
+			
+			_request = new URLRequest( uri );
 			
 			// updating status
 			_status = ASlave._LOADING;

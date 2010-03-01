@@ -34,17 +34,8 @@ package cocktail.core.slave.slaves
 		 * @param auto_load If true, the load is started automatically.
 		 * @param target The video target to render the stream.
 		 */
-		public function VideoSlave(
-			uri : String,
-			auto_load : Boolean = false,
-			target : Video = null
-		) : void
+		public function VideoSlave() : void
 		{
-			super( uri );
-			
-			if( target )
-				put( target );
-			
 			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
 			_progress_timer.stop();
 			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
@@ -56,9 +47,6 @@ package cocktail.core.slave.slaves
 			_netconn.addEventListener( 	SecurityErrorEvent.SECURITY_ERROR, 
 										_on_security_error );
 			_netconn.connect( null );
-						
-			if( auto_load )
-				load( );
 		}
 
 		/**

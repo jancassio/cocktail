@@ -97,7 +97,7 @@ package cocktail.core.slave
 		 */
 		public function graph( uri : String ) : GraphSlave
 		{
-			return _queue( new GraphSlave( uri, _auto_load ) );
+			return _queue( new GraphSlave() );
 		}
 
 		/**
@@ -107,7 +107,7 @@ package cocktail.core.slave
 		 */
 		public function text( uri : String ) : TextSlave
 		{
-			return _queue( new TextSlave( uri, _auto_load ) );
+			return _queue( new TextSlave() );
 		}
 		
 		/**
@@ -117,7 +117,7 @@ package cocktail.core.slave
 		 */
 		public function video( uri : String ) : VideoSlave
 		{
-			return _queue( new VideoSlave( uri, _auto_load ) );
+			return _queue( new VideoSlave() );
 		}
 		
 		/**
@@ -127,7 +127,7 @@ package cocktail.core.slave
 		 */
 		public function audio( uri : String ) : AudioSlave
 		{
-			return _queue( new AudioSlave( uri, _auto_load ) );
+			return _queue( new AudioSlave() );
 		}
 
 
