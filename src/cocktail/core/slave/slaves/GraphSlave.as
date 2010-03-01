@@ -1,5 +1,6 @@
 package cocktail.core.slave.slaves 
 {
+	import flash.system.System;
 	import cocktail.core.slave.gunz.GraphSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
@@ -26,33 +27,16 @@ package cocktail.core.slave.slaves
 		private var _loader_info : LoaderInfo;
 		private var _request : URLRequest;
 		private var _target : DisplayObjectContainer;
-
+		private var _trigger_set : Boolean = false;
+		
 		/* INITIALIZING */
 		
 		/**
 		 * Creates a new GraphLoader instance.
-		 * @param uri	Uniform Resource Identifier to be loaded.
-		 * @param auto_load	If <code>true</code> all subsequent loading calls
-		 * will start loading immediatelly, otherwise <code>false</code> you'll
-		 * need to call the "load" method to start the loading process.
 		 */
-		public function GraphSlave(
-			uri : String,
-			auto_load : Boolean = false
-		) : void
+		public function GraphSlave() : void
 		{
-			super( uri );
 			
-			_loader_info = ( _loader = new Loader( ) ).contentLoaderInfo;
-			_loader_info.addEventListener( Event.OPEN, _start );
-			_loader_info.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader_info.addEventListener( Event.INIT, _complete );
-			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
-			
-			_request = new URLRequest( uri );
-			
-			if( auto_load )
-				load( );
 		}
 
 		/* LISTENERS */
@@ -91,6 +75,19 @@ package cocktail.core.slave.slaves
 			if( _target != null )
 				_target.addChild( content );
 			
+			_unset_triggers();
+		}
+		
+		private function _set_triggers() : void
+		{
+			_loader_info.addEventListener( Event.OPEN, _start );
+			_loader_info.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader_info.addEventListener( Event.INIT, _complete );
+			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
+		}
+		
+		private function _unset_triggers() : void
+		{
 			_loader_info.removeEventListener( Event.OPEN, _start );
 			_loader_info.removeEventListener( ProgressEvent.PROGRESS, _progress );
 			_loader_info.removeEventListener( Event.INIT, _complete );
@@ -137,15 +134,6 @@ package cocktail.core.slave.slaves
 		}
 
 		/**
-		 * Get the url reference.
-		 * @return	Url request reference.
-		 */
-		public function get request() : URLRequest
-		{
-			return _request;
-		}
-
-		/**
 		 * Get the loader reference.
 		 * @return	Loader reference.
 		 */
@@ -153,6 +141,8 @@ package cocktail.core.slave.slaves
 		{
 			return _loader;
 		}
+		
+		
 
 		/* PUTTING */
 		
@@ -167,22 +157,47 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 
-		/* LOADNIG */
+		/* LOADING */
 		
 		/**
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		final public function load( uri : String = null ) : ISlave
+		final public function load( uri : String = null) : ISlave
 		{
-			if( _status != ASlave._QUEUED )
+			// Check if this class was destroyed
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
 				return this;
+			}
+			
+			// Change _uri with new value
+			if ( uri != null)
+				_uri = uri;
+			
+			// Lock loading if _uri is null
+			if ( _uri == null )
+			{
+				trace( "Set the uri param before loading." );
+				return this;
+			}
+			
+			unload();
+			
+			_loader = new Loader( );
+			_loader_info = _loader.contentLoaderInfo;
+			_request = new URLRequest( _uri );
 			
 			// updating status
 			_status = ASlave._LOADING;
 			
 			// start loading
 			_loader.load( _request );
+			
+			// listeners
+			_set_triggers();
 			
 			return this;
 		}
@@ -191,18 +206,32 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			_loader.unload();
-			return this;
-		}
-		
-		public function close() : ISlave
-		{
-			_loader.close();
+			if ( _loader )
+				_loader.unloadAndStop( true );
+				
+			if ( _status == ASlave._LOADING )
+				_loader.close();
+			
+			if ( _trigger_set )
+				_unset_triggers();
+				
+			_loader = null;
+			_loader_info = null;
+			_request = null;
+			
 			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
+			unload();
+
+			_status = _DESTROYED;
+			
+			gunz.rm_all();
+			
+			System.gc();
+			
 			return this;
 		}
 	}

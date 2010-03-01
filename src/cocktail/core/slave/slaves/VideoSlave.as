@@ -1,8 +1,8 @@
 package cocktail.core.slave.slaves 
 {
-	import cocktail.core.slave.gunz.VideoSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
+	import cocktail.core.slave.gunz.VideoSlaveBullet;
 
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
@@ -11,8 +11,8 @@ package cocktail.core.slave.slaves
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import flash.system.System;
 	import flash.utils.Timer;
-
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
@@ -22,6 +22,7 @@ package cocktail.core.slave.slaves
 		private var _netconn : NetConnection;
 		private var _netstream : NetStream;
 		private var _target : Video;
+		private var _trigger_set : Boolean = false;
 		
 		private var _progress_timer : Timer;
 		private const DEFAULT_TIMER_DELAY: Number = 10;
@@ -34,60 +35,45 @@ package cocktail.core.slave.slaves
 		 * @param auto_load If true, the load is started automatically.
 		 * @param target The video target to render the stream.
 		 */
-		public function VideoSlave(
-			uri : String,
-			auto_load : Boolean = false,
-			target : Video = null
-		) : void
+		public function VideoSlave() : void
 		{
-			super( uri );
 			
-			if( target )
-				put( target );
-			
-			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
-			_progress_timer.stop();
-			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
-			_progress_timer.start();
-			
-			_netconn = new NetConnection( );
+		}
+
+		private function _set_triggers() : void
+		{
 			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
 										_on_net_status );
 			_netconn.addEventListener( 	SecurityErrorEvent.SECURITY_ERROR, 
 										_on_security_error );
-			_netconn.connect( null );
-						
-			if( auto_load )
-				load( );
+			
+			_netstream.addEventListener( NetStatusEvent.NET_STATUS, 
+											_on_net_status );
+			_netstream.addEventListener( AsyncErrorEvent.ASYNC_ERROR, 
+											_on_net_status );
+			
+			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
+			_progress_timer.start();
+			
+			_trigger_set = true;
 		}
-
-		/**
-		 * Start the loading process.
-		 * @return	Self reference for inline reuse.
-		 */
-		public function load( uri : String = null ) : ISlave
+		
+		private function _unset_triggers() : void
 		{
-			if( _status != ASlave._QUEUED )
-				return this;
-				
-			if( !_target )
-				return this;	
+			_netconn.removeEventListener( NetStatusEvent.NET_STATUS, 
+										_on_net_status );
+			_netconn.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, 
+										_on_security_error );
 			
-			// updating status
-			_status = ASlave._LOADING;
-			
-			// start connection
-			_netstream = new NetStream( _netconn );
-			_netstream.client = new StatusHandler( );
-			_netstream.addEventListener( 	NetStatusEvent.NET_STATUS, 
+			_netstream.removeEventListener( NetStatusEvent.NET_STATUS, 
 											_on_net_status );
-			_netstream.addEventListener( 	AsyncErrorEvent.ASYNC_ERROR, 
+			_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, 
 											_on_net_status );
-			_target.attachNetStream( _netstream );
-			_netstream.play( _uri );
-			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
 			
-			return this;
+			_progress_timer.stop();
+			_progress_timer.removeEventListener( TimerEvent.TIMER, _pull_time );
+			
+			_trigger_set = false;
 		}
 
 		/**
@@ -154,15 +140,9 @@ package cocktail.core.slave.slaves
 					if( _status == ASlave._LOADED )
 						break;
 					_status = ASlave._LOADED;
-					_progress_timer.stop();
-					_progress_timer.removeEventListener( TimerEvent.TIMER, 
-														 _pull_time );
-					_netstream.removeEventListener( NetStatusEvent.NET_STATUS, 
-													_on_net_status );
-					_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, 
-													_on_net_status );															
-					gunz_complete.shoot( new VideoSlaveBullet( loaded, 
-																total ) );
+					
+					_unset_triggers();
+					
 					break;	
 			}
 		}
@@ -190,79 +170,87 @@ package cocktail.core.slave.slaves
 			return _netstream;
 		}
 		
-		public function unload() : ISlave
+		/* LOADING */
+		
+		/**
+		 * Start the loading process.
+		 * @return	Self reference for inline reuse.
+		 */
+		public function load( uri : String = null ) : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			// Check if this class was destroyed
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
+				return this;
+			}
+			
+			// Change _uri with new value
+			if ( uri != null)
+				_uri = uri;
+			
+			// Lock loading if _uri is null
+			if ( _uri == null )
+			{
+				trace( "Set the uri param before loading." );
+				return this;
+			}
+				
+			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
+			
+			_netconn = new NetConnection( );
+			_netconn.connect( null );
+			
+			// updating status
+			_status = ASlave._LOADING;
+			
+			// start connection
+			_netstream = new NetStream( _netconn );
+			_netstream.client = new StatusHandler( );
+			
+			if( _target )
+				_target.attachNetStream( _netstream );
+				
+			_netstream.play( _uri );
+			_netstream.pause();
+			
+			_set_triggers();
+			
+			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
+			
+			return this;
 		}
 		
-		public function close() : ISlave
+		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			_netconn.close();
+			_netstream.close( );
+			
+			if ( _trigger_set )
+				_unset_triggers();
+				
+			_progress_timer = null;
+			
+			if( _target )
+				_target.clear();
+			_target = null;
+			
+			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			unload();
+			
+			_status = _DESTROYED;
+			
+			gunz.rm_all();
+			
+			System.gc();
+			
+			return this;
 		}
-		
-		
-		/* STREAM CONTROLS */
-		
-//		/**
-//		 * Stop the stream.
-//		 */
-//		public function stop () : VideoSlave
-//		{
-//			_stream_paused = true;
-//			_netstream.seek( 0 );
-//			_netstream.pause();
-//			return this;
-//		}
-//		
-//		/**
-//		 * Play or pause the stream.
-//		 */
-//		public function play_pause () : VideoSlave
-//		{
-//			_stream_paused = !_stream_paused;
-//			
-//			if ( _stream_paused )
-//				_netstream.pause();
-//			else
-//				_netstream.resume();
-//			
-//			return this;
-//		}
-//		
-//		/**
-//		 * Play the stream.
-//		 */
-//		public function play () : VideoSlave
-//		{
-//			if ( _stream_paused )
-//			{
-//				_netstream.resume();
-//				_stream_paused = true;
-//			}
-//			return this;
-//		}
-//		
-//		/**
-//		 * Pause the stream.
-//		 */
-//		public function pause () : VideoSlave
-//		{
-//			if ( !_stream_paused )
-//			{
-//				_netstream.pause();
-//				_stream_paused = false;
-//			}
-//			return this;
-//		}
-		
 	}
 }
 

@@ -78,23 +78,25 @@ package cocktail.lib
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
 				case "jpg": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "jpeg": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "png": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "gif": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "swf": 
-					slave = new GraphSlave( uri, _is_queue_opened );
+					slave = new GraphSlave();
+				break;
+				
 				case "xml": 
-					slave = new TextSlave( uri, _is_queue_opened );
+					slave = new TextSlave();
+				break;
+				
+				default:
+					slave = new GraphSlave();
 			}
 			
 			if( _is_queue_opened )
 				_load_queue.append( slave );
 			else
-				ISlave( slave ).load( );
+				ISlave( slave ).load( uri );
 			
 			return slave;
 		}
@@ -105,7 +107,7 @@ package cocktail.lib
 		 */
 		public function controller( name : String ) : Controller
 		{
-			return _cocktail.processes.controller( name );
+			return _cocktail.process.controller( name );
 		}
 		
 		/* GETTERS */

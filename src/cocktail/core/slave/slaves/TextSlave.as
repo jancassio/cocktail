@@ -1,5 +1,6 @@
 package cocktail.core.slave.slaves 
 {
+	import flash.system.System;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -20,6 +21,7 @@ package cocktail.core.slave.slaves
 		/* VARS */
 		private var _loader : URLLoader;
 		private var _request : URLRequest;
+		private var _trigger_set : Boolean = false;
 
 		/* INITIALIZING */
 		
@@ -30,23 +32,8 @@ package cocktail.core.slave.slaves
 		 * will start loading immediatelly, otherwise <code>false</code> you'll
 		 * need to call the "load" method to start the loading process.
 		 */
-		public function TextSlave(
-			uri : String,
-			auto_load : Boolean = false
-		) : void
-		{
-			super( uri );
-			
-			_loader = new URLLoader( );
-			_loader.addEventListener( Event.OPEN, _start );
-			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader.addEventListener( Event.COMPLETE, _complete );
-			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
-			
-			_request = new URLRequest( uri );
-			
-			if( auto_load )
-				load( );
+		public function TextSlave() : void
+		{			
 		}
 
 		/* LISTENERS */
@@ -90,6 +77,30 @@ package cocktail.core.slave.slaves
 		{
 			_status = ASlave._ERROR;
 			gunz_error.shoot( new ASlaveBullet( 0, 0 ) );
+		}
+		
+		/* TRIGGERS */
+		
+		private function _set_triggers () : void
+		{
+			_loader.addEventListener( Event.OPEN, _start );
+			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.addEventListener( Event.COMPLETE, _complete );
+			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
+			
+			_trigger_set = true;
+		}
+		
+		private function _unset_triggers () : void
+		{
+			if( _loader == null ) return;
+			
+			_loader.removeEventListener( Event.OPEN, _start );
+			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.removeEventListener( Event.COMPLETE, _complete );
+			_loader.removeEventListener( IOErrorEvent.IO_ERROR, _error );
+			
+			_trigger_set = false;
 		}
 
 		/* GETTERS */
@@ -139,7 +150,7 @@ package cocktail.core.slave.slaves
 			return _loader;
 		}
 
-		/* LOADNIG */
+		/* LOADING */
 		
 		/**
 		 * Start the loading process.
@@ -147,8 +158,22 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			if( _status != ASlave._QUEUED )
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
+				
 				return this;
+			}
+			
+			_uri = uri;
+			
+			unload();
+			
+			_loader  = new URLLoader( );
+			_request = new URLRequest( uri );
+			
+			_set_triggers();
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -159,22 +184,35 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
+		/**
+		 * Unload yhe last loaded content.
+		 */
 		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			if ( _status == ASlave._LOADING )
+				_loader.close();
+			
+			if ( _trigger_set )
+				_unset_triggers();
+			
+			return this;
 		}
 		
-		public function close() : ISlave
-		{
-			// TODO: Auto-generated method stub
-			return null;
-		}
-		
+		/**
+		 * Destroy the slave.
+		 * After this method call, this slave can't be loaded anymore.
+		 */
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			unload();
+			
+			_status = _DESTROYED;
+			
+			gunz.rm_all();
+			
+			System.gc();
+			
+			return this;
 		}
 	}
 }
