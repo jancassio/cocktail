@@ -18,6 +18,7 @@ package cocktail.core.slave.slaves {
 	{
 		private var _request : URLRequest;
 		private var _sound : Sound;
+		private var _trigger_set : Boolean = false;
 
 		public function AudioSlave() : void
 		{
@@ -76,6 +77,8 @@ package cocktail.core.slave.slaves {
 			_sound.addEventListener( ProgressEvent.PROGRESS, _progress );
 			_sound.addEventListener( IOErrorEvent.IO_ERROR, _error );
 			_sound.addEventListener( Event.COMPLETE, _complete );
+			
+			_trigger_set = true;
 		}
 		
 		private function _unset_triggers() : void
@@ -84,6 +87,8 @@ package cocktail.core.slave.slaves {
 			_sound.removeEventListener( ProgressEvent.PROGRESS, _progress );
 			_sound.removeEventListener( Event.INIT, _complete );
 			_sound.removeEventListener( IOErrorEvent.IO_ERROR, _error );
+			
+			_trigger_set = false;
 		}
 		
 		/* GETTERS */
@@ -167,12 +172,12 @@ package cocktail.core.slave.slaves {
 		 */
 		public function unload() : ISlave
 		{
-			try { _sound.close(); } 
-			catch ( e : Error ) { trace ( e ); };
+			if ( _status == ASlave._LOADING )
+				_sound.close();
 			
-			try { _unset_triggers(); } 
-			catch ( e : Error ) { trace ( e ); };
-			
+			if ( _trigger_set )
+				_unset_triggers();
+							
 			_sound = null;
 			_request = null;
 			_status = ASlave._QUEUED;

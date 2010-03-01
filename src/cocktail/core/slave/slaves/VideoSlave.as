@@ -22,6 +22,7 @@ package cocktail.core.slave.slaves
 		private var _netconn : NetConnection;
 		private var _netstream : NetStream;
 		private var _target : Video;
+		private var _trigger_set : Boolean = false;
 		
 		private var _progress_timer : Timer;
 		private const DEFAULT_TIMER_DELAY: Number = 10;
@@ -103,6 +104,8 @@ package cocktail.core.slave.slaves
 			
 			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
 			_progress_timer.start();
+			
+			_trigger_set = true;
 		}
 		
 		private function _unset_triggers() : void
@@ -119,6 +122,8 @@ package cocktail.core.slave.slaves
 			
 			_progress_timer.stop();
 			_progress_timer.removeEventListener( TimerEvent.TIMER, _pull_time );
+			
+			_trigger_set = false;
 		}
 
 		/**
@@ -172,8 +177,6 @@ package cocktail.core.slave.slaves
 		 */
 		private function _on_net_status( event : NetStatusEvent ) : void
 		{
-			ctrace();
-			
 			switch ( event.info[ "code" ] ) 
 			{
 				case "NetConnection.Connect.Success":
@@ -219,27 +222,20 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			try { _netconn.close(); } 
-			catch ( e : Error ) { trace ( e ); };
+			ctrace( _status );
 			
-			try	{ _netstream.close( ); } 
-			catch ( e : Error ) { trace ( e ); };
+			_netconn.close();
+			_netstream.close( );
 			
-			try	{ _unset_triggers( ); } 
-			catch ( e : Error ) { trace ( e ); };
-			
+			if ( _trigger_set )
+				_unset_triggers();
+				
 			_progress_timer = null;
 			
 			if( _target )
 				_target.clear();
 			_target = null;
 			
-			return null;
-		}
-		
-		public function close() : ISlave
-		{
-			// TODO: Auto-generated method stub
 			return null;
 		}
 		
