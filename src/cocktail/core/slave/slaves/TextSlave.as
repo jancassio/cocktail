@@ -145,7 +145,9 @@ package cocktail.core.slave.slaves
 			
 			unload();
 			
-			_loader = new URLLoader( );
+			_loader  = new URLLoader( );
+			_request = new URLRequest( uri );
+			
 			_set_triggers();
 			
 			// updating status
@@ -199,6 +201,8 @@ package cocktail.core.slave.slaves
 		
 		private function _unset_triggers () : void
 		{
+			if( _loader == null ) return;
+			
 			_loader.removeEventListener( Event.OPEN, _start );
 			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
 			_loader.removeEventListener( Event.COMPLETE, _complete );
