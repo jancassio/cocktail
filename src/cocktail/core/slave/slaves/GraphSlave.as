@@ -27,7 +27,7 @@ package cocktail.core.slave.slaves
 		private var _loader_info : LoaderInfo;
 		private var _request : URLRequest;
 		private var _target : DisplayObjectContainer;
-
+		
 		/* INITIALIZING */
 		
 		/**
@@ -39,11 +39,7 @@ package cocktail.core.slave.slaves
 		 */
 		public function GraphSlave() : void
 		{
-			_loader_info = ( _loader = new Loader( ) ).contentLoaderInfo;
-			_loader_info.addEventListener( Event.OPEN, _start );
-			_loader_info.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader_info.addEventListener( Event.INIT, _complete );
-			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
+			
 		}
 
 		/* LISTENERS */
@@ -82,6 +78,19 @@ package cocktail.core.slave.slaves
 			if( _target != null )
 				_target.addChild( content );
 			
+			_unset_triggers();
+		}
+		
+		private function _set_triggers() : void
+		{
+			_loader_info.addEventListener( Event.OPEN, _start );
+			_loader_info.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader_info.addEventListener( Event.INIT, _complete );
+			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
+		}
+		
+		private function _unset_triggers() : void
+		{
 			_loader_info.removeEventListener( Event.OPEN, _start );
 			_loader_info.removeEventListener( ProgressEvent.PROGRESS, _progress );
 			_loader_info.removeEventListener( Event.INIT, _complete );
@@ -144,6 +153,8 @@ package cocktail.core.slave.slaves
 		{
 			return _loader;
 		}
+		
+		
 
 		/* PUTTING */
 		
@@ -158,7 +169,7 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 
-		/* LOADNIG */
+		/* LOADING */
 		
 		/**
 		 * Start the loading process.
@@ -166,16 +177,30 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			if( _status != ASlave._QUEUED )
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
+				
 				return this;
+			}
 			
-			_request = new URLRequest( uri );
+			_uri = uri;
+			
+			unload();
+			
+			_loader = new Loader( );
+			_loader_info = _loader.contentLoaderInfo;
+			_request = new URLRequest( _uri );
 			
 			// updating status
 			_status = ASlave._LOADING;
 			
 			// start loading
 			_loader.load( _request );
+			
+			// listeners
+			_set_triggers();
 			
 			return this;
 		}
@@ -184,17 +209,32 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			if ( _status == ASlave._LOADED && content )
-			{
-				_target.removeChild( content );
-				_loader.unloadAndStop( true );
-				System.gc();
-			}
+			try { _loader.unloadAndStop( true ); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			try { _loader.close( ); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			_loader = null;
+			_loader_info = null;
+			_request = null;
+			
 			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
+			unload();
+
+			_status = _DESTROYED;
+			
+			gunz_complete.rm_all();
+			gunz_error.rm_all();
+			gunz_progress.rm_all();
+			gunz_start.rm_all();
+			
+			System.gc();
+			
 			return this;
 		}
 	}

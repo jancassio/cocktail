@@ -52,8 +52,11 @@ package cocktail.core.gunz
 			
 			if( _gunz.length ) do
 			{
-				if( type == null || type == ( gun = _gunz[ i ] )._type )
+				gun = _gunz[ i ];
+				
+				if( type == null || type == gun._type )
 					gun.rm_all( );
+					
 			} while( ++i < _gunz.length );
 		}
 
