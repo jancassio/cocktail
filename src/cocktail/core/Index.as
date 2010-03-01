@@ -191,6 +191,11 @@ package cocktail.core
 				) );
 		}
 
+		final public function isN( number: Number ): Boolean
+		{
+			return !isN( number );
+		}
+		
 		/* CASTING VALUES */
 		
 		/**
