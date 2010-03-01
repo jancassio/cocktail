@@ -32,10 +32,6 @@ package cocktail.core.slave.slaves
 		
 		/**
 		 * Creates a new GraphLoader instance.
-		 * @param uri	Uniform Resource Identifier to be loaded.
-		 * @param auto_load	If <code>true</code> all subsequent loading calls
-		 * will start loading immediatelly, otherwise <code>false</code> you'll
-		 * need to call the "load" method to start the loading process.
 		 */
 		public function GraphSlave() : void
 		{
@@ -137,15 +133,6 @@ package cocktail.core.slave.slaves
 		}
 
 		/**
-		 * Get the url reference.
-		 * @return	Url request reference.
-		 */
-		public function get request() : URLRequest
-		{
-			return _request;
-		}
-
-		/**
 		 * Get the loader reference.
 		 * @return	Loader reference.
 		 */
@@ -175,17 +162,27 @@ package cocktail.core.slave.slaves
 		 * Start the loading process.
 		 * @return	Self reference for inline reuse.
 		 */
-		final public function load( uri : String = null ) : ISlave
+		final public function load( uri : String = null) : ISlave
 		{
+			trace( _status );
+			// Check if this class was destroyed
 			if( _status == ASlave._DESTROYED )
 			{
 				trace( "This class was destroyed! " +
 				"You cannot load content anymore." );
-				
 				return this;
 			}
 			
-			_uri = uri;
+			// Change _uri with new value
+			if ( uri != null)
+				_uri = uri;
+			
+			// Lock loading if _uri is null
+			if ( _uri == null )
+			{
+				trace( "Set the uri param before loading." );
+				return this;
+			}
 			
 			unload();
 			
@@ -228,10 +225,7 @@ package cocktail.core.slave.slaves
 
 			_status = _DESTROYED;
 			
-			gunz_complete.rm_all();
-			gunz_error.rm_all();
-			gunz_progress.rm_all();
-			gunz_start.rm_all();
+			gunz.rm_all();
 			
 			System.gc();
 			
