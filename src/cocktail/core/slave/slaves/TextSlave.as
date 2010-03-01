@@ -1,5 +1,6 @@
 package cocktail.core.slave.slaves 
 {
+	import flash.system.System;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -32,11 +33,6 @@ package cocktail.core.slave.slaves
 		 */
 		public function TextSlave() : void
 		{			
-			_loader = new URLLoader( );
-			_loader.addEventListener( Event.OPEN, _start );
-			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader.addEventListener( Event.COMPLETE, _complete );
-			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
 		}
 
 		/* LISTENERS */
@@ -137,8 +133,20 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			if( _status != ASlave._QUEUED )
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
+				
 				return this;
+			}
+			
+			_uri = uri;
+			
+			unload();
+			
+			_loader = new URLLoader( );
+			_set_triggers();
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -149,22 +157,52 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
+		/**
+		 * Unload yhe last loaded content.
+		 */
 		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			try { _loader.close(); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			_unset_triggers();
+			
+			return this;
 		}
 		
-		public function close() : ISlave
-		{
-			// TODO: Auto-generated method stub
-			return null;
-		}
-		
+		/**
+		 * Destroy the slave.
+		 * After this method call, this slave can't be loaded anymore.
+		 */
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			unload();
+			
+			_status = _DESTROYED;
+			
+			gunz.rm_all();
+			
+			System.gc();
+			
+			return this;
+		}
+		
+		/* TRIGGERS */
+		
+		private function _set_triggers () : void
+		{
+			_loader.addEventListener( Event.OPEN, _start );
+			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.addEventListener( Event.COMPLETE, _complete );
+			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
+		}
+		
+		private function _unset_triggers () : void
+		{
+			_loader.removeEventListener( Event.OPEN, _start );
+			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.removeEventListener( Event.COMPLETE, _complete );
+			_loader.removeEventListener( IOErrorEvent.IO_ERROR, _error );
 		}
 	}
 }
