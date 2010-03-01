@@ -2,7 +2,7 @@
 <launchConfiguration type="com.powerflasher.fdt.ui.MxmlcGroup">
 <stringAttribute key="APP_ARGUMENTS" value=""/>
 <stringAttribute key="ARGUMENTS" value="-default-size 550 400 -default-frame-rate 31 -default-background-color 0xFFFFFF -library-path {flexSDK}/frameworks/locale/en_US"/>
-<stringAttribute key="FLEX_SDK_NAME" value="Flex_3_SDK_0_Pure"/>
+<stringAttribute key="FLEX_SDK_NAME" value="Flex_3_SDK_0_Pure_for_FP_10"/>
 <stringAttribute key="MAIN_CLASS" value="demo/src/Codeine.as"/>
 <stringAttribute key="OUTPUT" value="demo/www/cocktail/swf/core.swf"/>
 <booleanAttribute key="PASS_CP" value="true"/>
@@ -12,14 +12,14 @@
 <intAttribute key="PLAYER_WIDTH" value="550"/>
 <stringAttribute key="POST_COMPILE_ANT" value=""/>
 <stringAttribute key="PRE_COMPILE_ANT" value="demo/configs/ant/build.xml"/>
-<stringAttribute key="PROJECT_NAME" value="cocktail:03-unstable"/>
+<stringAttribute key="PROJECT_NAME" value="cocktail"/>
 <stringAttribute key="PUBLISHER_ID" value=""/>
 <booleanAttribute key="START_SWF_ENABLED" value="true"/>
-<stringAttribute key="START_SWF_LOCATION" value="http://localhost/codeine/"/>
+<stringAttribute key="START_SWF_LOCATION" value="http://rafaelcordoba.local/codeine/"/>
 <stringAttribute key="START_SWF_WITH" value="Browser"/>
 <booleanAttribute key="USE_GLOBAL_FCSH_LOCATION" value="true"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/cocktail:03-unstable"/>
+<listEntry value="/cocktail"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
