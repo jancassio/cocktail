@@ -125,7 +125,7 @@ package cocktail.core.slave.slaves
 			return _loader;
 		}
 
-		/* LOADNIG */
+		/* LOADING */
 		
 		/**
 		 * Start the loading process.
