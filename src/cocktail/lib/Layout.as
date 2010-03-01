@@ -79,15 +79,15 @@ package cocktail.lib
 		{
 			return childs.request == request; 
 		}
-		
+
 		/* PUBLIC GETTERS */
-		
+
 		public function get target() : DisplayObjectContainer 
 		{
 			var full_path : Array;
-			var controller_name: String;
-			var action_name: String;
-			var asset_id: String;
+			var controller_name : String;
+			var action_name : String;
+			var asset_id : String;
 			
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
@@ -103,6 +103,5 @@ package cocktail.lib
 
 			return controller( name ).layout.childs.by_id( asset_id ).sprite;
 		}
-		
 	}
 }

@@ -8,7 +8,7 @@ package cocktail.messages.lib
 	{
 		public static function get no_target_found() : String
 		{
-			return "No target found: getting cocktail.app as target";
+			return "No target found: rendering at cocktail.app";
 		}
 	}
 }

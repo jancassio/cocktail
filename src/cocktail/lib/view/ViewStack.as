@@ -164,7 +164,7 @@ package cocktail.lib.view
 			while ( node )
 			{
 				view = node.data;
-				
+
 				if( _will_render[ view.identifier ] )
 					_group_rendering.add( view.gunz_render_done );
 				else
@@ -221,7 +221,9 @@ package cocktail.lib.view
 			created.identifier = xml_node.localName();
 			created.xml_node = xml_node;
 			
-			return created;
+			created.up = view;
+			
+			return list.append( created ).data;
 		}
 
 		/**

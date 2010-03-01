@@ -33,7 +33,7 @@ package cocktail.lib
 		public var node : DListNode;
 
 		/** Reference to the parent view container **/
-		internal var _up : View;
+		public var up : View;
 
 		/** When created trought xml, this will hold the xml node**/
 		private var _xml_node : XML;
@@ -42,11 +42,11 @@ package cocktail.lib
 		private var _loading_group : GunzGroup;
 
 		/** View sprite **/
-		public var sprite: Sprite;
-		
+		public var sprite : Sprite;
+
 		private function _init_gunz() : void 
 		{
-			gunz_render_done  = new Gun( gunz, this, "render_done" );
+			gunz_render_done = new Gun( gunz, this, "render_done" );
 			gunz_destroy_done = new Gun( gunz, this, "destroy_done" );
 		}
 
@@ -135,7 +135,6 @@ package cocktail.lib
 					view.load( request );
 					childs.mark_as_alive( view );
 				} while( ++i < assets.length );
-				
 			}
 			
 			return true;
@@ -231,14 +230,15 @@ package cocktail.lib
 			
 			if( !sprite )
 			{
-				sprite = new Sprite();
+				sprite = new Sprite( );
 				
 				if( this is Layout )
+				{
 					Layout( this ).target.addChild( sprite );
+				}
 				else
 					up.add( this );
 			}
-			
 			
 			childs.render( request );
 			
@@ -247,9 +247,8 @@ package cocktail.lib
 			return true;
 		}
 
-		private function add(view : View) : void 
+		private function add( view : View ) : void 
 		{
-			view._up = this;
 			sprite.addChild( view.sprite );
 		}
 
@@ -304,11 +303,6 @@ package cocktail.lib
 		public function get childs() : ViewStack
 		{
 			return _childs;
-		}
-
-		public function get up() : View
-		{
-			return _up;
 		}
 	}
 }

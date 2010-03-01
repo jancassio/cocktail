@@ -19,7 +19,7 @@ package codeine.views.main
 			
 			log.info( "Running..." );
 			
-			sprite.graphics.beginFill( 0xFF000000 );
+			sprite.graphics.beginFill( 0xFF0000 );
 			sprite.graphics.drawCircle( 50, 50, 50 );
 			sprite.graphics.endFill();
 			
