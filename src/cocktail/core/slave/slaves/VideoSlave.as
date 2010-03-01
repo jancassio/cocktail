@@ -225,7 +225,8 @@ package cocktail.core.slave.slaves
 			try	{ _netstream.close( ); } 
 			catch ( e : Error ) { trace ( e ); };
 			
-			_unset_triggers();
+			try	{ _unset_triggers( ); } 
+			catch ( e : Error ) { trace ( e ); };
 			
 			_progress_timer = null;
 			
