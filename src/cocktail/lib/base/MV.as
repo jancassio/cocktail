@@ -76,23 +76,21 @@ package cocktail.lib.base
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
 				case "jpg": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "jpeg": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "png": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "gif": 
-					slave = new GraphSlave( uri, _is_queue_opened );
 				case "swf": 
-					slave = new GraphSlave( uri, _is_queue_opened );
+					slave = new GraphSlave();
+				break;
 				case "xml": 
-					slave = new TextSlave( uri, _is_queue_opened );
+					slave = new TextSlave();
+				break;
 			}
 			
 			if( _is_queue_opened )
 				_load_queue.append( slave );
 			else
-				ISlave( slave ).load( );
+				ISlave( slave ).load( uri );
 			
 			return slave;
 		}
