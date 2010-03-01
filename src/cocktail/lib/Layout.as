@@ -4,6 +4,7 @@ package cocktail.lib
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.LayoutBullet;
+	import cocktail.messages.lib.LayoutMessages;
 
 	import flash.display.DisplayObjectContainer;
 
@@ -90,6 +91,7 @@ package cocktail.lib
 			
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
+				log.info( LayoutMessages.no_target_found );
 				return cocktail.app;
 			}
 			
