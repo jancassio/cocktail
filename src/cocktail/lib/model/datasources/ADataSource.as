@@ -24,15 +24,11 @@ package cocktail.lib.model.datasources
 		public var inject : String; 
 		public var locale : String; 
 		public var src : String; 
-		
 		protected var _raw : *;
 		protected var _model : Model;
 		protected var _scheme : XML; 
-		
 		protected var _binds : XMLList;
-		
-		
-		
+
 		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
 		{
@@ -42,19 +38,41 @@ package cocktail.lib.model.datasources
 			_init_gunz( );
 			
 			return s;		}
-		
+
 		public function ADataSource( model : Model, scheme : XML = null )
 		{
 			_model = model;
 			_scheme = scheme;
 		}
-		
+
 		/* LOADING */
-		
-		public function load() : ADataSource
+		public function load() : void
 		{
-			log.fatal( "You need to override the 'ADataSource.load' method" );
-			return this;
+			var msg : String;
+			
+			msg = "This method (ADataSource.load) must be overritten by ";
+			msg += "superclass.";
+			log.fatal( msg );
+		}
+		
+		/* PARSING */
+		public function parse() : void
+		{
+			var msg : String;
+			
+			msg = "This method (ADataSource.parse) must be overritten by ";
+			msg += "superclass.";
+			log.fatal( msg );
+		}
+		
+		/* BINDING */
+		public function bind() : void
+		{
+			var msg : String;
+			
+			msg = "This method (ADataSource.bind) must be overritten by ";
+			msg += "superclass.";
+			log.fatal( msg );
 		}
 	}
 }

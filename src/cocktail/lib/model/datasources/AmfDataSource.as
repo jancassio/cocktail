@@ -13,10 +13,9 @@ package cocktail.lib.model.datasources
 		}
 		
 		/* LOADING */
-		override public function load() : ADataSource
+		override public function load() : void
 		{
 			new Timeout( _after_load, 1 );
-			return this;
 		}
 		
 		private function _after_load() : void
@@ -25,7 +24,7 @@ package cocktail.lib.model.datasources
 			bind( );
 		}
 		
-		public function bind() : void
+		override public function bind() : void
 		{
 //			var node : XML;
 //			var result : *;
