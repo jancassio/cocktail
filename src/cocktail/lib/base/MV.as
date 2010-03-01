@@ -103,7 +103,7 @@ package cocktail.lib.base
 		 */
 		public function controller( name : String ) : Controller
 		{
-			return _cocktail.processes.controller( name );
+			return _cocktail.process.controller( name );
 		}
 	}
 }

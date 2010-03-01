@@ -7,9 +7,9 @@ package codeine.views.main
 	/**
 	 * @author hems | dev@henriquematias.com
 	 */
-	public class MyAwesOneView extends AppView 
+	public class MyAwesomeView extends AppView 
 	{
-		public function MyAwesOneView()
+		public function MyAwesomeView()
 		{
 		}
 
@@ -18,9 +18,12 @@ package codeine.views.main
 			super.after_render( request );
 			
 			log.info( "Running..." );
+			
 			sprite.graphics.beginFill( 0xFF000000 );
 			sprite.graphics.drawCircle( 50, 50, 50 );
 			sprite.graphics.endFill();
+			
+			cocktail.app.addChild( sprite );
 		}
 	}
 }
