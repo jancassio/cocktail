@@ -69,6 +69,11 @@ package cocktail.lib
 			return path;
 		}
 
+		/**
+		 * Returns true if childs.request is equal to param request
+		 * @param request	The request you would check if is rendered
+		 * @see	ViewStack#request
+		 */
 		public function is_rendered( request : Request ) : Boolean
 		{
 			return childs.request == request; 
