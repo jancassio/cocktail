@@ -1,5 +1,6 @@
 package cocktail.core.slave.slaves 
 {
+	import flash.system.System;
 	import cocktail.core.slave.gunz.GraphSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
@@ -191,13 +192,12 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			_loader.unload();
-			return this;
-		}
-		
-		public function close() : ISlave
-		{
-			_loader.close();
+			if ( _status == ASlave._LOADED && content )
+			{
+				_target.removeChild( content );
+				_loader.unloadAndStop( true );
+				System.gc();
+			}
 			return this;
 		}
 		
