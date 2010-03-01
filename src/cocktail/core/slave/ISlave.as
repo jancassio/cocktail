@@ -13,7 +13,7 @@ package cocktail.core.slave
 
 		function get status() : String;
 
-		function load( uri : String = null ) : ISlave;
+		function load( uri : String ) : ISlave;
 		
 		function unload() : ISlave;
 		
