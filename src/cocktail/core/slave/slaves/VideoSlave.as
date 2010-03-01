@@ -222,8 +222,6 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			ctrace( _status );
-			
 			_netconn.close();
 			_netstream.close( );
 			
