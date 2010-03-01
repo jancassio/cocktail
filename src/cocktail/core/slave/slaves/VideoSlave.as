@@ -36,17 +36,7 @@ package cocktail.core.slave.slaves
 		 */
 		public function VideoSlave() : void
 		{
-			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
-			_progress_timer.stop();
-			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
-			_progress_timer.start();
 			
-			_netconn = new NetConnection( );
-			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
-										_on_net_status );
-			_netconn.addEventListener( 	SecurityErrorEvent.SECURITY_ERROR, 
-										_on_security_error );
-			_netconn.connect( null );
 		}
 
 		/**
@@ -55,11 +45,29 @@ package cocktail.core.slave.slaves
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			if( _status != ASlave._QUEUED )
+			// Check if this class was destroyed
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
 				return this;
+			}
+			
+			// Change _uri with new value
+			if ( uri != null)
+				_uri = uri;
+			
+			// Lock loading if _uri is null
+			if ( _uri == null )
+			{
+				trace( "Set the uri param before loading." );
+				return this;
+			}
 				
-			if( !_target )
-				return this;	
+			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
+			
+			_netconn = new NetConnection( );
+			_netconn.connect( null );
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -67,15 +75,50 @@ package cocktail.core.slave.slaves
 			// start connection
 			_netstream = new NetStream( _netconn );
 			_netstream.client = new StatusHandler( );
-			_netstream.addEventListener( 	NetStatusEvent.NET_STATUS, 
-											_on_net_status );
-			_netstream.addEventListener( 	AsyncErrorEvent.ASYNC_ERROR, 
-											_on_net_status );
-			_target.attachNetStream( _netstream );
+			
+			if( _target )
+				_target.attachNetStream( _netstream );
+				
 			_netstream.play( _uri );
+			_netstream.pause();
+			
+			_set_triggers();
+			
 			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
 			
 			return this;
+		}
+		
+		private function _set_triggers() : void
+		{
+			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
+										_on_net_status );
+			_netconn.addEventListener( 	SecurityErrorEvent.SECURITY_ERROR, 
+										_on_security_error );
+			
+			_netstream.addEventListener( NetStatusEvent.NET_STATUS, 
+											_on_net_status );
+			_netstream.addEventListener( AsyncErrorEvent.ASYNC_ERROR, 
+											_on_net_status );
+			
+			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
+			_progress_timer.start();
+		}
+		
+		private function _unset_triggers() : void
+		{
+			_netconn.removeEventListener( NetStatusEvent.NET_STATUS, 
+										_on_net_status );
+			_netconn.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, 
+										_on_security_error );
+			
+			_netstream.removeEventListener( NetStatusEvent.NET_STATUS, 
+											_on_net_status );
+			_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, 
+											_on_net_status );
+			
+			_progress_timer.stop();
+			_progress_timer.removeEventListener( TimerEvent.TIMER, _pull_time );
 		}
 
 		/**
@@ -129,6 +172,8 @@ package cocktail.core.slave.slaves
 		 */
 		private function _on_net_status( event : NetStatusEvent ) : void
 		{
+			ctrace();
+			
 			switch ( event.info[ "code" ] ) 
 			{
 				case "NetConnection.Connect.Success":
@@ -142,15 +187,9 @@ package cocktail.core.slave.slaves
 					if( _status == ASlave._LOADED )
 						break;
 					_status = ASlave._LOADED;
-					_progress_timer.stop();
-					_progress_timer.removeEventListener( TimerEvent.TIMER, 
-														 _pull_time );
-					_netstream.removeEventListener( NetStatusEvent.NET_STATUS, 
-													_on_net_status );
-					_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, 
-													_on_net_status );															
-					gunz_complete.shoot( new VideoSlaveBullet( loaded, 
-																total ) );
+					
+					_unset_triggers();
+					
 					break;	
 			}
 		}
@@ -180,7 +219,20 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			// TODO: Auto-generated method stub
+			try { _netconn.close(); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			try	{ _netstream.close( ); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			_unset_triggers();
+			
+			_progress_timer = null;
+			
+			if( _target )
+				_target.clear();
+			_target = null;
+			
 			return null;
 		}
 		
