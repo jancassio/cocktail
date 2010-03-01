@@ -82,9 +82,13 @@ package cocktail.lib.base
 				case "swf": 
 					slave = new GraphSlave();
 				break;
+				
 				case "xml": 
 					slave = new TextSlave();
 				break;
+				
+				default:
+					slave = new GraphSlave();
 			}
 			
 			if( _is_queue_opened )
