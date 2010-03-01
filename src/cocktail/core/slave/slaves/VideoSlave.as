@@ -1,8 +1,8 @@
 package cocktail.core.slave.slaves 
 {
-	import cocktail.core.slave.gunz.VideoSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
+	import cocktail.core.slave.gunz.VideoSlaveBullet;
 
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
@@ -11,8 +11,8 @@ package cocktail.core.slave.slaves
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import flash.system.System;
 	import flash.utils.Timer;
-
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
@@ -40,56 +40,6 @@ package cocktail.core.slave.slaves
 			
 		}
 
-		/**
-		 * Start the loading process.
-		 * @return	Self reference for inline reuse.
-		 */
-		public function load( uri : String = null ) : ISlave
-		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
-			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
-				return this;
-			}
-			
-			// Change _uri with new value
-			if ( uri != null)
-				_uri = uri;
-			
-			// Lock loading if _uri is null
-			if ( _uri == null )
-			{
-				trace( "Set the uri param before loading." );
-				return this;
-			}
-				
-			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
-			
-			_netconn = new NetConnection( );
-			_netconn.connect( null );
-			
-			// updating status
-			_status = ASlave._LOADING;
-			
-			// start connection
-			_netstream = new NetStream( _netconn );
-			_netstream.client = new StatusHandler( );
-			
-			if( _target )
-				_target.attachNetStream( _netstream );
-				
-			_netstream.play( _uri );
-			_netstream.pause();
-			
-			_set_triggers();
-			
-			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
-			
-			return this;
-		}
-		
 		private function _set_triggers() : void
 		{
 			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
@@ -220,6 +170,58 @@ package cocktail.core.slave.slaves
 			return _netstream;
 		}
 		
+		/* LOADING */
+		
+		/**
+		 * Start the loading process.
+		 * @return	Self reference for inline reuse.
+		 */
+		public function load( uri : String = null ) : ISlave
+		{
+			// Check if this class was destroyed
+			if( _status == ASlave._DESTROYED )
+			{
+				trace( "This class was destroyed! " +
+				"You cannot load content anymore." );
+				return this;
+			}
+			
+			// Change _uri with new value
+			if ( uri != null)
+				_uri = uri;
+			
+			// Lock loading if _uri is null
+			if ( _uri == null )
+			{
+				trace( "Set the uri param before loading." );
+				return this;
+			}
+				
+			_progress_timer = new Timer( DEFAULT_TIMER_DELAY );
+			
+			_netconn = new NetConnection( );
+			_netconn.connect( null );
+			
+			// updating status
+			_status = ASlave._LOADING;
+			
+			// start connection
+			_netstream = new NetStream( _netconn );
+			_netstream.client = new StatusHandler( );
+			
+			if( _target )
+				_target.attachNetStream( _netstream );
+				
+			_netstream.play( _uri );
+			_netstream.pause();
+			
+			_set_triggers();
+			
+			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
+			
+			return this;
+		}
+		
 		public function unload() : ISlave
 		{
 			_netconn.close();
@@ -234,70 +236,21 @@ package cocktail.core.slave.slaves
 				_target.clear();
 			_target = null;
 			
-			return null;
+			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			unload();
+			
+			_status = _DESTROYED;
+			
+			gunz.rm_all();
+			
+			System.gc();
+			
+			return this;
 		}
-		
-		
-		/* STREAM CONTROLS */
-		
-//		/**
-//		 * Stop the stream.
-//		 */
-//		public function stop () : VideoSlave
-//		{
-//			_stream_paused = true;
-//			_netstream.seek( 0 );
-//			_netstream.pause();
-//			return this;
-//		}
-//		
-//		/**
-//		 * Play or pause the stream.
-//		 */
-//		public function play_pause () : VideoSlave
-//		{
-//			_stream_paused = !_stream_paused;
-//			
-//			if ( _stream_paused )
-//				_netstream.pause();
-//			else
-//				_netstream.resume();
-//			
-//			return this;
-//		}
-//		
-//		/**
-//		 * Play the stream.
-//		 */
-//		public function play () : VideoSlave
-//		{
-//			if ( _stream_paused )
-//			{
-//				_netstream.resume();
-//				_stream_paused = true;
-//			}
-//			return this;
-//		}
-//		
-//		/**
-//		 * Pause the stream.
-//		 */
-//		public function pause () : VideoSlave
-//		{
-//			if ( !_stream_paused )
-//			{
-//				_netstream.pause();
-//				_stream_paused = false;
-//			}
-//			return this;
-//		}
-		
 	}
 }
 
