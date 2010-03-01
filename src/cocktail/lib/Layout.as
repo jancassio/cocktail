@@ -4,6 +4,7 @@ package cocktail.lib
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.LayoutBullet;
+	import cocktail.messages.lib.LayoutMessages;
 
 	import flash.display.DisplayObjectContainer;
 
@@ -69,22 +70,28 @@ package cocktail.lib
 			return path;
 		}
 
+		/**
+		 * Returns true if childs.request is equal to param request
+		 * @param request	The request you would check if is rendered
+		 * @see	ViewStack#request
+		 */
 		public function is_rendered( request : Request ) : Boolean
 		{
 			return childs.request == request; 
 		}
-		
+
 		/* PUBLIC GETTERS */
-		
+
 		public function get target() : DisplayObjectContainer 
 		{
 			var full_path : Array;
-			var controller_name: String;
-			var action_name: String;
-			var asset_id: String;
+			var controller_name : String;
+			var action_name : String;
+			var asset_id : String;
 			
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
+				log.info( LayoutMessages.no_target_found );
 				return cocktail.app;
 			}
 			
@@ -96,6 +103,5 @@ package cocktail.lib
 
 			return controller( name ).layout.childs.by_id( asset_id ).sprite;
 		}
-		
 	}
 }
