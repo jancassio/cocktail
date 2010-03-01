@@ -30,23 +30,13 @@ package cocktail.core.slave.slaves
 		 * will start loading immediatelly, otherwise <code>false</code> you'll
 		 * need to call the "load" method to start the loading process.
 		 */
-		public function TextSlave(
-			uri : String,
-			auto_load : Boolean = false
-		) : void
-		{
-			super( uri );
-			
+		public function TextSlave() : void
+		{			
 			_loader = new URLLoader( );
 			_loader.addEventListener( Event.OPEN, _start );
 			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
 			_loader.addEventListener( Event.COMPLETE, _complete );
 			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
-			
-			_request = new URLRequest( uri );
-			
-			if( auto_load )
-				load( );
 		}
 
 		/* LISTENERS */

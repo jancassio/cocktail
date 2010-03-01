@@ -19,17 +19,8 @@ package cocktail.core.slave.slaves
 		private var _request : URLRequest;
 		private var _sound : Sound;
 
-		public function AudioSlave( 
-			uri : String,
-			auto_load : Boolean = false
-		) : void
+		public function AudioSlave() : void
 		{
-			super( uri );
-			
-			_uri = uri;
-			
-			if( auto_load )
-				load( );
 		}
 		
 		private function _init() : void
