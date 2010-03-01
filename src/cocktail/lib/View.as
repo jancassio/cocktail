@@ -146,7 +146,7 @@ package cocktail.lib
 		 * @param process	Running process.
 		 * @return	An array with all Datasources, properly instantiated. 
 		 */
-		private function _parse_assets( process : Request ) : Array 
+		private function _parse_assets( request : Request ) : Array 
 		{
 			log.info( "Running..." );
 			var i : int;
@@ -155,7 +155,7 @@ package cocktail.lib
 			var node : XML;
 			var action : String;
 			
-			action = process.route.api.action;
+			action = request.route.api.action;
 			assets = [];
 			
 			//layout will work just if it finds 1 action.
@@ -256,6 +256,7 @@ package cocktail.lib
 		public function after_render( request : Request ) : void
 		{
 			log.info( "Running..." );
+			request;
 		}
 
 		/**

@@ -16,9 +16,9 @@ package cocktail.lib
 		 * Load model scheme.
 		 * @param process	Running process.
 		 */
-		public function load_scheme( process : Request ) : Layout 
+		public function load_scheme( request : Request ) : Layout 
 		{
-			process;
+			request;
 			log.info( "Running..." );
 			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme );
 			return this;
