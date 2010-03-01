@@ -20,20 +20,13 @@ package cocktail.core.slave
 		public var gunz_complete : Gun;
 		public var gunz_error : Gun;
 
-		private function _init_gunz() : void
-		{
-			gunz = new Gunz( this );
-			gunz_start = new Gun( gunz, this, "start" );
-			gunz_progress = new Gun( gunz, this, "progress" );
-			gunz_complete = new Gun( gunz, this, "complete" );
-			gunz_error = new Gun( gunz, this, "error" );
-		}
-
 		/**  CONSTANTS **/
 		protected static const _QUEUED : String = "queued";
 		protected static const _LOADING : String = "loading";
 		protected static const _LOADED : String = "loaded";
 		protected static const _ERROR : String = "error";
+		protected static const _DESTROYED : String = "destroyed";
+		
 		/** VARS **/
 		protected var _uri : String;
 		protected var _node : DListNode;
@@ -54,6 +47,15 @@ package cocktail.core.slave
 			_node = new DListNode( this );
 			dlist = new DLinkedList( );
 		}
+		
+		private function _init_gunz() : void
+		{
+			gunz = new Gunz( this );
+			gunz_start = new Gun( gunz, this, "start" );
+			gunz_progress = new Gun( gunz, this, "progress" );
+			gunz_complete = new Gun( gunz, this, "complete" );
+			gunz_error = new Gun( gunz, this, "error" );
+		}
 
 		/* GETTERS */
 		
@@ -63,6 +65,7 @@ package cocktail.core.slave
 		 * 	2- loading
 		 * 	3- loaded
 		 * 	4- error
+		 * 	5- destroyed
 		 * @return	Item status.
 		 */
 		final public function get status() : String
@@ -95,6 +98,16 @@ package cocktail.core.slave
 		final public function get next() : DListNode
 		{
 			return _node.next;
+		}
+		
+		public function get uri() : String 
+		{
+			return _uri;
+		}
+		
+		public function set uri(uri : String) : void 
+		{
+			_uri = uri;
 		}
 	}
 }
