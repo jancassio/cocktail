@@ -21,6 +21,7 @@ package cocktail.core.slave.slaves
 		/* VARS */
 		private var _loader : URLLoader;
 		private var _request : URLRequest;
+		private var _trigger_set : Boolean = false;
 
 		/* INITIALIZING */
 		
@@ -76,6 +77,30 @@ package cocktail.core.slave.slaves
 		{
 			_status = ASlave._ERROR;
 			gunz_error.shoot( new ASlaveBullet( 0, 0 ) );
+		}
+		
+		/* TRIGGERS */
+		
+		private function _set_triggers () : void
+		{
+			_loader.addEventListener( Event.OPEN, _start );
+			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.addEventListener( Event.COMPLETE, _complete );
+			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
+			
+			_trigger_set = true;
+		}
+		
+		private function _unset_triggers () : void
+		{
+			if( _loader == null ) return;
+			
+			_loader.removeEventListener( Event.OPEN, _start );
+			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
+			_loader.removeEventListener( Event.COMPLETE, _complete );
+			_loader.removeEventListener( IOErrorEvent.IO_ERROR, _error );
+			
+			_trigger_set = false;
 		}
 
 		/* GETTERS */
@@ -145,7 +170,9 @@ package cocktail.core.slave.slaves
 			
 			unload();
 			
-			_loader = new URLLoader( );
+			_loader  = new URLLoader( );
+			_request = new URLRequest( uri );
+			
 			_set_triggers();
 			
 			// updating status
@@ -162,10 +189,11 @@ package cocktail.core.slave.slaves
 		 */
 		public function unload() : ISlave
 		{
-			try { _loader.close(); } 
-			catch ( e : Error ) { trace ( e ); };
+			if ( _status == ASlave._LOADING )
+				_loader.close();
 			
-			_unset_triggers();
+			if ( _trigger_set )
+				_unset_triggers();
 			
 			return this;
 		}
@@ -185,24 +213,6 @@ package cocktail.core.slave.slaves
 			System.gc();
 			
 			return this;
-		}
-		
-		/* TRIGGERS */
-		
-		private function _set_triggers () : void
-		{
-			_loader.addEventListener( Event.OPEN, _start );
-			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader.addEventListener( Event.COMPLETE, _complete );
-			_loader.addEventListener( IOErrorEvent.IO_ERROR, _error );
-		}
-		
-		private function _unset_triggers () : void
-		{
-			_loader.removeEventListener( Event.OPEN, _start );
-			_loader.removeEventListener( ProgressEvent.PROGRESS, _progress );
-			_loader.removeEventListener( Event.COMPLETE, _complete );
-			_loader.removeEventListener( IOErrorEvent.IO_ERROR, _error );
 		}
 	}
 }

@@ -27,6 +27,7 @@ package cocktail.core.slave.slaves
 		private var _loader_info : LoaderInfo;
 		private var _request : URLRequest;
 		private var _target : DisplayObjectContainer;
+		private var _trigger_set : Boolean = false;
 		
 		/* INITIALIZING */
 		
@@ -205,15 +206,15 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			try { _loader.unloadAndStop( true ); } 
-			catch ( e : Error ) { trace ( e ); };
+			if ( _loader )
+				_loader.unloadAndStop( true );
+				
+			if ( _status == ASlave._LOADING )
+				_loader.close();
 			
-			try { _loader.close( ); } 
-			catch ( e : Error ) { trace ( e ); };
-			
-			try { _unset_triggers(); } 
-			catch ( e : Error ) { trace ( e ); };
-			
+			if ( _trigger_set )
+				_unset_triggers();
+				
 			_loader = null;
 			_loader_info = null;
 			_request = null;
