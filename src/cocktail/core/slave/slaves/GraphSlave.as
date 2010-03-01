@@ -164,7 +164,6 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null) : ISlave
 		{
-			trace( _status );
 			// Check if this class was destroyed
 			if( _status == ASlave._DESTROYED )
 			{
@@ -210,6 +209,9 @@ package cocktail.core.slave.slaves
 			catch ( e : Error ) { trace ( e ); };
 			
 			try { _loader.close( ); } 
+			catch ( e : Error ) { trace ( e ); };
+			
+			try { _unset_triggers(); } 
 			catch ( e : Error ) { trace ( e ); };
 			
 			_loader = null;
