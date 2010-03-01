@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.core.slave.Slave;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
@@ -37,9 +38,6 @@ package cocktail.lib
 
 		/** When created trought xml, this will hold the xml node**/
 		private var _xml_node : XML;
-
-		/** Current loading group **/ 
-		private var _loading_group : GunzGroup;
 
 		/** View sprite **/
 		public var sprite : Sprite;
@@ -103,40 +101,29 @@ package cocktail.lib
 			var i : int;
 			var assets : Array;
 			var view : View;
+			var src: String;
 			
+			//will mark all views as dead ( not in current render )
 			childs.clear_render_poll( );
-			
-			if( !( assets = _parse_assets( request ) ).length )
-			{
-				var bullet : ViewBullet;
-				
-				bullet = new ViewBullet( );
-				bullet.params = request;
-				
-				new Timeout( _after_load_assets, 1, bullet );
-			}
-			else
-			{
-				_loading_group = new GunzGroup( );
-				_loading_group.gunz_complete.add( _after_load_assets, request );
 
-				//TODO: use a lambda to run all selected assets				
-				do 
-				{
-					view = assets[ i ];
-					_loading_group.add( view.gunz_load_complete );
-				} while( ++i < assets.length );
-				
-				
-				i = 0; 
-				do 
-				{
-					view = assets[ i ];
-					view.load( request );
-					childs.mark_as_alive( view );
-				} while( ++i < assets.length );
-			}
+			//ATT: _parse assets should run after childs.clear_render_poll()			
+			assets = _parse_assets( request ); 
 			
+			if( ( src = xml_node.attribute( 'src' ) ) )
+				loader.append( load_uri( src ) );
+			
+			if( ( this is Layout ) == false )
+				up.childs.mark_as_alive( this );
+			
+			if( assets.length == 0 ) return true;
+			
+			//TODO: use a lambda to run all selected assets				
+			do 
+			{
+				view = assets[ i ];
+				view.load( request );
+			} while( ++i < assets.length );
+
 			return true;
 		}
 
@@ -181,16 +168,6 @@ package cocktail.lib
 		}
 
 		/**
-		 * Triggered after all views have loaded its content
-		 */
-		private function _after_load_assets( bullet : Bullet ) : void 
-		{
-			log.info( "Running..." );
-			bullet;
-			gunz_load_complete.shoot( new ViewBullet( ) );
-		}
-
-		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
 		 */
@@ -208,7 +185,6 @@ package cocktail.lib
 			
 			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) != null ) 
 			{
-				childs.mark_as_alive( view );
 				return childs.by_id( xml_node.attribute( 'id' ) );
 			}
 			
@@ -240,6 +216,15 @@ package cocktail.lib
 					up.add( this );
 			}
 			
+			//properties rendering
+			//need to think in a good automated process to apply it
+			
+			if( xml_node.attribute( 'x' ) )
+				sprite.x = Number( xml_node.attribute( 'x' ) );
+				 	
+			if( xml_node.attribute( 'y' ) )
+				sprite.x = Number( xml_node.attribute( 'y' ) ); 	
+
 			childs.render( request );
 			
 			after_render( request );
@@ -300,6 +285,11 @@ package cocktail.lib
 			return ( up == null ) ? Layout( this ) : up.root;
 		}
 
+		public function get loader(): Slave
+		{
+			return root.loader;
+		}
+		
 		public function get childs() : ViewStack
 		{
 			return _childs;

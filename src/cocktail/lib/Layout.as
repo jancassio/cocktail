@@ -1,15 +1,29 @@
 package cocktail.lib 
 {
+	import cocktail.Cocktail;
+	import cocktail.core.gunz.Bullet;
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.LayoutBullet;
+	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.messages.lib.LayoutMessages;
+	import cocktail.utils.Timeout;
 
 	import flash.display.DisplayObjectContainer;
 
 	public class Layout extends View 
 	{
+
+		/** will hold all loadings from this layout and its childs **/
+		private var _loader: Slave;
+		
+		override public function boot(cocktail : Cocktail) : * 
+		{
+			_loader = new Slave();
+			return super.boot( cocktail );
+		}
 
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
@@ -53,6 +67,37 @@ package cocktail.lib
 			return true;
 		}
 
+		
+		override public function load(request : Request) : Boolean 
+		{
+			if( !super.load( request ) ) return false;
+			
+			if( loader.length )
+				loader.gunz_complete.add( _after_load_assets, request ).once();
+			else
+			{
+				var bullet : ViewBullet;
+				
+				bullet = new ViewBullet( );
+				bullet.params = request;
+				
+				new Timeout( _after_load_assets, 1, bullet );
+			}
+				
+			return true;
+		}
+
+		/**
+		 * Triggered after all views have loaded its content
+		 */
+		private function _after_load_assets( bullet : Bullet ) : void 
+		{
+			log.info( "Running..." );
+			bullet;
+			//this will tell controller, that everything was ok
+			gunz_load_complete.shoot( new ViewBullet( ) );
+		}
+		
 		/* PRIVATE GETTERS */
 
 		/**
@@ -92,7 +137,7 @@ package cocktail.lib
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
 				log.info( LayoutMessages.no_target_found );
-				return cocktail.app;
+				return _cocktail.app;
 			}
 			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
@@ -102,6 +147,11 @@ package cocktail.lib
 			asset_id = full_path[ 1 ];
 
 			return controller( name ).layout.childs.by_id( asset_id ).sprite;
+		}
+		
+		override public function get loader() : Slave
+		{
+			return _loader;
 		}
 	}
 }
