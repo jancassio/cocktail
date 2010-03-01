@@ -78,6 +78,10 @@ package cocktail.lib
 
 		/* LOAD ASSETS */
 
+		/**
+		 * Filters the loading action. If return false, load routine will
+		 * pause
+		 */
 		public function before_load( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
