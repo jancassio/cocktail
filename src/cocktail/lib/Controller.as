@@ -6,7 +6,6 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
-	import cocktail.lib.base.MVC;
 	import cocktail.lib.gunz.ControllerBullet;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.gunz.ViewBullet;
@@ -69,6 +68,8 @@ package cocktail.lib
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
+			
+			_model._controller = _layout._controller = this;
 			
 			return s;
 		}
@@ -145,7 +146,6 @@ package cocktail.lib
 		 */
 		private function _load_scheme( request : Request ) : void
 		{
-			
 			_group = new GunzGroup( );
 			_group.add( _layout.gunz_scheme_load_complete );
 			_group.add( _model.gunz_scheme_load_complete );
@@ -171,10 +171,6 @@ package cocktail.lib
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
-			
-			//FIXME: Remove this hardcoded call to load layout, and let the code flow
-			_load_layout( request );
-			return;
 			
 			if( _model.load( request ) )
 				_model.gunz_load_complete.add( _after_load_model, request );
