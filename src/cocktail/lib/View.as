@@ -217,9 +217,9 @@ package cocktail.lib
 		/**
 		 * Creates then attachs the view sprite
 		 */
-		private function _instantiate_sprite(): void
+		private function _instantiate_sprite(): Boolean
 		{
-			if( sprite ) return;
+			if( sprite ) return false;
 			
 			sprite = new Sprite( );
 			
@@ -227,13 +227,16 @@ package cocktail.lib
 				root.scope.addChild( sprite );
 			else
 				up.sprite.addChild( sprite );
+			
+			set_triggers( );
 		}
-		
+
 		/**
 		 * Apply the styles for the current request
 		 */
 		private function _apply_styles( request: Request ): void
 		{
+			//FIXME: Implement a real style system
 			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
@@ -254,6 +257,40 @@ package cocktail.lib
 			request;
 		}
 
+		/**
+		 * Will check if user customized some events, if so, will plug
+		 * then for the user.
+		 * 
+		 * Called automatically once - when creating the view sprite
+		 */
+		public function set_triggers() : void 
+		{
+			if( prototype[ 'click' ] != View.prototype[ 'click' ] )
+			{
+				log.notice( "Naiz! You customized the click" );
+			}
+			
+			if( prototype[ 'over' ] != View.prototype[ 'over' ] )
+			{
+				log.notice( "Naiz! You customized the over" );
+			}
+			
+			if( prototype[ 'over' ] != View.prototype[ 'out' ] )
+			{
+				log.notice( "Naiz! You customized the out" );
+			}
+		}
+		
+		/**
+		 * Should unset all possible triggers.
+		 * 
+		 * Called automatically once - when destroying the view
+		 */
+		public function unset_triggers(): void
+		{
+			
+		}
+		
 		/**
 		 * Destroy filter, if returns false, wont destroy
 		 */
