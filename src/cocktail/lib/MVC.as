@@ -40,6 +40,12 @@ package cocktail.lib
 			return s;
 		}
 		
+		public function redirect( url: String, silent: Boolean = false ): void
+		{
+			silent;
+			router.get( url );
+		}
+
 		/*Clean class name */
 		public function get name(): String
 		{

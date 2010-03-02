@@ -73,7 +73,10 @@ package cocktail.lib
 			if( !super.load( request ) ) return false;
 			
 			if( loader.length )
+			{
 				loader.gunz_complete.add( _after_load_assets, request ).once();
+				loader.load();
+			}
 			else
 			{
 				var bullet : ViewBullet;

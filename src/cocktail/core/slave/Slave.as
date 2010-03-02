@@ -117,7 +117,7 @@ package cocktail.core.slave
 		}
 
 		/**
-		 * Loads any video request (.flv).
+		 * Loads any video request (.flv .mov).
 		 * @param uri	Uniform Resource Identifier to be loaded.
 		 * @return	The created and appended VideoSlave instance.
 		 */
@@ -129,7 +129,7 @@ package cocktail.core.slave
 		}
 
 		/**
-		 * Loads any audio request (.mp3).
+		 * Loads any audio request (.mp3 .wav).
 		 * @param uri	Uniform Resource Identifier to be loaded.
 		 * @return	The created and appended AudioSlave instance.
 		 */

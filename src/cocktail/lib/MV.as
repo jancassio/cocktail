@@ -6,9 +6,9 @@ package cocktail.lib
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
+	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
-	
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
@@ -18,7 +18,6 @@ package cocktail.lib
 	{
 		/* GUNZ */
 		public var gunz_scheme_load_start : Gun; 
-
 		public var gunz_scheme_load_complete : Gun; 
 
 		private function _init_gunz() : void
@@ -41,16 +40,12 @@ package cocktail.lib
 
 		/* VARS */
 		internal var _controller : Controller;  
-		
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
-
 		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;
-
 		/** Quite explainatory name, huh? **/
 		private var _is_queue_opened : Boolean;
-		
 
 		/**
 		 * 
@@ -77,20 +72,27 @@ package cocktail.lib
 			
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
+				case "flv":
+				case "mov":
+					slave = new AudioSlave( );
+					break;
+				
+				case "mp3":
+				case "wav":
+					slave = new AudioSlave( );
+					break;
+				
+				case "xml":
+					slave = new TextSlave( );
+					break;
+				
+				default:
 				case "jpg": 
 				case "jpeg": 
 				case "png": 
 				case "gif": 
-				case "swf": 
-					slave = new GraphSlave();
-				break;
-				
-				case "xml": 
-					slave = new TextSlave();
-				break;
-				
-				default:
-					slave = new GraphSlave();
+				case "swf":
+					slave = new GraphSlave( );
 			}
 			
 			if( _is_queue_opened )
@@ -109,9 +111,8 @@ package cocktail.lib
 		{
 			return _cocktail.process.controller( name );
 		}
-		
+
 		/* GETTERS */
-		
 		public function get bind() : Bind
 		{
 			return _controller._bind;
