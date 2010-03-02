@@ -5,7 +5,7 @@
 
 	<inline id="inline-test" inject="main,home" locale="pt">
 		<song>Dead From Inside Out</song>
-		<year>male</year>
+		<year>2010</year>
 		<duration>10"+</duration>
 	</inline>
 
