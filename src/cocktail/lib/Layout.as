@@ -73,10 +73,10 @@ package cocktail.lib
 		{
 			if( !super.load( request ) ) return false;
 			
-			
-			if( loader.length  )
+			if( loader.length )
 			{
 				loader.gunz_complete.add( _after_load_assets, request ).once();
+				loader.gunz_error.add( _load_assets_failed, request ).once();
 				loader.load();
 			}
 			else
@@ -101,6 +101,12 @@ package cocktail.lib
 			bullet;
 			//this will tell controller, that everything was ok
 			gunz_load_complete.shoot( new ViewBullet( ) );
+		}
+		
+		private function _load_assets_failed( bullet: Bullet ) : void
+		{
+			log.error( "Failed to load all layout assets" );
+			_after_load_assets(bullet);
 		}
 		
 		/* PRIVATE GETTERS */
