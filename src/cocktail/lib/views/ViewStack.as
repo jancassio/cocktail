@@ -214,7 +214,11 @@ package cocktail.lib.views
 			var path : String;
 			
 			path = StringUtil.toUnderscore( view.root.name ) + '.';
-			path = path + '' + StringUtil.toCamel( xml_node.localName() );
+			
+			if( xml_node.attribute( 'class' ).toString() )
+				path += StringUtil.toCamel( xml_node.attribute( 'class' ) );
+			else
+				path += StringUtil.toCamel( xml_node.localName() );
 			
 			created = View( new ( _cocktail.factory.view( path ) ) );
 			created.identifier = xml_node.localName();
