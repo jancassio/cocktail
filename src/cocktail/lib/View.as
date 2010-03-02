@@ -200,13 +200,26 @@ package cocktail.lib
 			return true;
 		}
 
-		public function render( request : Request ) : Boolean
+		public function render( request : Request ) : *
 		{
 			if( !before_render( request ) ) return false;
 			
 			log.info( "Running..." );
 			
-			if( !sprite )
+			if( !sprite ) _create_sprite();
+			
+			_apply_styles( request );
+
+			childs.render( request );
+			
+			return after_render( request );
+		}
+
+		/**
+		 * Creates then attachs the view sprite
+		 */
+		private function _create_sprite(): void
+		{
 			{
 				sprite = new Sprite( );
 				
@@ -217,7 +230,14 @@ package cocktail.lib
 				else
 					up.add( this );
 			}
-			
+		}
+		
+		/**
+		 * Apply the styles for the current request
+		 */
+		private function _apply_styles( request: Request ): void
+		{
+			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
 			
@@ -226,14 +246,8 @@ package cocktail.lib
 				 	
 			if( xml_node.attribute( 'y' ) )
 				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
-
-			childs.render( request );
-			
-			after_render( request );
-			
-			return true;
 		}
-
+		
 		private function add( view : View ) : void 
 		{
 			sprite.addChild( view.sprite );
