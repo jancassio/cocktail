@@ -224,16 +224,21 @@ package cocktail.core.slave.slaves
 		
 		public function unload() : ISlave
 		{
-			_netconn.close();
-			_netstream.close( );
+			if ( _netconn )
+				_netconn.close();
+			
+			if ( _netstream )
+				_netstream.close( );
 			
 			if ( _trigger_set )
 				_unset_triggers();
 				
-			_progress_timer = null;
-			
 			if( _target )
 				_target.clear();
+			
+			_progress_timer = null;
+			_netconn = null;
+			_netstream = null;
 			_target = null;
 			
 			return this;
