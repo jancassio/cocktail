@@ -1,13 +1,14 @@
 package cocktail.lib.base 
 {
-	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
+	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.core.slave.slaves.VideoSlave;
 	import cocktail.lib.Controller;
 
 	/**
@@ -43,7 +44,7 @@ package cocktail.lib.base
 
 		/* VARS */
 		internal var _controller : Controller;  
-		
+
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
 
@@ -79,17 +80,17 @@ package cocktail.lib.base
 			{
 				case "flv":
 				case "mov":
-					slave = new AudioSlave();
-				break;
+					slave = new VideoSlave( );
+					break;
 				
 				case "mp3":
 				case "wav":
-					slave = new AudioSlave();
-				break;
+					slave = new AudioSlave( );
+					break;
 				
 				case "xml":
-					slave = new TextSlave();
-				break;
+					slave = new TextSlave( );
+					break;
 				
 				default:
 				case "jpg": 
@@ -97,7 +98,7 @@ package cocktail.lib.base
 				case "png": 
 				case "gif": 
 				case "swf":
-					slave = new GraphSlave();
+					slave = new GraphSlave( );
 			}
 			
 			if( _is_queue_opened )
