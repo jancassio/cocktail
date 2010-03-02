@@ -206,7 +206,7 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			if( !sprite ) _create_sprite();
+			_instantiate_sprite();
 			
 			_apply_styles( request );
 
@@ -218,18 +218,16 @@ package cocktail.lib
 		/**
 		 * Creates then attachs the view sprite
 		 */
-		private function _create_sprite(): void
+		private function _instantiate_sprite(): void
 		{
-			{
-				sprite = new Sprite( );
-				
-				if( this is Layout )
-				{
-					Layout( this ).target.addChild( sprite );
-				}
-				else
-					up.add( this );
-			}
+			if( sprite ) return;
+			
+			sprite = new Sprite( );
+			
+			if( this is root )
+				root.scope.addChild( sprite );
+			else
+				up.sprite.addChild( sprite );
 		}
 		
 		/**
@@ -248,11 +246,9 @@ package cocktail.lib
 				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
 		}
 		
-		private function add( view : View ) : void 
-		{
-			sprite.addChild( view.sprite );
-		}
-
+		/**
+		 * Called just after the render function
+		 */
 		public function after_render( request : Request ) : void
 		{
 			log.info( "Running..." );
