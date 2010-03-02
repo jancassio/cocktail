@@ -159,6 +159,10 @@ package cocktail.utils
 			return result;
 		}
 
+		/**
+		 * Convert camel cases string ( CamelCased ) 
+		 * to underscoded ( camel_case )
+		 */
 		public static function toUnderscore( string : String ) : String
 		{
 			string = string.replace( /(.)([A-Z])/, '$1_$2' );
