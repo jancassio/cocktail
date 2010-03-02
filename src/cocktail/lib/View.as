@@ -4,7 +4,7 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
-	import cocktail.lib.view.ViewStack;
+	import cocktail.lib.views.ViewStack;
 
 	import de.polygonal.ds.DListNode;
 
@@ -192,31 +192,49 @@ package cocktail.lib
 			return childs.create( xml_node );
 		}
 
-		private function before_render( request : Request ) : Boolean 
+		public function before_render( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
 			request;
 			return true;
 		}
 
-		public function render( request : Request ) : Boolean
+		public function render( request : Request ) : *
 		{
 			if( !before_render( request ) ) return false;
 			
 			log.info( "Running..." );
 			
-			if( !sprite )
-			{
-				sprite = new Sprite( );
-				
-				if( this is Layout )
-				{
-					Layout( this ).target.addChild( sprite );
-				}
-				else
-					up.add( this );
-			}
+			_instantiate_sprite();
 			
+			_apply_styles( request );
+
+			childs.render( request );
+			
+			return after_render( request );
+		}
+
+		/**
+		 * Creates then attachs the view sprite
+		 */
+		private function _instantiate_sprite(): void
+		{
+			if( sprite ) return;
+			
+			sprite = new Sprite( );
+			
+			if( this == root )
+				root.scope.addChild( sprite );
+			else
+				up.sprite.addChild( sprite );
+		}
+		
+		/**
+		 * Apply the styles for the current request
+		 */
+		private function _apply_styles( request: Request ): void
+		{
+			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
 			
@@ -225,19 +243,11 @@ package cocktail.lib
 				 	
 			if( xml_node.attribute( 'y' ) )
 				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
-
-			childs.render( request );
-			
-			after_render( request );
-			
-			return true;
 		}
-
-		private function add( view : View ) : void 
-		{
-			sprite.addChild( view.sprite );
-		}
-
+		
+		/**
+		 * Called just after the render function
+		 */
 		public function after_render( request : Request ) : void
 		{
 			log.info( "Running..." );

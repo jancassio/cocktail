@@ -1,4 +1,4 @@
-package cocktail.lib.view 
+package cocktail.lib.views 
 {
 	import cocktail.utils.StringUtil;
 	import cocktail.core.Index;

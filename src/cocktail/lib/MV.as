@@ -9,6 +9,7 @@ package cocktail.lib
 	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.core.slave.slaves.VideoSlave;
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
@@ -74,7 +75,7 @@ package cocktail.lib
 			{
 				case "flv":
 				case "mov":
-					slave = new AudioSlave( );
+					slave = new VideoSlave( );
 					break;
 				
 				case "mp3":

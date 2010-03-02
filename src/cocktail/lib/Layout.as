@@ -130,7 +130,7 @@ package cocktail.lib
 
 		/* PUBLIC GETTERS */
 
-		public function get target() : DisplayObjectContainer 
+		public function get scope() : DisplayObjectContainer 
 		{
 			var full_path : Array;
 			var controller_name : String;
