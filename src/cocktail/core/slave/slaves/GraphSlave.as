@@ -173,6 +173,13 @@ package cocktail.core.slave.slaves
 				return this;
 			}
 			
+			if ( _status == _LOADING )
+			{
+				trace( "This class is loading! " +
+				"You cannot load content now." );
+				return this;
+			}
+			
 			// Change _uri with new value
 			if ( uri != null)
 				_uri = uri;
@@ -184,7 +191,7 @@ package cocktail.core.slave.slaves
 				return this;
 			}
 			
-			unload();
+			//unload();
 			
 			_loader = new Loader( );
 			_loader_info = _loader.contentLoaderInfo;
@@ -218,6 +225,8 @@ package cocktail.core.slave.slaves
 			_loader = null;
 			_loader_info = null;
 			_request = null;
+			
+			_status = _QUEUED;
 			
 			return this;
 		}

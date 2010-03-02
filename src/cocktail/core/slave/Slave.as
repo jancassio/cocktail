@@ -54,6 +54,7 @@ package cocktail.core.slave
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
+			ctrace( _status );
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
 			{
@@ -343,6 +344,8 @@ package cocktail.core.slave
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
 				( i.next() as ISlave ).unload();
+			
+			_status = _QUEUED;
 			
 			return this;
 		}
