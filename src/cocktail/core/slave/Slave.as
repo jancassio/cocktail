@@ -103,7 +103,7 @@ package cocktail.core.slave
 		{
 			var slave : GraphSlave = new GraphSlave();
 			slave.uri = uri;
-			return _queue( slave );
+			return queue( slave );
 		}
 
 		/**
@@ -115,11 +115,11 @@ package cocktail.core.slave
 		{
 			var slave : TextSlave = new TextSlave();
 			slave.uri = uri;
-			return _queue( slave );
+			return queue( slave );
 		}
 		
 		/**
-		 * Loads any video request (.flv).
+		 * Loads any video request (.flv .mov).
 		 * @param uri	Uniform Resource Identifier to be loaded.
 		 * @return	The created and appended VideoSlave instance.
 		 */
@@ -127,11 +127,11 @@ package cocktail.core.slave
 		{
 			var slave : VideoSlave = new VideoSlave();
 			slave.uri = uri;
-			return _queue( slave );
+			return queue( slave );
 		}
 		
 		/**
-		 * Loads any audio request (.mp3).
+		 * Loads any audio request (.mp3 .wav).
 		 * @param uri	Uniform Resource Identifier to be loaded.
 		 * @return	The created and appended AudioSlave instance.
 		 */
@@ -139,7 +139,7 @@ package cocktail.core.slave
 		{
 			var slave : AudioSlave = new AudioSlave();
 			slave.uri = uri;
-			return _queue( slave );
+			return queue( slave );
 		}
 
 
@@ -149,7 +149,7 @@ package cocktail.core.slave
 		 * Enqueue the given slave item.
 		 * @param slave	Slave item to be queued.
 		 */
-		private function _queue( slave : ASlave ) : *
+		public function queue( slave : ASlave ) : *
 		{
 			slave.gunz_start.add( _start );
 			slave.gunz_progress.add( _progress );
@@ -226,7 +226,7 @@ package cocktail.core.slave
 		 * @param slave	Slave instance to be appended.
 		 * @return	A self reference for inline reuse.
 		 */
-		public function append( slave : Slave ) : ASlave
+		public function concat( slave : Slave ) : ASlave
 		{
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )

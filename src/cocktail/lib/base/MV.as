@@ -1,5 +1,6 @@
 package cocktail.lib.base 
 {
+	import cocktail.core.slave.slaves.AudioSlave;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.slave.ASlave;
@@ -19,6 +20,8 @@ package cocktail.lib.base
 		public var gunz_scheme_load_start : Gun; 
 
 		public var gunz_scheme_load_complete : Gun; 
+
+		private var _is_queue_opened : Boolean;
 
 		private function _init_gunz() : void
 		{
@@ -48,7 +51,6 @@ package cocktail.lib.base
 		private var _load_queue : Slave;
 
 		/** Quite explainatory name, huh? **/
-		private var _is_queue_opened : Boolean;
 
 		/**
 		 * 
@@ -75,24 +77,31 @@ package cocktail.lib.base
 			
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
-				case "jpg": 
-				case "jpeg": 
-				case "png": 
-				case "gif": 
-				case "swf": 
-					slave = new GraphSlave();
+				case "flv":
+				case "mov":
+					slave = new AudioSlave();
 				break;
 				
-				case "xml": 
+				case "mp3":
+				case "wav":
+					slave = new AudioSlave();
+				break;
+				
+				case "xml":
 					slave = new TextSlave();
 				break;
 				
 				default:
+				case "jpg": 
+				case "jpeg": 
+				case "png": 
+				case "gif": 
+				case "swf":
 					slave = new GraphSlave();
 			}
 			
 			if( _is_queue_opened )
-				_load_queue.append( slave );
+				_load_queue.queue( slave );
 			else
 				ISlave( slave ).load( uri );
 			
