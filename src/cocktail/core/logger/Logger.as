@@ -128,7 +128,7 @@ package cocktail.core.logger
 			
 			base = "[" + params[ 0 ] + "] ";
 			tmpl1 = base + "{$class} ~: ";
-			tmpl2 = base + "#$line {$class/$method} ~: ";
+			tmpl2 = base + "#$line {$class} => $method ~: ";
 			
 			msg = "";
 			if ( detail == 1 )
