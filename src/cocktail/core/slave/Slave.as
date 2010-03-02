@@ -41,7 +41,7 @@ package cocktail.core.slave
 			super( );
 			_auto_load = auto_load;
 			_parallelized = parallelized;
-			dlist = new DLinkedList( this );
+			dlist = new DLinkedList();
 		}
 
 		/* LOADING */
@@ -53,7 +53,7 @@ package cocktail.core.slave
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			trace( "Slave#load " + uri );
+			trace( "Slave#load " + _status );
 			
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
