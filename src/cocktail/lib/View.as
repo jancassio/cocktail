@@ -104,8 +104,11 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 			
-			if( ( src = xml_node.attribute( 'src' ) ) )
-				loader.append( load_uri( src ) );
+			if( ( src = xml_node.attribute( 'src' ).toString() ) )
+			{
+				log.warn( "\t\t->adding " + src + " to queue" );
+				loader.append( load_uri( src, false ) );
+			}
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -229,6 +232,8 @@ package cocktail.lib
 				up.sprite.addChild( sprite );
 			
 			set_triggers( );
+			
+			return true;
 		}
 
 		/**
