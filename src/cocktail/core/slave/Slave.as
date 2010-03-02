@@ -22,8 +22,7 @@ package cocktail.core.slave
 		private var _parallelized : Boolean;
 		private var _started : int;
 		private var _completed : int;
-		public var dlist : DLinkedList;
-		
+
 		/* INITIALIZING */
 		
 		/**
@@ -40,9 +39,9 @@ package cocktail.core.slave
 								parallelized : Boolean = false )
 		{
 			super( );
-			dlist = new DLinkedList();
 			_auto_load = auto_load;
 			_parallelized = parallelized;
+			dlist = new DLinkedList( this );
 		}
 
 		/* LOADING */
@@ -60,16 +59,16 @@ package cocktail.core.slave
 				return this;
 			}
 			
-			return _load();
+			return _load( );
 		}
-		
+
 		/**
 		 * Really start the loading process.
 		 * Set as private to keep the loading proccess safe.
 		 * 
 		 * @return Self return;
 		 */
-		private function _load () : ISlave
+		private function _load() : ISlave
 		{
 			_status = _LOADING;
 			
@@ -80,7 +79,7 @@ package cocktail.core.slave
 			
 			if ( !_parallelized )
 			{
-				( dlist.head.data as ASlave )[ "load" ]();
+				( dlist.head.data as ASlave )[ "load" ]( );
 				return this; 
 			}
 			
@@ -100,7 +99,7 @@ package cocktail.core.slave
 		 */
 		public function graph( uri : String ) : GraphSlave
 		{
-			var slave : GraphSlave = new GraphSlave();
+			var slave : GraphSlave = new GraphSlave( );
 			slave.uri = uri;
 			return _queue( slave );
 		}
@@ -112,11 +111,11 @@ package cocktail.core.slave
 		 */
 		public function text( uri : String ) : TextSlave
 		{
-			var slave : TextSlave = new TextSlave();
+			var slave : TextSlave = new TextSlave( );
 			slave.uri = uri;
 			return _queue( slave );
 		}
-		
+
 		/**
 		 * Loads any video request (.flv).
 		 * @param uri	Uniform Resource Identifier to be loaded.
@@ -124,11 +123,11 @@ package cocktail.core.slave
 		 */
 		public function video( uri : String ) : VideoSlave
 		{
-			var slave : VideoSlave = new VideoSlave();
+			var slave : VideoSlave = new VideoSlave( );
 			slave.uri = uri;
 			return _queue( slave );
 		}
-		
+
 		/**
 		 * Loads any audio request (.mp3).
 		 * @param uri	Uniform Resource Identifier to be loaded.
@@ -136,11 +135,10 @@ package cocktail.core.slave
 		 */
 		public function audio( uri : String ) : AudioSlave
 		{
-			var slave : AudioSlave = new AudioSlave();
+			var slave : AudioSlave = new AudioSlave( );
 			slave.uri = uri;
 			return _queue( slave );
 		}
-
 
 		/* QUEUE */
 		
@@ -200,11 +198,9 @@ package cocktail.core.slave
 			else
 			{
 				if( ( bullet.owner as ASlave ).node.next )
-					( ( bullet.owner as ASlave ).node.next.data 
-						as ISlave ).load();
+					( ( bullet.owner as ASlave ).node.next.data as ISlave ).load( );
 				else
 					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
-					
 			}
 		}
 
@@ -225,7 +221,7 @@ package cocktail.core.slave
 		 * @param slave	Slave instance to be appended.
 		 * @return	A self reference for inline reuse.
 		 */
-		public function append( slave : Slave ) : ASlave
+		public function append( slave : ASlave ) : ASlave
 		{
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
@@ -239,14 +235,15 @@ package cocktail.core.slave
 			i = dlist.getIterator( );
 			while( i.hasNext( ) )
 			{
-				node = i.next( )[ "data" ];
+				node = i.next( );
 				node.gunz_start.add( _start );
 				node.gunz_progress.add( _progress );
 				node.gunz_complete.add( _complete );
 				node.gunz_error.add( _error );
 			}
 			
-			dlist = dlist.concat( slave.dlist );
+			if( slave.dlist )
+				dlist = dlist.concat( slave.dlist );
 			
 			return this;
 		}
@@ -320,44 +317,44 @@ package cocktail.core.slave
 			
 			while( i.hasNext( ) )
 			{
-				slave = i.next();
+				slave = i.next( );
 				if( slave.status != ASlave._QUEUED )
 					loaded += slave.loaded;
 			}
 			
 			return loaded;
 		}
-		
-		public function stop_loading () : void
+
+		public function stop_loading() : void
 		{
 			if ( _status == _LOADING )
 			{
-				dlist.clear();
+				dlist.clear( );
 			}
 		}
-		
+
 		public function unload() : ISlave
 		{
 			var i : DListIterator;
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				( i.next() as ISlave ).unload();
+				( i.next( ) as ISlave ).unload( );
 			
 			return this;
 		}
-		
+
 		public function destroy() : ISlave
 		{
-			unload();
+			unload( );
 			
 			var i : DListIterator;
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				( i.next() as ISlave ).unload();
+				( i.next( ) as ISlave ).unload( );
 				
-			gunz.rm_all();	
+			gunz.rm_all( );	
 			
 			return this;
 		}

@@ -3,6 +3,7 @@ package cocktail.core.slave
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.Gunz;
 
+	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListNode;
 
 	/**
@@ -18,18 +19,17 @@ package cocktail.core.slave
 		public var gunz_progress : Gun;
 		public var gunz_complete : Gun;
 		public var gunz_error : Gun;
-
 		/**  CONSTANTS **/
 		protected static const _QUEUED : String = "queued";
 		protected static const _LOADING : String = "loading";
 		protected static const _LOADED : String = "loaded";
 		protected static const _ERROR : String = "error";
 		protected static const _DESTROYED : String = "destroyed";
-		
 		/** VARS **/
 		protected var _uri : String;
 		protected var _node : DListNode;
 		protected var _status : String;
+		public var dlist : DLinkedList;
 
 		/* INITIALIZING */
 		
@@ -43,7 +43,7 @@ package cocktail.core.slave
 			_uri = uri;
 			_status = _QUEUED;
 		}
-		
+
 		private function _init_gunz() : void
 		{
 			gunz = new Gunz( this );
@@ -77,7 +77,7 @@ package cocktail.core.slave
 		{
 			return _node;
 		}
-		
+
 		/**
 		 * Returns the slave node, in the linked list.
 		 * @param	Slave node.
@@ -104,18 +104,18 @@ package cocktail.core.slave
 		{
 			return _node.next;
 		}
-		
+
 		public function get uri() : String 
 		{
 			return _uri;
 		}
-		
+
 		public function set uri(uri : String) : void 
 		{
 			_uri = uri;
 		}
-		
-		public function carlos () : void
+
+		public function carlos() : void
 		{
 			trace( "CARRRRRRLO" );
 		}
