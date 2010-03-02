@@ -342,18 +342,22 @@ package cocktail.core.slave
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				DListNode( i.next( ) ).data[ "unload" ]( );
+				( i.next() as ISlave ).unload();
 			
 			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
+			unload();
+			
 			var i : DListIterator;
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				DListNode( i.next( ) ).data[ "destroy" ]( );
+				( i.next() as ISlave ).unload();
+				
+			gunz.rm_all();	
 			
 			return this;
 		}
