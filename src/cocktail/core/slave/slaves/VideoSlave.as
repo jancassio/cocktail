@@ -120,7 +120,9 @@ package cocktail.core.slave.slaves
 			if ( loaded >= total )
 			{
 				_status = ASlave._LOADED;
-				_unset_triggers();
+				_unset_triggers( );
+				
+				gunz_complete.shoot( new VideoSlaveBullet( loaded, total ) );
 			}
 			
 			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
@@ -216,8 +218,6 @@ package cocktail.core.slave.slaves
 			_set_triggers();
 			
 			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
-			
-			ctrace(2);
 			
 			return this;
 		}
