@@ -173,7 +173,7 @@ package cocktail.lib
 			log.info( "Running..." );
 			var path : String;
 			
-			path = config.path( ".xml" ) + "models/";
+			path = config.path( "xml" ) + "models/";
 			path += classname.toLowerCase( ).replace( "model", "" ) + ".xml";
 			
 			return path;

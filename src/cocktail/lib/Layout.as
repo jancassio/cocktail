@@ -114,7 +114,7 @@ package cocktail.lib
 			log.info( "Running..." );
 			var path : String;
 			
-			path = config.path( ".xml" ) + "layouts/";
+			path = config.path( "xml" ) + "layouts/";
 			path += StringUtil.toUnderscore( name ) + ".xml";
 			
 			return path;
