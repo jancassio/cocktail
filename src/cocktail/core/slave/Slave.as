@@ -6,6 +6,7 @@ package cocktail.core.slave
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.core.slave.slaves.VideoSlave;
 
+	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListIterator;
 	import de.polygonal.ds.DListNode;
 	import de.polygonal.ds.Iterator;
@@ -21,7 +22,8 @@ package cocktail.core.slave
 		private var _parallelized : Boolean;
 		private var _started : int;
 		private var _completed : int;
-
+		public var dlist : DLinkedList;
+		
 		/* INITIALIZING */
 		
 		/**
@@ -38,6 +40,7 @@ package cocktail.core.slave
 								parallelized : Boolean = false )
 		{
 			super( );
+			dlist = new DLinkedList();
 			_auto_load = auto_load;
 			_parallelized = parallelized;
 		}
@@ -77,7 +80,7 @@ package cocktail.core.slave
 			
 			if ( !_parallelized )
 			{
-				dlist.removeHead()[ "data" ][ "load" ]();
+				( dlist.head.data as ASlave )[ "load" ]();
 				return this; 
 			}
 			
@@ -152,7 +155,7 @@ package cocktail.core.slave
 			slave.gunz_complete.add( _complete );
 			slave.gunz_error.add( _error );
 			
-			dlist.append( slave.node );
+			slave.node = dlist.append( slave );
 			
 			return slave;
 		}
@@ -196,10 +199,12 @@ package cocktail.core.slave
 			}
 			else
 			{
-				if ( length )
-					_load();
+				if( ( bullet.owner as ASlave ).node.next )
+					( ( bullet.owner as ASlave ).node.next.data 
+						as ISlave ).load();
 				else
 					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+					
 			}
 		}
 
@@ -220,7 +225,7 @@ package cocktail.core.slave
 		 * @param slave	Slave instance to be appended.
 		 * @return	A self reference for inline reuse.
 		 */
-		public function append( slave : ASlave ) : ASlave
+		public function append( slave : Slave ) : ASlave
 		{
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
@@ -292,7 +297,7 @@ package cocktail.core.slave
 			
 			while( i.hasNext( ) )
 			{
-				slave = DListNode( i.next( ) ).data;
+				slave = i.next( );
 				if( slave.status != ASlave._QUEUED )
 					total += slave.total;
 			}
@@ -315,7 +320,7 @@ package cocktail.core.slave
 			
 			while( i.hasNext( ) )
 			{
-				slave = DListNode( i.next( ) ).data;
+				slave = i.next();
 				if( slave.status != ASlave._QUEUED )
 					loaded += slave.loaded;
 			}
@@ -337,15 +342,24 @@ package cocktail.core.slave
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				DListNode( i.next( ) ).data[ "unload" ]( );
+				( i.next() as ISlave ).unload();
 			
 			return this;
 		}
 		
 		public function destroy() : ISlave
 		{
-			// TODO: Auto-generated method stub
-			return null;
+			unload();
+			
+			var i : DListIterator;
+			
+			i = DListIterator( dlist.getIterator( ) );
+			while( i.hasNext( ) )
+				( i.next() as ISlave ).unload();
+				
+			gunz.rm_all();	
+			
+			return this;
 		}
 	}
 }
