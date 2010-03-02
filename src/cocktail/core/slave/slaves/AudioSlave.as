@@ -16,10 +16,15 @@ package cocktail.core.slave.slaves {
 	 */
 	public class AudioSlave extends ASlave implements ISlave
 	{
+		/* VARS */
+		
 		private var _request : URLRequest;
 		private var _sound : Sound;
 		private var _trigger_set : Boolean = false;
 
+		/**
+		 * Creates a new AudioSlave instance.
+		 */
 		public function AudioSlave() : void
 		{
 		}
@@ -94,7 +99,7 @@ package cocktail.core.slave.slaves {
 		/* GETTERS */
 		
 		/**
-		 * Computes the bytes total and return it.
+		 * Returns bytesTotal.
 		 * @return	Bytes total.
 		 */
 		public function get total() : Number
@@ -103,7 +108,7 @@ package cocktail.core.slave.slaves {
 		}
 
 		/**
-		 * Computes the bytes loaded and return it.
+		 * Returns bytesLoaded.
 		 * @return	Bytes loaded.
 		 */
 		public function get loaded() : Number
@@ -112,8 +117,8 @@ package cocktail.core.slave.slaves {
 		}
 
 		/**
-		 * Get the loaded content.
-		 * @return	Loaded content.
+		 * Get the loaded sound.
+		 * @return	Loaded sound.
 		 */
 		public function get sound() : Sound
 		{
@@ -183,7 +188,8 @@ package cocktail.core.slave.slaves {
 		}
 		
 		/**
-		 * Unload content and remove gunz listeners.
+		 * Destroy content, cannot load at this instance 
+		 * after destroying.
 		 * @return	ISlave.
 		 */
 		public function destroy() : ISlave

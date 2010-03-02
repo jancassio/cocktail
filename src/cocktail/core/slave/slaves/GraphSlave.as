@@ -23,6 +23,7 @@ package cocktail.core.slave.slaves
 	public class GraphSlave extends ASlave implements ISlave
 	{
 		/* VARS */
+		
 		private var _loader : Loader;
 		private var _loader_info : LoaderInfo;
 		private var _request : URLRequest;
@@ -32,11 +33,10 @@ package cocktail.core.slave.slaves
 		/* INITIALIZING */
 		
 		/**
-		 * Creates a new GraphLoader instance.
+		 * Creates a new GraphSlave instance.
 		 */
 		public function GraphSlave() : void
 		{
-			
 		}
 
 		/* LISTENERS */
@@ -78,6 +78,8 @@ package cocktail.core.slave.slaves
 			_unset_triggers();
 		}
 		
+		/* TRIGGERS */
+		
 		private function _set_triggers() : void
 		{
 			_loader_info.addEventListener( Event.OPEN, _start );
@@ -107,7 +109,7 @@ package cocktail.core.slave.slaves
 		/* GETTERS */
 		
 		/**
-		 * Computes the bytes total and return it.
+		 * Returns bytesTotal.
 		 * @return	Bytes total.
 		 */
 		public function get total() : Number
@@ -116,7 +118,7 @@ package cocktail.core.slave.slaves
 		}
 
 		/**
-		 * Computes the bytes loaded and return it.
+		 * Returns bytesLoaded.
 		 * @return	Bytes loaded.
 		 */
 		public function get loaded() : Number
@@ -142,8 +144,6 @@ package cocktail.core.slave.slaves
 			return _loader;
 		}
 		
-		
-
 		/* PUTTING */
 		
 		/**
@@ -198,8 +198,12 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
-		/* DESTROY */
+		/* UNLOAD / DESTROY */
 		
+		/**
+		 * Unload content.
+		 * @return	ISlave.
+		 */
 		public function unload() : ISlave
 		{
 			if ( _loader )
@@ -220,6 +224,11 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
+		/**
+		 * Destroy content, cannot load at this instance 
+		 * after destroying.
+		 * @return	ISlave.
+		 */
 		public function destroy() : ISlave
 		{
 			unload();
