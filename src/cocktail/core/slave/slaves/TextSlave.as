@@ -158,17 +158,13 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
-				
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
 			_uri = uri;
-			
-			unload();
 			
 			_loader  = new URLLoader( );
 			_request = new URLRequest( uri );
@@ -185,7 +181,7 @@ package cocktail.core.slave.slaves
 		}
 		
 		/**
-		 * Unload yhe last loaded content.
+		 * Unload the last loaded content.
 		 */
 		public function unload() : ISlave
 		{
@@ -194,6 +190,11 @@ package cocktail.core.slave.slaves
 			
 			if ( _trigger_set )
 				_unset_triggers();
+			
+			_loader = null;
+			_request = null;
+			
+			_status = _QUEUED;
 			
 			return this;
 		}

@@ -165,18 +165,9 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null) : ISlave
 		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
-				return this;
-			}
-			
-			if ( _status == _LOADING )
-			{
-				trace( "This class is loading! " +
-				"You cannot load content now." );
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -190,8 +181,6 @@ package cocktail.core.slave.slaves
 				trace( "Set the uri param before loading." );
 				return this;
 			}
-			
-			//unload();
 			
 			_loader = new Loader( );
 			_loader_info = _loader.contentLoaderInfo;

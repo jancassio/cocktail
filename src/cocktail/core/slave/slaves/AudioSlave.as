@@ -128,11 +128,9 @@ package cocktail.core.slave.slaves {
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -146,8 +144,6 @@ package cocktail.core.slave.slaves {
 				trace( "Set the uri param before loading." );
 				return this;
 			}
-			
-			unload();
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -180,6 +176,7 @@ package cocktail.core.slave.slaves {
 							
 			_sound = null;
 			_request = null;
+			
 			_status = ASlave._QUEUED;
 			
 			return this;
@@ -199,7 +196,7 @@ package cocktail.core.slave.slaves {
 			
 			System.gc();
 			
-			return null;
+			return this;
 		}
 	}
 }

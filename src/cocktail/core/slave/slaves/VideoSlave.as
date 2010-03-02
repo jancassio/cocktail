@@ -91,7 +91,7 @@ package cocktail.core.slave.slaves
 		 */
 		public function get loaded() : Number
 		{
-			return _netstream.bytesLoaded / _netstream.bytesTotal;
+			return _netstream.bytesLoaded;
 		}
 
 		/* PUTTING */
@@ -117,6 +117,12 @@ package cocktail.core.slave.slaves
 		 */
 		private function _pull_time( event: TimerEvent ) : void
 		{
+			if ( loaded >= total )
+			{
+				_status = ASlave._LOADED;
+				_unset_triggers();
+			}
+			
 			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
 		}
 		
@@ -137,12 +143,6 @@ package cocktail.core.slave.slaves
 					 "Unable to locate video: " + _uri ) );
 					break;
 				case "NetStream.Buffer.Full":
-					if( _status == ASlave._LOADED )
-						break;
-					_status = ASlave._LOADED;
-					
-					_unset_triggers();
-					
 					break;	
 			}
 		}
@@ -178,11 +178,9 @@ package cocktail.core.slave.slaves
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -219,6 +217,8 @@ package cocktail.core.slave.slaves
 			
 			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
 			
+			ctrace(2);
+			
 			return this;
 		}
 		
@@ -240,6 +240,8 @@ package cocktail.core.slave.slaves
 			_netconn = null;
 			_netstream = null;
 			_target = null;
+			
+			_status = _QUEUED;
 			
 			return this;
 		}

@@ -54,10 +54,10 @@ package cocktail.core.slave
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			ctrace( _status );
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
 			{
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
