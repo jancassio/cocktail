@@ -170,13 +170,7 @@ package cocktail.lib
 		 */
 		private function get _xml_path() : String
 		{
-			log.info( "Running..." );
-			var path : String;
-			
-			path = config.path( "xml" ) + "models/";
-			path += classname.toLowerCase( ).replace( "model", "" ) + ".xml";
-			
-			return path;
+			return "models/" + classname.toLowerCase( ).replace( "model", "" ) + ".xml";
 		}
 	}
 }
