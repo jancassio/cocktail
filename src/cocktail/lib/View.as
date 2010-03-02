@@ -1,15 +1,11 @@
 package cocktail.lib 
 {
-	import cocktail.core.slave.Slave;
 	import cocktail.Cocktail;
-	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
-	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.Slave;
 	import cocktail.lib.base.MV;
-	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.view.ViewStack;
-	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
@@ -110,7 +106,7 @@ package cocktail.lib
 			assets = _parse_assets( request ); 
 			
 			if( ( src = xml_node.attribute( 'src' ) ) )
-				loader.append( load_uri( src ) );
+				loader.queue( load_uri( src ) );
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -150,6 +146,12 @@ package cocktail.lib
 				list = _scheme..action.( @id == action || @id == "*" );
 				
 				xml_node = XML( list.toXMLString( ) );
+				
+				//TODO: If target isnt rendered, redirect to home
+				if( ! controller( name ).layout.childs.has( "" ) )
+				{
+					//redirect
+				}
 			}
 			
 			list = xml_node.children( );
@@ -223,7 +225,7 @@ package cocktail.lib
 				sprite.x = Number( xml_node.attribute( 'x' ) );
 				 	
 			if( xml_node.attribute( 'y' ) )
-				sprite.x = Number( xml_node.attribute( 'y' ) ); 	
+				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
 
 			childs.render( request );
 			
