@@ -26,7 +26,8 @@ package cocktail.core.slave.gunz
 		{
 			super( bytes_loaded, bytes_total );
 			
-			this.data = data;
+			if( data )
+				this.data = data.toString();
 		}
 	}
 }
