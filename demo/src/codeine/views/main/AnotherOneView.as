@@ -5,7 +5,7 @@ package codeine.views.main
 	import codeine.AppView;
 
 	/**
-	 * @author hems | dev@henriquematias.com
+	 * @author hems | henrique@cocktail.as
 	 */
 	public class AnotherOneView extends AppView
 	{
