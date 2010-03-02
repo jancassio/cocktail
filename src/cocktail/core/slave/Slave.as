@@ -234,21 +234,20 @@ package cocktail.core.slave
 				return this;
 			}
 			
-			var i : Iterator;
-			var node : ASlave;
-			
-			i = dlist.getIterator( );
-			while( i.hasNext( ) )
+			if( !slave.dlist )
+				_queue( slave );
+			else
 			{
-				node = i.next( );
-				node.gunz_start.add( _start );
-				node.gunz_progress.add( _progress );
-				node.gunz_complete.add( _complete );
-				node.gunz_error.add( _error );
+				var i : Iterator;
+				var node : ASlave;
+				i = slave.dlist.getIterator( );
+				
+				while( i.hasNext( ) )
+				{
+					node = i.next( );
+					_queue( slave );
+				}
 			}
-			
-			if( slave.dlist )
-				dlist = dlist.concat( slave.dlist );
 			
 			return this;
 		}
