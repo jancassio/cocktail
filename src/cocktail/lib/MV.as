@@ -78,11 +78,15 @@ package cocktail.lib
 			aslave = slave( uri );
 			path = config.path( uri.toLowerCase( ).split( "." ).pop( ) );
 			 
+			uri = path + uri;
+			
 			if( _is_queue_opened )
 				_load_queue.append( aslave );
 			
 			if( auto_load )
-				ISlave( aslave ).load( path + uri );
+				ISlave( aslave ).load( uri );
+			else
+				aslave.uri = uri;
 			
 			return aslave;
 		}
