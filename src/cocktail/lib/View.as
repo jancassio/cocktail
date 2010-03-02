@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
@@ -104,10 +105,13 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 			
-			if( ( src = xml_node.attribute( 'src' ).toString() ) )
+			if( ( src = xml_node.attribute( "src" ).toString() ) )
 			{
-				log.warn( "\t\t->adding " + src + " to queue" );
-				loader.append( load_uri( src, false ) );
+				loader.append( 
+					load_uri( 
+						StringUtil.toUnderscore( root.name ) + "/" + src, false 
+					) 
+				);
 			}
 			
 			if( ( this is Layout ) == false )
