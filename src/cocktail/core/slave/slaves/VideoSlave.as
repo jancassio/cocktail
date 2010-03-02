@@ -19,27 +19,24 @@ package cocktail.core.slave.slaves
 	public class VideoSlave extends ASlave implements ISlave
 	{
 		/* VARS */
+		
 		private var _netconn : NetConnection;
 		private var _netstream : NetStream;
 		private var _target : Video;
+		private var _progress_timer : Timer;
 		private var _trigger_set : Boolean = false;
 		
-		private var _progress_timer : Timer;
 		private const DEFAULT_TIMER_DELAY: Number = 10;
-//		private var _stream_paused : Boolean;
 
 		/**
-		 * Construct a new VideoSlave object.
-		 * 
-		 * @param uri The video URL.
-		 * @param auto_load If true, the load is started automatically.
-		 * @param target The video target to render the stream.
+		 * Creates a new VideoSlave instance.
 		 */
 		public function VideoSlave() : void
 		{
-			
 		}
-
+		
+		/* TRIGGERS */
+		
 		private function _set_triggers() : void
 		{
 			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
@@ -76,6 +73,54 @@ package cocktail.core.slave.slaves
 			_trigger_set = false;
 		}
 
+		/* LISTENERS */
+		
+		/**
+		 * Invoked by the timer to calc the buff progress and shoot the gun.
+		 * 
+		 * @param event TimerEvent.
+		 */
+		private function _pull_time( event: TimerEvent ) : void
+		{
+			if ( loaded >= total )
+			{
+				_status = ASlave._LOADED;
+				_unset_triggers( );
+				
+				gunz_complete.shoot( new VideoSlaveBullet( loaded, total ) );
+			}
+			
+			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
+		}
+		
+		/**
+		 * Handler to all th connection/status event types.
+		 * 
+		 * @param event NetStatusEvent.
+		 */
+		private function _on_net_status( event : NetStatusEvent ) : void
+		{
+			switch ( event.info[ "code" ] ) 
+			{
+				case "NetStream.Play.StreamNotFound":
+					gunz_error.shoot( new VideoSlaveBullet( loaded, total,
+					 "Unable to locate video: " + _uri ) );
+					break;
+			}
+		}
+		
+		/**
+		 * Handler to the security or IO possible errors on the stream.
+		 * 
+		 * @param event NetStatusEvent
+		 */
+		private function _on_security_error( event : NetStatusEvent ) : void
+		{
+			gunz_error.shoot( new VideoSlaveBullet( loaded, total, "Security error." ) );
+		}
+		
+		/* GETTERS */
+		
 		/**
 		 * Computes the bytes total and return it.
 		 * @return	Bytes total.
@@ -91,73 +136,8 @@ package cocktail.core.slave.slaves
 		 */
 		public function get loaded() : Number
 		{
-			return _netstream.bytesLoaded / _netstream.bytesTotal;
+			return _netstream.bytesLoaded;
 		}
-
-		/* PUTTING */
-		
-		/**
-		 * Puts the loaded content into the given target, right after the
-		 * loading process is completed.
-		 * @param target	Target to put the loaded content into.
-		 * @return Self reference for inline reuse.
-		 */
-		public function put( target : Video ) : VideoSlave
-		{
-			_target = target;
-			return this;
-		}
-
-		/* HANDLERS */
-		
-		/**
-		 * Invoked by the timer to calc the buff progress and shoot the gun.
-		 * 
-		 * @param event TimerEvent.
-		 */
-		private function _pull_time( event: TimerEvent ) : void
-		{
-			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
-		}
-		
-		/**
-		 * Handler to all th connection/status event types.
-		 * 
-		 * @param event NetStatusEvent.
-		 */
-		private function _on_net_status( event : NetStatusEvent ) : void
-		{
-			switch ( event.info[ "code" ] ) 
-			{
-				case "NetConnection.Connect.Success":
-					//Success
-					break;
-				case "NetStream.Play.StreamNotFound":
-					gunz_error.shoot( new VideoSlaveBullet( loaded, total,
-					 "Unable to locate video: " + _uri ) );
-					break;
-				case "NetStream.Buffer.Full":
-					if( _status == ASlave._LOADED )
-						break;
-					_status = ASlave._LOADED;
-					
-					_unset_triggers();
-					
-					break;	
-			}
-		}
-		
-		/**
-		 * Handler to the security or IO possible errors on the stream.
-		 * 
-		 * @param event NetStatusEvent
-		 */
-		private function _on_security_error( event : NetStatusEvent ) : void
-		{
-			gunz_error.shoot( new VideoSlaveBullet( loaded, total ) );
-		}
-		
-		/* GETTERS */
 		
 		/**
 		 * Return the NetStream object used to load and controll the video 
@@ -170,6 +150,19 @@ package cocktail.core.slave.slaves
 			return _netstream;
 		}
 		
+		/* PUTTING */
+		
+		/**
+		 * Puts the loaded content into the given target.
+		 * @param target	Target to put the loaded content into.
+		 * @return Self reference for inline reuse.
+		 */
+		public function put( target : Video ) : VideoSlave
+		{
+			_target = target;
+			return this;
+		}
+		
 		/* LOADING */
 		
 		/**
@@ -178,11 +171,9 @@ package cocktail.core.slave.slaves
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -222,6 +213,10 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
+		/**
+		 * Unload content.
+		 * @return	ISlave.
+		 */
 		public function unload() : ISlave
 		{
 			if ( _netconn )
@@ -241,9 +236,16 @@ package cocktail.core.slave.slaves
 			_netstream = null;
 			_target = null;
 			
+			_status = _QUEUED;
+			
 			return this;
 		}
 		
+		/**
+		 * Destroy content, cannot load at this instance 
+		 * after destroying.
+		 * @return	ISlave.
+		 */
 		public function destroy() : ISlave
 		{
 			unload();

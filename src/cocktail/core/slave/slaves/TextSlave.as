@@ -20,6 +20,7 @@ package cocktail.core.slave.slaves
 	public class TextSlave extends ASlave implements ISlave 
 	{
 		/* VARS */
+		
 		private var _loader : URLLoader;
 		private var _request : URLRequest;
 		private var _trigger_set : Boolean = false;
@@ -27,11 +28,7 @@ package cocktail.core.slave.slaves
 		/* INITIALIZING */
 		
 		/**
-		 * Creates a new GraphLoader instance.
-		 * @param uri	Uniform Resource Identifier to be loaded.
-		 * @param auto_load	If <code>true</code> all subsequent loading calls
-		 * will start loading immediatelly, otherwise <code>false</code> you'll
-		 * need to call the "load" method to start the loading process.
+		 * Creates a new TextSlave instance.
 		 */
 		public function TextSlave() : void
 		{			
@@ -107,7 +104,7 @@ package cocktail.core.slave.slaves
 		/* GETTERS */
 		
 		/**
-		 * Computes the bytes total and return it.
+		 * Returns bytesTotal.
 		 * @return	Bytes total.
 		 */
 		public function get total() : Number
@@ -116,7 +113,7 @@ package cocktail.core.slave.slaves
 		}
 
 		/**
-		 * Computes the bytes loaded and return it.
+		 * Returns bytesLoaded.
 		 * @return	Bytes loaded.
 		 */
 		public function get loaded() : Number
@@ -133,24 +130,6 @@ package cocktail.core.slave.slaves
 			return String( _loader.data );
 		}
 
-		/**
-		 * Get the url reference.
-		 * @return	Url request reference.
-		 */
-		public function get request() : URLRequest
-		{
-			return _request;
-		}
-
-		/**
-		 * Get the loader reference.
-		 * @return	Loader reference.
-		 */
-		public function get loader() : URLLoader
-		{
-			return _loader;
-		}
-
 		/* LOADING */
 		
 		/**
@@ -159,17 +138,13 @@ package cocktail.core.slave.slaves
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
-				
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
 			_uri = uri;
-			
-			unload();
 			
 			_loader  = new URLLoader( );
 			_request = new URLRequest( uri );
@@ -185,8 +160,10 @@ package cocktail.core.slave.slaves
 			return this;
 		}
 		
+		/* UNLOAD / DESTROY */
+		
 		/**
-		 * Unload yhe last loaded content.
+		 * Unload content.
 		 */
 		public function unload() : ISlave
 		{
@@ -196,12 +173,18 @@ package cocktail.core.slave.slaves
 			if ( _trigger_set )
 				_unset_triggers();
 			
+			_loader = null;
+			_request = null;
+			
+			_status = _QUEUED;
+			
 			return this;
 		}
 		
 		/**
-		 * Destroy the slave.
-		 * After this method call, this slave can't be loaded anymore.
+		 * Destroy content, cannot load at this instance 
+		 * after destroying.
+		 * @return	ISlave.
 		 */
 		public function destroy() : ISlave
 		{

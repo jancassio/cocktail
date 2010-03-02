@@ -56,6 +56,7 @@ package cocktail.core.slave
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
 			{
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -340,6 +341,8 @@ package cocktail.core.slave
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
 				( i.next( ) as ISlave ).unload( );
+			
+			_status = _QUEUED;
 			
 			return this;
 		}

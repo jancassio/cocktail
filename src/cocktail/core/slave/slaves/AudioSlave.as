@@ -16,10 +16,15 @@ package cocktail.core.slave.slaves {
 	 */
 	public class AudioSlave extends ASlave implements ISlave
 	{
+		/* VARS */
+		
 		private var _request : URLRequest;
 		private var _sound : Sound;
 		private var _trigger_set : Boolean = false;
 
+		/**
+		 * Creates a new AudioSlave instance.
+		 */
 		public function AudioSlave() : void
 		{
 		}
@@ -94,7 +99,7 @@ package cocktail.core.slave.slaves {
 		/* GETTERS */
 		
 		/**
-		 * Computes the bytes total and return it.
+		 * Returns bytesTotal.
 		 * @return	Bytes total.
 		 */
 		public function get total() : Number
@@ -103,7 +108,7 @@ package cocktail.core.slave.slaves {
 		}
 
 		/**
-		 * Computes the bytes loaded and return it.
+		 * Returns bytesLoaded.
 		 * @return	Bytes loaded.
 		 */
 		public function get loaded() : Number
@@ -112,8 +117,8 @@ package cocktail.core.slave.slaves {
 		}
 
 		/**
-		 * Get the loaded content.
-		 * @return	Loaded content.
+		 * Get the loaded sound.
+		 * @return	Loaded sound.
 		 */
 		public function get sound() : Sound
 		{
@@ -128,11 +133,9 @@ package cocktail.core.slave.slaves {
 		 */
 		final public function load( uri : String = null ) : ISlave
 		{
-			// Check if this class was destroyed
-			if( _status == ASlave._DESTROYED )
+			if( _status != ASlave._QUEUED )
 			{
-				trace( "This class was destroyed! " +
-				"You cannot load content anymore." );
+				trace( "Cannot load now, execute unload()" );
 				return this;
 			}
 			
@@ -146,8 +149,6 @@ package cocktail.core.slave.slaves {
 				trace( "Set the uri param before loading." );
 				return this;
 			}
-			
-			unload();
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -180,13 +181,15 @@ package cocktail.core.slave.slaves {
 							
 			_sound = null;
 			_request = null;
+			
 			_status = ASlave._QUEUED;
 			
 			return this;
 		}
 		
 		/**
-		 * Unload content and remove gunz listeners.
+		 * Destroy content, cannot load at this instance 
+		 * after destroying.
 		 * @return	ISlave.
 		 */
 		public function destroy() : ISlave
@@ -199,7 +202,7 @@ package cocktail.core.slave.slaves {
 			
 			System.gc();
 			
-			return null;
+			return this;
 		}
 	}
 }
