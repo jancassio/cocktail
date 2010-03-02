@@ -5,7 +5,7 @@ package cocktail.lib
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
 	import cocktail.lib.base.MV;
-	import cocktail.lib.view.ViewStack;
+	import cocktail.lib.views.ViewStack;
 
 	import de.polygonal.ds.DListNode;
 

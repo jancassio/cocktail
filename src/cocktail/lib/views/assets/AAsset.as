@@ -1,4 +1,4 @@
-package cocktail.lib.view.assets {
+package cocktail.lib.views.assets {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
