@@ -67,24 +67,40 @@ package cocktail.lib
 		/**
 		 * 
 		 */
-		public function load_uri( uri : String ) : ASlave
+		public function load_uri( 
+			uri : String, 
+			auto_load: Boolean = true 
+		) : ASlave
 		{
-			var slave : ASlave;
+			var aslave: ASlave;
+			var path: String;
 			
+			aslave = slave( uri );
+			path = config.path( uri.toLowerCase( ).split( "." ).pop( ) );
+			 
+			if( _is_queue_opened )
+				_load_queue.append( aslave );
+			
+			if( auto_load )
+				ISlave( aslave ).load( path + uri );
+			
+			return aslave;
+		}
+
+		public function slave( uri: String ): ASlave
+		{
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
 				case "flv":
 				case "mov":
-					slave = new VideoSlave( );
-					break;
+					return new VideoSlave( );
 				
 				case "mp3":
 				case "wav":
-					slave = new AudioSlave( );
-					break;
+					return new AudioSlave( );
 				
 				case "xml":
-					slave = new TextSlave( );
+					return new TextSlave( );
 					break;
 				
 				default:
@@ -93,17 +109,10 @@ package cocktail.lib
 				case "png": 
 				case "gif": 
 				case "swf":
-					slave = new GraphSlave( );
+					return  new GraphSlave( );
 			}
-			
-			if( _is_queue_opened )
-				_load_queue.append( slave );
-			else
-				ISlave( slave ).load( uri );
-			
-			return slave;
 		}
-
+		
 		/**
 		 * Returns a controller instance by name 
 		 * ( unique per cocktail instance )
