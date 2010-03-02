@@ -53,7 +53,7 @@ package cocktail.core.slave
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
-			trace( "Slave#load " + _status );
+//			trace( "Slave#load " + _status );
 			
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
@@ -73,7 +73,7 @@ package cocktail.core.slave
 		 */
 		private function _load() : ISlave
 		{
-			trace( "Slave#_load " + uri );
+//			trace( "Slave#_load " + uri );
 							
 			_status = _LOADING;
 			
