@@ -5,6 +5,11 @@ package cocktail.core.gunz
 	 * A Victim listens to Gun.shoot(). Everytime you
 	 * use the "Gun.add()" method to start listening to some Gun, a Victim
 	 * instance is created in order to keep things organized.
+	 * 
+	 * @see Gun
+	 * @see Gun#add()
+	 * @see Gun#shoot()
+	 * 
 	 * @author nybras | me@nybras.com
 	 */
 	public class Victim 
@@ -12,29 +17,37 @@ package cocktail.core.gunz
 		/* VARS */
 		
 		/** Victim index in the Gun listeners array. */
-		internal var _id : int;
+		private var _id : int;
+
 		/** Gun being listened. */
-		internal var _gun : Gun;
-		/** Listener handler. */
-		internal var _handler : Function;
+		private var _gun : Gun;
+
+		/** 
+		 * Listener handler. 
+		 * @private
+		 */
+		internal var handler : Function;
+
 		/**
-		 * Listener params--get it in the dispatched bullet, with
+		 * Listener params - get it in the dispatched bullet, with
 		 * <code>bullet.params</code>.
 		 */
-		public var _params : Object;
+		private var _params : Object;
+
 		/** Victim index in the Gun listeners array. */
-		internal var _times : int;
+		private var _times : int;
+
 		/** Victim index in the Gun listeners array. */
-		internal var _time : int;
+		private var _time : int;
 
 		/* INITIALIZING */
 		
 		/**
 		 * Creates a new Victim listener.
 		 * @param gun	Gun to be listened.
-		 * @param handler	Listener handler. Executed when a Gun.shoot()
+		 * @param handler Listener handler. Executed when a Gun.shoot()
 		 * happens.
-		 * @param params	Listener params included among all fired bullets.
+		 * @param params Listener params included among all fired bullets.
 		 */
 		public function Victim(
 			gun : Gun,
@@ -42,10 +55,10 @@ package cocktail.core.gunz
 			params : Object
 		)
 		{
-			_id = gun._victims.length;
+			_id = gun.victims.length;
 			
 			_gun = gun;
-			_handler = handler;
+			handler = handler;
 			_params = params;
 		}
 
@@ -79,34 +92,35 @@ package cocktail.core.gunz
 		
 		/**
 		 * Pull the given bullet across the cached Handler, inputing the also
-		 * cached params.
-		 * @param bullet	Bullet to be pulled.
-		 * @return	Self reference for reuse.
+		 * cached params. This method will be executed by Gun <code>shoot</code>
+		 * @param bullet Bullet to be pulled.
+		 * @return Self reference for reuse.
 		 */ 
 		internal function scream( bullet : Bullet ) : Victim
 		{
+			_time++;
+			
 			bullet._params = _params;
-			bullet._owner = _gun._owner;
+			bullet._owner = _gun.owner;
 			bullet._now = new Date( );
 			bullet._times = _times;
 			bullet._time = _time;
 			
-			_handler( bullet );
-			
-			if( ++_time == _times )
-				_gun.rm( _handler );
+			handler( bullet );
 			
 			return this;
 		}
 
 		/**
-		 * Destroys the Victim listener and perform some gc.
+		 * Destroys the Victim listener.
+		 * 
+		 * @private
 		 */
-		public function destroy() : void 
+		internal function destroy() : void 
 		{
 			_id = undefined;
 			_gun = null;
-			_handler = null;
+			handler = null;
 			_params = null;
 			_times = undefined;
 			_time = undefined;

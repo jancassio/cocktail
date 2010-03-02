@@ -5,25 +5,47 @@ package cocktail.core.gunz
 
 	/**
 	 * Stores all necessary and maybe useful info.
+	 * 
 	 * @author nybras | me@nybras.com
 	 */
 	public class Bullet 
 	{
 		/* VARS */
 		
-		/** Bullet type. */
+		/** 
+		 * Bullet type. 
+		 * @private
+		 */
 		internal var _type : String;
-		/** Bullet params. */
+		/** 
+		 * Bullet params. 
+		 * @private
+		 */
 		internal var _params : *;
-		/** Bullet owner. */
+		/** 
+		 * Bullet owner. 
+		 * @private
+		 */
 		internal var _owner : *;
-		/** NOW() time stamp of the fire momment. */
+		/** 
+		 * NOW() time stamp of the fire momment. 
+		 * @private 
+		 */
 		internal var _now : Date;
-		/** Current execution time. */
+		/** 
+		 * Current execution time.
+		 * @private
+		 */
 		internal var _time : int;
-		/** Execution times limit. */
+		/** 
+		 * Execution times limit. 
+		 * @private
+		 */
 		internal var _times : int;
-		/** Bullet proxied event (if captured from Adobe AS3 Events). */
+		/** 
+		 * Bullet proxied event (if captured from Adobe AS3 Events). 
+		 * @private
+		 */
 		protected var _event : Event;
 
 		/* INITIALIZING */
@@ -47,7 +69,7 @@ package cocktail.core.gunz
 			_event = ev;
 			return this;
 		}
-		
+
 		/* PUBLIC GETTERS */
 		
 		/**
@@ -67,7 +89,7 @@ package cocktail.core.gunz
 		}
 
 		/**
-		 * Returns the bullet excutions times limit.
+		 * Returns the bullet executions times limit.
 		 */
 		public function get times() : int 
 		{
@@ -88,6 +110,14 @@ package cocktail.core.gunz
 		public function get params() : *
 		{
 			return _params;
+		}
+		
+		/*
+		 * Sets the bullet params.
+		 */
+		public function set params( params : * ) : void
+		{
+			_params = params;
 		}
 
 		/**
@@ -115,13 +145,6 @@ package cocktail.core.gunz
 			_event = event;
 		}
 
-		/* PUBLIC SETTERS */
-		
-		public function set params(params : *) : void
-		{
-			_params = params;
-		}
-		
 		/* TO STRING CONVERSION */
 		
 		/**
@@ -162,6 +185,5 @@ package cocktail.core.gunz
 			
 			return output + "}";
 		}
-
 	}
 }
