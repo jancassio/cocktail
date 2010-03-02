@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.request.Request;
@@ -68,11 +69,12 @@ package cocktail.lib
 		}
 
 		
-		override public function load(request : Request) : Boolean 
+		override public function load( request : Request ) : Boolean 
 		{
 			if( !super.load( request ) ) return false;
 			
-			if( loader.length )
+			
+			if( loader.length  )
 			{
 				loader.gunz_complete.add( _after_load_assets, request ).once();
 				loader.load();
@@ -113,7 +115,7 @@ package cocktail.lib
 			var path : String;
 			
 			path = config.path( ".xml" ) + "layouts/";
-			path += name + ".xml";
+			path += StringUtil.toUnderscore( name ) + ".xml";
 			
 			return path;
 		}
