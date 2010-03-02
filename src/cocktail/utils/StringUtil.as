@@ -8,42 +8,16 @@ package cocktail.utils
 	public class StringUtil 
 	{
 		/**
-		 * Replaces all found occurencies.
-		 * @param string	String source.
-		 * @param search	String search entry.
-		 * @param replace	String replacement.
-		 */
-		public static function replace_all( string : String, search : *, replace : * ) : String
-		{
-			return string.split( search ).join( replace ); 
-		}
-
-		/**
-		 * Returns the given string in lowercase, except the first char that
+		 * Returns the given string in lowercase, except the first char that 
 		 * becomes uppercase.
 		 * @param string	String source.
 		 */
 		public static function ucasef( string : String ) : String
 		{
-			return string.substr( 0, 1 ).toUpperCase( ) + string.substr( 1 ).toLowerCase( );
-		}
-
-		/**
-		 * Capitalizes the given string according or no the given separator.
-		 * @param string	String to capitalize.
-		 * @param sep	Word separator (optional).
-		 * @return	The capitalized string.
-		 */
-		public static function cap( string : String, sep : String = "-" ) : String
-		{
-			var output : String;
-			var word : String;
-			
-			output = "";
-			for each( word in [].concat( string.split( sep ) ) )
-				output += ucasef( word );
-			
-			return output;
+			return 
+				string.substr( 0, 1 ).toUpperCase( ) 
+				+ 
+				string.substr( 1 ).toLowerCase( );
 		}
 
 		/**
@@ -65,16 +39,20 @@ package cocktail.utils
 		}
 
 		/**
-		 * Search the given string for every ocurrency surrounded by the given opening/close chars and return a array with all found occurrencies.
+		 * Search the given string for every ocurrency surrounded by the given 
+		 * opening/close chars and return a array with all found occurrencies.
 		 */
-		public static function enclosure( string : String, opening : String, closing : String ) : Array
+		public static function enclosure( 
+			string : String, 
+			opening : String, 
+			closing : String 
+		) : Array
 		{
 			var r : RegExp;
 			
 			opening = escapeRegExpChar( opening );
 			closing = escapeRegExpChar( closing );
 			
-			//r = new RegExp( opening +"[^"+ opening +"|"+ closing +"|\\n\\s]*"+ closing, "g" );
 			r = new RegExp( opening + ".+?" + closing, "g" );
 			
 			return string.match( r );
@@ -86,11 +64,14 @@ package cocktail.utils
 		 */
 		private static function escapeRegExpChar( char : String ) : String
 		{
-			return char.replace( new RegExp( "([{}\(\)\^$&.\*\?\/\+\|\[\\\\]|\]|\-)", "g" ), "\\$1" );
+			return char.replace( 
+				/([{}\(\)\^$&.\*\?\/\+\|\[\\\\]|\]|\-)/g, "\\$1" 
+			);
 		}
 
 		/**
-		 * Removes all blank spaces on the left and right side of the given string.
+		 * Removes all blank spaces on the left and right side of the given 
+		 * string.
 		 * @param string	String source.
 		 */
 		public static function trim( string : String ) : String
@@ -105,7 +86,7 @@ package cocktail.utils
 		public static function ltrim( string : String ) : String
 		{
 			var obj : RegExp = /^(\s*)([\W\w]*$)/;
-			if( obj.test( string ) )
+			if ( obj.test( string ) )
 				string = string.replace( obj, '$2' );
 			return string;		
 		}
@@ -117,9 +98,45 @@ package cocktail.utils
 		public static function rtrim( string : String ) : String
 		{
 			var obj : RegExp = /^([\W\w]*)(\b\s*$)/;
-			if( obj.test( string ) )
+			if ( obj.test( string ) )
 				string = string.replace( obj, '$1' );
 			return string;
+		}
+
+		/**
+		 * Replaces all found occurencies.
+		 * @param string	String source.
+		 * @param search	String search entry.
+		 * @param replace	String replacement.
+		 */
+		public static function replace_all( 
+			string : String, 
+			search : *, 
+			replace : * 
+		) : String
+		{
+			return string.split( search ).join( replace ); 
+		}
+
+		/**
+		 * Capitalizes the given string according or no the given separator.
+		 * @param string	String to capitalize.
+		 * @param sep	Word separator (optional).
+		 * @return	The capitalized string.
+		 */
+		public static function cap( 
+			string : String, 
+			sep : String = "-" 
+		) : String
+		{
+			var output : String;
+			var word : String;
+			
+			output = "";
+			for each( word in [].concat( string.split( sep ) ) )
+				output += ucasef( word );
+			
+			return output;
 		}
 
 		/**
@@ -141,11 +158,11 @@ package cocktail.utils
 			
 			return result;
 		}
-		
-		public static function toUnderscore( string: String ): String
+
+		public static function toUnderscore( string : String ) : String
 		{
-			string = string.replace(/(.)([A-Z])/,'$1_$2');
-			string = string.toLowerCase();
+			string = string.replace( /(.)([A-Z])/, '$1_$2' );
+			string = string.toLowerCase( );
 			
 			return string;
 		}
