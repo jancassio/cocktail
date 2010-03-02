@@ -193,7 +193,7 @@ package cocktail.lib
 			return childs.create( xml_node );
 		}
 
-		private function before_render( request : Request ) : Boolean 
+		public function before_render( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
 			request;
