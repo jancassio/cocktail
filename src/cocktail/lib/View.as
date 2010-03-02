@@ -223,7 +223,7 @@ package cocktail.lib
 			
 			sprite = new Sprite( );
 			
-			if( this is root )
+			if( this == root )
 				root.scope.addChild( sprite );
 			else
 				up.sprite.addChild( sprite );

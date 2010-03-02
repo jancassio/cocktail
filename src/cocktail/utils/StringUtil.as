@@ -14,8 +14,7 @@ package cocktail.utils
 		 */
 		public static function ucasef( string : String ) : String
 		{
-			return 
-				string.substr( 0, 1 ).toUpperCase( ) 
+			return string.substr( 0, 1 ).toUpperCase( ) 
 				+ 
 				string.substr( 1 ).toLowerCase( );
 		}
