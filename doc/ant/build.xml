@@ -15,45 +15,16 @@
 			<fileset dir="${project.doc-cocktail}" includes="**/*" />
 		</delete>
 		<!-- create docs -->
-		<exec executable="${common.asdoc}"> 
-		    <arg line="	-doc-sources '${project.src-cocktail}' 
+		<exec executable="${common.asdoc}">
+		    <arg line=" -doc-sources '${project.src-cocktail}' '${project.src-libs}' 
 		    		-output '${project.doc-cocktail}'
 		    		-examples-path '${project.examples}'
+		    		-library-path '${project.src-vendors}' 
 		    		-main-title 'Cocktail Documentation' 
-		    		-window-title 'Cocktail Documentation'" /> 
+		    		-window-title 'Cocktail Documentation'
+		    		-exclude-sources ${project.src-libs}"
+					/>
+			
 		</exec>
 	</target>
-	
-	<!-- GUNZ -->
-	<target name="gunz">
-		<!-- delete all files in the doc dir -->
-		<delete includeemptydirs="true">
-			<fileset dir="${project.doc-gunz}" includes="**/*" />
-		</delete>
-		<!-- create docs -->
-		<exec executable="${common.asdoc}"> 
-		    <arg line="	-doc-sources '${project.src-gunz}' 
-		    		-output '${project.doc-gunz}'
-		    		-examples-path '${project.examples}'
-		    		-main-title 'Gunz Documentation' 
-		    		-window-title 'Gunz Documentation'" /> 
-		</exec>
-	</target>
-	
-	<!-- SLAVE -->
-		<target name="slave">
-			<!-- delete all files in the doc dir -->
-			<delete includeemptydirs="true">
-				<fileset dir="${project.doc-slave}" includes="**/*" />
-			</delete>
-			<!-- create docs -->
-			<exec executable="${common.asdoc}"> 
-			    <arg line="	-doc-sources '${project.src-slave}' 
-			    		-output '${project.doc-slave}'
-			    		-examples-path '${project.examples}'
-			    		-main-title 'Slave Documentation' 
-			    		-window-title 'Slave Documentation'" /> 
-			</exec>
-		</target>
- 
 </project>

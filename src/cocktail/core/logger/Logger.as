@@ -30,7 +30,7 @@ package cocktail.core.logger
 		
 		/**
 		 * Sweep the entire object, return a formated-string with all object
-		 * levels & values.
+		 * levels and values.
 		 * @param params	Data to be sweeped.
 		 * @param level	Sweep cycle.
 		 * @param buffer	Sweep buffer.
@@ -68,7 +68,7 @@ package cocktail.core.logger
 			return buffer;
 		}
 
-		/* LEVEL & DETAIL (getter / setter ) */
+		/* LEVEL AND DETAIL (getter / setter ) */
 		 
 		/**
 		 * Sets the log level.
