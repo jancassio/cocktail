@@ -1,11 +1,9 @@
 package cocktail.lib 
 {
-	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
-	import cocktail.lib.base.MV;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.model.datasources.ADataSource;
 
@@ -15,9 +13,6 @@ package cocktail.lib
 	 */
 	public class Model extends MV
 	{
-		/* GETTERS */
-		public var bind : Bind;
-
 		/* LOADING, VALIDATING AND PARSING SCHEME */
 		
 		/**
@@ -95,7 +90,7 @@ package cocktail.lib
 				{
 					ds = ds_list[ i ];
 					group.add( ds.gunz_load_complete );
-					ds.load( );
+					ds.load();
 				} while( ++i < ds_list.length );
 			}
 			
@@ -106,9 +101,10 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			gunz_load_complete.shoot( new ModelBullet( ) );
+			after_load( );
 		}
 
-		public function after_load( ...n /* request : Request */ ) : void
+		public function after_load() : void
 		{
 			log.info( "Running..." );
 			gunz_load_complete.shoot( new ModelBullet( ) );
@@ -136,8 +132,8 @@ package cocktail.lib
 				node = _scheme.children( )[ i ];
 				inject = ( node.@inject + "," );
 				if( inject == "*," || inject.indexOf( action + "," ) > 0 )
-					ds.push( _instantiate_datasource( node ) );
-			} while( ++i < _scheme.length( ) );
+					ds.push( _instantiate_datasource( node, request ) );
+			} while( ++i < _scheme.children( ).length( ) );
 			
 			return ds;
 		}
@@ -147,15 +143,20 @@ package cocktail.lib
 		 * @param node	XML Scheme representation of the Datasource to be
 		 * instantiated.
 		 */
-		private function _instantiate_datasource( scheme : XML ) : ADataSource
+		private function _instantiate_datasource(
+			scheme : XML,
+			request : Request
+		) : ADataSource
 		{
 			log.info( "Running..." );
+			
 			var ds : ADataSource;
+			var ds_class : Class;
 			var name : String;
 			
 			name = scheme.localName( );
-			
-			ds = new ( _cocktail.factory.datasource( name ) )( this, scheme );
+			ds_class = _cocktail.factory.datasource( name );
+			ds = new ( ds_class )( this, request, scheme );
 			ds.boot( _cocktail );
 			
 			return ds;

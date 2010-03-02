@@ -1,4 +1,4 @@
-package cocktail.lib.base 
+package cocktail.lib 
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;

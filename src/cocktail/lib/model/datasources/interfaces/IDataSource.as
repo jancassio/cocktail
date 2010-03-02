@@ -5,5 +5,9 @@ package cocktail.lib.model.datasources.interfaces
 	public interface IDataSource
 	{
 		function load() : ADataSource;
+
+		function parse() : void;
+
+		function bind() : void;
 	}
 }

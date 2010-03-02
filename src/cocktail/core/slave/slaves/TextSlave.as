@@ -11,6 +11,7 @@ package cocktail.core.slave.slaves
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.System;
+
 	/**
 	 * TextSlave is the responsible for loading any kind of text request, such
 	 * as xml, txt, etc.
@@ -41,7 +42,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new ASlaveBullet( loaded, total ) );
+			gunz_start.shoot( new TextSlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -63,7 +64,7 @@ package cocktail.core.slave.slaves
 			_status = ASlave._LOADED;
 			
 			// pull the trigger
-			gunz_complete.shoot( new TextSlaveBullet( loaded, total ) );
+			gunz_complete.shoot( new TextSlaveBullet( loaded, total, data ) );
 		}
 
 		/**

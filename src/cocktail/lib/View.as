@@ -4,7 +4,6 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
-	import cocktail.lib.base.MV;
 	import cocktail.lib.view.ViewStack;
 
 	import de.polygonal.ds.DListNode;
@@ -106,7 +105,7 @@ package cocktail.lib
 			assets = _parse_assets( request ); 
 			
 			if( ( src = xml_node.attribute( 'src' ) ) )
-				loader.queue( load_uri( src ) );
+				loader.append( load_uri( src ) );
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
