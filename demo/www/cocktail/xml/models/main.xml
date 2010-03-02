@@ -4,42 +4,41 @@
 	<!--  INLINE  -->
 
 	<inline id="inline-test" inject="main,home" locale="pt">
-		<name>nybras</name>
-		<gender>male</gender>
-		<age>25</age>
+		<song>Dead From Inside Out</song>
+		<year>male</year>
+		<duration>10"+</duration>
 	</inline>
 
 
 
 	<!--  XML  -->
 
-	<xml id="xml-test" inject="main,home" locale="pt" src="file.xml">
-		<name>{..category.(@name==string)..instrument[2].@name}</name>
-		<age>{..category.(@name==string)..instrument[2].@age}</age>
+	<xml id="xml-test" inject="main,home" locale="pt" src="artists.xml">
+		<artist>{..genre.(@name==Prog Rock).artists.artist[1].@name}</artist>
+		<decade>{..genre.(@name==Prog Rock).artists.artist[1].@decade}</decade>
 	</xml>
-
 
 
 	<!--  AMF  -->
 
-	<amf id="amf-test" inject="main,home" locale="pt" src="ServiceTest">
-		<test_method params="#LOCALE_CURRENT#|ASC">
-			<name>{string.0}</name>
-			<age>{string.1}</age>
-		</test_method>
-	</amf>
+<!--	<amf id="amf-test" inject="main,home" locale="pt" src="ServiceTest">-->
+<!--		<test_method params="#LOCALE_CURRENT#|ASC">-->
+<!--			<name>{string.0}</name>-->
+<!--			<age>{string.1}</age>-->
+<!--		</test_method>-->
+<!--	</amf>-->
 
 
 
 	<!--  HTTP  -->
 
-	<http id="http-test-a" inject="main,home" locale="pt" src="test.php">
-		<name>{RAW}</name>
-	</http>
-
-	<http id="http-test-b" inject="main,home" locale="pt" src="test.php">
-		<name>{RAW}</name>
-	</http>
+<!--	<http id="http-test-a" inject="main,home" locale="pt" src="test.php">-->
+<!--		<name>{RAW}</name>-->
+<!--	</http>-->
+<!---->
+<!--	<http id="http-test-b" inject="main,home" locale="pt" src="test.php">-->
+<!--		<name>{RAW}</name>-->
+<!--	</http>-->
 
 
 </model>

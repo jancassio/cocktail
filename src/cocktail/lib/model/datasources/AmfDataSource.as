@@ -1,5 +1,6 @@
 package cocktail.lib.model.datasources 
 {
+	import cocktail.core.request.Request;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
@@ -7,25 +8,29 @@ package cocktail.lib.model.datasources
 
 	public class AmfDataSource extends ADataSource implements IDataSource 
 	{
-		public function AmfDataSource( model : Model, scheme : XML = null )
+		public function AmfDataSource(
+			model : Model,
+			request : Request,
+			scheme : XML = null
+		)
 		{
-			super( model, scheme );
+			super( model, request, scheme );
 		}
-		
+
 		/* LOADING */
 		override public function load() : ADataSource
 		{
 			new Timeout( _after_load, 1 );
 			return this;
 		}
-		
+
 		private function _after_load() : void
 		{
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 			bind( );
 		}
-		
-		public function bind() : void
+
+		override public function bind() : void
 		{
 //			var node : XML;
 //			var result : *;

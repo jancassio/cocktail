@@ -2,7 +2,7 @@ package cocktail.core.router
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
-	import cocktail.utils.ArrayUtil;	
+	import cocktail.utils.ArrayUtil;
 
 	/**
 	 * Stores URI and resolve it's route.
@@ -142,6 +142,7 @@ internal class API extends Index
 	public var controller : String;
 	public var action : String;
 	public var params : *;
+	public var folder : String;
 
 	/* ---------------------------------------------------------------------
 	INITIALIZING
@@ -173,7 +174,8 @@ internal class API extends Index
 		
 		parts = _uri.split( "/" );
 		
-		controller = StringUtil.cap( parts[ 0 ] );
+		controller = StringUtil.toCamel( parts[ 0 ] );
+		folder = StringUtil.toUnderscore( controller );
 		action = parts[ 1 ];
 		params = [].concat( parts.slice( 2 ) );
 		

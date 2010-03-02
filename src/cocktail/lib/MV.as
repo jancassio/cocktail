@@ -1,6 +1,7 @@
-package cocktail.lib.base 
+package cocktail.lib 
 {
 	import cocktail.Cocktail;
+	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
@@ -9,7 +10,6 @@ package cocktail.lib.base
 	import cocktail.core.slave.slaves.GraphSlave;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.core.slave.slaves.VideoSlave;
-	import cocktail.lib.Controller;
 
 	/**
 	 * Contains some preloading proxy utils for Model, Layout and View, and
@@ -19,10 +19,7 @@ package cocktail.lib.base
 	{
 		/* GUNZ */
 		public var gunz_scheme_load_start : Gun; 
-
 		public var gunz_scheme_load_complete : Gun; 
-
-		private var _is_queue_opened : Boolean;
 
 		private function _init_gunz() : void
 		{
@@ -44,14 +41,12 @@ package cocktail.lib.base
 
 		/* VARS */
 		internal var _controller : Controller;  
-
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
-
 		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;
-
 		/** Quite explainatory name, huh? **/
+		private var _is_queue_opened : Boolean;
 
 		/**
 		 * 
@@ -102,7 +97,7 @@ package cocktail.lib.base
 			}
 			
 			if( _is_queue_opened )
-				_load_queue.queue( slave );
+				_load_queue.append( slave );
 			else
 				ISlave( slave ).load( uri );
 			
@@ -116,6 +111,12 @@ package cocktail.lib.base
 		public function controller( name : String ) : Controller
 		{
 			return _cocktail.process.controller( name );
+		}
+
+		/* GETTERS */
+		public function get bind() : Bind
+		{
+			return _controller._bind;
 		}
 	}
 }
