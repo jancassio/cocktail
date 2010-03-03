@@ -14,7 +14,9 @@ package cocktail.core.slave.slaves
 	{
 		/* VARS */
 		private var _conn : NetConnection;
-		private var _gateway : String;		private var _service : String;
+
+		private var _gateway : String;
+		private var _service : String;
 
 		/* INITIALIZING */
 		
@@ -56,7 +58,7 @@ package cocktail.core.slave.slaves
 			_conn.call.apply( _conn, stuff.concat( params ) );
 			gunz_start.shoot( new AmfSlaveBullet( ) );
 		}
-		
+
 		/* DEFAULT RESPONDER AND FAULT */
 		
 		/**
@@ -66,7 +68,6 @@ package cocktail.core.slave.slaves
 		private function _result( result : * ) : void
 		{
 			gunz_complete.shoot( new AmfSlaveBullet( result ) );
-			// shoot bullet
 		}
 
 		/**
@@ -75,7 +76,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _fault( fault : * ) : void
 		{
-			gunz_error.shoot( new AmfSlaveBullet( fault  ) );
+			gunz_error.shoot( new AmfSlaveBullet( fault ) );
 		}
 	}
 }
