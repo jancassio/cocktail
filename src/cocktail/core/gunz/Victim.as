@@ -58,7 +58,7 @@ package cocktail.core.gunz
 			_id = gun.victims.length;
 			
 			_gun = gun;
-			handler = handler;
+			this.handler = handler;
 			_params = params;
 		}
 
