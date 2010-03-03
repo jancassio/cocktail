@@ -16,26 +16,29 @@
 	<xml id="xml-test" inject="main,home" locale="pt" src="artists.xml">
 		<xml-raw>{RAW}</xml-raw>
 		<artist>{..genre.(@name==Prog Rock).artists.artist[1].@name}</artist>
-		<decade>{..genre.(@name==Prog Rock).artists.artist[1].@decade}</decade>
+		<decade>{..genre.(@name==Prog Rock).artists.artist[1].@decade}
+		</decade>
 	</xml>
 
 
 	<!--  AMF  -->
 
-	<amf id="amf-test" inject="main,home" locale="pt" src="ServiceTest">
-		<test_method params="en">
+	<amf id="amf-test" inject="main,home" locale="pt" src="Instruments">
+		<get_all params="en">
 			<amf-raw>{RAW}</amf-raw>
-			<name>{wind.0}</name>
-			<age>{wind.1}</age>
-		</test_method>
+			<instrument-wind-1>{wind.0}</instrument-wind-1>
+			<instrument-wind-2>{wind.1}</instrument-wind-2>
+		</get_all>
 	</amf>
 
 
 
 	<!--  HTTP  -->
 
-<!--	<http id="http-test-a" inject="main,home" locale="pt" src="test.php">-->
-<!--		<name>{RAW}</name>-->
-<!--	</http>-->
-	
+	<!--
+		<http id="http-test-a" inject="main,home" locale="pt" src="test.php">
+	-->
+	<!--		<instrument-string-1>{RAW}</instrument-string-1>-->
+	<!--	</http>-->
+
 </model>

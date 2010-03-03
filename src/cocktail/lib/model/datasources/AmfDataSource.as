@@ -1,17 +1,23 @@
 package cocktail.lib.model.datasources 
 {
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.gunz.AmfSlaveBullet;
 	import cocktail.core.slave.slaves.AmfSlave;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
+	import cocktail.utils.StringUtil;
 
 	public class AmfDataSource extends ADataSource implements IDataSource 
 	{
 		/* VARS */
 		private var _slave : AmfSlave;
 
-		private var _requests : Array;
+		private var _current_call : AmfCall;
+
+		private var _current_result : *;
+
+		private var _calls : Array;
 
 		public var  params : Array;
 
@@ -28,35 +34,39 @@ package cocktail.lib.model.datasources
 		override public function load() : ADataSource
 		{
 			_slave = new AmfSlave( config.gateway( ), src );
-			_slave.gunz_complete.add( _after_load );
+			_slave.gunz_complete.add( _load_requests );
 			
-			_requests = [];
+			_calls = [];
 			for each( var method : XML in _scheme.children( ) )
-				_requests.push( new AmfRequest( method ) );
+				_calls.push( new AmfCall( method ) );
 			
 			_load_requests( );
 			
 			return this;
 		}
 
-		private function _load_requests() : void
+		private function _load_requests( bullet : AmfSlaveBullet = null ) : void
 		{
-			var request : AmfRequest;
 			
-			if( !_requests.length )
+			if( bullet != null )
+			{
+				_current_result = bullet.result.data;
+				bind( );
+			}
+			
+			if( !_calls.length )
 			{
 				_after_load( );
 				return;
 			}
 			
-			request = _requests.shift( );
-			
+			_current_call = _calls.shift( );
+			_slave.load( _current_call.name, _current_call.params );
 		}
 
 		private function _after_load() : void
 		{
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
-			bind( );
 		}
 
 		override public function parse() : void
@@ -69,33 +79,58 @@ package cocktail.lib.model.datasources
 
 		override public function bind() : void
 		{
-//			var node : XML;
-//			var result : *;
-//			var name : String;
-//			var value : String;
-//			var bind_exp : String;
-//			
-//			for each ( node in _binds )
-//			{
-//				value = node.toString( );
-//				name = node.localName( ) as String;
-//				
-//				for each ( bind_exp in StringUtil.enclosure( value, "{", "}" ) )
-//				{
-//					result = _query( StringUtil.innerb( bind_exp ) );
-//					value = value.replace( bind_exp, result );
-//				}
-//				
-//				_model.bind.s( name, value );
-//			}
-//			
-//			for each ( var node : XML in _binds )
-//				_model.bind.s( node.localName( ), node.toString( ) );
+			var name : String;
+			var value : String;
+			var result : String;
+			var query_exp : String;
+			var bind_exps : Array;
+			
+			for each ( var node : XML in _current_call.binds )
+			{
+				name = node.localName( );
+				value = node.text( );
+				
+				bind_exps = StringUtil.enclosure( value, "{", "}" );
+				for each ( query_exp in bind_exps )
+				{
+					if( query_exp == "{RAW}" )
+						result = _current_result;
+					else
+						result = _query( StringUtil.innerb( query_exp ) );
+					
+					value = value.replace( query_exp, result );
+				}
+				
+				_model.bind.s( node.localName( ), value );
+			}
+		}
+
+		/* QUERING */
+		private function _query( q : String ) : String
+		{
+			var steps : Array;
+			var data : *;
+			
+			if ( q == "RAW" )
+				return _current_result;
+			
+			steps = q.split( "." );
+			data = _current_result;
+			
+			while ( steps.length ) try 
+			{
+				data = data[ steps.shift( ) ];
+			} catch ( e : Error ) 
+			{
+				log.fatal( e.message );
+			}
+			
+			return data;
 		}
 	}
 }
 
-internal class AmfRequest
+internal class AmfCall
 {
 	public var name : String;
 
@@ -103,7 +138,7 @@ internal class AmfRequest
 
 	public var binds : XMLList;
 
-	public function AmfRequest( raw : XML )
+	public function AmfCall( raw : XML )
 	{
 		name = raw.localName( );
 		params = [].concat( raw.@params.split( "|" ) );
