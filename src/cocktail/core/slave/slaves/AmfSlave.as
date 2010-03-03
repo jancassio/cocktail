@@ -1,6 +1,7 @@
 package cocktail.core.slave.slaves 
 {
 	import cocktail.core.slave.ASlave;
+	import cocktail.core.slave.gunz.AmfSlaveBullet;
 
 	import flash.net.NetConnection;
 	import flash.net.ObjectEncoding;
@@ -53,9 +54,9 @@ package cocktail.core.slave.slaves
 			stuff.push( new Responder( _result, _fault ) );
 			
 			_conn.call.apply( _conn, stuff.concat( params ) );
-//			gunz_start.shoot( new AmfSlaveBullet( ) );
+			gunz_start.shoot( new AmfSlaveBullet( ) );
 		}
-
+		
 		/* DEFAULT RESPONDER AND FAULT */
 		
 		/**
@@ -64,17 +65,17 @@ package cocktail.core.slave.slaves
 		 */
 		private function _result( result : * ) : void
 		{
-//			gunz_complete.shoot( new AmfSlaveBullet( ) );
+			gunz_complete.shoot( new AmfSlaveBullet( result ) );
 			// shoot bullet
 		}
 
 		/**
 		 * Default fault callback, to handle server fault.
-		 * @param info	Fault info message, from server.
+		 * @param fault	Fault info message, from server.
 		 */
-		private function _fault( info : * ) : void
+		private function _fault( fault : * ) : void
 		{
-//			gunz_error.shoot( new AmfSlaveBullet( ) );
+			gunz_error.shoot( new AmfSlaveBullet( fault  ) );
 		}
 	}
 }

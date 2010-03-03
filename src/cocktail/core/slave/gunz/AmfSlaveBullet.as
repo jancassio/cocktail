@@ -6,21 +6,18 @@ package cocktail.core.slave.gunz
 	 */
 	public class AmfSlaveBullet extends ASlaveBullet 
 	{
-		/* VARS */
-		private var _response : *;
-		
 		/* BULLET PROPERTIES */
 		public var result : ResultVO;
 		public var fault : FaultVO;
 
-		public function AmfSlaveBullet(
-			bytes_loaded : Number = undefined,
-			bytes_total : Number = undefined,
-			response : * = null
-		)
+		public function AmfSlaveBullet( result : * = null, fault : * = null )
 		{
-			super( bytes_loaded, bytes_total );
-			_response = response;
+			super( undefined, undefined );
+			
+			if( result )
+				this.result = new ResultVO( result );
+			else
+				this.fault = new FaultVO( fault );
 		}
 	}
 }
