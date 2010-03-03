@@ -1,13 +1,16 @@
 package cocktail.lib.model.datasources 
 {
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
-	import cocktail.utils.Timeout;
+	import cocktail.utils.StringUtil;
 
 	public class HttpDataSource extends ADataSource implements IDataSource 
 	{
+		private var _slave : TextSlave;
+
 		public function HttpDataSource(
 			model : Model,
 			request : Request,
@@ -20,18 +23,50 @@ package cocktail.lib.model.datasources
 		/* LOADING */
 		override public function load() : ADataSource
 		{
-			new Timeout( _after_load, 1 );
+			_slave = new TextSlave( );
+			_slave.gunz_complete.add( _after_load );
+			_slave.load( src );
 			return this;
 		}
 
 		private function _after_load() : void
 		{
-			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 			bind( );
+			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
+		}
+
+		override public function parse() : void
+		{
+			id = _scheme.@id;
+			inject = _scheme.@inject;
+			locale = _scheme.@locale;
+			src = _scheme.@src;
 		}
 
 		override public function bind() : void
 		{
+			var name : String;
+			var value : String;
+			var result : String;
+			var query_exp : String;
+			var bind_exps : Array;
+			
+			for each ( var node : XML in _binds )
+			{
+				name = node.localName( );
+				value = node.text( );
+				
+				bind_exps = StringUtil.enclosure( value, "{", "}" );
+				for each ( query_exp in bind_exps )
+				{
+					if( query_exp == "{RAW}" )
+						result = _slave.data;
+					
+					value = value.replace( query_exp, result );
+				}
+				
+				_model.bind.s( node.localName( ), value );
+			}
 		}
 	}
 }
