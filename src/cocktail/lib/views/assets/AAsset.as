@@ -39,13 +39,13 @@ package cocktail.lib.views.assets {
 
 		public function load() : AAsset
 		{
-			_after_load;
+			_after_load();
 			return this;
 		}
 
 		private function _after_load() : void
 		{
-			// ...
+			//
 		}
 		
 	}

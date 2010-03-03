@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
@@ -104,8 +105,14 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 			
-			if( ( src = xml_node.attribute( 'src' ) ) )
-				loader.append( load_uri( src ) );
+			if( ( src = xml_node.attribute( "src" ).toString() ) )
+			{
+				loader.append( 
+					load_uri( 
+						StringUtil.toUnderscore( root.name ) + "/" + src, false 
+					) 
+				);
+			}
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -217,9 +224,9 @@ package cocktail.lib
 		/**
 		 * Creates then attachs the view sprite
 		 */
-		private function _instantiate_sprite(): void
+		private function _instantiate_sprite(): Boolean
 		{
-			if( sprite ) return;
+			if( sprite ) return false;
 			
 			sprite = new Sprite( );
 			
@@ -227,13 +234,18 @@ package cocktail.lib
 				root.scope.addChild( sprite );
 			else
 				up.sprite.addChild( sprite );
+			
+			set_triggers( );
+			
+			return true;
 		}
-		
+
 		/**
 		 * Apply the styles for the current request
 		 */
 		private function _apply_styles( request: Request ): void
 		{
+			//FIXME: Implement a real style system
 			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
@@ -254,6 +266,40 @@ package cocktail.lib
 			request;
 		}
 
+		/**
+		 * Will check if user customized some events, if so, will plug
+		 * then for the user.
+		 * 
+		 * Called automatically once - when creating the view sprite
+		 */
+		public function set_triggers() : void 
+		{
+			if( prototype[ 'click' ] != View.prototype[ 'click' ] )
+			{
+				log.notice( "Naiz! You customized the click" );
+			}
+			
+			if( prototype[ 'over' ] != View.prototype[ 'over' ] )
+			{
+				log.notice( "Naiz! You customized the over" );
+			}
+			
+			if( prototype[ 'over' ] != View.prototype[ 'out' ] )
+			{
+				log.notice( "Naiz! You customized the out" );
+			}
+		}
+		
+		/**
+		 * Should unset all possible triggers.
+		 * 
+		 * Called automatically once - when destroying the view
+		 */
+		public function unset_triggers(): void
+		{
+			
+		}
+		
 		/**
 		 * Destroy filter, if returns false, wont destroy
 		 */

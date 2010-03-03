@@ -60,7 +60,7 @@ package cocktail.lib.model.datasources
 			else
 			{
 				folder = _request.route.api.folder + "/";
-				src = config.path( ".xml" ) + "models/" + folder + src;
+				src = config.path( "xml" ) + "models/" + folder + src;
 			}
 			
 			_binds = _scheme.children( );

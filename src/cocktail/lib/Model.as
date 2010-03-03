@@ -6,6 +6,7 @@ package cocktail.lib
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.model.datasources.ADataSource;
+	import cocktail.utils.StringUtil;
 
 	/**
 	 * @author hems
@@ -170,13 +171,7 @@ package cocktail.lib
 		 */
 		private function get _xml_path() : String
 		{
-			log.info( "Running..." );
-			var path : String;
-			
-			path = config.path( ".xml" ) + "models/";
-			path += classname.toLowerCase( ).replace( "model", "" ) + ".xml";
-			
-			return path;
+			return "models/" + StringUtil.toUnderscore( name ) + ".xml";
 		}
 	}
 }

@@ -15,13 +15,13 @@
 		<path name="production"		url="./"	/>
 		
 		<filetypes>
-			<path ext=".fss" folder="cocktail/css/" />
-			<path ext=".fxml" folder="cocktail/fxml/" />
-			<path ext=".img" folder="cocktail/img/" />
-			<path ext=".swf" folder="cocktail/swf/" />
-			<path ext=".flv" folder="cocktail/flv/" />
-			<path ext=".mp3" folder="cocktail/mp3/" />
-			<path ext=".xml" folder="cocktail/xml/" />
+			<path ext="fss" folder="cocktail/css/" />
+			<path ext="fxml" folder="cocktail/fxml/" />
+			<path ext="img" folder="cocktail/img/" />
+			<path ext="swf" folder="cocktail/swf/" />
+			<path ext="flv" folder="cocktail/flv/" />
+			<path ext="mp3" folder="cocktail/mp3/" />
+			<path ext="xml" folder="cocktail/xml/" />
 		</filetypes>
 		
 	</paths>

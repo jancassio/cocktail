@@ -41,7 +41,7 @@ package cocktail.core.slave
 			super( );
 			_auto_load = auto_load;
 			_parallelized = parallelized;
-			dlist = new DLinkedList( this );
+			dlist = new DLinkedList();
 		}
 
 		/* LOADING */
@@ -53,6 +53,8 @@ package cocktail.core.slave
 		 */
 		public function load( uri : String = null ) : ISlave
 		{
+//			trace( "Slave#load " + _status );
+			
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
 			{
@@ -71,6 +73,8 @@ package cocktail.core.slave
 		 */
 		private function _load() : ISlave
 		{
+//			trace( "Slave#_load " + uri );
+							
 			_status = _LOADING;
 			
 			var i : DListIterator;
@@ -230,21 +234,20 @@ package cocktail.core.slave
 				return this;
 			}
 			
-			var i : Iterator;
-			var node : ASlave;
-			
-			i = dlist.getIterator( );
-			while( i.hasNext( ) )
+			if( !slave.dlist )
+				_queue( slave );
+			else
 			{
-				node = i.next( );
-				node.gunz_start.add( _start );
-				node.gunz_progress.add( _progress );
-				node.gunz_complete.add( _complete );
-				node.gunz_error.add( _error );
+				var i : Iterator;
+				var node : ASlave;
+				i = slave.dlist.getIterator( );
+				
+				while( i.hasNext( ) )
+				{
+					node = i.next( );
+					_queue( slave );
+				}
 			}
-			
-			if( slave.dlist )
-				dlist = dlist.concat( slave.dlist );
 			
 			return this;
 		}

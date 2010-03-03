@@ -114,10 +114,5 @@ package cocktail.core.slave
 		{
 			_uri = uri;
 		}
-
-		public function carlos() : void
-		{
-			trace( "CARRRRRRLO" );
-		}
 	}
 }

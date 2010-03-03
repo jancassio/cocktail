@@ -2,8 +2,13 @@ package cocktail.core.gunz
 {
 
 	/**
-	 * Groups multiples gunz, listens to every single one, and fires the
-	 * "complete" gun when all guns have fired.
+	 * Groups multiple Gun's, listens to every single one, and fires the
+	 * "complete" Gun (gunz_complete) when all Gun's have shot.
+	 * 
+	 * @see Gun
+	 * 
+	 * @includeExample GunzGroup.as
+	 * 
 	 * @author nybras | me@nybras.com
 	 */
 	public class GunzGroup 
@@ -45,22 +50,22 @@ package cocktail.core.gunz
 		/* ADDING ITEMS AND LISTENING THEM */
 
 		/**
-		 * Adds a new Gun to the queue list.
+		 * Adds a new Gun to the queue list and listen to its shots.
 		 * @param gun	Gun to be added.
 		 * @return	Self reference for reuse.
 		 */
 		public function add( gun : Gun ) : GunzGroup
 		{
-			gun.add( _fire );
+			gun.add( _gun_shot );
 			_items.push( gun );
 			return this;
 		}
 
 		/**
-		 * Listens for all queued gunz, checking if all gunz already finished
-		 * or not, and if is the last, fires a complete gun.
+		 * Listens to all queued Gun's, checking if all Gun's already finished
+		 * or not, and if it's the last, shoots a complete Gun.
 		 */
-		private function _fire( ...bullet ) : void
+		private function _gun_shot( ...bullet ) : void
 		{
 			if( ++_fired == _items.length )
 				gunz_complete.shoot( );

@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
 	import cocktail.core.request.Request;
@@ -68,13 +69,14 @@ package cocktail.lib
 		}
 
 		
-		override public function load(request : Request) : Boolean 
+		override public function load( request : Request ) : Boolean 
 		{
 			if( !super.load( request ) ) return false;
 			
 			if( loader.length )
 			{
 				loader.gunz_complete.add( _after_load_assets, request ).once();
+				loader.gunz_error.add( _load_assets_failed, request ).once();
 				loader.load();
 			}
 			else
@@ -101,6 +103,12 @@ package cocktail.lib
 			gunz_load_complete.shoot( new ViewBullet( ) );
 		}
 		
+		private function _load_assets_failed( bullet: Bullet ) : void
+		{
+			log.error( "Failed to load all layout assets" );
+			_after_load_assets(bullet);
+		}
+		
 		/* PRIVATE GETTERS */
 
 		/**
@@ -110,12 +118,7 @@ package cocktail.lib
 		private function get _xml_path() : String 
 		{
 			log.info( "Running..." );
-			var path : String;
-			
-			path = config.path( ".xml" ) + "layouts/";
-			path += name + ".xml";
-			
-			return path;
+			return "layouts/" + StringUtil.toUnderscore( name ) + ".xml";
 		}
 
 		/**
