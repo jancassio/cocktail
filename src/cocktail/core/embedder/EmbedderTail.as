@@ -3,7 +3,8 @@ package cocktail.core.embedder
 	import cocktail.lib.model.datasources.AmfDataSource;
 	import cocktail.lib.model.datasources.HttpDataSource;
 	import cocktail.lib.model.datasources.InlineDataSource;
-	import cocktail.lib.model.datasources.XmlDataSource;	
+	import cocktail.lib.model.datasources.JsonDataSource;
+	import cocktail.lib.model.datasources.XmlDataSource;
 
 	/**
 	 * Embeder class for cocktail.
@@ -17,6 +18,7 @@ package cocktail.core.embedder
 			HttpDataSource;
 			InlineDataSource;
 			AmfDataSource;
+			JsonDataSource;
 		}
 	}
 }
