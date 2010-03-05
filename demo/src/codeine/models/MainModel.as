@@ -22,8 +22,8 @@ package codeine.models
 			
 			log.debug( "========================================" );
 			log.debug( "[AmfDataSource] binds:" );
-			log.debug( "instrument1: " + bind.g( "instrument1" ) );
-			log.debug( "instrument2: " + bind.g( "instrument2" ) );
+			log.debug( "instrument-wind-1: " + bind.g( "instrument-wind-1" ) );
+			log.debug( "instrument-wind-2: " + bind.g( "instrument-wind-2" ) );
 			
 			log.debug( "========================================" );
 			log.debug( "[HttpDataSource] binds:" );
