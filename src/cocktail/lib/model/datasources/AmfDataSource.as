@@ -114,6 +114,7 @@ package cocktail.lib.model.datasources
 			if ( q == "RAW" )
 				return _current_result;
 			
+			q = q.replace( "[", "").replace( "]", "" );
 			steps = q.split( "." );
 			data = _current_result;
 			
