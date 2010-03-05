@@ -15,20 +15,33 @@ package cocktail.core.slave
 	{
 		/** GUNZ **/
 		public var gunz : Gunz;
+
 		public var gunz_start : Gun;
+
 		public var gunz_progress : Gun;
+
 		public var gunz_complete : Gun;
+
 		public var gunz_error : Gun;
+
 		/**  CONSTANTS **/
 		protected static const _QUEUED : String = "queued";
+
 		protected static const _LOADING : String = "loading";
+
 		protected static const _LOADED : String = "loaded";
+
 		protected static const _ERROR : String = "error";
+
 		protected static const _DESTROYED : String = "destroyed";
+
 		/** VARS **/
 		protected var _uri : String;
+
 		protected var _node : DListNode;
+
 		protected var _status : String;
+
 		public var dlist : DLinkedList;
 
 		/* INITIALIZING */

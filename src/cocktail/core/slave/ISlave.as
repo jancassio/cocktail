@@ -14,9 +14,9 @@ package cocktail.core.slave
 		function get status() : String;
 
 		function load( uri : String = null ) : ISlave;
-		
+
 		function unload() : ISlave;
-		
+
 		function destroy() : ISlave;
 	}
 }

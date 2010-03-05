@@ -12,9 +12,13 @@ package cocktail.core.router
 	{
 		/* VARS */
 		private var _api : API;
+
 		private var _uri : String;
+
 		private var _mask : String;
+
 		private var _target : String;
+
 		private var _locale : String;
 
 		/* INITIALIZING */
@@ -138,10 +142,15 @@ internal class API extends Index
 	VARS
 	--------------------------------------------------------------------- */
 	private var _uri : String;
+
 	private var _index : Index;
+
 	public var controller : String;
+
 	public var action : String;
+
 	public var params : *;
+
 	public var folder : String;
 
 	/* ---------------------------------------------------------------------

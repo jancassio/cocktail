@@ -1,6 +1,7 @@
 package cocktail.core.slave.slaves 
 {
 	import flash.system.System;
+
 	import cocktail.core.slave.gunz.GraphSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
@@ -23,13 +24,16 @@ package cocktail.core.slave.slaves
 	public class GraphSlave extends ASlave implements ISlave
 	{
 		/* VARS */
-		
 		private var _loader : Loader;
+
 		private var _loader_info : LoaderInfo;
+
 		private var _request : URLRequest;
+
 		private var _target : DisplayObjectContainer;
+
 		private var _trigger_set : Boolean = false;
-		
+
 		/* INITIALIZING */
 		
 		/**
@@ -75,11 +79,10 @@ package cocktail.core.slave.slaves
 			if( _target != null )
 				_target.addChild( content );
 			
-			_unset_triggers();
+			_unset_triggers( );
 		}
-		
+
 		/* TRIGGERS */
-		
 		private function _set_triggers() : void
 		{
 			_loader_info.addEventListener( Event.OPEN, _start );
@@ -87,7 +90,7 @@ package cocktail.core.slave.slaves
 			_loader_info.addEventListener( Event.INIT, _complete );
 			_loader_info.addEventListener( IOErrorEvent.IO_ERROR, _error );
 		}
-		
+
 		private function _unset_triggers() : void
 		{
 			_loader_info.removeEventListener( Event.OPEN, _start );
@@ -143,7 +146,7 @@ package cocktail.core.slave.slaves
 		{
 			return _loader;
 		}
-		
+
 		/* PUTTING */
 		
 		/**
@@ -193,11 +196,11 @@ package cocktail.core.slave.slaves
 			_loader.load( _request );
 			
 			// listeners
-			_set_triggers();
+			_set_triggers( );
 			
 			return this;
 		}
-		
+
 		/* UNLOAD / DESTROY */
 		
 		/**
@@ -210,10 +213,10 @@ package cocktail.core.slave.slaves
 				_loader.unloadAndStop( true );
 				
 			if ( _status == ASlave._LOADING )
-				_loader.close();
+				_loader.close( );
 			
 			if ( _trigger_set )
-				_unset_triggers();
+				_unset_triggers( );
 				
 			_loader = null;
 			_loader_info = null;
@@ -223,7 +226,7 @@ package cocktail.core.slave.slaves
 			
 			return this;
 		}
-		
+
 		/**
 		 * Destroy content, cannot load at this instance 
 		 * after destroying.
@@ -231,13 +234,13 @@ package cocktail.core.slave.slaves
 		 */
 		public function destroy() : ISlave
 		{
-			unload();
+			unload( );
 
 			_status = _DESTROYED;
 			
-			gunz.rm_all();
+			gunz.rm_all( );
 			
-			System.gc();
+			System.gc( );
 			
 			return this;
 		}

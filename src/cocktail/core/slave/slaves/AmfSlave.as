@@ -16,6 +16,7 @@ package cocktail.core.slave.slaves
 		private var _conn : NetConnection;
 
 		private var _gateway : String;
+
 		private var _service : String;
 
 		/* INITIALIZING */

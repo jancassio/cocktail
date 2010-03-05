@@ -9,7 +9,9 @@ package cocktail.utils
 	public class Timeout 
 	{
 		private var _timer : Timer;
+
 		private var _handler : Function;
+
 		private var _params : *;
 
 		public function Timeout(

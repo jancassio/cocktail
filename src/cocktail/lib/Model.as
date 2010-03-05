@@ -91,7 +91,7 @@ package cocktail.lib
 				{
 					ds = ds_list[ i ];
 					group.add( ds.gunz_load_complete );
-					ds.load();
+					ds.load( );
 				} while( ++i < ds_list.length );
 			}
 			

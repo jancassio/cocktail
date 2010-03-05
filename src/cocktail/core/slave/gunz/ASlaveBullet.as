@@ -11,7 +11,9 @@ package cocktail.core.slave.gunz
 	{
 		/* BULLET PROPERTIES */
 		public var bytes_loaded : Number;
+
 		public var bytes_total : Number;
+
 		/* INITIALIZING */
 		
 		/**

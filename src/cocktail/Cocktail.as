@@ -21,14 +21,23 @@ package cocktail
 	{
 		/* VARS */
 		private var _app : Sprite;
+
 		private var _app_id : String;
+
 		private var _embedder : EmbedderTail;
+
 		private var _default_uri : String; 
+
 		private var _config : Config;
+
 		private var _router : Router;
+
 		private var _routes : RoutesTail;
+
 		private var _process : Process;
+
 		private var _bind : Bind;
+
 		private var _factory : Factory;
 
 		/* INITIALIZING */

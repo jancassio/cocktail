@@ -16,13 +16,12 @@ package cocktail.lib
 
 	public class Layout extends View 
 	{
-
 		/** will hold all loadings from this layout and its childs **/
-		private var _loader: Slave;
-		
+		private var _loader : Slave;
+
 		override public function boot(cocktail : Cocktail) : * 
 		{
-			_loader = new Slave();
+			_loader = new Slave( );
 			return super.boot( cocktail );
 		}
 
@@ -68,16 +67,15 @@ package cocktail.lib
 			return true;
 		}
 
-		
 		override public function load( request : Request ) : Boolean 
 		{
 			if( !super.load( request ) ) return false;
 			
 			if( loader.length )
 			{
-				loader.gunz_complete.add( _after_load_assets, request ).once();
-				loader.gunz_error.add( _load_assets_failed, request ).once();
-				loader.load();
+				loader.gunz_complete.add( _after_load_assets, request ).once( );
+				loader.gunz_error.add( _load_assets_failed, request ).once( );
+				loader.load( );
 			}
 			else
 			{
@@ -102,13 +100,13 @@ package cocktail.lib
 			//this will tell controller, that everything was ok
 			gunz_load_complete.shoot( new ViewBullet( ) );
 		}
-		
-		private function _load_assets_failed( bullet: Bullet ) : void
+
+		private function _load_assets_failed( bullet : Bullet ) : void
 		{
 			log.error( "Failed to load all layout assets" );
-			_after_load_assets(bullet);
+			_after_load_assets( bullet );
 		}
-		
+
 		/* PRIVATE GETTERS */
 
 		/**
@@ -132,7 +130,6 @@ package cocktail.lib
 		}
 
 		/* PUBLIC GETTERS */
-
 		public function get scope() : DisplayObjectContainer 
 		{
 			var full_path : Array;
@@ -154,7 +151,7 @@ package cocktail.lib
 
 			return controller( name ).layout.childs.by_id( asset_id ).sprite;
 		}
-		
+
 		override public function get loader() : Slave
 		{
 			return _loader;

@@ -14,9 +14,7 @@ package cocktail.utils
 		 */
 		public static function ucasef( string : String ) : String
 		{
-			return string.substr( 0, 1 ).toUpperCase( ) 
-				+ 
-				string.substr( 1 ).toLowerCase( );
+			return string.substr( 0, 1 ).toUpperCase( ) + string.substr( 1 ).toLowerCase( );
 		}
 
 		/**
@@ -63,9 +61,7 @@ package cocktail.utils
 		 */
 		private static function escapeRegExpChar( char : String ) : String
 		{
-			return char.replace( 
-				/([{}\(\)\^$&.\*\?\/\+\|\[\\\\]|\]|\-)/g, "\\$1" 
-			);
+			return char.replace( /([{}\(\)\^$&.\*\?\/\+\|\[\\\\]|\]|\-)/g, "\\$1" );
 		}
 
 		/**

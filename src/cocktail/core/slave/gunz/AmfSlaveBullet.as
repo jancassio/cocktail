@@ -8,6 +8,7 @@ package cocktail.core.slave.gunz
 	{
 		/* BULLET PROPERTIES */
 		public var result : ResultVO;
+
 		public var fault : FaultVO;
 
 		public function AmfSlaveBullet( result : * = null, fault : * = null )
@@ -54,13 +55,13 @@ class FaultVO
 		// TODO: Parse and return the raw info.
 		return _raw;
 	}
-	
+
 	public function get code() : *
 	{
 		// TODO: Parse and return the raw error code.
 		return _raw;
 	}
-	
+
 	public function get message() : *
 	{
 		// TODO: Parse and return the raw error message.

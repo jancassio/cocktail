@@ -10,7 +10,9 @@ package cocktail.core.bind
 	{
 		/* VARS */
 		internal var _all : Boolean;
+
 		public var key : String;
+
 		public var methods : *;
 
 		/* INITIALIZING */

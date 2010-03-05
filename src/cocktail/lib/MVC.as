@@ -11,7 +11,9 @@ package cocktail.lib
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
+
 		public var gunz_load_progress : Gun; 
+
 		public var gunz_load_complete : Gun; 
 
 		/*Clean class name */
@@ -39,15 +41,15 @@ package cocktail.lib
 			
 			return s;
 		}
-		
-		public function redirect( url: String, silent: Boolean = false ): void
+
+		public function redirect( url : String, silent : Boolean = false ) : void
 		{
 			silent;
 			router.get( url );
 		}
 
 		/*Clean class name */
-		public function get name(): String
+		public function get name() : String
 		{
 			return _name;
 		}

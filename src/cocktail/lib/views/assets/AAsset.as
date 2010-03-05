@@ -1,4 +1,5 @@
-package cocktail.lib.views.assets {
+package cocktail.lib.views.assets 
+{
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
@@ -10,7 +11,9 @@ package cocktail.lib.views.assets {
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
+
 		public var gunz_load_progress : Gun; 
+
 		public var gunz_load_complete : Gun; 
 
 		private function _init_gunz() : void
@@ -21,11 +24,8 @@ package cocktail.lib.views.assets {
 		}
 
 		/* VARS */
-		
 		public var raw : *;
-		
-		
-		
+
 		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
 		{
@@ -39,7 +39,7 @@ package cocktail.lib.views.assets {
 
 		public function load() : AAsset
 		{
-			_after_load();
+			_after_load( );
 			return this;
 		}
 
@@ -47,6 +47,5 @@ package cocktail.lib.views.assets {
 		{
 			//
 		}
-		
 	}
 }

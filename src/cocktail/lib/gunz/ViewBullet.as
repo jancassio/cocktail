@@ -8,7 +8,7 @@ package cocktail.lib.gunz
 	{
 		public function ViewBullet()
 		{
-			super();
+			super( );
 		}
 	}
 }

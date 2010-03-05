@@ -73,7 +73,6 @@ package cocktail.core.gunz
 				
 				if( type == null || type == gun.type )
 					gun.rm_all( );
-					
 			} while( ++i < _gunz.length );
 		}
 

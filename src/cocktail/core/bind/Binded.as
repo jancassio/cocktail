@@ -11,10 +11,15 @@ package cocktail.core.bind
 	{
 		/* VARS */
 		internal var _all : Boolean;
+
 		private var _touched : Array;
+
 		public var key : String;
+
 		public var change : *;
+
 		public var setter : String;
+
 		public var value : *;
 
 		/* INITIALIZING */

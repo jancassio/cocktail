@@ -19,6 +19,7 @@ package cocktail.lib
 	{
 		/* GUNZ */
 		public var gunz_scheme_load_start : Gun; 
+
 		public var gunz_scheme_load_complete : Gun; 
 
 		private function _init_gunz() : void
@@ -41,10 +42,13 @@ package cocktail.lib
 
 		/* VARS */
 		internal var _controller : Controller;  
+
 		/** XML Scheme for Model, View and Layout. */
 		protected var _scheme : XML;
+
 		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;
+
 		/** Quite explainatory name, huh? **/
 		private var _is_queue_opened : Boolean;
 
@@ -69,11 +73,11 @@ package cocktail.lib
 		 */
 		public function load_uri( 
 			uri : String, 
-			auto_load: Boolean = true 
+			auto_load : Boolean = true 
 		) : ASlave
 		{
-			var aslave: ASlave;
-			var path: String;
+			var aslave : ASlave;
+			var path : String;
 			
 			aslave = slave( uri );
 			path = config.path( uri.toLowerCase( ).split( "." ).pop( ) );
@@ -91,7 +95,7 @@ package cocktail.lib
 			return aslave;
 		}
 
-		public function slave( uri: String ): ASlave
+		public function slave( uri : String ) : ASlave
 		{
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )
 			{
@@ -116,7 +120,7 @@ package cocktail.lib
 					return  new GraphSlave( );
 			}
 		}
-		
+
 		/**
 		 * Returns a controller instance by name 
 		 * ( unique per cocktail instance )

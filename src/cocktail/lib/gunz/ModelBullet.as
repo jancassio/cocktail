@@ -8,7 +8,7 @@ package cocktail.lib.gunz
 	{
 		public function ModelBullet()
 		{
-			super();
+			super( );
 		}
 	}
 }

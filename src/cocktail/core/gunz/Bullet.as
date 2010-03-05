@@ -17,31 +17,37 @@ package cocktail.core.gunz
 		 * @private
 		 */
 		internal var _type : String;
+
 		/** 
 		 * Bullet params. 
 		 * @private
 		 */
 		internal var _params : *;
+
 		/** 
 		 * Bullet owner. 
 		 * @private
 		 */
 		internal var _owner : *;
+
 		/** 
 		 * NOW() time stamp of the fire momment. 
 		 * @private 
 		 */
 		internal var _now : Date;
+
 		/** 
 		 * Current execution time.
 		 * @private
 		 */
 		internal var _time : int;
+
 		/** 
 		 * Execution times limit. 
 		 * @private
 		 */
 		internal var _times : int;
+
 		/** 
 		 * Bullet proxied event (if captured from Adobe AS3 Events). 
 		 * @private
@@ -111,7 +117,7 @@ package cocktail.core.gunz
 		{
 			return _params;
 		}
-		
+
 		/*
 		 * Sets the bullet params.
 		 */

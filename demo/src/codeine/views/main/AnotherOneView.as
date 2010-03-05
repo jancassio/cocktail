@@ -16,12 +16,11 @@ package codeine.views.main
 			
 			sprite.graphics.beginFill( 0xccff00 );
 			sprite.graphics.drawRect( 0, 0, 500, 500 );
-			sprite.graphics.endFill();
+			sprite.graphics.endFill( );
 		}
-		
-		public function click( bullet: Bullet ): void
+
+		public function click( bullet : Bullet ) : void
 		{
-			
 		}
 	}
 }

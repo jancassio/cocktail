@@ -1,4 +1,5 @@
-package cocktail.core.slave.slaves {
+package cocktail.core.slave.slaves 
+{
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -17,9 +18,10 @@ package cocktail.core.slave.slaves {
 	public class AudioSlave extends ASlave implements ISlave
 	{
 		/* VARS */
-		
 		private var _request : URLRequest;
+
 		private var _sound : Sound;
+
 		private var _trigger_set : Boolean = false;
 
 		/**
@@ -28,7 +30,7 @@ package cocktail.core.slave.slaves {
 		public function AudioSlave() : void
 		{
 		}
-		
+
 		/* LISTENERS */
 		
 		/**
@@ -61,7 +63,7 @@ package cocktail.core.slave.slaves {
 			// pull the trigger
 			gunz_complete.shoot( new AudioSlaveBullet( loaded, total, sound ) );
 			
-			_unset_triggers();
+			_unset_triggers( );
 		}
 
 		/**
@@ -73,9 +75,8 @@ package cocktail.core.slave.slaves {
 			_status = ASlave._ERROR;
 			gunz_error.shoot( new ASlaveBullet( -1, -1 ).inject( ev ) );
 		}
-		
+
 		/* TRIGGERS */
-		
 		private function _set_triggers() : void
 		{
 			_sound.addEventListener( Event.OPEN, _start );
@@ -85,7 +86,7 @@ package cocktail.core.slave.slaves {
 			
 			_trigger_set = true;
 		}
-		
+
 		private function _unset_triggers() : void
 		{
 			_sound.removeEventListener( Event.OPEN, _start );
@@ -95,7 +96,7 @@ package cocktail.core.slave.slaves {
 			
 			_trigger_set = false;
 		}
-		
+
 		/* GETTERS */
 		
 		/**
@@ -124,7 +125,7 @@ package cocktail.core.slave.slaves {
 		{
 			return _sound;
 		}
-		
+
 		/* LOADING */
 		
 		/**
@@ -154,17 +155,17 @@ package cocktail.core.slave.slaves {
 			_status = ASlave._LOADING;
             
 			_request = new URLRequest( _uri );
-			_sound = new Sound();
+			_sound = new Sound( );
 			
 			// start loading
 			_sound.load( _request );
 			
 			// listeners
-			_set_triggers();
+			_set_triggers( );
 			
 			return this;
 		}
-		
+
 		/* UNLOAD / DESTROY */
 		
 		/**
@@ -174,10 +175,10 @@ package cocktail.core.slave.slaves {
 		public function unload() : ISlave
 		{
 			if ( _status == ASlave._LOADING )
-				_sound.close();
+				_sound.close( );
 			
 			if ( _trigger_set )
-				_unset_triggers();
+				_unset_triggers( );
 							
 			_sound = null;
 			_request = null;
@@ -186,7 +187,7 @@ package cocktail.core.slave.slaves {
 			
 			return this;
 		}
-		
+
 		/**
 		 * Destroy content, cannot load at this instance 
 		 * after destroying.
@@ -198,9 +199,9 @@ package cocktail.core.slave.slaves {
 			
 			_status = _DESTROYED;
 			
-			gunz.rm_all();
+			gunz.rm_all( );
 			
-			System.gc();
+			System.gc( );
 			
 			return this;
 		}

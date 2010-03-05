@@ -125,8 +125,11 @@ package cocktail.core.router
 internal class MapVO
 {
 	public var mask : String;
+
 	public var target : String;
+
 	public var target_rgx : RegExp;
+
 	public var mask_rgx : RegExp;
 
 	/**

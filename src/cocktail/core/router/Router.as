@@ -19,8 +19,11 @@ package cocktail.core.router
 	{
 		/* VARS */
 		private var _initialized : Boolean;
+
 		private var _history : Array;
+
 		private var _index : Number;
+
 		/* GUNZ */
 		public var gunz_update : Gun; 
 

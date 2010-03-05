@@ -21,8 +21,8 @@ package cocktail.lib.views
 		// XXX: This will be very usefull when coding different view transitions
 		
 		/** Self explainatory name **/ 
-		public var WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE: Boolean;
-		
+		public var WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE : Boolean;
+
 		public var gunz_render_complete : Gun;
 
 		private var _group_rendering : GunzGroup;
@@ -42,10 +42,9 @@ package cocktail.lib.views
 		/** The holder of the view stack **/
 		private var _view : View;
 
-		
 		/** Last rendered request **/
 		private var _request : Request;
-		
+
 		public function ViewStack( view : View )
 		{
 			ids = new Dictionary( true );
@@ -95,9 +94,9 @@ package cocktail.lib.views
 			return null;
 		}
 
-		private function _after_child_destroy( bullet: ViewBullet ) : void 
+		private function _after_child_destroy( bullet : ViewBullet ) : void 
 		{
-			var view: View;
+			var view : View;
 			
 			view = bullet.owner;
 			//removing from child index
@@ -202,7 +201,7 @@ package cocktail.lib.views
 		{
 			log.info( "Running..." );
 			
-			gunz_render_complete.shoot( new ViewBullet() );
+			gunz_render_complete.shoot( new ViewBullet( ) );
 		}
 
 		/**
@@ -215,13 +214,13 @@ package cocktail.lib.views
 			
 			path = StringUtil.toUnderscore( view.root.name ) + '.';
 			
-			if( xml_node.attribute( 'class' ).toString() )
+			if( xml_node.attribute( 'class' ).toString( ) )
 				path += StringUtil.toCamel( xml_node.attribute( 'class' ) );
 			else
-				path += StringUtil.toCamel( xml_node.localName() );
+				path += StringUtil.toCamel( xml_node.localName( ) );
 			
 			created = View( new ( _cocktail.factory.view( path ) ) );
-			created.identifier = xml_node.localName();
+			created.identifier = xml_node.localName( );
 			created.xml_node = xml_node;
 			created.up = view;
 			
@@ -238,7 +237,6 @@ package cocktail.lib.views
 		{
 			return _view;
 		}
-
 
 		/** 
 		 * Last rendered request 

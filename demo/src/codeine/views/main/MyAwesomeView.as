@@ -21,7 +21,7 @@ package codeine.views.main
 			
 			sprite.graphics.beginFill( 0xFF0000 );
 			sprite.graphics.drawCircle( 0, 0, 50 );
-			sprite.graphics.endFill();
+			sprite.graphics.endFill( );
 			
 			cocktail.app.addChild( sprite );
 		}

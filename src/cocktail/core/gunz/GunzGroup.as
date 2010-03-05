@@ -17,6 +17,7 @@ package cocktail.core.gunz
 		
 		/** Gunz list. **/
 		public var gunz : Gunz;
+
 		/** Gunz complete event. **/
 		public var gunz_complete : Gun;
 
@@ -33,6 +34,7 @@ package cocktail.core.gunz
 		
 		/** Compute the number of fired guns, in the queue. **/
 		private var _fired : int;
+
 		/** Keeps all queued guns. **/
 		private var _items : Array;
 

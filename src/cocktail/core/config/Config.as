@@ -19,7 +19,9 @@ package cocktail.core.config
 	{
 		/* VARS */
 		private var _raw : XML;
+
 		private var _current_locale : String;
+
 		private var _tmp_loader : URLLoader;
 
 		/* BOOTING */

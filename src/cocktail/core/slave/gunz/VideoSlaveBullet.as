@@ -10,6 +10,7 @@ package cocktail.core.slave.gunz
 	{
 		/* BULLET PROPERTIES */
 		public var msg : String;
+
 		/* INITIALIZING */
 		
 		/**

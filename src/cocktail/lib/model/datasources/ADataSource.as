@@ -32,7 +32,6 @@ package cocktail.lib.model.datasources
 		public var src : String; 
 
 		/* VARS */
-		
 		protected var _raw : *;
 
 		protected var _request : Request;

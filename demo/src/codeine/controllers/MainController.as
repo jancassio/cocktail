@@ -8,7 +8,7 @@ package codeine.controllers
 	 */
 	public class MainController extends AppController 
 	{
-		public function home(): void
+		public function home() : void
 		{
 			log.notice( "Fucking running mothafucka!" );
 		}

@@ -26,6 +26,7 @@ package cocktail.core
 
 		/* VARS */
 		protected var _cocktail : Cocktail;
+
 		private var _log : Logger;
 
 		/* INITIALIZING */
@@ -191,11 +192,11 @@ package cocktail.core
 				) );
 		}
 
-		final public function isN( number: Number ): Boolean
+		final public function isN( number : Number ) : Boolean
 		{
 			return !isN( number );
 		}
-		
+
 		/* CASTING VALUES */
 		
 		/**
@@ -237,7 +238,7 @@ package cocktail.core
 		{
 			return Boolean( value );
 		}
-		
+
 		public function get cocktail() : Cocktail
 		{
 			return _cocktail;

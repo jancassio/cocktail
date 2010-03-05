@@ -12,6 +12,7 @@ package cocktail.core.request
 	{
 		/* CONSTANTS (+public getters) */
 		private static const _GET : String = "get";
+
 		private static const _POST : String = "post";
 
 		/**
@@ -32,9 +33,13 @@ package cocktail.core.request
 
 		/* VARS */
 		private var _type : String;
+
 		private var _uri : String;
+
 		private var _route : Route;
+
 		private var _title : String;
+
 		private var _data : String;
 
 		/* INITIALIZING */

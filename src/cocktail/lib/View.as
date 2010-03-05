@@ -13,7 +13,6 @@ package cocktail.lib
 
 	public class View extends MV 
 	{
-
 		/* GUNZ */
 		public var gunz_render_done : Gun;
 
@@ -97,7 +96,7 @@ package cocktail.lib
 			var i : int;
 			var assets : Array;
 			var view : View;
-			var src: String;
+			var src : String;
 			
 			//will mark all views as dead ( not in current render )
 			childs.clear_render_poll( );
@@ -105,13 +104,9 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 			
-			if( ( src = xml_node.attribute( "src" ).toString() ) )
+			if( ( src = xml_node.attribute( "src" ).toString( ) ) )
 			{
-				loader.append( 
-					load_uri( 
-						StringUtil.toUnderscore( root.name ) + "/" + src, false 
-					) 
-				);
+				loader.append( load_uri( StringUtil.toUnderscore( root.name ) + "/" + src, false ) );
 			}
 			
 			if( ( this is Layout ) == false )
@@ -154,7 +149,7 @@ package cocktail.lib
 				xml_node = XML( list.toXMLString( ) );
 				
 				//TODO: If target isnt rendered, redirect to home
-				if( ! controller( name ).layout.childs.has( "" ) )
+				if( !controller( name ).layout.childs.has( "" ) )
 				{
 					//redirect
 				}
@@ -212,7 +207,7 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			_instantiate_sprite();
+			_instantiate_sprite( );
 			
 			_apply_styles( request );
 
@@ -224,7 +219,7 @@ package cocktail.lib
 		/**
 		 * Creates then attachs the view sprite
 		 */
-		private function _instantiate_sprite(): Boolean
+		private function _instantiate_sprite() : Boolean
 		{
 			if( sprite ) return false;
 			
@@ -243,20 +238,19 @@ package cocktail.lib
 		/**
 		 * Apply the styles for the current request
 		 */
-		private function _apply_styles( request: Request ): void
+		private function _apply_styles( request : Request ) : void
 		{
 			//FIXME: Implement a real style system
 			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
-			
 			if( xml_node.attribute( 'x' ) )
 				sprite.x = Number( xml_node.attribute( 'x' ) );
 				 	
 			if( xml_node.attribute( 'y' ) )
 				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
 		}
-		
+
 		/**
 		 * Called just after the render function
 		 */
@@ -289,17 +283,16 @@ package cocktail.lib
 				log.notice( "Naiz! You customized the out" );
 			}
 		}
-		
+
 		/**
 		 * Should unset all possible triggers.
 		 * 
 		 * Called automatically once - when destroying the view
 		 */
-		public function unset_triggers(): void
+		public function unset_triggers() : void
 		{
-			
 		}
-		
+
 		/**
 		 * Destroy filter, if returns false, wont destroy
 		 */
@@ -326,7 +319,6 @@ package cocktail.lib
 		}
 
 		/** GETTERS / SETTERS **/
-
 		public function get xml_node() : XML  
 		{
 			return _xml_node;
@@ -342,11 +334,11 @@ package cocktail.lib
 			return ( up == null ) ? Layout( this ) : up.root;
 		}
 
-		public function get loader(): Slave
+		public function get loader() : Slave
 		{
 			return root.loader;
 		}
-		
+
 		public function get childs() : ViewStack
 		{
 			return _childs;

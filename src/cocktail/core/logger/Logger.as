@@ -10,8 +10,11 @@ package cocktail.core.logger
 	{
 		/* VARS */
 		protected var _target_class : String;
+
 		protected var _target_class_name : String;
+
 		protected var _level : uint;
+
 		protected var _detail : uint;
 
 		/* INITIALIZING */

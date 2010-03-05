@@ -13,20 +13,24 @@ package cocktail.core.slave.slaves
 	import flash.net.NetStream;
 	import flash.system.System;
 	import flash.utils.Timer;
+
 	/**
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class VideoSlave extends ASlave implements ISlave
 	{
 		/* VARS */
-		
 		private var _netconn : NetConnection;
+
 		private var _netstream : NetStream;
+
 		private var _target : Video;
+
 		private var _progress_timer : Timer;
+
 		private var _trigger_set : Boolean = false;
-		
-		private const DEFAULT_TIMER_DELAY: Number = 10;
+
+		private const DEFAULT_TIMER_DELAY : Number = 10;
 
 		/**
 		 * Creates a new VideoSlave instance.
@@ -34,40 +38,31 @@ package cocktail.core.slave.slaves
 		public function VideoSlave() : void
 		{
 		}
-		
+
 		/* TRIGGERS */
-		
 		private function _set_triggers() : void
 		{
-			_netconn.addEventListener( 	NetStatusEvent.NET_STATUS, 
-										_on_net_status );
-			_netconn.addEventListener( 	SecurityErrorEvent.SECURITY_ERROR, 
-										_on_security_error );
+			_netconn.addEventListener( NetStatusEvent.NET_STATUS, _on_net_status );
+			_netconn.addEventListener( SecurityErrorEvent.SECURITY_ERROR, _on_security_error );
 			
-			_netstream.addEventListener( NetStatusEvent.NET_STATUS, 
-											_on_net_status );
-			_netstream.addEventListener( AsyncErrorEvent.ASYNC_ERROR, 
-											_on_net_status );
+			_netstream.addEventListener( NetStatusEvent.NET_STATUS, _on_net_status );
+			_netstream.addEventListener( AsyncErrorEvent.ASYNC_ERROR, _on_net_status );
 			
 			_progress_timer.addEventListener( TimerEvent.TIMER, _pull_time );
-			_progress_timer.start();
+			_progress_timer.start( );
 			
 			_trigger_set = true;
 		}
-		
+
 		private function _unset_triggers() : void
 		{
-			_netconn.removeEventListener( NetStatusEvent.NET_STATUS, 
-										_on_net_status );
-			_netconn.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, 
-										_on_security_error );
+			_netconn.removeEventListener( NetStatusEvent.NET_STATUS, _on_net_status );
+			_netconn.removeEventListener( SecurityErrorEvent.SECURITY_ERROR, _on_security_error );
 			
-			_netstream.removeEventListener( NetStatusEvent.NET_STATUS, 
-											_on_net_status );
-			_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, 
-											_on_net_status );
+			_netstream.removeEventListener( NetStatusEvent.NET_STATUS, _on_net_status );
+			_netstream.removeEventListener( AsyncErrorEvent.ASYNC_ERROR, _on_net_status );
 			
-			_progress_timer.stop();
+			_progress_timer.stop( );
 			_progress_timer.removeEventListener( TimerEvent.TIMER, _pull_time );
 			
 			_trigger_set = false;
@@ -80,7 +75,7 @@ package cocktail.core.slave.slaves
 		 * 
 		 * @param event TimerEvent.
 		 */
-		private function _pull_time( event: TimerEvent ) : void
+		private function _pull_time( event : TimerEvent ) : void
 		{
 			if ( loaded >= total )
 			{
@@ -92,7 +87,7 @@ package cocktail.core.slave.slaves
 			
 			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
 		}
-		
+
 		/**
 		 * Handler to all th connection/status event types.
 		 * 
@@ -103,12 +98,11 @@ package cocktail.core.slave.slaves
 			switch ( event.info[ "code" ] ) 
 			{
 				case "NetStream.Play.StreamNotFound":
-					gunz_error.shoot( new VideoSlaveBullet( loaded, total,
-					 "Unable to locate video: " + _uri ) );
+					gunz_error.shoot( new VideoSlaveBullet( loaded, total, "Unable to locate video: " + _uri ) );
 					break;
 			}
 		}
-		
+
 		/**
 		 * Handler to the security or IO possible errors on the stream.
 		 * 
@@ -118,7 +112,7 @@ package cocktail.core.slave.slaves
 		{
 			gunz_error.shoot( new VideoSlaveBullet( loaded, total, "Security error." ) );
 		}
-		
+
 		/* GETTERS */
 		
 		/**
@@ -138,18 +132,18 @@ package cocktail.core.slave.slaves
 		{
 			return _netstream.bytesLoaded;
 		}
-		
+
 		/**
 		 * Return the NetStream object used to load and controll the video 
 		 * stream.
 		 * 
 		 * @return NetStream object.
 		 */
-		public function get net_stream () : NetStream
+		public function get net_stream() : NetStream
 		{
 			return _netstream;
 		}
-		
+
 		/* PUTTING */
 		
 		/**
@@ -162,7 +156,7 @@ package cocktail.core.slave.slaves
 			_target = target;
 			return this;
 		}
-		
+
 		/* LOADING */
 		
 		/**
@@ -204,15 +198,15 @@ package cocktail.core.slave.slaves
 				_target.attachNetStream( _netstream );
 				
 			_netstream.play( _uri );
-			_netstream.pause();
+			_netstream.pause( );
 			
-			_set_triggers();
+			_set_triggers( );
 			
 			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
 			
 			return this;
 		}
-		
+
 		/**
 		 * Unload content.
 		 * @return	ISlave.
@@ -220,16 +214,16 @@ package cocktail.core.slave.slaves
 		public function unload() : ISlave
 		{
 			if ( _netconn )
-				_netconn.close();
+				_netconn.close( );
 			
 			if ( _netstream )
 				_netstream.close( );
 			
 			if ( _trigger_set )
-				_unset_triggers();
+				_unset_triggers( );
 				
 			if( _target )
-				_target.clear();
+				_target.clear( );
 			
 			_progress_timer = null;
 			_netconn = null;
@@ -240,7 +234,7 @@ package cocktail.core.slave.slaves
 			
 			return this;
 		}
-		
+
 		/**
 		 * Destroy content, cannot load at this instance 
 		 * after destroying.
@@ -248,13 +242,13 @@ package cocktail.core.slave.slaves
 		 */
 		public function destroy() : ISlave
 		{
-			unload();
+			unload( );
 			
 			_status = _DESTROYED;
 			
-			gunz.rm_all();
+			gunz.rm_all( );
 			
-			System.gc();
+			System.gc( );
 			
 			return this;
 		}

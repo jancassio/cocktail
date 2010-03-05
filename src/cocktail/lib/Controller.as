@@ -244,9 +244,8 @@ package cocktail.lib
 			log.info( "Running..." );
 			request;
 		}
-		
+
 		/** GETTERS **/
-		
 		public function get layout() : Layout
 		{
 			return _layout;

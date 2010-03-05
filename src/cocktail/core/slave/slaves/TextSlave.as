@@ -20,9 +20,10 @@ package cocktail.core.slave.slaves
 	public class TextSlave extends ASlave implements ISlave 
 	{
 		/* VARS */
-		
 		private var _loader : URLLoader;
+
 		private var _request : URLRequest;
+
 		private var _trigger_set : Boolean = false;
 
 		/* INITIALIZING */
@@ -76,10 +77,9 @@ package cocktail.core.slave.slaves
 			_status = ASlave._ERROR;
 			gunz_error.shoot( new ASlaveBullet( 0, 0 ) );
 		}
-		
+
 		/* TRIGGERS */
-		
-		private function _set_triggers () : void
+		private function _set_triggers() : void
 		{
 			_loader.addEventListener( Event.OPEN, _start );
 			_loader.addEventListener( ProgressEvent.PROGRESS, _progress );
@@ -88,8 +88,8 @@ package cocktail.core.slave.slaves
 			
 			_trigger_set = true;
 		}
-		
-		private function _unset_triggers () : void
+
+		private function _unset_triggers() : void
 		{
 			if( _loader == null ) return;
 			
@@ -146,10 +146,10 @@ package cocktail.core.slave.slaves
 			
 			_uri = uri;
 			
-			_loader  = new URLLoader( );
+			_loader = new URLLoader( );
 			_request = new URLRequest( uri );
 			
-			_set_triggers();
+			_set_triggers( );
 			
 			// updating status
 			_status = ASlave._LOADING;
@@ -159,7 +159,7 @@ package cocktail.core.slave.slaves
 			
 			return this;
 		}
-		
+
 		/* UNLOAD / DESTROY */
 		
 		/**
@@ -168,10 +168,10 @@ package cocktail.core.slave.slaves
 		public function unload() : ISlave
 		{
 			if ( _status == ASlave._LOADING )
-				_loader.close();
+				_loader.close( );
 			
 			if ( _trigger_set )
-				_unset_triggers();
+				_unset_triggers( );
 			
 			_loader = null;
 			_request = null;
@@ -180,7 +180,7 @@ package cocktail.core.slave.slaves
 			
 			return this;
 		}
-		
+
 		/**
 		 * Destroy content, cannot load at this instance 
 		 * after destroying.
@@ -188,13 +188,13 @@ package cocktail.core.slave.slaves
 		 */
 		public function destroy() : ISlave
 		{
-			unload();
+			unload( );
 			
 			_status = _DESTROYED;
 			
-			gunz.rm_all();
+			gunz.rm_all( );
 			
-			System.gc();
+			System.gc( );
 			
 			return this;
 		}
