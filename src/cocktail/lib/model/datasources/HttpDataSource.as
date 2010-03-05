@@ -1,6 +1,7 @@
 package cocktail.lib.model.datasources 
 {
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.gunz.TextSlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
@@ -10,6 +11,7 @@ package cocktail.lib.model.datasources
 	public class HttpDataSource extends ADataSource implements IDataSource 
 	{
 		private var _slave : TextSlave;
+		private var _result : *;
 
 		public function HttpDataSource(
 			model : Model,
@@ -29,8 +31,9 @@ package cocktail.lib.model.datasources
 			return this;
 		}
 
-		private function _after_load() : void
+		private function _after_load( bullet : TextSlaveBullet ) : void
 		{
+			_result = bullet.data;
 			bind( );
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
@@ -41,6 +44,7 @@ package cocktail.lib.model.datasources
 			inject = _scheme.@inject;
 			locale = _scheme.@locale;
 			src = _scheme.@src;
+			_binds = _scheme.children();
 		}
 
 		override public function bind() : void
@@ -59,9 +63,7 @@ package cocktail.lib.model.datasources
 				bind_exps = StringUtil.enclosure( value, "{", "}" );
 				for each ( query_exp in bind_exps )
 				{
-					if( query_exp == "{RAW}" )
-						result = _slave.data;
-					
+					result = _result;
 					value = value.replace( query_exp, result );
 				}
 				
