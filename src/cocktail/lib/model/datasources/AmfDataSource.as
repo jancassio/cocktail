@@ -8,19 +8,18 @@ package cocktail.lib.model.datasources
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
 	import cocktail.utils.StringUtil;
 
-	public class AmfDataSource extends ADataSource implements IDataSource 
+	public class AmfDataSource extends JsonDataSource implements IDataSource 
 	{
 		/* VARS */
 		private var _slave : AmfSlave;
 
 		private var _current_call : AmfCall;
 
-		private var _current_result : *;
-
 		private var _calls : Array;
 
 		public var  params : Array;
 
+		/* INITIALIZING */
 		public function AmfDataSource(
 			model : Model,
 			request : Request,
@@ -50,23 +49,18 @@ package cocktail.lib.model.datasources
 			
 			if( bullet != null )
 			{
-				_current_result = bullet.result.data;
+				_result = bullet.result.data;
 				bind( );
 			}
 			
 			if( !_calls.length )
 			{
-				_after_load( );
+				gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 				return;
 			}
 			
 			_current_call = _calls.shift( );
 			_slave.load( _current_call.name, _current_call.params );
-		}
-
-		private function _after_load() : void
-		{
-			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
 
 		override public function parse() : void
@@ -94,7 +88,7 @@ package cocktail.lib.model.datasources
 				for each ( query_exp in bind_exps )
 				{
 					if( query_exp == "{RAW}" )
-						result = _current_result;
+						result = _result;
 					else
 						result = _query( StringUtil.innerb( query_exp ) );
 					
@@ -103,30 +97,6 @@ package cocktail.lib.model.datasources
 				
 				_model.bind.s( node.localName( ), value );
 			}
-		}
-
-		/* QUERING */
-		private function _query( q : String ) : String
-		{
-			var steps : Array;
-			var data : *;
-			
-			if ( q == "RAW" )
-				return _current_result;
-			
-			q = q.replace( "[", "").replace( "]", "" );
-			steps = q.split( "." );
-			data = _current_result;
-			
-			while ( steps.length ) try 
-			{
-				data = data[ steps.shift( ) ];
-			} catch ( e : Error ) 
-			{
-				log.fatal( e.message );
-			}
-			
-			return data;
 		}
 	}
 }

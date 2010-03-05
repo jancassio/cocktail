@@ -10,7 +10,9 @@ package cocktail.lib.model.datasources
 	{
 		/* GUNZ */
 		public var gunz_load_start : Gun; 
+
 		public var gunz_load_progress : Gun; 
+
 		public var gunz_load_complete : Gun;
 
 		private function _init_gunz() : void
@@ -20,15 +22,25 @@ package cocktail.lib.model.datasources
 			gunz_load_complete = new Gun( gunz, this, "load_complete" );
 		}
 
-		/* VARS */
+		/* XML SCHEME ATTRIBUTE / PROPERTIES */
 		public var id : String; 
+
 		public var inject : String; 
+
 		public var locale : String; 
+
 		public var src : String; 
+
+		/* VARS */
+		
 		protected var _raw : *;
+
 		protected var _request : Request;
+
 		protected var _model : Model;
+
 		protected var _scheme : XML; 
+
 		protected var _binds : XMLList;
 
 		/* BOOTING */
@@ -68,21 +80,10 @@ package cocktail.lib.model.datasources
 		/* PARSING */
 		public function parse() : void
 		{
-			var msg : String;
-			
-			msg = "This method (ADataSource.parse) must be overritten by ";
-			msg += "superclass.";
-			log.fatal( msg );
-		}
-
-		/* BINDING */
-		public function bind() : void
-		{
-			var msg : String;
-			
-			msg = "This method (ADataSource.bind) must be overritten by ";
-			msg += "superclass.";
-			log.fatal( msg );
+			id = _scheme.@id;
+			inject = _scheme.@inject;
+			locale = _scheme.@locale;
+			_binds = _scheme.children( );
 		}
 	}
 }

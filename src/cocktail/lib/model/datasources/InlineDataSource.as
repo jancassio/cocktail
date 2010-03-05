@@ -32,18 +32,8 @@ package cocktail.lib.model.datasources
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
 
-		/* PARSING */
-		override public function parse() : void
-		{
-			id = _scheme.@id;
-			inject = _scheme.@inject;
-			locale = _scheme.@locale;
-			
-			_binds = _scheme.children( );
-		}
-
 		/* BINDING */
-		override public function bind() : void
+		public function bind() : void
 		{
 			for each ( var node : XML in _binds )
 				_model.bind.s( node.localName( ), node.text( ) );

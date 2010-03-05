@@ -8,11 +8,14 @@ package cocktail.lib.model.datasources
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
 	import cocktail.utils.StringUtil;
 
-	public class HttpDataSource extends ADataSource implements IDataSource 
+	public class HttpDataSource extends InlineDataSource implements IDataSource 
 	{
+		/* VARS */
 		private var _slave : TextSlave;
+
 		private var _result : *;
 
+		/* 	INITIALIZING */
 		public function HttpDataSource(
 			model : Model,
 			request : Request,
@@ -26,27 +29,26 @@ package cocktail.lib.model.datasources
 		override public function load() : ADataSource
 		{
 			_slave = new TextSlave( );
-			_slave.gunz_complete.add( _after_load );
+			_slave.gunz_complete.add( _after_load ).once( );
 			_slave.load( src );
 			return this;
 		}
 
-		private function _after_load( bullet : TextSlaveBullet ) : void
+		protected function _after_load( bullet : TextSlaveBullet ) : void
 		{
 			_result = bullet.data;
 			bind( );
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
 
+		/* PARSING */
 		override public function parse() : void
 		{
-			id = _scheme.@id;
-			inject = _scheme.@inject;
-			locale = _scheme.@locale;
+			super.parse( );
 			src = _scheme.@src;
-			_binds = _scheme.children();
 		}
 
+		/* BINDING */
 		override public function bind() : void
 		{
 			var name : String;

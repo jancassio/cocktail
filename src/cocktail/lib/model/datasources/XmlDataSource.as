@@ -2,7 +2,6 @@ package cocktail.lib.model.datasources
 {
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.TextSlaveBullet;
-	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
@@ -10,15 +9,11 @@ package cocktail.lib.model.datasources
 
 	import net.digitalprimates.utils.E4XParser;
 
-	public class XmlDataSource extends ADataSource implements IDataSource
+	public class XmlDataSource extends HttpDataSource implements IDataSource
 	{
 		/* VARS */
-		private var _slave : TextSlave;
-		private var _result : XML;
+		protected var _result : *;
 
-		/* B */
-		
-		
 		/* INITIALIZING */
 		public function XmlDataSource(
 			model : Model,
@@ -29,16 +24,7 @@ package cocktail.lib.model.datasources
 			super( model, request, scheme );
 		}
 
-		/* LOADING */
-		override public function load() : ADataSource
-		{
-			_slave = new TextSlave( );
-			_slave.gunz_complete.add( _after_load ).once( );
-			_slave.load( src );
-			return this;
-		}
-
-		private function _after_load( bullet : TextSlaveBullet ) : void
+		override protected function _after_load( bullet : TextSlaveBullet ) : void
 		{
 			_result = new XML( bullet.data );
 			bind( );
@@ -50,10 +36,9 @@ package cocktail.lib.model.datasources
 		{
 			var folder : String;
 			
-			id = _scheme.@id;
-			inject = _scheme.@inject;
-			locale = _scheme.@locale;
-			src = _scheme.@src;
+			super.parse( );
+			
+			
 			
 			if ( StringUtil.outerb( src ) == "[]" )
 				src = StringUtil.innerb( src );
@@ -62,8 +47,6 @@ package cocktail.lib.model.datasources
 				folder = _request.route.api.folder + "/";
 				src = config.path( "xml" ) + "models/" + folder + src;
 			}
-			
-			_binds = _scheme.children( );
 		}
 
 		/* BINDING */
@@ -96,7 +79,7 @@ package cocktail.lib.model.datasources
 		}
 
 		/* QUERING */
-		private function _query( e4x : String ) : String
+		protected function _query( e4x : String ) : String
 		{
 			return E4XParser.evaluate( _result, e4x );
 		}

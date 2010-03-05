@@ -2,7 +2,6 @@ package cocktail.lib.model.datasources
 {
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.TextSlaveBullet;
-	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.Model;
 	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
 	import cocktail.lib.model.datasources.interfaces.IDataSource;
@@ -10,12 +9,9 @@ package cocktail.lib.model.datasources
 
 	import com.adobe.serialization.json.JSON;
 
-	public class JsonDataSource extends ADataSource implements IDataSource 
+	public class JsonDataSource extends XmlDataSource implements IDataSource 
 	{
-		private var _slave : TextSlave;
-
-		private var _result : *;
-
+		/* INITIALIZING */
 		public function JsonDataSource(
 			model : Model,
 			request : Request,
@@ -26,21 +22,14 @@ package cocktail.lib.model.datasources
 		}
 
 		/* LOADING */
-		override public function load() : ADataSource
-		{
-			_slave = new TextSlave( );
-			_slave.gunz_complete.add( _after_load );
-			_slave.load( src );
-			return this;
-		}
-
-		private function _after_load( bullet : TextSlaveBullet ) : void
+		override protected function _after_load( bullet : TextSlaveBullet ) : void
 		{
 			_result = JSON.decode( bullet.data );
 			bind( );
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
 
+		/* PARSING */
 		override public function parse() : void
 		{
 			id = _scheme.@id;
@@ -50,6 +39,7 @@ package cocktail.lib.model.datasources
 			_binds = _scheme.children( );
 		}
 
+		/* BINDING */
 		override public function bind() : void
 		{
 			var name : String;
@@ -79,7 +69,7 @@ package cocktail.lib.model.datasources
 		}
 
 		/* QUERING */
-		private function _query( q : String ) : String
+		override protected function _query( q : String ) : String
 		{
 			var steps : Array;
 			var data : *;
@@ -87,7 +77,7 @@ package cocktail.lib.model.datasources
 			if ( q == "RAW" )
 				return _result;
 			
-			q = q.replace( "[", "" ).replace( "]", "" );
+			q = q.replace( "[", "." ).replace( "].", "." ).replace( "]", "" );
 			steps = q.split( "." );
 			data = _result;
 			
