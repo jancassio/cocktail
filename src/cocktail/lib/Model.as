@@ -101,8 +101,8 @@ package cocktail.lib
 		public function _after_load( ...n /* bullet : Bullet */ ) : void
 		{
 			log.info( "Running..." );
-			gunz_load_complete.shoot( new ModelBullet( ) );
 			after_load( );
+			gunz_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		public function after_load() : void
