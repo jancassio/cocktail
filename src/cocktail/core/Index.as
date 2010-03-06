@@ -184,10 +184,10 @@ package cocktail.core
 			scope : *,
 			method : String,
 			params : * = null
-		) : void
+		) : *
 		{
 			if( is_defined( scope, method ) )
-				Function( scope[ method ] ).apply( scope, (
+				return Function( scope[ method ] ).apply( scope, (
 					params != null ? [].concat( params ) : []
 				) );
 		}
