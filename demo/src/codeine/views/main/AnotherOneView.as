@@ -19,8 +19,11 @@ package codeine.views.main
 			sprite.graphics.endFill( );
 		}
 
-		public function click( bullet : Bullet ) : void
+		public function click( bullet: Bullet ) : void
 		{
+			bullet;
+			trace( 'clicked!' );
+			go( 'main/base' );
 		}
 	}
 }
