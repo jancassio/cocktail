@@ -1,10 +1,12 @@
 package cocktail.lib 
 {
-	import flash.events.EventDispatcher;
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
+	import cocktail.utils.StringUtil;
 	import cocktail.utils.Timeout;
+
+	import flash.events.EventDispatcher;
 
 	/**
 	 * @author nybras | me@nybras.com
@@ -42,7 +44,7 @@ package cocktail.lib
 			_init_gunz( );
 			
 			regexp = /(Model|View|Controller|Layout$)/;
-			_name = classname.replace( regexp, '' );
+			_name = StringUtil.toUnderscore( classname.replace( regexp, '' ) );
 			
 			return s;
 		}
