@@ -1,11 +1,18 @@
 package cocktail.lib 
 {
-	import cocktail.utils.StringUtil;
+	import cocktail.core.slave.slaves.GraphSlave;
+	import cocktail.core.gunz.Bullet;
+	import cocktail.core.slave.ASlave;
+
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
 	import cocktail.lib.views.ViewStack;
+	import cocktail.utils.StringUtil;
+	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
@@ -36,6 +43,7 @@ package cocktail.lib
 
 		/** View sprite **/
 		public var sprite : Sprite;
+		private var _src_slave : ASlave;
 
 		private function _init_gunz() : void 
 		{
@@ -106,7 +114,11 @@ package cocktail.lib
 			
 			if( ( src = xml_node.attribute( "src" ).toString( ) ) )
 			{
-				loader.append( load_uri( StringUtil.toUnderscore( root.name ) + "/" + src, false ) );
+				_src_slave = load_uri( root.name + "/" + src, false ); 
+				
+				loader.append( _src_slave );
+				
+				_src_slave.gunz_complete.add( _populate_content );
 			}
 			
 			if( ( this is Layout ) == false )
@@ -122,6 +134,12 @@ package cocktail.lib
 			} while( ++i < assets.length );
 
 			return true;
+		}
+		
+		internal function _populate_content( bullet: Bullet ) : void
+		{
+			log.error( "This function should be overrided by your view" );
+			bullet;
 		}
 
 		/**
@@ -268,20 +286,23 @@ package cocktail.lib
 		 */
 		public function set_triggers() : void 
 		{
-			if( prototype[ 'click' ] != View.prototype[ 'click' ] )
-			{
-				log.notice( "Naiz! You customized the click" );
-			}
+			if( is_defined( 'click' ) )
+				event( sprite, MouseEvent.CLICK, this[ 'click' ] );
+				
+			if( is_defined( 'mouse_over' ) )
+				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_over' ] );
+				
+			if( is_defined( 'mouse_out' ) )
+				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_out' ] );
+				
+			if( is_defined( 'mouse_up' ) )
+				event( sprite, MouseEvent.MOUSE_UP, this[ 'mouse_up' ] );
+				
+			if( is_defined( 'mouse_down' ) )
+				event( sprite, MouseEvent.MOUSE_UP, this[ 'mouse_down' ] );
 			
-			if( prototype[ 'over' ] != View.prototype[ 'over' ] )
-			{
-				log.notice( "Naiz! You customized the over" );
-			}
-			
-			if( prototype[ 'over' ] != View.prototype[ 'out' ] )
-			{
-				log.notice( "Naiz! You customized the out" );
-			}
+			if( is_defined( 'double_click' ) )
+				event( sprite, MouseEvent.DOUBLE_CLICK, this[ 'double_click' ] );
 		}
 
 		/**
@@ -292,7 +313,7 @@ package cocktail.lib
 		public function unset_triggers() : void
 		{
 		}
-
+		
 		/**
 		 * Destroy filter, if returns false, wont destroy
 		 */
