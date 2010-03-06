@@ -1,3 +1,0 @@
-<view>
-	<swf id="hello" src="hello.swf" class="home.Hello" />
-</view>
