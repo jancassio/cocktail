@@ -56,6 +56,12 @@ package cocktail.core.gunz
 		{
 			var bullet : Bullet;
 		
+			if( _bullet_feed == null )
+			{
+				_gun.shoot();
+				return;
+			}
+			
 			bullet = _bullet_feed( _gun.type );
 			bullet.event = event;
 		
