@@ -8,8 +8,8 @@ package cocktail.core.router
 	import cocktail.core.request.RequestAsync;
 	import cocktail.core.router.gunz.RouterBullet;
 
-	import swfaddress.SWFAddress;
-	import swfaddress.SWFAddressEvent;
+	import com.asual.swfaddress.SWFAddress;
+	import com.asual.swfaddress.SWFAddressEvent;
 
 	/**
 	 * Handles all routing operations.

@@ -3,13 +3,13 @@ package cocktail.core.config
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 
-	import swfaddress.SWFAddress;
+	import com.asual.swfaddress.SWFAddress;
 
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.system.Capabilities;	
+	import flash.system.Capabilities;
 
 	/**
 	 * Config class is the source holder for the application base config.
