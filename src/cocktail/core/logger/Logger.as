@@ -131,7 +131,7 @@ package cocktail.core.logger
 			
 			base = "[" + params[ 0 ] + "] ";
 			tmpl1 = base + "{$class} ~: ";
-			tmpl2 = base + "#$line {$class} => $method ~: ";
+			tmpl2 = base + "{$class:$line} => $method ~: ";
 			
 			msg = "";
 			if ( detail == 1 )
@@ -166,11 +166,11 @@ package cocktail.core.logger
 			
 			try
 			{
-				this[ getTimer( ) ].length;
+				this[ getTimer( ) ][ "length" ];
 			}
 			catch( e : Error )
 			{
-				name = e.getStackTrace( ).match( reg )[ 3 ].match( reg );
+				name = e.getStackTrace( ).match( reg )[ 3 ][ "match" ]( reg );
 				return name.substr( 0, -1 );
 			}
 			
@@ -191,12 +191,11 @@ package cocktail.core.logger
 			
 			try
 			{
-				this[ getTimer( ) ].length;
+				this[ getTimer( ) ][ "length" ];
 			}
 			catch( e : Error )
 			{
-				line = e.getStackTrace( ).match( reg1 )[ 3 ].match( reg2 );
-				line += " " + ( ".....".substr( 0, ( 5 - line.length ) ) );
+				line = e.getStackTrace( ).match( reg1 )[ 3 ][ "match" ]( reg2 );
 				return line; 
 			}
 			
@@ -251,9 +250,7 @@ package cocktail.core.logger
 		public final function warn( ...params ) : Logger
 		{
 			if ( _level > 3 )
-			{
 				log( "WARN", params );
-			}
 			
 			return this;
 		}
