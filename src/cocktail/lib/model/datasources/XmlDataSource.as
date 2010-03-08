@@ -55,23 +55,23 @@ package cocktail.lib.model.datasources
 			var name : String;
 			var value : String;
 			var result : String;
-			var e4x_exp : String;
-			var bind_exps : Array;
+			var bind_query : String;
+			var bind_queries : Array;
 			
 			for each ( var node : XML in _binds )
 			{
 				name = node.localName( );
 				value = node.text( );
 				
-				bind_exps = StringUtil.enclosure( value, "{", "}" );
-				for each ( e4x_exp in bind_exps )
+				bind_queries = StringUtil.enclosure( value, "{", "}" );
+				for each ( bind_query in bind_queries )
 				{
-					if( e4x_exp == "{RAW}" )
+					if( bind_query == "{RAW}" )
 						result = new XML( _result.toXMLString( ) );
 					else
-						result = _query( StringUtil.innerb( e4x_exp ) );
+						result = _query( StringUtil.innerb( bind_query ) );
 					
-					value = value.replace( e4x_exp, result );
+					value = value.replace( bind_query, result );
 				}
 				
 				_model.bind.s( node.localName( ), value );
