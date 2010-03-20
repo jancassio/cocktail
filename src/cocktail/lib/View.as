@@ -1,22 +1,17 @@
 package cocktail.lib 
 {
-	import cocktail.core.slave.slaves.GraphSlave;
-	import cocktail.core.gunz.Bullet;
-	import cocktail.core.slave.ASlave;
-
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import cocktail.Cocktail;
+	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
+	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.lib.views.ViewStack;
-	import cocktail.utils.StringUtil;
-	import cocktail.utils.Timeout;
 
 	import de.polygonal.ds.DListNode;
 
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 
 	public class View extends MV 
 	{
@@ -43,6 +38,8 @@ package cocktail.lib
 
 		/** View sprite **/
 		public var sprite : Sprite;
+		
+		/** slave for loading **/
 		private var _src_slave : ASlave;
 
 		private function _init_gunz() : void 
@@ -51,7 +48,6 @@ package cocktail.lib
 			gunz_destroy_done = new Gun( gunz, this, "destroy_done" );
 		}
 
-		/* INITIALIZING */
 		
 		/**
 		 * 
@@ -69,6 +65,16 @@ package cocktail.lib
 			return s;
 		}
 
+		/* basic api */
+		
+		/**
+		 * Returns desired atribute in xml_node
+		 */
+		public function attribute( name : String ) : String
+		{
+			return xml_node.attribute( name ).toString( );
+		}
+		
 		/**
 		 * Removes a view from the view stack
 		 */
@@ -77,7 +83,7 @@ package cocktail.lib
 			return childs.remove( id );
 		}
 
-		/* LOAD ASSETS */
+		/* loeaing related */
 
 		/**
 		 * Filters the loading action. If return false, load routine will
@@ -104,22 +110,14 @@ package cocktail.lib
 			var i : int;
 			var assets : Array;
 			var view : View;
-			var src : String;
 			
 			//will mark all views as dead ( not in current render )
 			childs.clear_render_poll( );
 
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
-			
-			if( ( src = xml_node.attribute( "src" ).toString( ) ) )
-			{
-				_src_slave = load_uri( root.name + "/" + src, false ); 
-				
-				loader.append( _src_slave );
-				
-				_src_slave.gunz_complete.add( _populate_content );
-			}
+
+			_load_src();			
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -136,6 +134,33 @@ package cocktail.lib
 			return true;
 		}
 		
+		/**
+		 * This function will load the "src" attribute of the xml_node
+		 */
+		internal function _load_src() : void
+		{
+			var path: String;
+			var src: String;
+			
+			src = attribute( "src" );
+						
+			path = root.name + "/" + src;
+			
+			if( _src_slave.uri == path ) 
+				return;
+			else if( _src_slave.is_loaded )
+				_src_slave.destroy();
+			
+			_src_slave = load_uri( path, false ); 
+			
+			loader.append( _src_slave );
+			
+			_src_slave.gunz_complete.add( _populate_content );
+		}
+
+		/**
+		 * This function is a victim from _src_slave's gunz_complete
+		 */
 		internal function _populate_content( bullet: Bullet ) : void
 		{
 			log.error( "This function should be overrided by your view" );
