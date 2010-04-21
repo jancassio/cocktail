@@ -5,6 +5,7 @@ package cocktail.lib
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.ASlave;
+	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.lib.views.ViewStack;
 
@@ -149,7 +150,7 @@ package cocktail.lib
 			if( _src_slave.uri == path ) 
 				return;
 			else if( _src_slave.is_loaded )
-				_src_slave.destroy();
+				ISlave( _src_slave ).destroy();
 			
 			_src_slave = load_uri( path, false ); 
 			
