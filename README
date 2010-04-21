@@ -1,33 +1,39 @@
----------
-about
----------
+================================================================================
+ABOUT
+================================================================================
 
-cocktail is an actionscript full stack framework built to deploy fast rich
+Cocktail is an actionscript full stack framework built to deploy fast rich
 internet applications with a robust & high level interactive and data driven
 development style.
 
+================================================================================
+VERSION
+================================================================================
 
----------
-version
----------
-
-- 03/05/2009 - 0.1 alpha
-- 03/05/2010 - 0.3 unstable
+- 03/05/2010 - 0.3 Unstable
+- 03/05/2009 - 0.1 Alpha
 
 
----------
-fast tips
----------
+================================================================================
+APPLICATION DEMO
+================================================================================
 
-1. add the "src" and "demo/src" folders to classpath.
+http://github.com/nybras/cocktail-demo/
 
-2. add all "swc" inside "src/cocktail/vendors" to classpath.
 
-3. make the "demo/src/Codeine.as" (document class) export it's swf named
-"core.swf" inside "demo/www/cocktail/swf/".
+================================================================================
+BUG REPORTS
+================================================================================
 
-4. create a symbolic link from "demo/www" folder into your webserver root
-folder, so you can acces it @ localhost.
+http://assembla.com/spaces/cocktail/tickets/
 
-5. after compiling, launch "http://localhost/symbolic_link_name" to see the demo
-working.
+
+================================================================================
+MAILING LISTS
+================================================================================
+
+Users talk:
+	http://groups.google.com/group/cocktail-en/
+
+Developers talk:
+	http://groups.google.com/group/cocktail-dev/

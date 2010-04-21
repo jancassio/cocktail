@@ -1,15 +1,15 @@
 package cocktail.lib 
 {
-	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
+	import cocktail.core.logger.msgs.LayoutMsgs;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.LayoutBullet;
 	import cocktail.lib.gunz.ViewBullet;
-	import cocktail.messages.lib.LayoutMessages;
+	import cocktail.utils.StringUtil;
 	import cocktail.utils.Timeout;
 
 	import flash.display.DisplayObjectContainer;
@@ -139,7 +139,7 @@ package cocktail.lib
 			
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
-				log.info( LayoutMessages.no_target_found );
+				log.info( LayoutMsgs.no_target_found );
 				return _cocktail.app;
 			}
 			
