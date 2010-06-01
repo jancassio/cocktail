@@ -230,9 +230,9 @@ package cocktail.lib
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
 			
-			if( ( view = childs.by_id( xml_node.attribute( 'id' ) ) ) != null ) 
+			if( ( view = childs.by_id( xml_node.@id ) ) != null ) 
 			{
-				return childs.by_id( xml_node.attribute( 'id' ) );
+				return childs.by_id( xml_node.@id );
 			}
 			
 			return childs.create( xml_node );
@@ -288,11 +288,11 @@ package cocktail.lib
 			request;
 			//properties rendering
 			//need to think in a good automated process to apply it
-			if( xml_node.attribute( 'x' ) )
-				sprite.x = Number( xml_node.attribute( 'x' ) );
+			if( xml_node.@x )
+				sprite.x = Number( xml_node.@x );
 				 	
-			if( xml_node.attribute( 'y' ) )
-				sprite.y = Number( xml_node.attribute( 'y' ) ); 	
+			if( xml_node.@y )
+				sprite.y = Number( xml_node.@y ); 	
 		}
 
 		/**
