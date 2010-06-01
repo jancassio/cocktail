@@ -199,8 +199,8 @@ internal class API extends Index
 	 * Runs the API call into the given controller.
 	 * @param controller	Controller to run the API call.
 	 */
-	public function run( controller : Controller ) : void
+	public function run( controller : Controller ) : *
 	{
-		_index.exec( controller, action, params );
+		return _index.exec( controller, action, params );
 	}
 }

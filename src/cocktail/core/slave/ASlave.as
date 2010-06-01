@@ -10,6 +10,7 @@ package cocktail.core.slave
 	 * Slavery extends the SlaveBase and adds some functionality to it, becoming
 	 * the base class for every slave in this package.
 	 * @author nybras | nybras@codeine.it
+	 * @author hems | henrique@codeine.it
 	 */
 	public class ASlave 
 	{
@@ -126,6 +127,33 @@ package cocktail.core.slave
 		public function set uri(uri : String) : void 
 		{
 			_uri = uri;
+		}
+	
+		/** QUESTION GETTERS **/
+		
+		public function get is_queued(): Boolean
+		{
+			return status == _QUEUED;
+		}
+
+		public function get is_loading(): Boolean
+		{
+			return status == _LOADING;
+		}
+
+		public function get is_loaded(): Boolean
+		{
+			return status == _LOADED;
+		}
+		
+		public function get is_error(): Boolean
+		{
+			return status == _ERROR;
+		}
+
+		public function get is_destroyed(): Boolean
+		{
+			return status == _DESTROYED;
 		}
 	}
 }

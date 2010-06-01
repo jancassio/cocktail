@@ -1,5 +1,6 @@
 package cocktail.lib.views 
 {
+	import cocktail.core.request.Request;
 	import cocktail.lib.View;
 
 	/**
@@ -7,8 +8,5 @@ package cocktail.lib.views
 	 */
 	public class SwfView extends View 
 	{
-		public function SwfView()
-		{
-		}
 	}
 }
