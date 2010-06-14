@@ -38,8 +38,6 @@ package cocktail.lib.model.datasources
 			
 			super.parse( );
 			
-			
-			
 			if ( StringUtil.outerb( src ) == "[]" )
 				src = StringUtil.innerb( src );
 			else
