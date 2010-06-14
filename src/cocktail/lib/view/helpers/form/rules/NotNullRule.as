@@ -45,11 +45,12 @@ package cocktail.lib.view.helpers.form.rules
 		/**
 		 * Tests the given value against the rule.
 		 * @param value	Value to be tested.
-		 * @return	<code>true</code> if the value is valid, <code>false</code> otherwise.
+		 * @return	<code>true</code> if the value is valid,
+		 * <code>false</code> otherwise.
 		 */
 		override public function test ( value : * ) : Boolean
 		{
-			return ( StringUtil.trim( value.toString() ).length >= 1 );
+			return ( StringUtil.trim( String( value ) ).length >= 1 );
 		}
 	}
 }

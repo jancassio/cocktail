@@ -30,7 +30,7 @@ package cocktail.lib.view.styles.selectors
 	import cocktail.core.data.bind.Bind;
 	import cocktail.core.data.bind.Binded;
 	import cocktail.lib.view.styles.Style;
-	import cocktail.utils.StringUtil;	
+	import cocktail.utils.StringUtil;
 
 	/**
 	 * Selector base class.
@@ -212,7 +212,7 @@ package cocktail.lib.view.styles.selectors
 			}
 			catch ( e : Error )
 			{
-				_buffer = _parent._properties.g( property );
+				_buffer = Selector( _parent )._properties.g( property );
 			}
 			
 			return _buffer;

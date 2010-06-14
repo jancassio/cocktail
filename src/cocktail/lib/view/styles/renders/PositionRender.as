@@ -51,13 +51,13 @@ package cocktail.lib.view.styles.renders
 //			_style.plug( PositionSelector.POSITION, _position ).touch( _incremental );
 			
 			_style.touch( PositionSelector.POSITION, _incremental );
-			
 			_style.plug( PositionSelector.LEFT, _left ).touch( _incremental );
 			_style.plug( PositionSelector.TOP, _top ).touch( _incremental );
 			_style.plug( PositionSelector.RIGHT, _right ).touch( _incremental );
 			_style.plug( PositionSelector.BOTTOM, _bottom ).touch( _incremental );
 			_style.plug( PositionSelector.ALIGN, _align ).touch( _incremental );
 			_style.touch( PositionSelector.SNAP, _incremental );
+			
 			_style.plug( PositionSelector.OVERFLOW, _overflow );
 			_style.plug( PositionSelector.OVERFLOW_X, _overflow_x );
 			_style.plug( PositionSelector.OVERFLOW_Y, _overflow_y );
@@ -143,7 +143,6 @@ package cocktail.lib.view.styles.renders
 		private function _left( value : * ) : void
 		{
 			_handle ( value );
-			
 			if ( _is_percent )
 				_target.x = ( _target.parent.width * _clear_unit_u );
 			else

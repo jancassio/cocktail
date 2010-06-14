@@ -60,7 +60,10 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the list-style-type for list.
-	 	* @param value	Possible values are: none, disc, circle, square, decimal, decimal-leading-zero, armenian, georgian, lower-alpha, upper-alpha, lower-greek, lower-latin, upper-latin, lower-roman, upper-roman, inherit.
+	 	* @param value	Possible values are: none, disc, circle, square, decimal,
+	 	* decimal-leading-zero, armenian, georgian, lower-alpha, upper-alpha,
+	 	* lower-greek, lower-latin, upper-latin, lower-roman, upper-roman,
+	 	* inherit.
 	 	*/
 		public function set list_style_type ( value : * ) : void {
 			w ( LIST_STYLE_TYPE, value );
@@ -117,7 +120,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the list-style for list.
-	 	* @param value	Possible values are: list-style-type, list-style-position, list-style-image, inherit.
+	 	* @param value	Possible values are: list-style-type,
+	 	* list-style-position, list-style-image, inherit.
 	 	*/
 		public function set list_style ( value : * ) : void {
 			w ( LIST_STYLE, value );

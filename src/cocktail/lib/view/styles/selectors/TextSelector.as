@@ -26,7 +26,6 @@
 
 package cocktail.lib.view.styles.selectors 
 {
-	import cocktail.lib.view.styles.selectors.Selector;	
 
 	/**
 	 * Provides all Text property selectors
@@ -110,7 +109,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the white-space for text.
-	 	* @param value	Possible values are: normal, nowrap, pre, pre-line, pre-wrap, inherit.
+	 	* @param value	Possible values are: normal, nowrap, pre, pre-line,
+	 	* pre-wrap, inherit.
 	 	*/
 		public function set white_space ( value : * ) : void {
 			w ( WHITE_SPACE, value );
@@ -148,7 +148,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the text-align for text.
-	 	* @param value	Possible values are: left, right, center, justify, inherit.
+	 	* @param value	Possible values are: left, right, center, justify,
+	 	* inherit.
 	 	*/
 		public function set text_align ( value : * ) : void {
 			w ( TEXT_ALIGN, value );
@@ -167,7 +168,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the text-decoration for text.
-	 	* @param value	Possible values are: blink, line-through, none, overline, underline, inherit.
+	 	* @param value	Possible values are: blink, line-through, none,
+	 	* overline, underline, inherit.
 	 	*/
 		public function set text_decoration ( value : * ) : void {
 			w ( TEXT_DECORATION, value );

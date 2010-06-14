@@ -28,14 +28,13 @@ package cocktail.lib.view.helpers.form
 {
 	import cocktail.core.Index;
 	import cocktail.lib.view.helpers.events.FormEvent;
-	import cocktail.lib.view.helpers.form.FormItem;
 	import cocktail.lib.view.helpers.interfaces.IRule;
 	import cocktail.utils.Timeout;
-	
+
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.FocusEvent;	
-	
+	import flash.events.FocusEvent;
+
 	/**
 	 * FormItem class.
 	 * @author nybras | nybras@codeine.it
@@ -227,7 +226,7 @@ package cocktail.lib.view.helpers.form
 					output = instance[ getter ] ();
 				} catch ( e1 : Error ) {
 					log.warn ( "Getter '"+ getter +"' not valid, for item with alias '" + alias + "'" );
-					log.error( e );
+					log.error( e1 );
 				}
 			}
 			

@@ -86,7 +86,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the border for border.
-	 	* @param value	Possible values are: border-width, border-style, border-color, inherit.
+	 	* @param value	Possible values are: border-width, border-style,
+	 	* border-color, inherit.
 	 	*/
 		public function set border ( value : * ) : void {
 			w ( BORDER, value );
@@ -105,7 +106,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the border-color for border.
-	 	* @param value	Possible values are: color-rgb, color-hex, color-name, invert, inherit.
+	 	* @param value	Possible values are: color-rgb, color-hex, color-name,
+	 	* invert, inherit.
 	 	*/
 		public function set border_color ( value : * ) : void {
 			w ( BORDER_COLOR, value );
@@ -124,7 +126,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the border-width for border.
-	 	* @param value	Possible values are: thin, medium, thick, length, inherit.
+	 	* @param value	Possible values are: thin, medium, thick, length,
+	 	* inherit.
 	 	*/
 		public function set border_width ( value : * ) : void {
 			w ( BORDER_WIDTH, value );
@@ -143,7 +146,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the border-style for border.
-	 	* @param value	Possible values are: none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset, inherit.
+	 	* @param value	Possible values are: none, hidden, dotted, dashed,
+	 	* solid, double, groove, ridge, inset, outset, inherit.
 	 	*/
 		public function set border_style ( value : * ) : void {
 			w ( BORDER_STYLE, value );

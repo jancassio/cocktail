@@ -188,7 +188,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the overflow for position.
-	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible,
+	 	* inherit.
 	 	*/
 		public function set overflow ( value : * ) : void
 		{
@@ -208,7 +209,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the overflow-x for position.
-	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible,
+	 	* inherit.
 	 	*/
 		public function set overflow_x ( value : * ) : void
 		{
@@ -228,7 +230,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the overflow-y for position.
-	 	* @param value	Possible values are: auto, hidden, scroll, visible, inherit.
+	 	* @param value	Possible values are: auto, hidden, scroll, visible,
+	 	* inherit.
 	 	*/
 		public function set overflow_y ( value : * ) : void
 		{

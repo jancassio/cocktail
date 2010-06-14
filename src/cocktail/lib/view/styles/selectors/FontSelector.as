@@ -62,7 +62,9 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Sets all the font properties in one declaration.
-	 	* @param value	Possible values are: font-style, font-variant, font-weight, font-size/line-height, font-family, caption, icon, menu, message-box, small-caption, status-bar, inherit.
+	 	* @param value	Possible values are: font-style, font-variant,
+	 	* font-weight, font-size/line-height, font-family, caption, icon, menu,
+	 	* message-box, small-caption, status-bar, inherit.
 	 	*/
 		public function set font ( value : * ) : void {
 			w ( FONT, value );
@@ -99,7 +101,8 @@ package cocktail.lib.view.styles.selectors
 		}
 	
 		/**
-	 	* Specifies whether or not a text should be displayed in a small-caps font.
+	 	* Specifies whether or not a text should be displayed in a small-caps
+	 	* font.
 	 	* @param value	Possible values are: normal, small-caps, inherit.
 	 	*/
 		public function set font_variant ( value : * ) : void {
@@ -119,7 +122,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the weight of a font.
-	 	* @param value	Possible values are: normal, bold, bolder, lighter, 100, 200, 300, 400, 500, 600, 700, 800, 900, inherit.
+	 	* @param value	Possible values are: normal, bold, bolder, lighter,
+	 	* 100, 200, 300, 400, 500, 600, 700, 800, 900, inherit.
 	 	*/
 		public function set font_weigth ( value : * ) : void {
 			w ( FONT_WEIGTH, value );
@@ -138,7 +142,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the font size of text.
-	 	* @param value	Possible values are: xx-small, x-small, small, medium, large, x-large, xx-large, smaller, larger, length, %, inherit.
+	 	* @param value	Possible values are: xx-small, x-small, small, medium,
+	 	* large, x-large, xx-large, smaller, larger, length, %, inherit.
 	 	*/
 		public function set font_size ( value : * ) : void {
 			w ( FONT_SIZE, value );
@@ -157,7 +162,8 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the font family for text.
-	 	* @param value	Possible values are: family-name, generic-family, inherit.
+	 	* @param value	Possible values are: family-name, generic-family,
+	 	* inherit.
 	 	*/
 		public function set font_family ( value : * ) : void {
 			w ( FONT_FAMILY, value );

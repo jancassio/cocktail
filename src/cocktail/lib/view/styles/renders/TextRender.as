@@ -104,7 +104,7 @@ package cocktail.lib.view.styles.renders
 			var prop : String;
 			props = "<c>COCKTAIL</c>".match( /<[a-zA-Z0-9]+>/g );
 			for ( prop in props )
-				props[ prop ] = props[ prop ].slice( 1, -1 );
+				props[ prop ] = [].concat( props[ prop ] ).slice( 1, -1 );
 			
 			return props;
 		}

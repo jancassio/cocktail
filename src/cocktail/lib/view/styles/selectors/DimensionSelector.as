@@ -62,7 +62,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the width for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set width ( value : * ) : void {
 			w ( WIDTH, value );
@@ -81,7 +81,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the min-width for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set min_width ( value : * ) : void {
 			w ( MIN_WIDTH, value );
@@ -100,7 +100,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the max-width for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set max_width ( value : * ) : void {
 			w ( MAX_WIDTH, value );
@@ -119,7 +119,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the height for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set height ( value : * ) : void {
 			w ( HEIGHT, value );
@@ -138,7 +138,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the min-height for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set min_height ( value : * ) : void {
 			w ( MIN_HEIGHT, value );
@@ -157,7 +157,7 @@ package cocktail.lib.view.styles.selectors
 	
 		/**
 	 	* Specifies the max-height for dimension.
-	 	* @param value	Possible values are: auto, length, %, inherit  .
+	 	* @param value	Possible values are: auto, length, %, inherit.
 	 	*/
 		public function set max_height ( value : * ) : void {
 			w ( MAX_HEIGHT, value );
