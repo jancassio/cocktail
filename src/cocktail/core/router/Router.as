@@ -153,7 +153,7 @@ package cocktail.core.router
 		public function post( uri : String, data : * ) : RequestAsync
 		{
 			// TODO: implement method
-			return new RequestAsync( uri, data ).boot( _cocktail ).s;
+			return new RequestAsync( uri, data ).boot( _cocktail );
 		}
 
 		/* LOCATION HANDLERS */
