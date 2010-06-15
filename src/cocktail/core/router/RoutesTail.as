@@ -19,6 +19,8 @@ package cocktail.core.router
 		 */
 		public function clean_uri( uri : String ) : String
 		{
+			uri = uri.split( '?' )[ 0 ];
+			
 			if ( uri.substr( 0, 1 ) == "/" )
 				uri = uri.substr( 1 );
 			

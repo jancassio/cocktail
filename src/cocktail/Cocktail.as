@@ -1,5 +1,7 @@
 package cocktail 
 {
+	import flash.display.Stage;
+
 	import cocktail.core.bind.Bind;
 	import cocktail.core.config.Config;
 	import cocktail.core.embedder.EmbedderTail;
@@ -39,6 +41,8 @@ package cocktail
 		private var _bind : Bind;
 
 		private var _factory : Factory;
+		
+		private var _stage : Stage;
 
 		/* INITIALIZING */
 		
@@ -87,8 +91,9 @@ package cocktail
 			if ( event != null )
 				_app.removeEventListener( Event.ADDED_TO_STAGE, _init );
 			
-			_config = new Config( ).boot( this );
-			_router = new Router( ).boot( this );
+			_stage   = _app.stage;
+			_config  = new Config( ).boot( this );
+			_router  = new Router( ).boot( this );
 			_process = new Process( ).boot( this );
 		}
 
@@ -221,6 +226,11 @@ package cocktail
 		public function get factory() : Factory
 		{
 			return _factory;
+		}
+		
+		public function get stage() : Stage
+		{
+			return _stage;
 		}
 	}
 }
