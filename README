@@ -13,9 +13,15 @@ VERSION
 - 03/05/2010 - 0.3 Unstable
 - 03/05/2009 - 0.1 Alpha
 
+We have maintained an AS2 version for years in a svn repo. 
 
-================================================================================
-APPLICATION DEMO
+That version was a sketch/lab of all the ideas of grandeur presented in the 
+current version of the project.
+
+In the end we decided to put that aside and start from scratch, with a nicer 
+and cleaner new foundation.
+
+
 ================================================================================
 
 http://github.com/nybras/cocktail-demo/
