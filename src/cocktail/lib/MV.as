@@ -95,6 +95,9 @@ package cocktail.lib
 			return aslave;
 		}
 
+		/**
+		 * Returns a slave 
+		 */
 		public function slave( uri : String ) : ASlave
 		{
 			switch( uri.toLowerCase( ).split( "." ).pop( ) )

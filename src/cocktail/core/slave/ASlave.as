@@ -7,14 +7,16 @@ package cocktail.core.slave
 	import de.polygonal.ds.DListNode;
 
 	/**
-	 * Slavery extends the SlaveBase and adds some functionality to it, becoming
+	 * Slave extends the ASlave and adds some functionality to it, becoming
 	 * the base class for every slave in this package.
+	 * 
 	 * @author nybras | nybras@codeine.it
 	 * @author hems | henrique@codeine.it
 	 */
 	public class ASlave 
 	{
 		/** GUNZ **/
+		
 		public var gunz : Gunz;
 
 		public var gunz_start : Gun;
@@ -26,6 +28,7 @@ package cocktail.core.slave
 		public var gunz_error : Gun;
 
 		/**  CONSTANTS **/
+		
 		protected static const _QUEUED : String = "queued";
 
 		protected static const _LOADING : String = "loading";
@@ -37,6 +40,7 @@ package cocktail.core.slave
 		protected static const _DESTROYED : String = "destroyed";
 
 		/** VARS **/
+		
 		protected var _uri : String;
 
 		protected var _node : DListNode;
