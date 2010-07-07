@@ -9,7 +9,6 @@ package cocktail.core.slave
 	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListIterator;
 	import de.polygonal.ds.DListNode;
-	import de.polygonal.ds.Iterator;
 
 	/**
 	 * Slave is a loading library.
@@ -233,23 +232,16 @@ package cocktail.core.slave
 			//if the loading is started, lets keep safe from new inputs;
 			if ( _status == _LOADING )
 			{
+				trace
+				( 
+				"Warning: Unf, Slave.append doesn't append any slave during " +
+				"load time yet"
+				);
+				
 				return this;
 			}
 			
-			if( !slave.dlist )
-				_queue( slave );
-			else
-			{
-				var i : Iterator;
-				var node : ASlave;
-				i = slave.dlist.getIterator( );
-				
-				while( i.hasNext( ) )
-				{
-					node = i.next( );
-					_queue( slave );
-				}
-			}
+			_queue( slave );
 			
 			return this;
 		}
