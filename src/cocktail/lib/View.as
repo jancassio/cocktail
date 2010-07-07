@@ -147,10 +147,13 @@ package cocktail.lib
 						
 			path = root.name + "/" + src;
 			
-			if( _src_slave.uri == path ) 
-				return;
-			else if( _src_slave.is_loaded )
-				ISlave( _src_slave ).destroy();
+			if( _src_slave != null )
+			{
+				if( _src_slave.uri == path ) 
+					return;
+				else if( _src_slave.is_loaded )
+					ISlave( _src_slave ).destroy();
+			}
 			
 			_src_slave = load_uri( path, false ); 
 			
