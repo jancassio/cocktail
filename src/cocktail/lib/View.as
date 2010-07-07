@@ -1,12 +1,12 @@
 package cocktail.lib 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.gunz.Bullet;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
+	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.lib.views.ViewStack;
 
 	import de.polygonal.ds.DListNode;
@@ -118,7 +118,7 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 
-			_load_src();			
+			_load_attributes();
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -134,38 +134,22 @@ package cocktail.lib
 
 			return true;
 		}
-		
-		/**
-		 * This function will load the "src" attribute of the xml_node
-		 */
-		internal function _load_src() : void
+
+		private function _load_attributes() : void 
 		{
-			var path: String;
-			var src: String;
-			
-			src = attribute( "src" );
-						
-			path = root.name + "/" + src;
-			
-			if( _src_slave != null )
-			{
-				if( _src_slave.uri == path ) 
-					return;
-				else if( _src_slave.is_loaded )
-					ISlave( _src_slave ).destroy();
-			}
-			
-			_src_slave = load_uri( path, false ); 
-			
-			loader.append( _src_slave );
-			
-			_src_slave.gunz_complete.add( _populate_content );
+			if( attribute( 'src' ) )		
+				src = root.name + "/" + attribute( "src" );
 		}
 
 		/**
-		 * This function is a victim from _src_slave's gunz_complete
+		 * This function is a victim from _src_slave's gunz_complete.
+		 * 
+		 * If your view has any kind of source, you should override this
+		 * function and save a typed reference for it.
+		 * 
+		 * Also your view should extend the respective kind of view.
 		 */
-		internal function _populate_content( bullet: Bullet ) : void
+		protected function _source_loaded( bullet: ASlaveBullet ) : void
 		{
 			log.error( "This function should be overrided by your view" );
 			bullet;
@@ -254,7 +238,7 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			_instantiate_sprite( );
+			_instantiate_display( );
 			
 			_apply_styles( request );
 
@@ -264,9 +248,12 @@ package cocktail.lib
 		}
 
 		/**
-		 * Creates then attachs the view sprite
+		 * Creates then attachs the view sprite.
+		 * 
+		 * You view should override this function if it has a different
+		 * kind of display
 		 */
-		private function _instantiate_sprite() : Boolean
+		protected function _instantiate_display() : Boolean
 		{
 			if( sprite ) return false;
 			
@@ -368,30 +355,73 @@ package cocktail.lib
 			request;
 		}
 
+
 		/** GETTERS / SETTERS **/
-		public function get xml_node() : XML  
-		{
-			return _xml_node;
-		}
-
-		public function set xml_node( xml_node : XML ) : void 
-		{
-			_xml_node = xml_node;
-		}
-
+		
+		/** Alias to the main view ( layout ) of the viewstack **/
 		public function get root() : Layout 
 		{
 			return ( up == null ) ? Layout( this ) : up.root;
 		}
 
+		/** Alias to layout loader **/
 		public function get loader() : Slave
 		{
 			return root.loader;
 		}
 
+		/** Getter for the viewstack **/
 		public function get childs() : ViewStack
 		{
 			return _childs;
 		}
+		
+		/** Returns the raw XML of this view **/
+		public function get xml_node() : XML  
+		{
+			return _xml_node;
+		}
+
+		/** Set the xml_node for this view **/
+		public function set xml_node( xml_node : XML ) : void 
+		{
+			_xml_node = xml_node;
+		}
+
+
+		/** 
+		 * ATRIBUTTE SETTERS
+		 * 
+		 * This setters will receive the properties from xml_node, each
+		 * time the "load" method is called
+		 */
+		 
+		 /**
+		  * Unload the current source if any, then load the new path
+		  * Will trigger _source_loaded after complete 
+		  * 
+		  * @param path	Path to the desired asset
+		  */
+		 public function set src( path: String ): void
+		 {
+			if( _src_slave != null )
+			{
+				if( _src_slave.uri == path ) 
+				{
+					return;
+				}
+				else if( _src_slave.is_loaded )
+				{
+					ISlave( _src_slave ).destroy();
+				}
+			}
+			
+			_src_slave = load_uri( path, false ); 
+			
+			_src_slave.gunz_complete.add( _source_loaded );
+					 	
+			loader.append( _src_slave );
+		 }
+		 
 	}
 }
