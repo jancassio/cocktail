@@ -65,7 +65,7 @@ package cocktail.lib.model.datasources
 				for each ( bind_query in bind_queries )
 				{
 					if( bind_query == "{RAW}" )
-						result = new XML( _result.toXMLString( ) );
+						result = new XML( ( _result as XML ).toXMLString( ) );
 					else
 						result = _query( StringUtil.innerb( bind_query ) );
 					
