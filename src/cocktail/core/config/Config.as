@@ -62,12 +62,13 @@ package cocktail.core.config
 			var stage : Stage;
 			var route : XML;
 			 
-			_raw = new XML( _tmp_loader.data.toString( ) );
+			_raw = new XML( String( _tmp_loader.data ) );
 			
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
+			
 			
 			for each( route in _raw..route )
 				routes.map( route.@mask, route.@target );

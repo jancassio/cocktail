@@ -112,7 +112,7 @@ internal class AmfCall
 	public function AmfCall( raw : XML )
 	{
 		name = raw.localName( );
-		params = [].concat( raw.@params.split( "|" ) );
+		params = [].concat( String( raw.@params ).split( "|" ) );
 		binds = raw.children( );
 	}
 }

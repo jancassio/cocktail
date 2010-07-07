@@ -128,7 +128,7 @@ package cocktail.utils
 			var word : String;
 			
 			output = "";
-			for each( word in [].concat( string.split( sep ) ) )
+			for each( word in ( [] as Array ).concat( string.split( sep ) ) )
 				output += ucasef( word );
 			
 			return output;
