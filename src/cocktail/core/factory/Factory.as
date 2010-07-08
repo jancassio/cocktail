@@ -12,6 +12,9 @@ package cocktail.core.factory
 	 * 
 	 * Controllers and models will have just one instance per application.
 	 * 
+	 * TODO: make a generic instantiator that will receive the "name", "sufix"
+	 * and possible paths in order of priority
+	 * 
 	 * @author hems | hems@codeine.it
 	 * @author nybras | nybras@codeine.it
 	 */
@@ -42,32 +45,7 @@ package cocktail.core.factory
 		
 		public static const DATASOURCE_SUFIX : String = 'DataSource';
 		
-		public function Factory() 
-		{
-		}
 
-		/* ERROR MESSAGE TEMPLATE */
-		
-		/**
-		 * Formats an customized prefrix error message based on given name.
-		 * 
-		 * @param name	Class name not found.
-		 * @param kind	Base class name.
-		 */
-		private function _message( name : String, base : String = null ) : String
-		{
-			var message : String;
-
-			name = base ? name + base : name;
-			
-			message = "Class '" + ( name ? name : "null" );
-			message += "' was not found, so the default " + base + " was used.";
-			
-			return message;
-		}
-
-		/* CLASS EVALUATOR */
-		
 		/**
 		 * Returns a class reference according the given classpath.
 		 * 
@@ -82,7 +60,8 @@ package cocktail.core.factory
 			}
 			catch( e: Error )
 			{
-				_message( classpath );
+				//user feedback was implemented in each method
+				return null;
 			}
 			
 			return null;
@@ -111,19 +90,27 @@ package cocktail.core.factory
 		/**
 		 * Evaluates the given Controller class by name and return it.
 		 * 
-		 * @param name	Controller name (CamelCased).
-		 * @return	Controller class to be instantiated.
+		 * Path priority:
+		 * 	- app/controllers/{area}/{name}Controller
+		 * 	- cocktail/lib/controllers/{name}Controller
+		 * 	
+		 * @param name	Controller name ( CamelCased ).
+		 * @return	Model class reference
 		 */
 		public function controller( name : String ) : Class
 		{
 			var klass: Class;
-			
-			klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
-			 
-			if( klass )
+		
+			// app/controllers/{area}/{name}Controller	
+			if( ( klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX ) ) )
 				return klass;
-			else
-				log.warn( _message( name, COONTROLLER_SUFIX ) );
+			
+			// cocktail/lib/controllers/{name}Controller
+			if( ( klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX, true ) ) )
+				return klass;
+			
+			// let the user know what happened	
+			log.notice( FactoryMessages.controller_not_found( name ) );
 			
 			return evaluate( _cocktail.app_id + ".AppController" );
 		}
@@ -135,19 +122,23 @@ package cocktail.core.factory
 		 * 	- app/models/{area}/{name}Model
 		 * 	- cocktail/lib/models/{name}Model
 		 * 	
-		 * @param name	Model name (CamelCased).
+		 * @param name	Model name ( CamelCased ).
 		 * @return	Model class reference
 		 */
 		public function model( name : String ) : Class
 		{
 			var klass: Class;
-			
-			klass = _mvcl( MODELS, name + MODEL_SUFIX );
-			 
-			if( klass )
+		
+			// app/models/{area}/{name}Model	
+			if( ( klass = _mvcl( MODELS, name + MODEL_SUFIX ) ) )
 				return klass;
-			else
-				log.warn( _message( name, MODEL_SUFIX ) );
+			
+			// cocktail/lib/models/{name}Model
+			if( ( klass = _mvcl( MODELS, name + MODEL_SUFIX, true ) ) )
+				return klass;
+			
+			// let the user know what happened
+			log.notice( FactoryMessages.model_not_found( name ) );
 			
 			return evaluate( _cocktail.app_id + ".AppModel" );
 		}
@@ -155,20 +146,27 @@ package cocktail.core.factory
 		/**
 		 * Evaluates the given Layout class by name and return it.
 		 * 
-		 * @param name	Layout name (CamelCased).
-		 * @return	Layout class to be instantiated.
+		 * Path priority:
+		 * 	- app/layouts/{name}Layout
+		 * 	- cocktail/lib/layouts/{name}Layout
+		 * 	
+		 * @param name	Layout name ( CamelCased ).
+		 * @return	Model class reference
 		 */
 		public function layout( name : String ) : Class
 		{
 			var klass: Class;
-			
-			klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX );
-			 
-			if( klass )
+		
+			// app/layouts/{name}Layout	
+			if( ( klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX ) ) )
 				return klass;
-			else
-				log.warn( _message( name, LAYOUT_SUFIX ) );
-				
+			
+			// cocktail/lib/layouts/{name}Layout
+			if( ( klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX, true ) ) )
+				return klass;
+			
+			// let the user know what happened	
+			log.notice( FactoryMessages.layout_not_found( name ) );
 			
 			return evaluate( _cocktail.app_id + ".AppLayout" );
 		}
@@ -189,28 +187,19 @@ package cocktail.core.factory
 			var klass: Class;
 			
 			// app/views/{area}/{name}View
-			klass = _mvcl( VIEWS, area + '.' + name + VIEW_SUFIX );
-			 
-			if( klass )
+			if( ( klass = _mvcl( VIEWS, area + '.' + name + VIEW_SUFIX ) ) )
 				return klass;
-			else
-				log.warn( _message( name, VIEW_SUFIX ) );
 			
 			// app/views/elementst/{name}View
-			klass = _mvcl( VIEWS, ELEMENTS + '.' + name + VIEW_SUFIX );
-			 
-			if( klass )
+			if( ( klass = _mvcl( VIEWS, ELEMENTS + '.' + name + VIEW_SUFIX ) ) )
 				return klass;
-			else
-				log.warn( _message( name, VIEW_SUFIX ) );
 			
 			// cocktail/lib/views/{name}View
-			klass = _mvcl( VIEWS, name + VIEW_SUFIX, true );
-			 
-			if( klass )
+			if( ( klass = _mvcl( VIEWS, name + VIEW_SUFIX, true ) ) )
 				return klass;
-			else
-				log.warn( _message( name, VIEW_SUFIX ) );
+
+			// let the user know what happened			
+			log.notice( FactoryMessages.view_not_found( area + '.' + name ) );
 			
 			return evaluate( _cocktail.app_id + ".AppView" );
 		}
@@ -228,21 +217,14 @@ package cocktail.core.factory
 			name = StringUtil.toCamel( type ) + '.' + DATASOURCE_SUFIX;
 			
 			// app/models/datasources/{name}DataSource
-			klass = _mvcl( MODELS + '.' + DATASOURCE , name );
-			 
-			if( klass )
+			if( ( klass = _mvcl( MODELS + '.' + DATASOURCE , name ) ) )
 				return klass;
-			else
-				log.warn( _message( name, DATASOURCE_SUFIX ) );
 				
 			// cocktail/lib/models/datasources/{name}DataSource
-			klass = _mvcl( MODELS + '.' + DATASOURCE , name, true );
-			 
-			if( klass )
+			if( ( klass = _mvcl( MODELS + '.' + DATASOURCE , name, true ) ) )
 				return klass;
-			else
-				log.warn( _message( name, DATASOURCE_SUFIX ) );
 			
+			// let the user know what happened	
 			log.notice( FactoryMessages.datasource_not_found( type ) );
 			
 			return InlineDataSource;
