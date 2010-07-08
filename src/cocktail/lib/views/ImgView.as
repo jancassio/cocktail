@@ -25,7 +25,11 @@ package cocktail.lib.views
 		{
 			super._instantiate_display( );
 
-			if( !img ) return;
+			if( !img )
+			{
+				//image wasnt loaded
+				 return false;
+			}
 			
 			sprite.addChild( img );
 			
