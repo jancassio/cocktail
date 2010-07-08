@@ -1,6 +1,6 @@
-package cocktail.lib.model.datasources.interfaces 
+package cocktail.lib.models.datasources.interfaces 
 {
-	import cocktail.lib.model.datasources.ADataSource;
+	import cocktail.lib.models.datasources.ADataSource;
 
 	public interface IDataSource
 	{

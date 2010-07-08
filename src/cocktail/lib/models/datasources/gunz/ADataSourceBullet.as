@@ -1,4 +1,4 @@
-package cocktail.lib.model.datasources.gunz 
+package cocktail.lib.models.datasources.gunz 
 {
 	import cocktail.core.gunz.Bullet;
 

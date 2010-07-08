@@ -2,6 +2,10 @@ package cocktail.core.slave
 {
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.Gunz;
+	import cocktail.core.slave.slaves.AudioSlave;
+	import cocktail.core.slave.slaves.GraphSlave;
+	import cocktail.core.slave.slaves.TextSlave;
+	import cocktail.core.slave.slaves.VideoSlave;
 
 	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListNode;
@@ -49,10 +53,42 @@ package cocktail.core.slave
 
 		public var dlist : DLinkedList;
 
+		/**
+		 * Instantiate a slave based on uri
+		 * @param uri	Path of the desired file
+		 */
+		public static function slave( uri : String ) : ASlave 
+		{
+			switch( uri.toLowerCase( ).split( "." ).pop( ) )
+			{
+				case "flv":
+				case "mov":
+					return new VideoSlave( );
+				
+				case "mp3":
+				case "wav":
+					return new AudioSlave( );
+				
+				case "xml":
+					return new TextSlave( );
+					break;
+				
+				case "jpg": 
+				case "jpeg": 
+				case "png": 
+				case "gif": 
+				case "swf":
+					return  new GraphSlave( );
+				
+				default:
+					return new TextSlave( );
+			}
+		}
+		
 		/* INITIALIZING */
 		
 		/**
-		 * Creates a new Slavery instance.
+		 * Creates a new Slave instance.
 		 * @param uri	Uniform Resource Identifier to be loaded.
 		 */
 		public function ASlave( uri : String = null )
@@ -159,5 +195,6 @@ package cocktail.core.slave
 		{
 			return status == _DESTROYED;
 		}
+
 	}
 }

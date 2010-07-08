@@ -28,7 +28,7 @@ package cocktail.lib
 
 		private function _init_gunz() : void
 		{
-			on_xml_load_start    = new Gun( gunz, this, "load_start" );
+			on_xml_load_start = new Gun( gunz, this, "load_start" );
 			on_xml_load_complete = new Gun( gunz, this, "load_complete" );
 		}
 
@@ -48,7 +48,7 @@ package cocktail.lib
 		}
 
 		/* VARS */
-		
+
 		internal var _controller : Controller;  
 
 		/** XML Scheme for Model and View */
@@ -77,7 +77,10 @@ package cocktail.lib
 		}
 
 		/**
+		 * Receives a uri, creates a slave based on the given uri
 		 * 
+		 * @param uri	
+		 * @param auto_load
 		 */
 		public function load_uri( 
 			uri : String, 
@@ -87,8 +90,8 @@ package cocktail.lib
 			var aslave : ASlave;
 			var path : String;
 			
-			aslave = slave( uri );
-			path = config.path( uri.toLowerCase( ).split( "." ).pop( ) );
+			path   = config.path( uri.toLowerCase( ).split( "." ).pop( ) );
+			aslave = ASlave.slave( uri );
 			 
 			uri = path + uri;
 			
@@ -104,37 +107,10 @@ package cocktail.lib
 		}
 
 		/**
-		 * Returns a slave 
-		 */
-		public function slave( uri : String ) : ASlave
-		{
-			switch( uri.toLowerCase( ).split( "." ).pop( ) )
-			{
-				case "flv":
-				case "mov":
-					return new VideoSlave( );
-				
-				case "mp3":
-				case "wav":
-					return new AudioSlave( );
-				
-				case "xml":
-					return new TextSlave( );
-					break;
-				
-				default:
-				case "jpg": 
-				case "jpeg": 
-				case "png": 
-				case "gif": 
-				case "swf":
-					return  new GraphSlave( );
-			}
-		}
-
-		/**
 		 * Returns a controller instance by name 
 		 * ( unique per cocktail instance )
+		 * 
+		 * @param name
 		 */
 		public function controller( name : String ) : Controller
 		{

@@ -1,10 +1,10 @@
 package cocktail.core.embedder
 {
-	import cocktail.lib.model.datasources.AmfDataSource;
-	import cocktail.lib.model.datasources.HttpDataSource;
-	import cocktail.lib.model.datasources.InlineDataSource;
-	import cocktail.lib.model.datasources.JsonDataSource;
-	import cocktail.lib.model.datasources.XmlDataSource;
+	import cocktail.lib.models.datasources.InlineDataSource;
+	import cocktail.lib.models.datasources.AmfDataSource;
+	import cocktail.lib.models.datasources.XmlDataSource;
+	import cocktail.lib.models.datasources.JsonDataSource;
+	import cocktail.lib.models.datasources.HttpDataSource;
 	import cocktail.lib.views.ImgView;
 	import cocktail.lib.views.SwfView;
 	import cocktail.lib.views.TextFieldView;

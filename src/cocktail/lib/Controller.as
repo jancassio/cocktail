@@ -1,5 +1,6 @@
 package cocktail.lib 
 {
+	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Bullet;
@@ -10,8 +11,8 @@ package cocktail.lib
 	import cocktail.lib.gunz.ViewBullet;
 
 	/**
-	 * @author hems
-	 * @author nybras
+	 * @author hems	hems@henriquematias.com
+	 * @author nybras	me@nybras.com
 	 */
 	public class Controller extends MVC
 	{
@@ -57,6 +58,9 @@ package cocktail.lib
 		 */
 		internal var _bind : Bind;
 
+		/**
+		 * @param cocktail
+		 */
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var name : String;
@@ -66,7 +70,7 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			name = classname.replace( "Controller", "" );
+			name = StringUtil.toCamel( this.name );
 			
 			_model  = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
@@ -86,6 +90,8 @@ package cocktail.lib
 		
 		/**
 		 * Run filtering. If returns false, wont run the action.
+		 * 
+		 * @param request
 		 */
 		public function before_run( request : Request ) : Boolean
 		{
@@ -96,6 +102,8 @@ package cocktail.lib
 
 		/**
 		 * Run the desired request.
+		 * 
+		 * @param request
 		 */
 		final public function run( request : Request ) : void
 		{
@@ -112,6 +120,8 @@ package cocktail.lib
 		
 		/**
 		 * Load filtering. If returns false, wont load anything.
+		 * 
+		 * @param request
 		 */
 		public function before_load( request : Request ) : Boolean
 		{
@@ -122,6 +132,7 @@ package cocktail.lib
 
 		/**
 		 * Load Model ( data ) and Layout ( assets ).
+		 * 
 		 * @param request. 
 		 */
 		private function _load( request : Request ) : void
@@ -143,6 +154,7 @@ package cocktail.lib
 
 		/**
 		 * Load Model and Layout scheme.
+		 * 
 		 * @param request	Request that will be loaded after load scheme. 
 		 */
 		private function _load_xml( request : Request ) : void
@@ -157,7 +169,9 @@ package cocktail.lib
 		}
 
 		/**
-		 * Triggered after load  model and layout scheme.
+		 * Triggered after load  model and layout xml.
+		 * 
+		 * @param bullet
 		 */
 		private function _xml_loaded( bullet : Bullet ) : void
 		{
@@ -167,33 +181,45 @@ package cocktail.lib
 			_load( bullet.params );
 		}
 
+		/**
+		 * @param request
+		 */
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
 			
 			if( _model.load( request ) )
-				_model.on_load_complete.add( _after_load_model, request );
+				_model.on_load_complete.add( _model_loaded, request );
 			else
 				_load_layout( request );
 		}
 
-		private function _after_load_model( bullet : ModelBullet ) : void
+		/**
+		 * @param bullet
+		 */
+		private function _model_loaded( bullet : ModelBullet ) : void
 		{
 			log.info( "Running..." );
 			
 			_load_layout( bullet.params );
 		}
 
+		/**
+		 * @param request
+		 */
 		private function _load_layout( request : Request ) : void
 		{
 			log.info( "Running..." );
 			
-			_layout.on_load_complete.add( _after_load_layout, request );
+			_layout.on_load_complete.add( _layout_loaded, request );
 			
 			_layout.load( request );
 		}
 
-		private function _after_load_layout( bullet : ViewBullet ) : void
+		/**
+		 * @param bullet
+		 */
+		private function _layout_loaded( bullet : ViewBullet ) : void
 		{
 			log.info( "Running..." );
 			
@@ -204,6 +230,8 @@ package cocktail.lib
 		
 		/**
 		 * Rendering filter. If returns false, wont render.
+		 * 
+		 * @param request
 		 */
 		public function before_render( request : Request ) : Boolean
 		{
@@ -214,6 +242,8 @@ package cocktail.lib
 
 		/**
 		 * Called after render request completes.
+		 * 
+		 * @param request
 		 */
 		public function render( request : Request ) : void
 		{
@@ -236,6 +266,8 @@ package cocktail.lib
 
 		/**
 		 * Called after render request completes.
+		 * 
+		 * @param request
 		 */
 		public function after_render( request : Request ) : void
 		{
@@ -246,7 +278,9 @@ package cocktail.lib
 
 		/* GETTERS */
 
-		
+		/**
+		 * 
+		 */
 		public function get layout() : Layout
 		{
 			return _layout;

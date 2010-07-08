@@ -1,6 +1,5 @@
-package cocktail.lib.model.datasources.gunz 
+package cocktail.lib.models.datasources.gunz 
 {
-	import cocktail.lib.model.datasources.gunz.ADataSourceBullet;
 
 	/**
 	 * @author nybras | me@nybras.com

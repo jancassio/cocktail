@@ -1,18 +1,21 @@
-package cocktail.lib.model.datasources 
+package cocktail.lib.models.datasources
 {
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.TextSlaveBullet;
 	import cocktail.lib.Model;
-	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
-	import cocktail.lib.model.datasources.interfaces.IDataSource;
+	import cocktail.lib.models.datasources.gunz.InlineDataSourceBullet;
+	import cocktail.lib.models.datasources.interfaces.IDataSource;
 	import cocktail.utils.StringUtil;
 
-	import com.adobe.serialization.json.JSON;
+	import net.digitalprimates.utils.E4XParser;
 
-	public class JsonDataSource extends XmlDataSource implements IDataSource 
+	public class XmlDataSource extends HttpDataSource implements IDataSource
 	{
+		/* VARS */
+		protected var _result : *;
+
 		/* INITIALIZING */
-		public function JsonDataSource(
+		public function XmlDataSource(
 			model : Model,
 			request : Request,
 			scheme : XML = null
@@ -21,10 +24,9 @@ package cocktail.lib.model.datasources
 			super( model, request, scheme );
 		}
 
-		/* LOADING */
 		override protected function _after_load( bullet : TextSlaveBullet ) : void
 		{
-			_result = JSON.decode( bullet.data );
+			_result = new XML( bullet.data );
 			bind( );
 			gunz_load_complete.shoot( new InlineDataSourceBullet( ) );
 		}
@@ -32,11 +34,17 @@ package cocktail.lib.model.datasources
 		/* PARSING */
 		override public function parse() : void
 		{
-			id = _scheme.@id;
-			inject = _scheme.@inject;
-			locale = _scheme.@locale;
-			src = _scheme.@src;
-			_binds = _scheme.children( );
+			var folder : String;
+			
+			super.parse( );
+			
+			if ( StringUtil.outerb( src ) == "[]" )
+				src = StringUtil.innerb( src );
+			else
+			{
+				folder = _request.route.api.folder + "/";
+				src = config.path( "xml" ) + "models/" + folder + src;
+			}
 		}
 
 		/* BINDING */
@@ -57,7 +65,7 @@ package cocktail.lib.model.datasources
 				for each ( bind_query in bind_queries )
 				{
 					if( bind_query == "{RAW}" )
-						result = _result;
+						result = new XML( ( _result as XML ).toXMLString( ) );
 					else
 						result = _query( StringUtil.innerb( bind_query ) );
 					
@@ -69,27 +77,9 @@ package cocktail.lib.model.datasources
 		}
 
 		/* QUERING */
-		override protected function _query( q : String ) : String
+		protected function _query( e4x : String ) : String
 		{
-			var steps : Array;
-			var data : *;
-			
-			if ( q == "RAW" )
-				return _result;
-			
-			q = q.replace( "[", "." ).replace( "].", "." ).replace( "]", "" );
-			steps = q.split( "." );
-			data = _result;
-			
-			while ( steps.length ) try 
-			{
-				data = data[ steps.shift( ) ];
-			} catch ( e : Error ) 
-			{
-				log.fatal( e.message );
-			}
-			
-			return data;
+			return E4XParser.evaluate( _result, e4x );
 		}
 	}
 }

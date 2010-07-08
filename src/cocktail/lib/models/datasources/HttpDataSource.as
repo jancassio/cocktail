@@ -1,11 +1,11 @@
-package cocktail.lib.model.datasources 
+package cocktail.lib.models.datasources 
 {
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.gunz.TextSlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.Model;
-	import cocktail.lib.model.datasources.gunz.InlineDataSourceBullet;
-	import cocktail.lib.model.datasources.interfaces.IDataSource;
+	import cocktail.lib.models.datasources.gunz.InlineDataSourceBullet;
+	import cocktail.lib.models.datasources.interfaces.IDataSource;
 	import cocktail.utils.StringUtil;
 
 	public class HttpDataSource extends InlineDataSource implements IDataSource 

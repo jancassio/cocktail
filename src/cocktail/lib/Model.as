@@ -5,7 +5,7 @@ package cocktail.lib
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.TextSlave;
 	import cocktail.lib.gunz.ModelBullet;
-	import cocktail.lib.model.datasources.ADataSource;
+	import cocktail.lib.models.datasources.ADataSource;
 	import cocktail.utils.StringUtil;
 
 	/**
@@ -155,6 +155,7 @@ package cocktail.lib
 			var name : String;
 			
 			name = scheme.localName( );
+			
 			ds_class = _cocktail.factory.datasource( name );
 			ds = new ( ds_class )( this, request, scheme );
 			ds.boot( _cocktail );

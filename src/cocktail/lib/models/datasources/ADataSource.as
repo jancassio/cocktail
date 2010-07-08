@@ -1,4 +1,4 @@
-package cocktail.lib.model.datasources 
+package cocktail.lib.models.datasources 
 {
 	import cocktail.Cocktail;
 	import cocktail.core.Index;

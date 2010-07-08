@@ -28,6 +28,8 @@ package cocktail.core.factory
 
 		public static const CONTROLLERS : String = "controllers";
 
+		public static const DATASOURCE: String = 'datasources';
+		
 		public static const VIEW_SUFIX : String = 'View';
 
 		public static const LAYOUT_SUFIX : String = 'Layout';
@@ -35,6 +37,8 @@ package cocktail.core.factory
 		public static const MODEL_SUFIX : String = 'Model';
 
 		public static const COONTROLLER_SUFIX : String = 'Controller';
+		
+		public static const DATASOURCE_SUFIX : String = 'DataSource';
 		
 		public function Factory() 
 		{
@@ -44,14 +48,17 @@ package cocktail.core.factory
 		
 		/**
 		 * Formats an customized prefrix error message based on given name.
+		 * 
 		 * @param name	Class name not found.
 		 * @param kind	Base class name.
 		 */
-		private function _m( name : String, base : String ) : String
+		private function _message( name : String, base : String = null ) : String
 		{
 			var message : String;
+
+			name = base ? name + base : name;
 			
-			message = "Class '" + ( name ? name + base : "null" );
+			message = "Class '" + ( name ? name : "null" );
 			message += "' was not found, so the default " + base + " was used.";
 			
 			return message;
@@ -61,16 +68,27 @@ package cocktail.core.factory
 		
 		/**
 		 * Returns a class reference according the given classpath.
+		 * 
 		 * @param classpath	Desired classpath.
 		 * @return	The found class reference.
 		 */
 		public function evaluate( classpath : String ) : Class
 		{
-			return Class( getDefinitionByName( classpath ) );
+			try
+			{
+				return Class( getDefinitionByName( classpath ) );
+			}
+			catch( e: Error )
+			{
+				_message( classpath );
+			}
+			
+			return null;
 		}
 
 		/**
 		 * Evaluates classes for Model, View, Controller and Layout.
+		 * 
 		 * @param folder	Class folder name.
 		 * @param classname	Class name.
 		 */
@@ -90,37 +108,40 @@ package cocktail.core.factory
 
 		/**
 		 * Evaluates the given Controller class by name and return it.
+		 * 
 		 * @param name	Controller name (CamelCased).
 		 * @return	Controller class to be instantiated.
 		 */
 		public function controller( name : String ) : Class
 		{
+			var klass: Class;
 			
-			try
-			{
-				return _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, COONTROLLER_SUFIX ) );
-			}
+			klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, COONTROLLER_SUFIX ) );
 			
 			return evaluate( _cocktail.app_id + ".AppController" );
 		}
 
 		/**
 		 * Evaluates the given Model class by name and return it.
+		 * 
 		 * @param name	Model name (CamelCased).
 		 * @return	Model class to be instantiated.
 		 */
 		public function model( name : String ) : Class
 		{
-			try
-			{
-				return _mvcl( MODELS, name + MODEL_SUFIX );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, MODEL_SUFIX ) );
-			}
+			var klass: Class;
+			
+			klass = _mvcl( MODELS, name + MODEL_SUFIX );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, MODEL_SUFIX ) );
 			
 			return evaluate( _cocktail.app_id + ".AppModel" );
 		}
@@ -133,13 +154,15 @@ package cocktail.core.factory
 		 */
 		public function layout( name : String ) : Class
 		{
-			try
-			{
-				return _mvcl( LAYOUTS, name + LAYOUT_SUFIX );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, LAYOUT_SUFIX ) );
-			}
+			var klass: Class;
+			
+			klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, LAYOUT_SUFIX ) );
+				
 			
 			return evaluate( _cocktail.app_id + ".AppLayout" );
 		}
@@ -157,44 +180,49 @@ package cocktail.core.factory
 		 */
 		public function view( area: String, name : String ) : Class
 		{
-			try
-			{
-				return _mvcl( VIEWS, area + '.' + name + VIEW_SUFIX );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, VIEW_SUFIX ) );
-			}
+			var klass: Class;
 			
-			try
-			{
-				return _mvcl( VIEWS, ELEMENTS + '.' + name + VIEW_SUFIX );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, VIEW_SUFIX ) );
-			}
+			// app/views/{area}/{name}View
+			klass = _mvcl( VIEWS, area + '.' + name + VIEW_SUFIX );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, VIEW_SUFIX ) );
 			
-			try
-			{
-				return _mvcl( VIEWS, name + VIEW_SUFIX, true );
-			} catch( e : Error )
-			{
-				log.warn( _m( name, VIEW_SUFIX ) );
-			}
+			// app/views/elementst/{name}View
+			klass = _mvcl( VIEWS, ELEMENTS + '.' + name + VIEW_SUFIX );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, VIEW_SUFIX ) );
+			
+			// cocktail/lib/views/{name}View
+			klass = _mvcl( VIEWS, name + VIEW_SUFIX, true );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, VIEW_SUFIX ) );
 			
 			return evaluate( _cocktail.app_id + ".AppView" );
 		}
 
 		/**
 		 * Evaluates the desired DataSource class based on the given type.
+		 * 
 		 * @param type	Datasource type to be evaluated.
 		 */
 		public function datasource( type : String ) : Class
 		{
 			var path : String;
 			
-			path = "cocktail.lib.model.datasources.";
-			path += StringUtil.ucasef( type );
-			path += "DataSource";
+			path = LIB + '.';
+			path = path + Factory.MODELS + '.';
+			path = path + DATASOURCE + ".";
+			path = path + StringUtil.toCamel( type );
+			path = path + DATASOURCE_SUFIX;
 			
 			return evaluate( path );
 		}
