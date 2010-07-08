@@ -9,22 +9,21 @@ package cocktail.lib
 	import cocktail.utils.StringUtil;
 
 	/**
-	 * @author hems
-	 * @author nybras
+	 * This class will load the respective xml and it datasources. 
+	 * 
+	 * @author nybras	me@nybras.com
+	 * @author hems	hems@henriquematias.com
 	 */
 	public class Model extends MV
 	{
-		/* LOADING, VALIDATING AND PARSING SCHEME */
-		
 		/**
-		 * Load model scheme.
 		 * @param request	Running request.
 		 */
-		public function load_scheme( request : Request ) : Model
+		public function load_xml( request : Request ) : Model
 		{
 			request;
 			log.info( "Running..." );
-			gunz_scheme_load_start.shoot( new ModelBullet( ) );
+			on_xml_load_start.shoot( new ModelBullet( ) );
 			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme );
 			return this;
 		}
@@ -37,11 +36,11 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			
-			_scheme = new XML( TextSlave( bullet.owner ).data );
+			_xml = new XML( TextSlave( bullet.owner ).data );
 			if( !_is_scheme_valid )
 				log.fatal( "The scheme in this file has errors." + _xml_path );
 			else
-				gunz_scheme_load_complete.shoot( new ModelBullet( ) );
+				on_xml_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		/**
@@ -102,13 +101,13 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			after_load( );
-			gunz_load_complete.shoot( new ModelBullet( ) );
+			on_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		public function after_load() : void
 		{
 			log.info( "Running..." );
-			gunz_load_complete.shoot( new ModelBullet( ) );
+			on_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		/**
@@ -130,11 +129,11 @@ package cocktail.lib
 			
 			do
 			{
-				node = _scheme.children( )[ i ];
+				node = _xml.children( )[ i ];
 				inject = ( node.@inject + "," );
 				if( inject == "*," || inject.indexOf( action + "," ) > 0 )
 					ds.push( _instantiate_datasource( node, request ) );
-			} while( ++i < _scheme.children( ).length( ) );
+			} while( ++i < _xml.children( ).length( ) );
 			
 			return ds;
 		}

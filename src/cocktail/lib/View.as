@@ -175,7 +175,7 @@ package cocktail.lib
 			//layout will work just if it finds 1 action.
 			if( this is Layout )
 			{
-				list = _scheme..action.( @id == action || @id == "*" );
+				list = _xml..action.( @id == action || @id == "*" );
 				
 				xml_node = XML( list.toXMLString( ) );
 				

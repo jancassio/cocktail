@@ -12,23 +12,30 @@ package cocktail.lib
 	import cocktail.core.slave.slaves.VideoSlave;
 
 	/**
-	 * Contains some preloading proxy utils for Model, Layout and View, and
-	 * some another core functionality usefull only for these classes.
+	 * Contains some preloading proxy utils for Model and View, also
+	 * some core functionality.
+	 * 
+	 * @author nybras me@nybras.com
+	 * @author hems hems@henriquematias.com
 	 */
 	public class MV extends MVC
 	{
 		/* GUNZ */
-		public var gunz_scheme_load_start : Gun; 
 
-		public var gunz_scheme_load_complete : Gun; 
+		public var on_xml_load_start : Gun; 
+
+		public var on_xml_load_complete : Gun; 
 
 		private function _init_gunz() : void
 		{
-			gunz_scheme_load_start = new Gun( gunz, this, "load_start" );
-			gunz_scheme_load_complete = new Gun( gunz, this, "load_complete" );
+			on_xml_load_start    = new Gun( gunz, this, "load_start" );
+			on_xml_load_complete = new Gun( gunz, this, "load_complete" );
 		}
 
+		
 		/* BOOTING */
+
+		
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var s : *;
@@ -41,10 +48,11 @@ package cocktail.lib
 		}
 
 		/* VARS */
+		
 		internal var _controller : Controller;  
 
-		/** XML Scheme for Model, View and Layout. */
-		protected var _scheme : XML;
+		/** XML Scheme for Model and View */
+		protected var _xml : XML;
 
 		/** Queue holders for loading shorcuts. */
 		private var _load_queue : Slave;

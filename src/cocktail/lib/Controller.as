@@ -3,7 +3,6 @@ package cocktail.lib
 	import cocktail.Cocktail;
 	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.lib.gunz.ControllerBullet;
@@ -16,9 +15,6 @@ package cocktail.lib
 	 */
 	public class Controller extends MVC
 	{
-		/* GUNZ */
-		private var gunz_load_change_phase : Gun;
-
 		/** Each render, this flag turns true.
 		 * If your action turns this to false, _layout_render wont occur
 		 */
@@ -26,52 +22,64 @@ package cocktail.lib
 
 		/**
 		 * Last runned _request. 
-		 * ATTENTION: Doesnt means the request is rendered
+		 * ATT: Doesnt means the request is rendered
 		 */
 		private var _request : Request;
 
-		private function _init_gunz() : void
-		{
-			log.info( "Running..." );
-			gunz_load_change_phase = new Gun( gunz, this, "load_change_phase" );
-		}
-
-		/* Quite explainatory name, huh? */
+		/* 
+		 * Cocktail will instantiate a model for each controller.
+		 * 
+		 * Will try to find a model with the same name, if it doesnt
+		 * exists, will instantiate an AppModel 
+		 */
 		private var _model : Model;
 
-		/* Quite explainatory name, huh? */
+		/* 
+		 * Cocktail will instantiate a layout for each controller.
+		 * 
+		 * Will try to find a layout with the same name, if it doesnt
+		 * exists, will instantiate an AppLayout
+		 */
 		private var _layout : Layout;
 
-		private var _group : GunzGroup;
+		/** 
+		 * Has model and view loaded theirs xmls?
+		 **/
+		private var _is_xml_loaded : Boolean;
+		
+		/**
+		 * Group Event manager for needed loadings
+		 */
+		private var _load_group : GunzGroup;
 
-		/** Has model and view loaded theirs schemes? **/
-		private var _is_scheme_loaded : Boolean;
-
+		/**
+		 * Saves / broadcasts all transitory variables / binds
+		 */
 		internal var _bind : Bind;
 
-		/* BOOTING */
 		override public function boot( cocktail : Cocktail ) : *
 		{
 			var name : String;
-			var s : *;
+			var result : *;
 		
-			s = super.boot( cocktail );
-			log.info( "Running..." );
+			result = super.boot( cocktail );
 			
-			_init_gunz( );
+			log.info( "Running..." );
 			
 			name = classname.replace( "Controller", "" );
 			
-			_model = new ( _cocktail.factory.model( name ) )( );
+			_model  = new ( _cocktail.factory.model( name ) )( );
 			_layout = new ( _cocktail.factory.layout( name ) )( );
-			_bind = new Bind( );
+			
+			_bind   = new Bind( );
+			
+			_model._controller  = this;
+			_layout._controller = this;
 			
 			_model.boot( cocktail );
 			_layout.boot( cocktail );
 			
-			_model._controller = _layout._controller = this;
-			
-			return s;
+			return result;
 		}
 
 		/* RUNNING */
@@ -113,8 +121,8 @@ package cocktail.lib
 		}
 
 		/**
-		 * Load Model and Layout.
-		 * @param request	Process to load. 
+		 * Load Model ( data ) and Layout ( assets ).
+		 * @param request. 
 		 */
 		private function _load( request : Request ) : void
 		{
@@ -122,58 +130,49 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			if( !_is_scheme_loaded ) 
+			if( !_is_xml_loaded ) 
 			{
-				_load_scheme( request );
-				gunz_load_start.shoot( new ControllerBullet( ) );
+				_load_xml( request );
+				on_load_start.shoot( new ControllerBullet( ) );
 				return;
 			}
 			
-			/*
-			 * 
-			_layout.load( request );
-			return;
-			 * 	
-			 */
 			_load_model( request );
 		}
 
-		/* LOADING - SCHEME */
-		
+
 		/**
 		 * Load Model and Layout scheme.
 		 * @param request	Request that will be loaded after load scheme. 
 		 */
-		private function _load_scheme( request : Request ) : void
+		private function _load_xml( request : Request ) : void
 		{
-			_group = new GunzGroup( );
-			_group.add( _layout.gunz_scheme_load_complete );
-			_group.add( _model.gunz_scheme_load_complete );
-			_group.gunz_complete.add( _after_load_scheme, request );
+			_load_group = new GunzGroup( );
+			_load_group.add( _layout.on_xml_load_complete );
+			_load_group.add( _model.on_xml_load_complete );
+			_load_group.gunz_complete.add( _xml_loaded, request );
 			
-			_model.load_scheme( request );
-			_layout.load_scheme( request );
+			_model.load_xml( request );
+			_layout.load_xml( request );
 		}
 
 		/**
 		 * Triggered after load  model and layout scheme.
 		 */
-		private function _after_load_scheme( bullet : Bullet ) : void
+		private function _xml_loaded( bullet : Bullet ) : void
 		{
 			log.info( "Running..." );
 			bullet;
-			_is_scheme_loaded = true;
-			gunz_load_change_phase.shoot( new ControllerBullet( ) );
+			_is_xml_loaded = true;
 			_load( bullet.params );
 		}
 
-		/* LOADING - MODEL */
 		private function _load_model( request : Request ) : void
 		{
 			log.info( "Running..." );
 			
 			if( _model.load( request ) )
-				_model.gunz_load_complete.add( _after_load_model, request );
+				_model.on_load_complete.add( _after_load_model, request );
 			else
 				_load_layout( request );
 		}
@@ -185,12 +184,11 @@ package cocktail.lib
 			_load_layout( bullet.params );
 		}
 
-		/* LOADING - LAYOUT */
 		private function _load_layout( request : Request ) : void
 		{
 			log.info( "Running..." );
 			
-			_layout.gunz_load_complete.add( _after_load_layout, request );
+			_layout.on_load_complete.add( _after_load_layout, request );
 			
 			_layout.load( request );
 		}
@@ -245,7 +243,10 @@ package cocktail.lib
 			request;
 		}
 
-		/** GETTERS **/
+
+		/* GETTERS */
+
+		
 		public function get layout() : Layout
 		{
 			return _layout;

@@ -14,44 +14,51 @@ package cocktail.lib
 
 	import flash.display.DisplayObjectContainer;
 
+	/**
+	 * This class will load the respective xml and it assets 
+	 * 
+	 * @author hems	hems@henriquematias.com
+	 */
 	public class Layout extends View 
 	{
-		/** will hold all loadings from this layout and its childs **/
+		/** queue of this layout an respective children **/
 		private var _loader : Slave;
 
 		override public function boot(cocktail : Cocktail) : * 
 		{
 			_loader = new Slave( );
+			
 			return super.boot( cocktail );
 		}
 
-		/* LOADING, VALIDATING AND PARSING SCHEME */
-		
 		/**
-		 * Load model scheme.
-		 * @param process	Running process.
+		 * Load layout's xml scheme.
+		 * 
+		 * @param request	request responsible for the action
 		 */
-		public function load_scheme( request : Request ) : Layout 
+		public function load_xml( request : Request ) : Layout 
 		{
 			request;
 			log.info( "Running..." );
-			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme );
+			load_uri( _xml_path ).gunz_complete.add( _xml_loaded );
 			return this;
 		}
 
 		/**
 		 * Parsing model xml scheme.
+		 * 
 		 * @param bullet	SlaveBullet.
 		 */
-		public function _after_load_scheme( bullet : ASlaveBullet ) : void 
+		private function _xml_loaded( bullet : ASlaveBullet ) : void 
 		{
 			log.info( "Running..." );
 			
-			_scheme = new XML( TextSlave( bullet.owner ).data );
+			_xml = new XML( TextSlave( bullet.owner ).data );
+			
 			if( !_is_scheme_valid )
 				log.fatal( "The scheme in this file has errors." + _xml_path );
 			else
-				gunz_scheme_load_complete.shoot( new LayoutBullet( ) );
+				on_xml_load_complete.shoot( new LayoutBullet( ) );
 		}
 
 		/**
@@ -98,7 +105,7 @@ package cocktail.lib
 			log.info( "Running..." );
 			bullet;
 			//this will tell controller, that everything was ok
-			gunz_load_complete.shoot( new ViewBullet( ) );
+			on_load_complete.shoot( new ViewBullet( ) );
 		}
 
 		private function _load_assets_failed( bullet : Bullet ) : void

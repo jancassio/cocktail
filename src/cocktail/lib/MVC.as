@@ -10,17 +10,18 @@ package cocktail.lib
 
 	/**
 	 * @author nybras | me@nybras.com
+	 * @author hems | hems@henriquematias.com
 	 */
 	public class MVC extends Index 
 	{
 		/* GUNZ */
-		public var gunz_load_start : Gun; 
+		public var on_load_start : Gun; 
 
-		public var gunz_load_progress : Gun; 
+		public var on_load_progress : Gun; 
 
-		public var gunz_load_complete : Gun; 
+		public var on_load_complete : Gun; 
 
-		/*Clean class name */
+		/** Clean class name **/
 		private var _name : String;
 
 		/** hold all timeouts created by this class  **/
@@ -28,9 +29,9 @@ package cocktail.lib
 		
 		private function _init_gunz() : void
 		{
-			gunz_load_start = new Gun( gunz, this, "load_start" );
-			gunz_load_progress = new Gun( gunz, this, "load_progress" );
-			gunz_load_complete = new Gun( gunz, this, "load_complete" );
+			on_load_start    = new Gun( gunz, this, "load_start" );
+			on_load_progress = new Gun( gunz, this, "load_progress" );
+			on_load_complete = new Gun( gunz, this, "load_complete" );
 		}
 
 		/* BOOTING */
@@ -103,10 +104,14 @@ package cocktail.lib
 			return gun;
 		}
 		
-		/*Clean class name */
+		
+		/* GETTERS  /  SETTERS */
+		
+		
 		public function get name() : String
 		{
 			return _name;
 		}
+		
 	}
 }
