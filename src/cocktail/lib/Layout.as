@@ -2,7 +2,7 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.logger.msgs.LayoutMsgs;
+	import cocktail.core.logger.msgs.LayoutMessages;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -146,7 +146,7 @@ package cocktail.lib
 			
 			if( !xml_node.hasOwnProperty( 'target' ) )
 			{
-				log.info( LayoutMsgs.no_target_found );
+				log.info( LayoutMessages.no_target_found );
 				return _cocktail.app;
 			}
 			

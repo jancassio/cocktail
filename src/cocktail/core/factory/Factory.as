@@ -1,6 +1,8 @@
 package cocktail.core.factory 
 {
 	import cocktail.core.Index;
+	import cocktail.core.logger.msgs.FactoryMessages;
+	import cocktail.lib.models.datasources.InlineDataSource;
 	import cocktail.utils.StringUtil;
 
 	import flash.utils.getDefinitionByName;
@@ -129,8 +131,12 @@ package cocktail.core.factory
 		/**
 		 * Evaluates the given Model class by name and return it.
 		 * 
+		 * Path priority:
+		 * 	- app/models/{area}/{name}Model
+		 * 	- cocktail/lib/models/{name}Model
+		 * 	
 		 * @param name	Model name (CamelCased).
-		 * @return	Model class to be instantiated.
+		 * @return	Model class reference
 		 */
 		public function model( name : String ) : Class
 		{
@@ -171,9 +177,9 @@ package cocktail.core.factory
 		 * Evaluates the given View class by name and return it.
 		 * 
 		 * Path priority:
-		 * 	- app/views/{area}/
-		 * 	- app/views/elements/
-		 * 	- cocktail/lib/views/
+		 * 	- app/views/{area}/{name}View
+		 * 	- app/views/elements/{name}View
+		 * 	- cocktail/lib/views/{name}View
 		 * 	
 		 * @param name	View name (CamelCased).
 		 * @return	View class to be instantiated.
@@ -216,15 +222,30 @@ package cocktail.core.factory
 		 */
 		public function datasource( type : String ) : Class
 		{
-			var path : String;
+			var name: String;
+			var klass: Class;
 			
-			path = LIB + '.';
-			path = path + Factory.MODELS + '.';
-			path = path + DATASOURCE + ".";
-			path = path + StringUtil.toCamel( type );
-			path = path + DATASOURCE_SUFIX;
+			name = StringUtil.toCamel( type ) + '.' + DATASOURCE_SUFIX;
 			
-			return evaluate( path );
+			// app/models/datasources/{name}DataSource
+			klass = _mvcl( MODELS + '.' + DATASOURCE , name );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, DATASOURCE_SUFIX ) );
+				
+			// cocktail/lib/models/datasources/{name}DataSource
+			klass = _mvcl( MODELS + '.' + DATASOURCE , name, true );
+			 
+			if( klass )
+				return klass;
+			else
+				log.warn( _message( name, DATASOURCE_SUFIX ) );
+			
+			log.notice( FactoryMessages.datasource_not_found( type ) );
+			
+			return InlineDataSource;
 		}
 	}
 }

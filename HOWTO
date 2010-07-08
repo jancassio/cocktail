@@ -1,0 +1,23 @@
+i will write those details here...
+TODO: format this file as expected
+
+ADD NEW TAG TO layout XML
+	1. Create your view class, you should extend one of the core views, or
+	the core view itself.
+	
+	2. Put it in one of the available classpaths, according to your needs:
+		- app/views/{area}/{tag}View
+		- app/views/elements/{tag}View
+		- cocktail/lib/views/{tag}View
+		
+	3. if you add the tag to the core lib, you should refence it in:
+		cocktail.core.embedder.EmbedderTail
+		
+ADD NEW DATASOURCE TO model XML
+
+	1. create class in one of those paths:
+		- app/models/datasources/{tag}Model
+		- cocktail/lib/models/datasources/{tag}Model
+		
+	2. if you add the tag to the core lib, you should refence it in:
+		cocktail.core.embedder.EmbedderTail

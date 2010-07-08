@@ -2,9 +2,9 @@ package cocktail.core.logger.msgs
 {
 
 	/**
-	 * @author hems | dev@henriquematias.com
+	 * @author hems | hems@henriquematias.com
 	 */
-	public class LayoutMsgs 
+	public class LayoutMessages 
 	{
 		public static function get no_target_found() : String
 		{
