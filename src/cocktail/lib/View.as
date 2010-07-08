@@ -39,7 +39,7 @@ package cocktail.lib
 
 		/** View sprite **/
 		public var sprite : Sprite;
-		
+
 		/** slave for loading **/
 		private var _src_slave : ASlave;
 
@@ -75,7 +75,7 @@ package cocktail.lib
 		{
 			return xml_node.attribute( name ).toString( );
 		}
-		
+
 		/**
 		 * Removes a view from the view stack
 		 */
@@ -118,7 +118,7 @@ package cocktail.lib
 			//ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 
-			_load_attributes();
+			_load_attributes( );
 			
 			if( ( this is Layout ) == false )
 				up.childs.mark_as_alive( this );
@@ -149,7 +149,7 @@ package cocktail.lib
 		 * 
 		 * Also your view should extend the respective kind of view.
 		 */
-		protected function _source_loaded( bullet: ASlaveBullet ) : void
+		protected function _source_loaded( bullet : ASlaveBullet ) : void
 		{
 			log.error( "This function should be overrided by your view" );
 			bullet;
@@ -188,6 +188,7 @@ package cocktail.lib
 			
 			list = xml_node.children( );
 			
+			//return home early!
 			if( list == null || !list.length( ) ) return assets;
 			
 			do
@@ -329,7 +330,7 @@ package cocktail.lib
 		public function unset_triggers() : void
 		{
 		}
-		
+
 		/**
 		 * Destroy filter, if returns false, wont destroy
 		 */
@@ -355,7 +356,7 @@ package cocktail.lib
 			request;
 		}
 
-
+		
 		/** GETTERS / SETTERS **/
 		
 		/** Alias to the main view ( layout ) of the viewstack **/
@@ -375,7 +376,7 @@ package cocktail.lib
 		{
 			return _childs;
 		}
-		
+
 		/** Returns the raw XML of this view **/
 		public function get xml_node() : XML  
 		{
@@ -388,7 +389,7 @@ package cocktail.lib
 			_xml_node = xml_node;
 		}
 
-
+		
 		/** 
 		 * ATRIBUTTE SETTERS
 		 * 
@@ -396,14 +397,14 @@ package cocktail.lib
 		 * time the "load" method is called
 		 */
 		 
-		 /**
-		  * Unload the current source if any, then load the new path
-		  * Will trigger _source_loaded after complete 
-		  * 
-		  * @param path	Path to the desired asset
-		  */
-		 public function set src( path: String ): void
-		 {
+		/**
+		 * Unload the current source if any, then load the new path
+		 * Will trigger _source_loaded after complete 
+		 * 
+		 * @param path	Path to the desired asset
+		 */
+		public function set src( path : String ) : void
+		{
 			if( _src_slave != null )
 			{
 				if( _src_slave.uri == path ) 
@@ -412,7 +413,7 @@ package cocktail.lib
 				}
 				else if( _src_slave.is_loaded )
 				{
-					ISlave( _src_slave ).destroy();
+					ISlave( _src_slave ).destroy( );
 				}
 			}
 			
@@ -421,7 +422,6 @@ package cocktail.lib
 			_src_slave.gunz_complete.add( _source_loaded );
 					 	
 			loader.append( _src_slave );
-		 }
-		 
+		}
 	}
 }
