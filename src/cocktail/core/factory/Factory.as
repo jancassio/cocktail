@@ -6,14 +6,22 @@ package cocktail.core.factory
 	import flash.utils.getDefinitionByName;
 
 	/**
-	 * Factory class.
+	 * This class will handle all mvc instantiations.
+	 * 
+	 * Controllers and models will have just one instance per application.
+	 * 
 	 * @author hems | hems@codeine.it
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class Factory extends Index
 	{
+		
+		public static const LIB : String = "cocktail.lib";
+		
 		public static const VIEWS : String = "views";
 
+		public static const ELEMENTS: String = "elements"; 
+		
 		public static const LAYOUTS : String = "layouts";
 
 		public static const MODELS : String = "models";
@@ -27,6 +35,10 @@ package cocktail.core.factory
 		public static const MODEL_SUFIX : String = 'Model';
 
 		public static const COONTROLLER_SUFIX : String = 'Controller';
+		
+		public function Factory() 
+		{
+		}
 
 		/* ERROR MESSAGE TEMPLATE */
 		
@@ -62,12 +74,17 @@ package cocktail.core.factory
 		 * @param folder	Class folder name.
 		 * @param classname	Class name.
 		 */
-		private function _mvcl( folder : String, classname : String ) : Class
+		private function _mvcl( 
+			folder : String, 
+			classname : String,
+			in_lib: Boolean = false ) : Class
 		{
 			var klass : Class;
 			var path : String;
 			
-			path = _cocktail.app_id + "." + folder + "." + classname;
+			path = in_lib ? LIB : _cocktail.app_id; 
+			path = path + "." + folder + "." + classname;
+			
 			return evaluate( path );
 		}
 
@@ -78,6 +95,7 @@ package cocktail.core.factory
 		 */
 		public function controller( name : String ) : Class
 		{
+			
 			try
 			{
 				return _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
@@ -85,7 +103,8 @@ package cocktail.core.factory
 			{
 				log.warn( _m( name, COONTROLLER_SUFIX ) );
 			}
-			return evaluate( "cocktail.lib.Controller" );
+			
+			return evaluate( _cocktail.app_id + ".AppController" );
 		}
 
 		/**
@@ -102,11 +121,13 @@ package cocktail.core.factory
 			{
 				log.warn( _m( name, MODEL_SUFIX ) );
 			}
-			return evaluate( "cocktail.lib.Model" );
+			
+			return evaluate( _cocktail.app_id + ".AppModel" );
 		}
 
 		/**
 		 * Evaluates the given Layout class by name and return it.
+		 * 
 		 * @param name	Layout name (CamelCased).
 		 * @return	Layout class to be instantiated.
 		 */
@@ -119,24 +140,48 @@ package cocktail.core.factory
 			{
 				log.warn( _m( name, LAYOUT_SUFIX ) );
 			}
-			return evaluate( "cocktail.lib.Layout" );
+			
+			return evaluate( _cocktail.app_id + ".AppLayout" );
 		}
 
 		/**
 		 * Evaluates the given View class by name and return it.
+		 * 
+		 * Path priority:
+		 * 	- app/views/{area}/
+		 * 	- app/views/elements/
+		 * 	- cocktail/lib/views/
+		 * 	
 		 * @param name	View name (CamelCased).
 		 * @return	View class to be instantiated.
 		 */
-		public function view( name : String ) : Class
+		public function view( area: String, name : String ) : Class
 		{
 			try
 			{
-				return _mvcl( VIEWS, name + VIEW_SUFIX );
+				return _mvcl( VIEWS, area + '.' + name + VIEW_SUFIX );
 			} catch( e : Error )
 			{
 				log.warn( _m( name, VIEW_SUFIX ) );
 			}
-			return evaluate( "cocktail.lib.View" );
+			
+			try
+			{
+				return _mvcl( VIEWS, ELEMENTS + '.' + name + VIEW_SUFIX );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, VIEW_SUFIX ) );
+			}
+			
+			try
+			{
+				return _mvcl( VIEWS, name + VIEW_SUFIX, true );
+			} catch( e : Error )
+			{
+				log.warn( _m( name, VIEW_SUFIX ) );
+			}
+			
+			return evaluate( _cocktail.app_id + ".AppView" );
 		}
 
 		/**

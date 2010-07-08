@@ -1,12 +1,12 @@
 package cocktail.lib.views 
 {
-	import cocktail.utils.StringUtil;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.GunzGroup;
 	import cocktail.core.request.Request;
 	import cocktail.lib.View;
 	import cocktail.lib.gunz.ViewBullet;
+	import cocktail.utils.StringUtil;
 
 	import de.polygonal.ds.DLinkedList;
 	import de.polygonal.ds.DListNode;
@@ -210,16 +210,17 @@ package cocktail.lib.views
 		public function create( xml_node : XML ) : View 
 		{
 			var created : View;
+			var area_path : String;
 			var path : String;
 			
-			path = StringUtil.toUnderscore( view.root.name ) + '.';
+			area_path = StringUtil.toUnderscore( view.root.name );
 			
 			if( xml_node.attribute( 'class' ).toString( ) )
-				path += StringUtil.toCamel( xml_node.attribute( 'class' ) );
+				path = StringUtil.toCamel( xml_node.attribute( 'class' ) );
 			else
-				path += StringUtil.toCamel( xml_node.localName( ) );
+				path = StringUtil.toCamel( xml_node.localName( ) );
 			
-			created = View( new ( _cocktail.factory.view( path ) ) );
+			created = View( new ( _cocktail.factory.view( area_path, path ) ) );
 			created.identifier = xml_node.localName( );
 			created.xml_node = xml_node;
 			created.up = view;
