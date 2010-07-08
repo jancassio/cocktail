@@ -25,7 +25,8 @@ package cocktail.lib.views
 		{
 			super._instantiate_display( );
 
-			trace( "where are me ?" );			
+			if( !img ) return;
+			
 			sprite.addChild( img );
 			
 			return true;

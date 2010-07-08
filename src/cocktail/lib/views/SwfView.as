@@ -25,6 +25,8 @@ package cocktail.lib.views
 		{
 			super._instantiate_display( );
 			
+			if( !swf ) return false;
+			
 			sprite.addChild( swf );
 			
 			return true;
