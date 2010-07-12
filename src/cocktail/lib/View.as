@@ -120,21 +120,26 @@ package cocktail.lib
 
 			_load_attributes( );
 			
-			if( ( this is Layout ) == false )
-				up.childs.mark_as_alive( this );
-			
 			if( assets.length == 0 ) return true;
 			
 			//TODO: use a lambda to run all selected assets				
 			do 
 			{
 				view = assets[ i ];
+				
+				childs.mark_as_alive( view );
+				
 				view.load( request );
 			} while( ++i < assets.length );
 
 			return true;
 		}
 
+		/**
+		 * Loads tag attributes into view.
+		 * 
+		 * Currently only reading "src" attribute.
+		 */
 		private function _load_attributes() : void 
 		{
 			if( attribute( 'src' ) )		
@@ -156,7 +161,7 @@ package cocktail.lib
 		}
 
 		/**
-		 * Parses all necessary Datasources for given Process.
+		 * Parses all necessary Views for given request.
 		 * @param process	Running process.
 		 * @return	An array with all Datasources, properly instantiated. 
 		 */
@@ -171,20 +176,6 @@ package cocktail.lib
 			
 			action = request.route.api.action;
 			assets = [];
-			
-			//layout will work just if it finds 1 action.
-			if( this is Layout )
-			{
-				list = _xml..action.( @id == action || @id == "*" );
-				
-				xml_node = XML( list.toXMLString( ) );
-				
-				//TODO: If target isnt rendered, redirect to home
-				if( !controller( name ).layout.childs.has( "" ) )
-				{
-					//redirect
-				}
-			}
 			
 			list = xml_node.children( );
 			

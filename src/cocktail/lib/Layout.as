@@ -76,6 +76,22 @@ package cocktail.lib
 
 		override public function load( request : Request ) : Boolean 
 		{
+			var list : XMLList;
+			var action : String;
+			
+			action = request.route.api.action;
+			
+			list = _xml..action.( @id == action || @id == "*" );
+			
+			if( list )
+				xml_node = XML( list.toXMLString( ) );
+			
+			//TODO: If target isnt rendered, redirect to home
+			if( !controller( name ).layout.childs.has( "" ) )
+			{
+				//redirect
+			}
+			
 			if( !super.load( request ) ) return false;
 			
 			if( loader.length )
