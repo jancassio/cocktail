@@ -42,10 +42,6 @@ package cocktail.core
 			_init_gunz( );
 			
 			_cocktail = cocktail;
-			_log = new Logger( classpath );
-			
-			_cocktail.bind.plug( "log-level", _log, "level" );
-			_cocktail.bind.plug( "log-detail", _log, "detail" );
 			
 			return this;
 		}
@@ -85,6 +81,13 @@ package cocktail.core
 		 */
 		final public function get log() : Logger
 		{
+			if( !_log )
+			{
+				_log = new Logger( classpath );
+				
+				_cocktail.bind.plug( "log-level", _log, "level" );
+				_cocktail.bind.plug( "log-detail", _log, "detail" );
+			}
 			return _log;
 		}
 
