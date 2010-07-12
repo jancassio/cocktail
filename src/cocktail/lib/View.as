@@ -277,6 +277,7 @@ package cocktail.lib
 		{
 			//FIXME: Implement a real style system
 			request;
+			
 			//properties rendering
 			//need to think in a good automated process to apply it
 			if( xml_node.@x )
@@ -309,9 +310,15 @@ package cocktail.lib
 			if( is_defined( 'mouse_over' ) )
 				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_over' ] );
 				
+			if( is_defined( 'roll_over' ) )
+				event( sprite, MouseEvent.ROLL_OVER, this[ 'roll_over' ] );
+				
 			if( is_defined( 'mouse_out' ) )
 				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_out' ] );
 				
+			if( is_defined( 'roll_out' ) )
+				event( sprite, MouseEvent.ROLL_OUT, this[ 'roll_out' ] );
+			
 			if( is_defined( 'mouse_up' ) )
 				event( sprite, MouseEvent.MOUSE_UP, this[ 'mouse_up' ] );
 				
