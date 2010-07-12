@@ -17,6 +17,8 @@ package cocktail.core.request
 
 		private var _cocktail : Cocktail;
 
+		private var _silent : Boolean;
+
 		/**
 		 * Returns a GET request type.
 		 */
@@ -50,10 +52,12 @@ package cocktail.core.request
 		public function Request(
 			type : String,
 			uri : String,
+			silent: Boolean = false,
 			data : * = null
 		) : void
 		{
 			_uri = uri;
+			_silent = silent;
 			this.type = type;
 			this.data = data;
 		}
@@ -130,6 +134,11 @@ package cocktail.core.request
 		public function get route() : Route
 		{
 			return _route;
+		}
+		
+		public function get silent() : Boolean
+		{
+			return _silent;
 		}
 	}
 }
