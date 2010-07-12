@@ -270,7 +270,7 @@ package cocktail.core.factory
 			var name: String;
 			var klass: Class;
 			
-			name = StringUtil.toCamel( type ) + '.' + DATASOURCE_SUFIX;
+			name = StringUtil.toCamel( type ) + DATASOURCE_SUFIX;
 			
 			// app/models/datasources/{name}DataSource
 			if( ( klass = _mvcl( MODELS + '.' + DATASOURCE , name ) ) )
@@ -281,7 +281,7 @@ package cocktail.core.factory
 				return klass;
 			
 			// let the user know what happened	
-			log.notice( FactoryMessages.datasource_not_found( type ) );
+			log.notice( FactoryMessages.datasource_not_found( name ) );
 			
 			return InlineDataSource;
 		}
