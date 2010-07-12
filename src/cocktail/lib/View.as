@@ -217,6 +217,9 @@ package cocktail.lib
 			return childs.create( xml_node );
 		}
 
+		/**
+		 * 
+		 */
 		public function before_render( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
@@ -224,6 +227,11 @@ package cocktail.lib
 			return true;
 		}
 
+		/**
+		 * Render itself and the children.
+		 * 
+		 * Wont render if before_render returns false
+		 */
 		public function render( request : Request ) : *
 		{
 			if( !before_render( request ) ) return false;
