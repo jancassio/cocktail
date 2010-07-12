@@ -50,10 +50,14 @@ package cocktail.lib
 			return s;
 		}
 
+		/**
+		 * Navigate to desired url
+		 * @param url	dedired url
+		 * @param silent	if true, wont run SWFAddress call
+		 */
 		public function go( url : String, silent : Boolean = false ) : void
 		{
-			silent;
-			router.get( url );
+			router.get( url, silent );
 		}
 
 
