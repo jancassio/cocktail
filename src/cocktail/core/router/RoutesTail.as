@@ -1,6 +1,6 @@
 package cocktail.core.router
 {
-	import cocktail.utils.ArrayUtil;																																																									
+	import cocktail.utils.ArrayUtil;
 
 	/**
 	 * Handles all Routes translations.

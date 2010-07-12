@@ -37,6 +37,7 @@ package cocktail.lib
 			log.info( "Running..." );
 			
 			_xml = new XML( TextSlave( bullet.owner ).data );
+			
 			if( !_is_scheme_valid )
 				log.fatal( "The scheme in this file has errors." + _xml_path );
 			else

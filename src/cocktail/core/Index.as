@@ -2,6 +2,7 @@ package cocktail.core
 {
 	import cocktail.Cocktail;
 	import cocktail.core.config.Config;
+	import cocktail.core.factory.Factory;
 	import cocktail.core.gunz.Gunz;
 	import cocktail.core.logger.Logger;
 	import cocktail.core.router.Router;

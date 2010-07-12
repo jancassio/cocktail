@@ -3,7 +3,7 @@ package cocktail.core.boot
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.net.URLRequest;	
+	import flash.net.URLRequest;
 
 	/**
 	 * Boots the framework, initializing the main preloader, and loading

@@ -1,6 +1,6 @@
 package cocktail.core.bind 
 {
-	import cocktail.utils.ArrayUtil;																														
+	import cocktail.utils.ArrayUtil;
 
 	/**
 	 * Simple bind class.

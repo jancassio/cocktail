@@ -1,6 +1,5 @@
 package cocktail.lib 
 {
-	import cocktail.utils.StringUtil;
 	import cocktail.Cocktail;
 	import cocktail.core.bind.Bind;
 	import cocktail.core.gunz.Bullet;
@@ -9,6 +8,7 @@ package cocktail.lib
 	import cocktail.lib.gunz.ControllerBullet;
 	import cocktail.lib.gunz.ModelBullet;
 	import cocktail.lib.gunz.ViewBullet;
+	import cocktail.utils.StringUtil;
 
 	/**
 	 * @author hems	hems@henriquematias.com

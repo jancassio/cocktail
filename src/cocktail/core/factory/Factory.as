@@ -2,6 +2,9 @@ package cocktail.core.factory
 {
 	import cocktail.core.Index;
 	import cocktail.core.logger.msgs.FactoryMessages;
+	import cocktail.lib.Controller;
+	import cocktail.lib.Layout;
+	import cocktail.lib.Model;
 	import cocktail.lib.models.datasources.InlineDataSource;
 	import cocktail.utils.StringUtil;
 
@@ -10,7 +13,8 @@ package cocktail.core.factory
 	/**
 	 * This class will handle all mvc instantiations.
 	 * 
-	 * Controllers and models will have just one instance per application.
+	 * Controllers / models / layouts will have just 
+	 * one instance per application.
 	 * 
 	 * TODO: make a generic instantiator that will receive the "name", "sufix"
 	 * and possible paths in order of priority

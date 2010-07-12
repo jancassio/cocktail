@@ -1,6 +1,6 @@
 package cocktail.lib.gunz 
 {
-	import cocktail.core.gunz.Bullet;	
+	import cocktail.core.gunz.Bullet;
 
 	/**
 	 * Bullet for MVC.

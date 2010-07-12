@@ -6,10 +6,6 @@ package cocktail.lib
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
-	import cocktail.core.slave.slaves.AudioSlave;
-	import cocktail.core.slave.slaves.GraphSlave;
-	import cocktail.core.slave.slaves.TextSlave;
-	import cocktail.core.slave.slaves.VideoSlave;
 
 	/**
 	 * Contains some preloading proxy utils for Model and View, also

@@ -1,11 +1,10 @@
 package cocktail.core.router 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.gunz.Gun;
-	import cocktail.core.gunz.Gunz;
 	import cocktail.core.request.Request;
 	import cocktail.core.request.RequestAsync;
 	import cocktail.core.router.gunz.RouterBullet;
+	import cocktail.lib.Controller;
 
 	import com.asual.swfaddress.SWFAddress;
 	import com.asual.swfaddress.SWFAddressEvent;

@@ -1,16 +1,14 @@
 package cocktail 
 {
-	import flash.display.Stage;
-
 	import cocktail.core.bind.Bind;
 	import cocktail.core.config.Config;
 	import cocktail.core.embedder.EmbedderTail;
 	import cocktail.core.factory.Factory;
-	import cocktail.core.process.Process;
 	import cocktail.core.router.Router;
 	import cocktail.core.router.RoutesTail;
 
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 
 	/**

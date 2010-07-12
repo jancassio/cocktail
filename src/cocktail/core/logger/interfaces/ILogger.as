@@ -1,6 +1,6 @@
 package cocktail.core.logger.interfaces 
 {
-	import cocktail.core.logger.Logger;				
+	import cocktail.core.logger.Logger;
 
 	/**
 	 * Interface for Loggers.

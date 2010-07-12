@@ -1,11 +1,9 @@
 package cocktail.core.slave.slaves 
 {
-	import flash.system.System;
-
-	import cocktail.core.slave.gunz.GraphSlaveBullet;
 	import cocktail.core.slave.ASlave;
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
+	import cocktail.core.slave.gunz.GraphSlaveBullet;
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -15,6 +13,7 @@ package cocktail.core.slave.slaves
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
+	import flash.system.System;
 
 	/**
 	 * GraphSlave is the responsible for loading any binary graphic asset, such
