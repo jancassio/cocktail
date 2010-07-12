@@ -93,6 +93,10 @@ package cocktail.lib
 					ds.load( );
 				} while( ++i < ds_list.length );
 			}
+			else
+			{
+				_after_load();
+			}
 			
 			return true;
 		}
@@ -129,8 +133,9 @@ package cocktail.lib
 			
 			do
 			{
-				node = _xml.children( )[ i ];
+				node   = _xml.children( )[ i ];
 				inject = ( node.@inject + "," );
+				
 				if( inject == "*," || inject.indexOf( action + "," ) > 0 )
 					ds.push( _instantiate_datasource( node, request ) );
 			} while( ++i < _xml.children( ).length( ) );
