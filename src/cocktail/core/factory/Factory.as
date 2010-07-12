@@ -159,6 +159,8 @@ package cocktail.core.factory
 			var klass: Class;
 			var model: Model;
 			
+			name = StringUtil.toCamel( name );
+			
 			// app/models/{area}/{name}Model
 			klass = _mvcl( MODELS, name + MODEL_SUFIX );
 				
@@ -200,6 +202,8 @@ package cocktail.core.factory
 		{
 			var klass: Class;
 			var layout: Layout;
+			
+			name = StringUtil.toCamel( name );
 			
 			// app/layouts/{name}Layout
 			klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX );

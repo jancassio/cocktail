@@ -63,14 +63,11 @@ package cocktail.lib
 		 */
 		override public function boot( cocktail : Cocktail ) : *
 		{
-			var name : String;
 			var result : *;
 		
 			result = super.boot( cocktail );
 			
 			log.info( "Running..." );
-			
-			name = StringUtil.toCamel( this.name );
 			
 			_model  = factory.model( name );
 			_layout = factory.layout( name );
