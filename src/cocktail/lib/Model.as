@@ -23,8 +23,11 @@ package cocktail.lib
 		{
 			request;
 			log.info( "Running..." );
+			
 			on_xml_load_start.shoot( new ModelBullet( ) );
-			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme );
+			
+			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme ).once();
+			
 			return this;
 		}
 

@@ -235,7 +235,7 @@ package cocktail.core
 		 * @param value	Value to be casted.
 		 * @return	Value as <code>Boolean</code>.
 		 */
-		final protected function b( value : * ) : Boolean
+		final protected function b( value : * ) : Boolean      
 		{
 			return Boolean( value );
 		}
@@ -243,6 +243,16 @@ package cocktail.core
 		public function get cocktail() : Cocktail
 		{
 			return _cocktail;
+		}
+
+		public function get factory() : Factory
+		{
+			return _cocktail.factory;
+		}
+		
+		public function get f(): Factory
+		{
+			return _cocktail.factory;
 		}
 	}
 }

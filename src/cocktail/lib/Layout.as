@@ -90,7 +90,7 @@ package cocktail.lib
 				xml_node = XML( list.toXMLString( ) );
 			
 			//TODO: If target isnt rendered, redirect to home
-			if( !controller( name ).layout.childs.has( "" ) )
+			if( !factory.layout( name ).childs.has( "" ) )
 			{
 				//redirect
 			}
@@ -142,6 +142,7 @@ package cocktail.lib
 		private function get _xml_path() : String 
 		{
 			log.info( "Running..." );
+			
 			return "layouts/" + StringUtil.toUnderscore( name ) + ".xml";
 		}
 
@@ -175,7 +176,7 @@ package cocktail.lib
 			action_name = full_path[ 0 ].split( '/' )[ 1 ];
 			asset_id = full_path[ 1 ];
 
-			return controller( name ).layout.childs.by_id( asset_id ).sprite;
+			return factory.layout( name ).childs.by_id( asset_id ).sprite;
 		}
 
 		override public function get loader() : Slave

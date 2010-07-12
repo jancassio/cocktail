@@ -72,8 +72,8 @@ package cocktail.lib
 			
 			name = StringUtil.toCamel( this.name );
 			
-			_model  = new ( _cocktail.factory.model( name ) )( );
-			_layout = new ( _cocktail.factory.layout( name ) )( );
+			_model  = factory.model( name );
+			_layout = factory.layout( name );
 			
 			_bind   = new Bind( );
 			
@@ -188,10 +188,14 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			
-			if( _model.load( request ) )
-				_model.on_load_complete.add( _model_loaded, request );
-			else
+			_model.on_load_complete.add( _model_loaded, request ).once();
+			
+			if( !_model.load( request ) )
+			{
+				_model.on_load_complete.rm( _model_loaded );
+				
 				_load_layout( request );
+			}
 		}
 
 		/**

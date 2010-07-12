@@ -34,8 +34,6 @@ package cocktail
 
 		private var _routes : RoutesTail;
 
-		private var _process : Process;
-
 		private var _bind : Bind;
 
 		private var _factory : Factory;
@@ -92,7 +90,6 @@ package cocktail
 			_stage   = _app.stage;
 			_config  = new Config( ).boot( this );
 			_router  = new Router( ).boot( this );
-			_process = new Process( ).boot( this );
 		}
 
 		/* LOGGER LEVEL and DETAIL */
@@ -206,15 +203,6 @@ package cocktail
 		public function get routes() : RoutesTail
 		{
 			return _routes;
-		}
-
-		/**
-		 * Get the reference for the Proces instance.
-		 * @param	Reference to the Proces instance.
-		 */
-		public function get process() : Process
-		{
-			return _process;
 		}
 
 		/**

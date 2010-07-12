@@ -44,7 +44,7 @@ package cocktail.lib
 			
 			_init_gunz( );
 			
-			regexp = /(Model|View|Controller|Layout$)/;
+			regexp = /(Model|View|Controller|Layout)$/;
 			_name = StringUtil.toUnderscore( classname.replace( regexp, '' ) );
 			
 			return s;

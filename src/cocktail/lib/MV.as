@@ -102,18 +102,8 @@ package cocktail.lib
 			return aslave;
 		}
 
-		/**
-		 * Returns a controller instance by name 
-		 * ( unique per cocktail instance )
-		 * 
-		 * @param name
-		 */
-		public function controller( name : String ) : Controller
-		{
-			return _cocktail.process.controller( name );
-		}
-
 		/* GETTERS */
+		
 		public function get bind() : Bind
 		{
 			return _controller._bind;

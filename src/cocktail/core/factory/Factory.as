@@ -49,6 +49,18 @@ package cocktail.core.factory
 		
 		public static const DATASOURCE_SUFIX : String = 'DataSource';
 		
+		private var _controllers: Object;
+		
+		private var _models: Object;
+
+		private var _layouts: Object;
+		
+		public function Factory() 
+		{
+			_controllers = {};
+			_models = {};
+			_layouts = {};
+		}
 
 		/**
 		 * Returns a class reference according the given classpath.
@@ -99,24 +111,37 @@ package cocktail.core.factory
 		 * 	- cocktail/lib/controllers/{name}Controller
 		 * 	
 		 * @param name	Controller name ( CamelCased ).
-		 * @return	Model class reference
+		 * @return	AppController as Controller
 		 */
-		public function controller( name : String ) : Class
+		public function controller( name : String ) : Controller
 		{
 			var klass: Class;
+			var controller : Controller;
 		
-			// app/controllers/{area}/{name}Controller	
-			if( ( klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX ) ) )
-				return klass;
-			
+			// app/controllers/{area}/{name}Controller
+			klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX );
+				
 			// cocktail/lib/controllers/{name}Controller
-			if( ( klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX, true ) ) )
-				return klass;
+			if( !klass )
+				klass = _mvcl( CONTROLLERS, name + COONTROLLER_SUFIX, true );
+				
+			if( !klass )
+			{	
+				// let the user know what happened
+				log.notice( FactoryMessages.controller_not_found( name ) );
+				klass = evaluate( _cocktail.app_id + ".AppController" );
+			}
 			
-			// let the user know what happened	
-			log.notice( FactoryMessages.controller_not_found( name ) );
 			
-			return evaluate( _cocktail.app_id + ".AppController" );
+			if( _controllers.hasOwnProperty( name ) )
+				return _controllers[ name ];
+			else
+			{
+				controller = Controller( new ( klass )( ) ).boot( _cocktail );
+				_controllers[ name ] = controller;
+			}
+			
+			return controller;
 		}
 
 		/**
@@ -127,24 +152,38 @@ package cocktail.core.factory
 		 * 	- cocktail/lib/models/{name}Model
 		 * 	
 		 * @param name	Model name ( CamelCased ).
-		 * @return	Model class reference
+		 * @return	AppModel as Model
 		 */
-		public function model( name : String ) : Class
+		public function model( name : String ) : Model
 		{
 			var klass: Class;
-		
-			// app/models/{area}/{name}Model	
-			if( ( klass = _mvcl( MODELS, name + MODEL_SUFIX ) ) )
-				return klass;
+			var model: Model;
 			
+			// app/models/{area}/{name}Model
+			klass = _mvcl( MODELS, name + MODEL_SUFIX );
+				
 			// cocktail/lib/models/{name}Model
-			if( ( klass = _mvcl( MODELS, name + MODEL_SUFIX, true ) ) )
-				return klass;
+			if( !klass )
+				klass = _mvcl( MODELS, name + MODEL_SUFIX, true ); 
 			
-			// let the user know what happened
-			log.notice( FactoryMessages.model_not_found( name ) );
+			if( !klass )
+			{
+				// let the user know what happened
+				log.notice( FactoryMessages.model_not_found( name ) );
+				
+				klass = evaluate( _cocktail.app_id + ".AppModel" );
+			}
 			
-			return evaluate( _cocktail.app_id + ".AppModel" );
+			
+			if( _models.hasOwnProperty( name ) )
+				return _models[ name ];
+			else
+			{
+				model = Model( new ( klass )( ) ).boot( _cocktail );
+				_models[ name ] = model;
+			}
+			
+			return model;
 		}
 
 		/**
@@ -155,24 +194,37 @@ package cocktail.core.factory
 		 * 	- cocktail/lib/layouts/{name}Layout
 		 * 	
 		 * @param name	Layout name ( CamelCased ).
-		 * @return	Model class reference
+		 * @return	AppLayout as Layout
 		 */
-		public function layout( name : String ) : Class
+		public function layout( name : String ) : Layout
 		{
 			var klass: Class;
-		
-			// app/layouts/{name}Layout	
-			if( ( klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX ) ) )
-				return klass;
+			var layout: Layout;
 			
+			// app/layouts/{name}Layout
+			klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX );
+				
 			// cocktail/lib/layouts/{name}Layout
-			if( ( klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX, true ) ) )
-				return klass;
+			if( !klass )
+				klass = _mvcl( LAYOUTS, name + LAYOUT_SUFIX, true );
 			
-			// let the user know what happened	
-			log.notice( FactoryMessages.layout_not_found( name ) );
+			if( !klass )
+			{
+				// let the user know what happened
+				log.notice( FactoryMessages.layout_not_found( name ) );
+				
+				klass = evaluate( _cocktail.app_id + ".AppLayout" );
+			}
 			
-			return evaluate( _cocktail.app_id + ".AppLayout" );
+			if( _layouts.hasOwnProperty( name ) )
+				return _layouts[ name ];
+			else
+			{
+				layout = Layout( new ( klass )( ) ).boot( _cocktail );
+				_layouts[ name ] = layout;
+			}
+			
+			return layout;
 		}
 
 		/**

@@ -3,7 +3,6 @@ package cocktail.core.router
 	import cocktail.Cocktail;
 	import cocktail.core.request.Request;
 	import cocktail.core.request.RequestAsync;
-	import cocktail.core.router.gunz.RouterBullet;
 	import cocktail.lib.Controller;
 
 	import com.asual.swfaddress.SWFAddress;
@@ -23,24 +22,11 @@ package cocktail.core.router
 
 		private var _index : Number;
 
-		/* GUNZ */
-		public var gunz: Gunz;
-		
-		public var gunz_update : Gun; 
-
 		protected var _cocktail : Cocktail;
-
-		private function _init_gunz() : void
-		{
-			gunz = new Gunz( this );
-			gunz_update = new Gun( gunz, this, "update" );
-		}
 
 		public function boot( cocktail : Cocktail ) : Router
 		{
-			_init_gunz();
-			
-			_history = new Array();
+			_history = new Array( );
 			_index = -1;
 			
 			_cocktail = cocktail;
@@ -125,11 +111,11 @@ package cocktail.core.router
 		 * Redirects the application to the given request.
 		 * @param request	Request to redirect the application to. 
 		 */
-		public function get( uri : String, silent: Boolean = false ) : void
+		public function get( uri : String, silent : Boolean = false ) : void
 		{
 			var request : Request;
 			
-			request = new Request( Request.GET, uri ).boot( _cocktail );
+			request = new Request( Request.GET, uri, silent ).boot( _cocktail );
 			history.push( request );
 			_index++;
 			
@@ -139,7 +125,7 @@ package cocktail.core.router
 					SWFAddress.setValue( request.route.mask );
 			}
 			else
-				gunz_update.shoot( new RouterBullet( request ) );
+				run( request );
 		}
 
 		/*
@@ -178,7 +164,16 @@ package cocktail.core.router
 				
 			request = new Request( Request.GET, uri ).boot( _cocktail );
 			
-			gunz_update.shoot( new RouterBullet( request ) );
+			run( request );
+		}
+
+		private function run( request : Request ) : * 
+		{
+			var ctl : Controller;
+			
+			ctl = _cocktail.factory.controller( request.route.api.controller );
+			 
+			return ctl.run( request );
 		}
 	}
 }
