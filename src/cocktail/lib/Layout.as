@@ -172,8 +172,8 @@ package cocktail.lib
 			
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
-			controller_name = full_path[ 0 ].split( '/' )[ 0 ];
-			action_name = full_path[ 0 ].split( '/' )[ 1 ];
+			controller_name = full_path[ 0 ][ 'split' ]( '/' )[ 0 ];
+			action_name = full_path[ 0 ][ 'split' ]( '/' )[ 1 ];
 			asset_id = full_path[ 1 ];
 
 			return factory.layout( name ).childs.by_id( asset_id ).sprite;
