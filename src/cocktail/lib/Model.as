@@ -69,6 +69,7 @@ package cocktail.lib
 
 		/**
 		 * Load all datasources needed for the request.
+		 * 
 		 * @param request	Running request.
 		 */
 		public function load( request : Request ) : Boolean
@@ -79,6 +80,7 @@ package cocktail.lib
 			var ds : ADataSource;
 			
 			if( !before_load( request ) ) return false;
+			
 			log.info( "Running..." );
 			
 			if( ( ds_list = _parse_datasources( request ) ).length )
@@ -111,7 +113,6 @@ package cocktail.lib
 		public function after_load() : void
 		{
 			log.info( "Running..." );
-			on_load_complete.shoot( new ModelBullet( ) );
 		}
 
 		/**

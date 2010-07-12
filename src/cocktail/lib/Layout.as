@@ -74,6 +74,9 @@ package cocktail.lib
 			return true;
 		}
 
+		/**
+		 * 
+		 */
 		override public function load( request : Request ) : Boolean 
 		{
 			var list : XMLList;
