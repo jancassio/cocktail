@@ -1,7 +1,6 @@
 package cocktail.core.process 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.Index;
 	import cocktail.core.router.gunz.RouterBullet;
 	import cocktail.lib.Controller;
 
@@ -9,12 +8,14 @@ package cocktail.core.process
 	 * Manage all processes.
 	 * @author nybras | nybras@codeine.it
 	 */
-	public class Process extends Index 
+	public class Process 
 	{
 		/* VARS */
 		private var _controllers : Object;
 
 		private var _current_controller : Controller;
+
+		private var _cocktail : Cocktail;
 
 		/* BOOTING */
 		
@@ -22,14 +23,14 @@ package cocktail.core.process
 		 * Creates a new Processes instance.
 		 * @param cocktail	Cocktail reference.
 		 */
-		override public function boot( cocktail : Cocktail ) : *
+		public function boot( cocktail : Cocktail ) : *
 		{
-			var s : *;
-		
-			s = super.boot( cocktail );
 			_controllers = {};
-			router.gunz_update.add( _route );
-			return s;
+			_cocktail = cocktail;
+			
+			_cocktail.router.gunz_update.add( _route );
+			
+			return this;
 		}
 
 		/* ROUTING ADDRESS BAR CALLS */

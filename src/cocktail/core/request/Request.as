@@ -1,19 +1,21 @@
 package cocktail.core.request 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.Index;
-	import cocktail.core.router.Route;	
+	import cocktail.core.router.Route;
 
 	/**
 	 * Handle all possible kind of requests.
 	 * @author nybras | nybras@codeine.it
+	 * @author hems | hems@henriquematias.com
 	 */
-	public class Request extends Index
+	public class Request
 	{
 		/* CONSTANTS (+public getters) */
 		private static const _GET : String = "get";
 
 		private static const _POST : String = "post";
+
+		private var _cocktail : Cocktail;
 
 		/**
 		 * Returns a GET request type.
@@ -37,8 +39,6 @@ package cocktail.core.request
 		private var _uri : String;
 
 		private var _route : Route;
-
-		private var _title : String;
 
 		private var _data : String;
 
@@ -64,13 +64,13 @@ package cocktail.core.request
 		 * Boots the Index base class.
 		 * @param cocktail	Cocktail reference.
 		 */
-		override public function boot( cocktail : Cocktail ) : *
+		public function boot( cocktail : Cocktail ) : *
 		{
-			var s : *;
-		
-			s = super.boot( cocktail );
+			_cocktail = cocktail;
+			
 			uri = _uri;
-			return s;
+			
+			return this;
 		}
 
 		/* GETTERS / SETTERS */
@@ -88,24 +88,8 @@ package cocktail.core.request
 		 */
 		public function set uri( uri : String ) : void
 		{
-			_uri = routes.clean_uri( uri );
+			_uri = _cocktail.routes.clean_uri( uri );
 			( _route = new Route( _uri ) ).boot( _cocktail );
-		}
-
-		/*
-		 * TODO: write docs
-		 */
-		public function get title() : String
-		{
-			return _title;
-		}
-
-		/*
-		 * TODO: write docs
-		 */
-		public function set title( title : String ) : void
-		{
-			_title = title;
 		}
 
 		/*

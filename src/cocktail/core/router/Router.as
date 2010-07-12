@@ -1,7 +1,6 @@
 package cocktail.core.router 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
 	import cocktail.core.gunz.Gunz;
 	import cocktail.core.request.Request;
@@ -14,8 +13,9 @@ package cocktail.core.router
 	/**
 	 * Handles all routing operations.
 	 * @author nybras | nybras@codeine.it
+	 * @author hems | hems@henriquematias.com
 	 */
-	public class Router extends Index
+	public class Router
 	{
 		/* VARS */
 		private var _initialized : Boolean;
@@ -25,7 +25,11 @@ package cocktail.core.router
 		private var _index : Number;
 
 		/* GUNZ */
+		public var gunz: Gunz;
+		
 		public var gunz_update : Gun; 
+
+		protected var _cocktail : Cocktail;
 
 		private function _init_gunz() : void
 		{
@@ -33,24 +37,16 @@ package cocktail.core.router
 			gunz_update = new Gun( gunz, this, "update" );
 		}
 
-		/* BOOTING */
-		
-		/**
-		 * Creates a new Router instance.
-		 * @param cocktail	Cocktail reference.
-		 */
-		override public function boot( cocktail : Cocktail ) : *
+		public function boot( cocktail : Cocktail ) : Router
 		{
-			var s : *;
+			_init_gunz();
 			
-			s = super.boot( cocktail );
-			
-			_init_gunz( );
-			
-			_history = new Array( );
+			_history = new Array();
 			_index = -1;
 			
-			return s;
+			_cocktail = cocktail;
+			
+			return this;
 		}
 
 		/**
@@ -63,7 +59,7 @@ package cocktail.core.router
 			
 			_initialized = true;
 			
-			if( config.plugin )
+			if( _cocktail.config.is_in_browser )
 				SWFAddress.addEventListener( SWFAddressEvent.CHANGE, _addressbar_change );
 		}
 
@@ -130,7 +126,7 @@ package cocktail.core.router
 		 * Redirects the application to the given request.
 		 * @param request	Request to redirect the application to. 
 		 */
-		public function get( uri : String ) : void
+		public function get( uri : String, silent: Boolean = false ) : void
 		{
 			var request : Request;
 			
@@ -138,7 +134,7 @@ package cocktail.core.router
 			history.push( request );
 			_index++;
 			
-			if( config.plugin )
+			if( _cocktail.config.is_in_browser && !silent )
 			{
 				if( request.route.mask != SWFAddress.getValue( ) )
 					SWFAddress.setValue( request.route.mask );
@@ -176,7 +172,11 @@ package cocktail.core.router
 			var request : Request;
 			var uri : String;
 			
-			uri = (event.value == "/" ? config.default_uri : event.value );
+			if( event.value != '/' )
+				uri = event.value;
+			else
+				uri = _cocktail.config.default_uri;
+				
 			request = new Request( Request.GET, uri ).boot( _cocktail );
 			
 			gunz_update.shoot( new RouterBullet( request ) );

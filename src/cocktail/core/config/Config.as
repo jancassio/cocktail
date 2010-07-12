@@ -103,7 +103,7 @@ package cocktail.core.config
 		 */
 		private function get _config_path() : String
 		{
-			return	( (	plugin ? "" : "." ) + "./cocktail/config/config.xml" + "?v=" + Math.random( )
+			return	( (	is_in_browser ? "" : "." ) + "./cocktail/config/config.xml" + "?v=" + Math.random( )
 					);
 		}
 
@@ -139,7 +139,7 @@ package cocktail.core.config
 		 * @return <code>true</code> if movie is inside a browser,
 		 * <code>false</code> otherwise.
 		 */
-		public function get plugin() : Boolean
+		public function get is_in_browser() : Boolean
 		{
 			return( "PlugInActiveX".indexOf( Capabilities.playerType ) != -1 );
 		}

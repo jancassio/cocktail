@@ -1,7 +1,6 @@
 package cocktail.core.request 
 {
 	import cocktail.Cocktail;
-	import cocktail.core.request.Request;
 
 	/**
 	 * Handles all async requests.
@@ -30,10 +29,9 @@ package cocktail.core.request
 		 */
 		override public function boot( cocktail : Cocktail ) : *
 		{
-			var s : *;
+			super.boot( cocktail );
 			
-			s = super.boot( cocktail );
-			return s;
+			return this;
 		}
 	}
 }
