@@ -211,7 +211,7 @@ package cocktail.lib
 		{
 			log.info( "Running..." );
 			
-			_layout.on_load_complete.add( _layout_loaded, request );
+			_layout.on_load_complete.add( _layout_loaded, request ).once();
 			
 			_layout.load( request );
 		}
