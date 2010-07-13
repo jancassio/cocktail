@@ -3,6 +3,7 @@ package cocktail.lib
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
+	import cocktail.core.gunz.Gunz;
 	import cocktail.core.gunz.Victim;
 	import cocktail.utils.StringUtil;
 	import cocktail.utils.Timeout;
@@ -16,6 +17,9 @@ package cocktail.lib
 	public class MVC extends Index 
 	{
 		/* GUNZ */
+		public var gunz : Gunz; 
+
+		/* GUNZ */
 		public var on_load_start : Gun; 
 
 		public var on_load_progress : Gun; 
@@ -25,11 +29,13 @@ package cocktail.lib
 		/** Clean class name **/
 		private var _name : String;
 
-		/** hold all timeouts created by this class  **/
-		private var _timeouts : Array;
+		/** hold all delays created by this class  **/
+		private var _delays : Array;
 		
 		private function _init_gunz() : void
 		{
+			gunz = new Gunz( this );
+			
 			on_load_start    = new Gun( gunz, this, "load_start" );
 			on_load_progress = new Gun( gunz, this, "load_progress" );
 			on_load_complete = new Gun( gunz, this, "load_complete" );
@@ -65,34 +71,36 @@ package cocktail.lib
 		/**
 		 * Create, start then return the timeout
 		 */
-		public function timeout( 
-			method: Function, 
+		public function delay( 
 			delay: Number, 
+			method: Function, 
 			params: * = null 
 		): Timeout
 		{
 			var to: Timeout;
 			
 			to = new Timeout( method, delay * 1000, params );
-			_timeouts.push( to );
+			_delays.push( to );
 			
 			return to; 
 		}
 		
 		/**
-		 * Stops and destroy all timeouts
+		 * Abort and set all timeouts to null
 		 */
-		public function clear_timeouts(): void
+		public function clear_delays(): void
 		{
 			var i: int;
 			
-			if( !_timeouts.length ) return;
+			if( !_delays.length ) return;
+			
 			do
 			{
-				Timeout( _timeouts[ i ] ).abort();
-			} while ( ++i < _timeouts.length );
+				Timeout( _delays[ i ] ).abort();
+				_delays[ i ]  = null;
+			} while ( ++i < _delays.length );
 		}
-
+		
 		/**
 		 * Creates a gun that listen for EventDispatcher events ( screams )
 		 */
@@ -101,6 +109,7 @@ package cocktail.lib
 			type: String 
 		): Gun
 		{
+			
 			var gun: Gun;
 			
 			gun = new Gun( gunz, this, type );

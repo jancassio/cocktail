@@ -32,7 +32,7 @@ package cocktail.lib.models.datasources
 		/* LOADING */
 		override public function load() : ADataSource
 		{
-			_slave = new AmfSlave( config.gateway( ), src );
+			_slave = new AmfSlave( _cocktail.config.gateway( ), src );
 			_slave.on_complete.add( _load_requests );
 			
 			_calls = [];

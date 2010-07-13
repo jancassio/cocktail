@@ -43,7 +43,7 @@ package cocktail.lib.models.datasources
 			else
 			{
 				folder = _request.route.api.folder + "/";
-				src = config.path( "xml" ) + "models/" + folder + src;
+				src = _cocktail.config.path( "xml" ) + "models/" + folder + src;
 			}
 		}
 

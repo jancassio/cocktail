@@ -3,26 +3,26 @@ package cocktail.lib.models.datasources
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
+	import cocktail.core.gunz.Gunz;
+	import cocktail.core.logger.Logger;
 	import cocktail.core.request.Request;
 	import cocktail.lib.Model;
+	import cocktail.utils.ObjectUtil;
 
-	public class ADataSource extends Index
+	public class ADataSource
 	{
 		/* GUNZ */
+		
+		public var gunz: Gunz;
+		
 		public var gunz_load_start : Gun; 
 
 		public var gunz_load_progress : Gun; 
 
 		public var gunz_load_complete : Gun;
 
-		private function _init_gunz() : void
-		{
-			gunz_load_start = new Gun( gunz, this, "load_start" );
-			gunz_load_progress = new Gun( gunz, this, "load_progress" );
-			gunz_load_complete = new Gun( gunz, this, "load_complete" );
-		}
-
 		/* XML SCHEME ATTRIBUTE / PROPERTIES */
+		
 		public var id : String; 
 
 		public var inject : String; 
@@ -42,16 +42,25 @@ package cocktail.lib.models.datasources
 
 		protected var _binds : XMLList;
 
+		public var log: Logger;
+
+		protected var _cocktail : Cocktail;
+
 		/* BOOTING */
-		override public function boot( cocktail : Cocktail ) : *
+		public function boot( cocktail : Cocktail ) : *
 		{
-			var s : *;
+			_cocktail = cocktail;
 			
-			s = super.boot( cocktail );
-			_init_gunz( );
+			gunz = new Gunz( this );
+			
+			gunz_load_start = new Gun( gunz, this, "load_start" );
+			gunz_load_progress = new Gun( gunz, this, "load_progress" );
+			gunz_load_complete = new Gun( gunz, this, "load_complete" );
+			
+			log = Index.drop_logger( cocktail, ObjectUtil.classpath( this ) );
+			
 			parse( );
-			
-			return s;		}
+		}
 
 		public function ADataSource(
 			model : Model,
