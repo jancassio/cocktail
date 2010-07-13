@@ -12,6 +12,7 @@ package cocktail.core.slave
 
 	/**
 	 * Slave is a loading library.
+	 * @author hems | hems@henriquematias.com
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class Slave extends ASlave implements ISlave
@@ -199,15 +200,22 @@ package cocktail.core.slave
 			if ( _parallelized )
 			{
 				if ( ++_completed == length )
-					on_complete.shoot( new ASlaveBullet( loaded, total ) );
+					_on_complete();
 			}
 			else
 			{
 				if( ( bullet.owner as ASlave ).node.next )
 					( ( bullet.owner as ASlave ).node.next.data as ISlave ).load( );
 				else
-					on_complete.shoot( new ASlaveBullet( loaded, total ) );
+					_on_complete();
 			}
+		}
+
+		private function _on_complete() : void 
+		{
+			status == _LOADED;
+
+			on_complete.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
