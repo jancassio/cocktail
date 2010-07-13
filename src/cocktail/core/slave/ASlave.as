@@ -94,7 +94,7 @@ package cocktail.core.slave
 		public function ASlave( uri : String = null )
 		{
 			_init_gunz( );
-			_uri = uri;
+			_uri    = uri;
 			_status = _QUEUED;
 		}
 

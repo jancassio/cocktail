@@ -179,7 +179,25 @@ package cocktail.lib.views
 				node = node.next;
 			}
 			
-			//rendering
+			/*
+			 *  made two independent functions to easily implement transitions
+			 *  in a near future.
+			 */
+			_destroy_all(); /* ¿ transition ? */ _render_all();
+			
+			//reset render poll
+			_will_render = {};
+		}
+
+		/**
+		 * Run trough all views, and call destroy in those that arent in the
+		 * current request
+		 */
+		private function _destroy_all() : void 
+		{
+			var node : DListNode;
+			var view: View;
+			
 			node = list.head;
 			while ( node )
 			{
@@ -187,19 +205,37 @@ package cocktail.lib.views
 				
 				if( _will_render[ view.identifier ] )
 					view.render( request );
-				else
+					
+				node = node.next;
+			}
+		}
+
+		/**
+		 * Run trough all views, and call render in those that arent in the
+		 * current request
+		 */
+		private function _render_all() : void 
+		{
+			var node : DListNode;
+			var view: View;
+			
+			node = list.head;
+			while ( node )
+			{
+				view = node.data;
+				
+				if( !_will_render[ view.identifier ] )
 					view.destroy( request );
 					
 				node = node.next;
 			}
-			
-			//reset render flags
-			_will_render = {};
 		}
 
 		/**
 		 * Victim of _group_rendering
+		 * 
 		 * @see	ViewStack#render
+		 * 
 		 * //TODO: verify how docs will behave with this link to private
 		 * @see	ViewStack#_group_rendering
 		 */

@@ -4,6 +4,31 @@ package cocktail.lib.views
 	import cocktail.lib.View;
 
 	/**
+	 * Auto-glue to mouse events.
+	 * 
+	 * Any of those functions will be automatically assigned to sprite
+	 * events. ( you just need to defined it in your class ).
+	 * 	click
+	 * 	mouse_over
+	 * 	roll_over
+	 * 	mouse_out
+	 * 	roll_out
+	 * 	mouse_up
+	 * 	mouse_down
+	 * 	double_click
+	 * 	
+	 * All interactive views have those gunz, so if you want listen
+	 * to any of those events from "outside" ( why ? ), use:
+	 * 
+	 * 	view.on_click.add( handler, params )
+	 * 	view.on_mouse_over.add( handler, params )
+	 * 	view.on_roll_over.add( handler, params )
+	 * 	view.on_mouse_out.add( handler, params )
+	 * 	view.on_roll_out.add( handler, params )
+	 * 	view.on_mouse_up.add( handler, params )
+	 * 	view.on_mouse_down.add( handler, params )
+	 * 	view.on_double_click.add( handler, params )
+	 * 	
 	 * @author hems | henriquematias.com
 	 */
 	public class InteractiveView extends View

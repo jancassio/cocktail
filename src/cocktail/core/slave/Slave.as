@@ -12,12 +12,15 @@ package cocktail.core.slave
 
 	/**
 	 * Slave is a loading library.
+	 * 
 	 * @author hems | hems@henriquematias.com
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class Slave extends ASlave implements ISlave
 	{
-		/* VARS */	
+		/* VARS */
+		
+		
 		private var _auto_load : Boolean;
 
 		private var _parallelized : Boolean;
@@ -26,7 +29,9 @@ package cocktail.core.slave
 
 		private var _completed : int;
 
+
 		/* INITIALIZING */
+
 		
 		/**
 		 * Creates a new Slave.
@@ -38,12 +43,16 @@ package cocktail.core.slave
 		 * loading process is sequentially managed, where the object is started
 		 * only when the prev object is quite and done.
 		 */
-		public function Slave( 	auto_load : Boolean = false, 
-								parallelized : Boolean = false )
+		public function Slave( 	
+			auto_load : Boolean = false, 
+			parallelized : Boolean = false 
+		)
 		{
 			super( );
-			_auto_load = auto_load;
+			
+			_auto_load    = auto_load;
 			_parallelized = parallelized;
+			
 			dlist = new DLinkedList( );
 		}
 

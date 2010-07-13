@@ -68,7 +68,9 @@ package cocktail.lib
 			return s;
 		}
 
-		/* basic api */
+
+		/* b a s i c   a p i */
+
 		
 		/**
 		 * Returns desired atribute in xml_node.
@@ -88,94 +90,8 @@ package cocktail.lib
 			return childs.remove( id );
 		}
 
-		/* loeaing related */
 
-		/**
-		 * Filters the loading action. If return false, load routine will
-		 * pause
-		 */
-		public function before_load( request : Request ) : Boolean 
-		{
-			log.info( "Running..." );
-			
-			request;
-			return true;
-		}
-
-		/**
-		 * Load will parse all views, instantiate they, and listen for
-		 * all loads to complete. After that, will trigger _after_load_assets
-		 */
-		public function load( request : Request ) : Boolean 
-		{
-			if( !before_load( request ) ) return false;
-
-			log.info( "Running..." );
-			
-			var i : int;
-			var assets : Array;
-			var view : View;
-			
-			//will mark all views as dead ( not in current render )
-			childs.clear_render_poll( );
-
-			//ATT: _parse assets should run after childs.clear_render_poll()			
-			assets = _parse_assets( request ); 
-
-			_load_attributes( );
-			
-			if( assets.length == 0 ) return true;
-			
-			//PIMP: use a lambda to run all selected assets				
-			do 
-			{
-				view = assets[ i ];
-				
-				childs.mark_as_alive( view );
-				
-				view.load( request );
-			} while( ++i < assets.length );
-
-			return true;
-		}
-
-		/**
-		 * Loads tag attributes into view.
-		 * 
-		 * Currently only reading "src" attribute.
-		 */
-		internal function _load_attributes() : void 
-		{
-			if( attribute( 'src' ) )		
-				src = root.name + "/" + attribute( "src" );
-		}
-
-		/**
-		 * This function is a victim from _src_slave's gunz_complete.
-		 * 
-		 * If your view has any kind of source, you should override this
-		 * function and save a typed reference for it.
-		 * 
-		 * Also your view should extend the respective kind of view.
-		 */
-		protected function source_loaded( bullet : ASlaveBullet ) : void
-		{
-			log.error( "This function should be overrided by your view" );
-			bullet;
-		}
-		
-		/**
-		 * This function is a victim from _src_slave's gunz_error.
-		 * 
-		 * If your view has any kind of source, you should override to
-		 * make a custom error handling
-		 * 
-		 */
-		protected function load_fails( bullet : ASlaveBullet = null ) : void
-		{
-			log.notice( "This function could be overrided by your view" );
-			bullet;
-		}
+		/* l o d a i n g   r e l a t e d */
 
 		/**
 		 * Parses all necessary Views for given request.
@@ -212,6 +128,109 @@ package cocktail.lib
 		}
 
 		/**
+		 * Filters the loading action. If return false, load routine will
+		 * pause
+		 */
+		public function before_load( request : Request ) : Boolean 
+		{
+			log.info( "Running..." );
+			
+			request;
+			return true;
+		}
+
+		/**
+		 * Load will parse all views, instantiate they, and listen for
+		 * all loads to complete. After that, will trigger _after_load_assets
+		 */
+		public function load( request : Request ) : Boolean 
+		{
+			if( !before_load( request ) ) return false;
+
+			log.info( "Running..." );
+			
+			var i : int;
+			var assets : Array;
+			var view : View;
+			
+			//yet not used
+			//_is_loading = true;
+			
+			// will mark all views as dead ( not in current render )
+			childs.clear_render_poll( );
+
+			// ATT: _parse assets should run after childs.clear_render_poll()			
+			assets = _parse_assets( request ); 
+
+			_load_attributes( );
+			
+			if( assets.length == 0 ) return true;
+			
+			// PIMP: use a lambda to run all selected assets				
+			do 
+			{
+				view = assets[ i ];
+				
+				childs.mark_as_alive( view );
+				
+				view.load( request );
+			} while( ++i < assets.length );
+
+			return true;
+		}
+
+		/**
+		 * Loads xml_node attributes into view.
+		 * 
+		 * Currently only reading "src" attribute.
+		 */
+		internal function _load_attributes() : void 
+		{
+			if( attribute( 'src' )  )
+				src = attribute( 'src' );
+		}
+
+		/**
+		 * This function is a victim from _src_slave's gunz_complete.
+		 * 
+		 * If your view has any kind of source, you should override this
+		 * function and save a typed reference for it.
+		 * 
+		 * Also your view should extend the respective kind of view.
+		 */
+		protected function source_loaded( bullet : ASlaveBullet ) : void
+		{
+			log.error( "This function should be overrided by your view" );
+			
+			if( !( this is Layout) )
+				after_load( true );
+			
+			bullet;
+		}
+		
+		/**
+		 * This function is a victim from _src_slave's gunz_error.
+		 * 
+		 * If your view has any kind of source, you should override to
+		 * make a custom error handling
+		 * 
+		 */
+		protected function load_fails( bullet : ASlaveBullet = null ) : void
+		{
+			log.notice( "This function could be overrided by your view" );
+			
+			if( !( this is Layout) )
+				after_load( false );
+			
+			bullet;
+		}
+		
+		public function after_load( success: Boolean ): void
+		{
+			
+		}
+		
+		/**
 		 * Instantiate a view based on a xml_node, if it already exists, 
 		 * will just return the reference.
 		 */
@@ -235,6 +254,13 @@ package cocktail.lib
 			return childs.create( xml_node );
 		}
 
+
+		/* r e n d e r   r e l a t e d */
+		
+
+		/**
+		 * If returns false, wont render
+		 */		
 		public function before_render( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
@@ -260,7 +286,9 @@ package cocktail.lib
 
 			childs.render( request );
 			
-			return after_render( request );
+			after_render( request );
+			
+			return true;
 		}
 
 		/**
@@ -278,6 +306,14 @@ package cocktail.lib
 			return up.sprite.addChild( sprite );
 		}
 
+		/**
+		 * Should "undo" + unload what was instantiated in _instantiate_display 
+		 */
+		protected function _destroy_display(): void
+		{
+			up.sprite.removeChild( sprite );
+		}
+		
 		/**
 		 * Apply the styles for the current request
 		 */
@@ -327,8 +363,16 @@ package cocktail.lib
 		public function destroy( request : Request ) : Boolean 
 		{
 			if( !before_destroy( request ) ) return false;
+		
+			_destroy_display();
 			
+			gunz.rm_all();
+			
+			clear_delays();
+
 			log.info( "Running..." );
+			
+			after_destroy( request );
 			
 			return true;
 		}
@@ -381,6 +425,7 @@ package cocktail.lib
 		 * time the "load" method is called
 		 */
 		 
+		 
 		/**
 		 * Unload the current source if any, then load the new path
 		 * 
@@ -392,6 +437,8 @@ package cocktail.lib
 		 */
 		public function set src( path : String ) : void
 		{
+			path = root.name + "/" + path;
+			
 			if( _src_slave != null )
 			{
 				if( _src_slave.uri == path ) 

@@ -14,8 +14,16 @@ package cocktail.lib
 	import flash.display.Sprite;
 
 	/**
-	 * This class will load the respective xml and it assets 
+	 * This class will load the respective xml and it assets.
 	 * 
+	 * It has some filters:
+	 * 	before_render( request: Request )
+	 * 	before_load( request: Request )
+	 * 
+	 * And some callbacks:
+	 *  after_render( request )
+	 *  after_load( success ) //triggered after all request assets were loaded
+	 *  
 	 * @author hems	hems@henriquematias.com
 	 */
 	public class Layout extends View 
@@ -134,8 +142,12 @@ package cocktail.lib
 		 */
 		private function _after_load_assets( bullet : Bullet ) : void 
 		{
-			log.info( "Running..." );
 			bullet;
+			
+			log.info( "Running..." );
+			
+			after_load( true );
+			
 			//this will tell controller, that everything was ok
 			on_load_complete.shoot( new ViewBullet( ) );
 		}
