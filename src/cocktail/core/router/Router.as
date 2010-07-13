@@ -116,8 +116,6 @@ package cocktail.core.router
 			var request : Request;
 			
 			request = new Request( Request.GET, uri, silent ).boot( _cocktail );
-			history.push( request );
-			_index++;
 			
 			if( _cocktail.config.is_in_browser && !silent )
 			{
@@ -160,6 +158,9 @@ package cocktail.core.router
 				uri = _cocktail.config.default_uri;
 				
 			request = new Request( Request.GET, uri ).boot( _cocktail );
+			
+			history.push( request );
+			_index++;
 			
 			run( request );
 		}
