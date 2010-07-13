@@ -9,6 +9,7 @@ package cocktail.core.gunz
 	 * 
 	 * @includeExample GunzGroup.as
 	 * 
+	 * TODO: rename this to "ScreamCounter" or something like that. Then we could implement another kind of gunz groups 
 	 * @author nybras | me@nybras.com
 	 */
 	public class GunzGroup 
