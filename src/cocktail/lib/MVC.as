@@ -3,6 +3,7 @@ package cocktail.lib
 	import cocktail.Cocktail;
 	import cocktail.core.Index;
 	import cocktail.core.gunz.Gun;
+	import cocktail.core.gunz.Victim;
 	import cocktail.utils.StringUtil;
 	import cocktail.utils.Timeout;
 
@@ -92,20 +93,35 @@ package cocktail.lib
 			} while ( ++i < _timeouts.length );
 		}
 
-		public function capture(
-			dispatcher: EventDispatcher,
-			type: String,
-			method: Function,
-			params: * = null
+		/**
+		 * Creates a gun that listen for EventDispatcher events ( screams )
+		 */
+		public function listen( 
+			dispatcher: EventDispatcher, 
+			type: String 
 		): Gun
 		{
 			var gun: Gun;
 			
 			gun = new Gun( gunz, this, type );
 			gun.capture( dispatcher, type );
-			gun.add( method, params );
 			
 			return gun;
+		}
+		
+		/**
+		 * Get a gun for given EventDispatcher event ( screm ) AND adds a  
+		 * victim :
+		 * 	a callback wich will receive a bullet with params in its prop
+		 */
+		public function capture(
+			dispatcher: EventDispatcher,
+			type: String,
+			method: Function,
+			params: * = null
+		): Victim
+		{
+			return listen( dispatcher, type ).add( method, params );
 		}
 		
 		

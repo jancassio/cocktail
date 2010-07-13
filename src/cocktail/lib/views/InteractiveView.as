@@ -24,12 +24,21 @@ package cocktail.lib.views
 
 		private var _on_double_click : Gun;
 
-		
+		/**
+		 * Override super method just to add triggers to view
+		 */		
 		override protected function _instantiate_display() : * 
 		{
-			return super._instantiate_display( );
+			var r: *;
+			
+			r = super._instantiate_display( );
+			
+			set_triggers();
+			
+			return r; 
 		}
 
+		
 		/**
 		 * Will check if user customized some events, if so, will plug
 		 * then for the user.
@@ -67,14 +76,14 @@ package cocktail.lib.views
 		{
 			if( _on_click ) return _on_click;
 			
-			return _on_click = capture( sprite, "click", this[ 'click' ] ); 
+			return _on_click = listen( sprite, "click" ); 
 		}
 
 		public function get on_mouse_over( ): Gun
 		{
 			if( _on_mouse_over ) return _on_mouse_over;
 			
-			_on_mouse_over = capture( sprite, "mouseOver", this[ 'mouse_over' ] );
+			_on_mouse_over = listen( sprite, "mouseOver" );
 			
 			return _on_mouse_over;  
 		}
@@ -83,7 +92,7 @@ package cocktail.lib.views
 		{
 			if( _on_roll_over ) return _on_roll_over;
 			
-			_on_roll_over = capture( sprite, "rollOver", this[ 'roll_over' ] );
+			_on_roll_over = listen( sprite, "rollOver" );
 			
 			return _on_roll_over;  
 		}
@@ -92,7 +101,7 @@ package cocktail.lib.views
 		{
 			if( _on_mouse_out ) return _on_mouse_out;
 			
-			_on_mouse_out = capture( sprite, "mouseOut", this[ 'mouse_out' ] );
+			_on_mouse_out = listen( sprite, "mouseOut" );
 			return _on_mouse_out; 
 		}
 
@@ -100,7 +109,7 @@ package cocktail.lib.views
 		{
 			if( _on_roll_out ) return _on_roll_out;
 			
-			_on_roll_out = capture( sprite, "rollOut", this[ 'roll_out' ] ); 
+			_on_roll_out = listen( sprite, "rollOut" ); 
 			
 			return _on_roll_out; 
 		}
@@ -109,7 +118,7 @@ package cocktail.lib.views
 		{
 			if( _on_mouse_up ) return _on_mouse_up;
 			
-			_on_mouse_up = capture( sprite, "mouseUp", this[ 'mouse_up' ] ); 
+			_on_mouse_up = listen( sprite, "mouseUp" ); 
 			
 			return _on_mouse_up; 
 		}
@@ -118,7 +127,7 @@ package cocktail.lib.views
 		{
 			if( _on_mouse_down ) return on_mouse_down;
 			
-			_on_mouse_down = capture( sprite, "mouseDown", this[ 'mouse_down' ] );
+			_on_mouse_down = listen( sprite, "mouseDown" );
 			
 			return _on_mouse_down; 
 		}
@@ -127,7 +136,7 @@ package cocktail.lib.views
 		{
 			if( _on_double_click ) return _on_double_click;
 			
-			_on_double_click = capture( sprite, "doubleClick", this[ 'double_click' ] );
+			_on_double_click = listen( sprite, "doubleClick" );
 			 
 			return _on_double_click; 
 		}
