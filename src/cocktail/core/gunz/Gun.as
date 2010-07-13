@@ -28,6 +28,7 @@ package cocktail.core.gunz
 	 * @includeExample GunListening.as
 	 * 
 	 * @author nybras | me@nybras.com
+	 * @author hems | hems@henriquematias.com
 	 */
 	public class Gun
 	{
@@ -147,9 +148,13 @@ package cocktail.core.gunz
 			if( _victims.length ) do
 			{
 				victim = Victim( _victims[ i ] );
+				
 				if( victim.handler == handler )
 				{
 					_victims.splice( i, 1 );
+					
+					victim.destroy();
+					
 					break;
 				}
 			} while( ++i < _victims.length );

@@ -11,6 +11,7 @@ package cocktail.core.gunz
 	 * @see Gun#shoot()
 	 * 
 	 * @author nybras | me@nybras.com
+	 * @author hems | hems@henriquematias.com
 	 */
 	public class Victim 
 	{
@@ -108,6 +109,11 @@ package cocktail.core.gunz
 			
 			handler( bullet );
 			
+			if( _time == _times )
+			{
+				_gun.rm( handler );
+			}
+			
 			return this;
 		}
 
@@ -118,12 +124,9 @@ package cocktail.core.gunz
 		 */
 		internal function destroy() : void 
 		{
-			_id = undefined;
 			_gun = null;
 			handler = null;
 			_params = null;
-			_times = undefined;
-			_time = undefined;
 		}
 	}
 }
