@@ -340,7 +340,8 @@ package cocktail.lib
 		}
 
 		
-		/** GETTERS / SETTERS **/
+		/* GETTERS / SETTERS */
+		
 		
 		/** Alias to the main view ( layout ) of the viewstack **/
 		public function get root() : Layout 
