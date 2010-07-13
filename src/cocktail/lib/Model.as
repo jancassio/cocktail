@@ -110,6 +110,7 @@ package cocktail.lib
 		public function _after_load( ...n /* bullet : Bullet */ ) : void
 		{
 			log.info( "Running..." );
+			
 			after_load( );
 			on_load_complete.shoot( new ModelBullet( ) );
 		}
