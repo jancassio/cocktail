@@ -128,12 +128,9 @@ package cocktail.core.router
 				run( request );
 		}
 
-		/*
-		 * TODO: write docs
-		 */
 		public function post( uri : String, data : * ) : RequestAsync
 		{
-			// TODO: implement method
+			// TODO: Implement / document Assyncronous post
 			return new RequestAsync( uri, data ).boot( _cocktail );
 		}
 

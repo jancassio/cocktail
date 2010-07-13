@@ -29,7 +29,7 @@ package cocktail.lib.models.datasources
 		override public function load() : ADataSource
 		{
 			_slave = new TextSlave( );
-			_slave.gunz_complete.add( _after_load ).once( );
+			_slave.on_complete.add( _after_load ).once( );
 			_slave.load( src );
 			return this;
 		}

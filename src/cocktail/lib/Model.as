@@ -26,7 +26,7 @@ package cocktail.lib
 			
 			on_xml_load_start.shoot( new ModelBullet( ) );
 			
-			load_uri( _xml_path ).gunz_complete.add( _after_load_scheme ).once();
+			load_uri( _xml_path ).on_complete.add( _after_load_scheme ).once();
 			
 			return this;
 		}
@@ -55,8 +55,7 @@ package cocktail.lib
 		private function get _is_scheme_valid() : Boolean
 		{
 			log.info( "Running..." );
-			// TODO: scheme needs to be validated against any inconsistence or
-			//  problem cause that may exists
+			// TODO: check for some reserved word, or things like that
 			return true;
 		}
 
@@ -87,6 +86,8 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
+			_is_loading = true;
+			
 			if( ( ds_list = _parse_datasources( request ) ).length )
 			{
 				group = new GunzGroup( );
@@ -107,14 +108,22 @@ package cocktail.lib
 			return true;
 		}
 
-		public function _after_load( ...n /* bullet : Bullet */ ) : void
+		/**
+		 * Private handler to after_load
+		 */
+		private function _after_load( ...n /* bullet : Bullet */ ) : void
 		{
 			log.info( "Running..." );
+			
+			_is_loading = false; 
 			
 			after_load( );
 			on_load_complete.shoot( new ModelBullet( ) );
 		}
 
+		/**
+		 * Called after load all request datasources
+		 */
 		public function after_load() : void
 		{
 			log.info( "Running..." );
@@ -128,6 +137,7 @@ package cocktail.lib
 		private function _parse_datasources( request : Request ) : Array
 		{
 			log.info( "Running..." );
+			
 			var i : int;
 			var ds : Array;
 			var node : XML;
@@ -167,6 +177,10 @@ package cocktail.lib
 			
 			name = scheme.localName( );
 			
+			/**
+			 * ATT: If not found, Inline is used.
+			 * @see Factory::datasource for details
+			 */ 
 			ds_class = _cocktail.factory.datasource( name );
 			ds = new ( ds_class )( this, request, scheme );
 			ds.boot( _cocktail );

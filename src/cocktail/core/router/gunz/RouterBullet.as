@@ -4,7 +4,6 @@ package cocktail.core.router.gunz
 	import cocktail.core.request.Request;
 
 	/**
-	 * TODO: add class description
 	 * @author hems | hems@codeine.it
 	 */
 	public class RouterBullet extends Bullet

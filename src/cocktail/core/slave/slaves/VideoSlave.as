@@ -82,10 +82,10 @@ package cocktail.core.slave.slaves
 				_status = ASlave._LOADED;
 				_unset_triggers( );
 				
-				gunz_complete.shoot( new VideoSlaveBullet( loaded, total ) );
+				on_complete.shoot( new VideoSlaveBullet( loaded, total ) );
 			}
 			
-			gunz_progress.shoot( new VideoSlaveBullet( loaded, total ) );
+			on_progress.shoot( new VideoSlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -98,7 +98,7 @@ package cocktail.core.slave.slaves
 			switch ( event.info[ "code" ] ) 
 			{
 				case "NetStream.Play.StreamNotFound":
-					gunz_error.shoot( new VideoSlaveBullet( loaded, total, "Unable to locate video: " + _uri ) );
+					on_error.shoot( new VideoSlaveBullet( loaded, total, "Unable to locate video: " + _uri ) );
 					break;
 			}
 		}
@@ -110,7 +110,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _on_security_error( event : NetStatusEvent ) : void
 		{
-			gunz_error.shoot( new VideoSlaveBullet( loaded, total, "Security error." ) );
+			on_error.shoot( new VideoSlaveBullet( loaded, total, "Security error." ) );
 		}
 
 		/* GETTERS */
@@ -202,7 +202,7 @@ package cocktail.core.slave.slaves
 			
 			_set_triggers( );
 			
-			gunz_start.shoot( new VideoSlaveBullet( loaded, total ) );
+			on_start.shoot( new VideoSlaveBullet( loaded, total ) );
 			
 			return this;
 		}

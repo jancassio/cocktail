@@ -2,38 +2,28 @@ package cocktail.lib.views
 {
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.GraphSlave;
-	import cocktail.lib.View;
 
 	import flash.display.Bitmap;
+	import flash.display.Sprite;
 
 	/**
 	 * @author hems | henrique@cocktail.as
 	 */
-	public class ImgView extends View
+	public class ImgView extends InteractiveView
 	{
 		public var img: Bitmap;
 		
 		/**
 		 * This function is a victim from _src_slave's gunz_complete
 		 */
-		override protected function _source_loaded( bullet: ASlaveBullet ) : void
+		override protected function source_loaded( bullet: ASlaveBullet ) : void
 		{
 			img = Bitmap( GraphSlave( bullet.owner ).content );
 		}
 
-		override protected function _instantiate_display() : Boolean 
+		override protected function _instantiate_display() : * 
 		{
-			super._instantiate_display( );
-
-			if( !img )
-			{
-				//image wasnt loaded
-				 return false;
-			}
-			
-			sprite.addChild( img );
-			
-			return true;
+			return Sprite( super._instantiate_display( ) ).addChild( img ); 
 		}
 	}
 }

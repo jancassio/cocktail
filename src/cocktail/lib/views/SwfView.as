@@ -2,38 +2,31 @@ package cocktail.lib.views
 {
 	import cocktail.core.slave.gunz.ASlaveBullet;
 	import cocktail.core.slave.slaves.GraphSlave;
-	import cocktail.lib.View;
 
 	import flash.display.MovieClip;
 
 	/**
 	 * @author hems | henrique@cocktail.as
 	 */
-	public class SwfView extends View 
+	public class SwfView extends InteractiveView 
 	{
 		public var swf: MovieClip;
 		
 		/**
 		 * This function is a victim from _src_slave's gunz_complete
 		 */
-		override protected function _source_loaded( bullet: ASlaveBullet ) : void
+		override protected function source_loaded( bullet: ASlaveBullet ) : void
 		{
 			swf = MovieClip( GraphSlave( bullet.owner ).content );
 		}
 
-		override protected function _instantiate_display() : Boolean 
+		override protected function _instantiate_display() : *
 		{
-			super._instantiate_display( );
+			if( !src ) return sprite;
 			
-			if( !swf )
-			{
-				//swf wasnt loaded
-				 return false;
-			}
+			sprite = super._instantiate_display( );
 			
-			sprite.addChild( swf );
-			
-			return true;
+			return sprite.addChild( swf );
 		}
 	}
 }

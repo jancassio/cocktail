@@ -1,11 +1,11 @@
 package cocktail.lib.views 
 {
-	import cocktail.lib.View;
 
 	/**
+	 * TODO: Code auto-event-capture, see InteractiveView for a real example
 	 * @author hems | henrique@cocktail.as
 	 */
-	public class TextFieldView extends View
+	public class TextFieldView extends InteractiveView
 	{
 	}
 }

@@ -50,7 +50,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new ASlaveBullet( loaded, total ) );
+			on_start.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -59,7 +59,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _progress( ev : ProgressEvent ) : void
 		{
-			gunz_progress.shoot( new ASlaveBullet( loaded, total ) );
+			on_progress.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -72,7 +72,7 @@ package cocktail.core.slave.slaves
 			_status = ASlave._LOADED;
 			
 			// pull the trigger
-			gunz_complete.shoot( new GraphSlaveBullet( loaded, total, content ) );
+			on_complete.shoot( new GraphSlaveBullet( loaded, total, content ) );
 			
 			// putting
 			if( _target != null )
@@ -105,7 +105,7 @@ package cocktail.core.slave.slaves
 		private function _error( ev : IOErrorEvent ) : void
 		{
 			_status = ASlave._ERROR;
-			gunz_error.shoot( new ASlaveBullet( -1, -1 ).inject( ev ) );
+			on_error.shoot( new ASlaveBullet( -1, -1 ).inject( ev ) );
 		}
 
 		/* GETTERS */

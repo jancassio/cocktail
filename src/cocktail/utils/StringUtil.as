@@ -143,7 +143,6 @@ package cocktail.utils
 			var result : String;
 			var i : int;
 			
-			//TODO: check if i need really 
 			result = '';
 			parts = string.split( '_' );
 			do

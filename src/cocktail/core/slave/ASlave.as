@@ -23,13 +23,13 @@ package cocktail.core.slave
 		
 		public var gunz : Gunz;
 
-		public var gunz_start : Gun;
+		public var on_start : Gun;
 
-		public var gunz_progress : Gun;
+		public var on_progress : Gun;
 
-		public var gunz_complete : Gun;
+		public var on_complete : Gun;
 
-		public var gunz_error : Gun;
+		public var on_error : Gun;
 
 		/**  CONSTANTS **/
 		
@@ -101,10 +101,10 @@ package cocktail.core.slave
 		private function _init_gunz() : void
 		{
 			gunz = new Gunz( this );
-			gunz_start = new Gun( gunz, this, "start" );
-			gunz_progress = new Gun( gunz, this, "progress" );
-			gunz_complete = new Gun( gunz, this, "complete" );
-			gunz_error = new Gun( gunz, this, "error" );
+			on_start = new Gun( gunz, this, "start" );
+			on_progress = new Gun( gunz, this, "progress" );
+			on_complete = new Gun( gunz, this, "complete" );
+			on_error = new Gun( gunz, this, "error" );
 		}
 
 		/* GETTERS */

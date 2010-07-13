@@ -16,7 +16,7 @@ package cocktail.core.factory
 	 * Controllers / models / layouts will have just 
 	 * one instance per application.
 	 * 
-	 * TODO: make a generic instantiator that will receive the "name", "sufix"
+	 * PIMP: make a generic instantiator that will receive the "name", "sufix"
 	 * and possible paths in order of priority
 	 * 
 	 * @author hems | hems@codeine.it

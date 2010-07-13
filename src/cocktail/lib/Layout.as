@@ -2,7 +2,6 @@ package cocktail.lib
 {
 	import cocktail.Cocktail;
 	import cocktail.core.gunz.Bullet;
-	import cocktail.core.logger.msgs.LayoutMessages;
 	import cocktail.core.request.Request;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
@@ -12,7 +11,7 @@ package cocktail.lib
 	import cocktail.utils.StringUtil;
 	import cocktail.utils.Timeout;
 
-	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 
 	/**
 	 * This class will load the respective xml and it assets 
@@ -23,6 +22,12 @@ package cocktail.lib
 	{
 		/** queue of this layout an respective children **/
 		private var _loader : Slave;
+
+		/** 
+		 * path to "container" asset.
+		 * format is: {controller}/{area}:{view_id}
+		 */
+		private var _target : String;
 
 		override public function boot(cocktail : Cocktail) : * 
 		{
@@ -40,7 +45,7 @@ package cocktail.lib
 		{
 			request;
 			log.info( "Running..." );
-			load_uri( _xml_path ).gunz_complete.add( _xml_loaded );
+			load_uri( _xml_path ).on_complete.add( _xml_loaded );
 			return this;
 		}
 
@@ -61,6 +66,15 @@ package cocktail.lib
 				on_xml_load_complete.shoot( new LayoutBullet( ) );
 		}
 
+		
+		override internal function _load_attributes() : void 
+		{
+			super._load_attributes( );
+			
+			if( xml_node.hasOwnProperty( 'target' ) )
+				target = attribute( 'target' );
+		}
+
 		/**
 		 * Checks if the scheme is valid.
 		 * @return	If shceme is valid, returns <code>true</code> otherwise
@@ -69,8 +83,7 @@ package cocktail.lib
 		private function get _is_scheme_valid() : Boolean 
 		{
 			log.info( "Running..." );
-			// TODO: scheme needs to be validated against any inconsistence or
-			//  problem cause that may exists
+			// TODO: check for some reserved word, or things like that
 			return true;
 		}
 
@@ -89,7 +102,7 @@ package cocktail.lib
 			if( list )
 				xml_node = XML( list.toXMLString( ) );
 			
-			//TODO: If target isnt rendered, redirect to home
+			//TODO: If target isnt rendered, redirect to asset page
 			if( !factory.layout( name ).childs.has( "" ) )
 			{
 				//redirect
@@ -99,8 +112,8 @@ package cocktail.lib
 			
 			if( loader.length )
 			{
-				loader.gunz_complete.add( _after_load_assets, request ).once( );
-				loader.gunz_error.add( _load_assets_failed, request ).once( );
+				loader.on_complete.add( _after_load_assets, request ).once( );
+				loader.on_error.add( _load_assets_failed, request ).once( );
 				loader.load( );
 			}
 			else
@@ -133,6 +146,11 @@ package cocktail.lib
 			_after_load_assets( bullet );
 		}
 
+		override protected function _instantiate_display() : * 
+		{
+			return _cocktail.app.addChild( sprite = new Sprite( ) );
+		}
+
 		/* PRIVATE GETTERS */
 
 		/**
@@ -156,32 +174,52 @@ package cocktail.lib
 			return childs.request == request; 
 		}
 
+
 		/* PUBLIC GETTERS */
-		public function get scope() : DisplayObjectContainer 
+
+		override public function get loader() : Slave
+		{
+			return _loader;
+		}
+		
+		
+		/** 
+		 * ATRIBUTTE SETTERS
+		 * 
+		 * This setters will receive the properties from xml_node, each
+		 * time the "load" method is called
+		 */
+		 
+		/**
+		 * Unload the current source if any, then load the new path
+		 * Will trigger _source_loaded after complete 
+		 * 
+		 * @param path	Path to the desired asset
+		 */
+		public function set target( path : String ) : void
+		{
+			_target = path;
+		}
+		
+		
+		public function get scope() : View 
 		{
 			var full_path : Array;
 			var controller_name : String;
 			var action_name : String;
 			var asset_id : String;
 			
-			if( !xml_node.hasOwnProperty( 'target' ) )
-			{
-				log.info( LayoutMessages.no_target_found );
-				return _cocktail.app;
-			}
-			
+			//ATT: see Route::api
 			full_path = String( xml_node.attribute( 'target' ) ).split( ":" ); 
 			
 			controller_name = full_path[ 0 ][ 'split' ]( '/' )[ 0 ];
-			action_name = full_path[ 0 ][ 'split' ]( '/' )[ 1 ];
-			asset_id = full_path[ 1 ];
+			action_name     = full_path[ 0 ][ 'split' ]( '/' )[ 1 ];
+			asset_id        = full_path[ 1 ];
 
-			return factory.layout( name ).childs.by_id( asset_id ).sprite;
-		}
-
-		override public function get loader() : Slave
-		{
-			return _loader;
+			if( !factory.layout( controller_name ).childs.by_id( asset_id ) )
+				return null;
+			
+			return factory.layout( name ).childs.by_id( asset_id );
 		}
 	}
 }

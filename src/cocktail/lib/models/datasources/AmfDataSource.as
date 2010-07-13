@@ -33,7 +33,7 @@ package cocktail.lib.models.datasources
 		override public function load() : ADataSource
 		{
 			_slave = new AmfSlave( config.gateway( ), src );
-			_slave.gunz_complete.add( _load_requests );
+			_slave.on_complete.add( _load_requests );
 			
 			_calls = [];
 			for each( var method : XML in _scheme.children( ) )

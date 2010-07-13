@@ -92,7 +92,7 @@ package cocktail.lib
 			} while ( ++i < _timeouts.length );
 		}
 
-		public function event(
+		public function capture(
 			dispatcher: EventDispatcher,
 			type: String,
 			method: Function,

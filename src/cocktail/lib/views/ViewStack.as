@@ -18,29 +18,31 @@ package cocktail.lib.views
 	 */
 	public class ViewStack extends Index
 	{
-		// XXX: This will be very usefull when coding different view transitions
-		
-		/** Self explainatory name **/ 
+		/**
+		 * ATT: May be will be usefull when coding 
+		 * different action/layout transitions
+		 */
 		public var WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE : Boolean;
 
-		public var gunz_render_complete : Gun;
+		public var on_render_complete : Gun;
 
+		/** The "owner" of the view stack **/
+		private var _view : View;
+		
 		private var _group_rendering : GunzGroup;
-
-		public var ids : Dictionary;
 
 		/** Double linked list of view childs **/
 		public var list : DLinkedList;
 
+		/** maping view's ids as key on a dictonary **/
+		public var ids : Dictionary;
+		
 		/** 
 		 * Everytime an action is rendered, cocktail needs to know
 		 * who will be rendered and who will de destroyed in the view
 		 * stack.
 		 */
 		private var _will_render : Object;
-
-		/** The holder of the view stack **/
-		private var _view : View;
 
 		/** Last rendered request **/
 		private var _request : Request;
@@ -51,7 +53,7 @@ package cocktail.lib.views
 			_view = view;
 			
 			list = new DLinkedList( );
-			gunz_render_complete = new Gun( view.gunz, this, "render_complete" );
+			on_render_complete = new Gun( view.gunz, this, "render_complete" );
 			
 			WILL_WAIT_DESTROY_BEFORE_TRIGGER_RENDER_DONE = false;
 		}
@@ -63,13 +65,17 @@ package cocktail.lib.views
 		{
 			if( has( view.identifier ) )
 			{
-				//TODO: just run the boot routine again
+				/**
+				 * TODO: wont add a identifier twice, instead we need to think... 
+				 * in a good way to pass those params to the already rendered 
+				 * child
+				 */
 				log.error( "Identifier is unique in ViewStack" );
 				
 				return view;
 			}
 			
-			//indexing child
+			// indexing child
 			ids[ view.identifier ] = view;
 			view.node = list.append( view );
 			
@@ -201,7 +207,7 @@ package cocktail.lib.views
 		{
 			log.info( "Running..." );
 			
-			gunz_render_complete.shoot( new ViewBullet( ) );
+			on_render_complete.shoot( new ViewBullet( ) );
 		}
 
 		/**

@@ -154,10 +154,10 @@ package cocktail.core.slave
 		 */
 		private function _queue( slave : ASlave ) : *
 		{
-			slave.gunz_start.add( _start );
-			slave.gunz_progress.add( _progress );
-			slave.gunz_complete.add( _complete );
-			slave.gunz_error.add( _error );
+			slave.on_start.add( _start );
+			slave.on_progress.add( _progress );
+			slave.on_complete.add( _complete );
+			slave.on_error.add( _error );
 			
 			slave.node = dlist.append( slave );
 			
@@ -172,9 +172,9 @@ package cocktail.core.slave
 		 */
 		private function _start( bullet : ASlaveBullet ) : void
 		{
-			ASlave( bullet.owner ).gunz_start.rm( _start );
+			ASlave( bullet.owner ).on_start.rm( _start );
 			if( !_started++ )
-				gunz_start.shoot( new ASlaveBullet( loaded, total ) );
+				on_start.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -184,7 +184,7 @@ package cocktail.core.slave
 		private function _progress( bullet : ASlaveBullet ) : void
 		{
 			bullet;
-			gunz_progress.shoot( new ASlaveBullet( loaded, total ) );
+			on_progress.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/**
@@ -193,20 +193,20 @@ package cocktail.core.slave
 		 */
 		private function _complete( bullet : ASlaveBullet ) : void
 		{
-			ASlave( bullet.owner ).gunz_progress.rm( _progress );
-			ASlave( bullet.owner ).gunz_complete.rm( _progress );
+			ASlave( bullet.owner ).on_progress.rm( _progress );
+			ASlave( bullet.owner ).on_complete.rm( _progress );
 			
 			if ( _parallelized )
 			{
 				if ( ++_completed == length )
-					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+					on_complete.shoot( new ASlaveBullet( loaded, total ) );
 			}
 			else
 			{
 				if( ( bullet.owner as ASlave ).node.next )
 					( ( bullet.owner as ASlave ).node.next.data as ISlave ).load( );
 				else
-					gunz_complete.shoot( new ASlaveBullet( loaded, total ) );
+					on_complete.shoot( new ASlaveBullet( loaded, total ) );
 			}
 		}
 
@@ -216,8 +216,8 @@ package cocktail.core.slave
 		 */
 		private function _error( bullet : ASlaveBullet ) : void
 		{
-			ASlave( bullet.owner ).gunz_error.rm( _error );
-			gunz_error.shoot( new ASlaveBullet( loaded, total ) );
+			ASlave( bullet.owner ).on_error.rm( _error );
+			on_error.shoot( new ASlaveBullet( loaded, total ) );
 		}
 
 		/* APPENDING ANOTHERS SLAVES */

@@ -39,7 +39,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _start( ev : Event ) : void
 		{
-			gunz_start.shoot( new AudioSlaveBullet( loaded, total, sound ) );
+			on_start.shoot( new AudioSlaveBullet( loaded, total, sound ) );
 		}
 
 		/**
@@ -48,7 +48,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _progress( ev : ProgressEvent ) : void
 		{
-			gunz_progress.shoot( new AudioSlaveBullet( loaded, total, sound ) );
+			on_progress.shoot( new AudioSlaveBullet( loaded, total, sound ) );
 		}
 
 		/**
@@ -61,7 +61,7 @@ package cocktail.core.slave.slaves
 			_status = ASlave._LOADED;
 			
 			// pull the trigger
-			gunz_complete.shoot( new AudioSlaveBullet( loaded, total, sound ) );
+			on_complete.shoot( new AudioSlaveBullet( loaded, total, sound ) );
 			
 			_unset_triggers( );
 		}
@@ -73,7 +73,7 @@ package cocktail.core.slave.slaves
 		private function _error( ev : IOErrorEvent ) : void
 		{
 			_status = ASlave._ERROR;
-			gunz_error.shoot( new ASlaveBullet( -1, -1 ).inject( ev ) );
+			on_error.shoot( new ASlaveBullet( -1, -1 ).inject( ev ) );
 		}
 
 		/* TRIGGERS */

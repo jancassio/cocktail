@@ -12,9 +12,8 @@ package cocktail.lib
 	import de.polygonal.ds.DListNode;
 
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 
-	public class View extends MV 
+	public class View extends MV
 	{
 		/* GUNZ */
 		public var gunz_render_done : Gun;
@@ -63,13 +62,18 @@ package cocktail.lib
 			
 			_childs = new ViewStack( this );
 			_childs.boot( cocktail );
+			
+			sprite = null;
+			
 			return s;
 		}
 
 		/* basic api */
 		
 		/**
-		 * Returns desired atribute in xml_node
+		 * Returns desired atribute in xml_node.
+		 * 
+		 * i.e. attribute( 'x' )
 		 */
 		public function attribute( name : String ) : String
 		{
@@ -122,7 +126,7 @@ package cocktail.lib
 			
 			if( assets.length == 0 ) return true;
 			
-			//TODO: use a lambda to run all selected assets				
+			//PIMP: use a lambda to run all selected assets				
 			do 
 			{
 				view = assets[ i ];
@@ -140,7 +144,7 @@ package cocktail.lib
 		 * 
 		 * Currently only reading "src" attribute.
 		 */
-		private function _load_attributes() : void 
+		internal function _load_attributes() : void 
 		{
 			if( attribute( 'src' ) )		
 				src = root.name + "/" + attribute( "src" );
@@ -154,14 +158,28 @@ package cocktail.lib
 		 * 
 		 * Also your view should extend the respective kind of view.
 		 */
-		protected function _source_loaded( bullet : ASlaveBullet ) : void
+		protected function source_loaded( bullet : ASlaveBullet ) : void
 		{
 			log.error( "This function should be overrided by your view" );
+			bullet;
+		}
+		
+		/**
+		 * This function is a victim from _src_slave's gunz_error.
+		 * 
+		 * If your view has any kind of source, you should override to
+		 * make a custom error handling
+		 * 
+		 */
+		protected function load_fails( bullet : ASlaveBullet = null ) : void
+		{
+			log.notice( "This function could be overrided by your view" );
 			bullet;
 		}
 
 		/**
 		 * Parses all necessary Views for given request.
+		 * 
 		 * @param process	Running process.
 		 * @return	An array with all Datasources, properly instantiated. 
 		 */
@@ -179,7 +197,7 @@ package cocktail.lib
 			
 			list = xml_node.children( );
 			
-			//return home early!
+			// return home early!
 			if( list == null || !list.length( ) ) return assets;
 			
 			do
@@ -217,9 +235,6 @@ package cocktail.lib
 			return childs.create( xml_node );
 		}
 
-		/**
-		 * 
-		 */
 		public function before_render( request : Request ) : Boolean 
 		{
 			log.info( "Running..." );
@@ -238,7 +253,8 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			_instantiate_display( );
+			if( sprite == null )
+				_instantiate_display( );
 			
 			_apply_styles( request );
 
@@ -251,22 +267,15 @@ package cocktail.lib
 		 * Creates then attachs the view sprite.
 		 * 
 		 * You view should override this function if it has a different
-		 * kind of display
+		 * kind of display.
+		 * 
+		 * ATT: Called by render method when sprite == null
 		 */
-		protected function _instantiate_display() : Boolean
+		protected function _instantiate_display() : *
 		{
-			if( sprite ) return false;
-			
 			sprite = new Sprite( );
 			
-			if( this == root )
-				root.scope.addChild( sprite );
-			else
-				up.sprite.addChild( sprite );
-			
-			set_triggers( );
-			
-			return true;
+			return up.sprite.addChild( sprite );
 		}
 
 		/**
@@ -274,7 +283,7 @@ package cocktail.lib
 		 */
 		private function _apply_styles( request : Request ) : void
 		{
-			//FIXME: Implement a real style system
+			//FIXME: Implement a style system
 			request;
 			
 			//properties rendering
@@ -295,38 +304,6 @@ package cocktail.lib
 			request;
 		}
 
-		/**
-		 * Will check if user customized some events, if so, will plug
-		 * then for the user.
-		 * 
-		 * Called automatically once - when creating the view sprite
-		 */
-		public function set_triggers() : void 
-		{
-			if( is_defined( 'click' ) )
-				event( sprite, MouseEvent.CLICK, this[ 'click' ] );
-				
-			if( is_defined( 'mouse_over' ) )
-				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_over' ] );
-				
-			if( is_defined( 'roll_over' ) )
-				event( sprite, MouseEvent.ROLL_OVER, this[ 'roll_over' ] );
-				
-			if( is_defined( 'mouse_out' ) )
-				event( sprite, MouseEvent.MOUSE_OVER, this[ 'mouse_out' ] );
-				
-			if( is_defined( 'roll_out' ) )
-				event( sprite, MouseEvent.ROLL_OUT, this[ 'roll_out' ] );
-			
-			if( is_defined( 'mouse_up' ) )
-				event( sprite, MouseEvent.MOUSE_UP, this[ 'mouse_up' ] );
-				
-			if( is_defined( 'mouse_down' ) )
-				event( sprite, MouseEvent.MOUSE_UP, this[ 'mouse_down' ] );
-			
-			if( is_defined( 'double_click' ) )
-				event( sprite, MouseEvent.DOUBLE_CLICK, this[ 'double_click' ] );
-		}
 
 		/**
 		 * Should unset all possible triggers.
@@ -405,7 +382,10 @@ package cocktail.lib
 		 
 		/**
 		 * Unload the current source if any, then load the new path
-		 * Will trigger _source_loaded after complete 
+		 * 
+		 * Will load using _src_slave
+		 * 	on_complete triggers source_loaded
+		 * 	on_error triggers load_fails
 		 * 
 		 * @param path	Path to the desired asset
 		 */
@@ -425,9 +405,21 @@ package cocktail.lib
 			
 			_src_slave = load_uri( path, false ); 
 			
-			_src_slave.gunz_complete.add( _source_loaded );
-					 	
+			_src_slave.on_error.add( load_fails );
+			_src_slave.on_complete.add( source_loaded );
+			
 			loader.append( _src_slave );
+		}
+		
+		/**
+		 * Alias to _src_slave.uri
+		 * 	if nothing was loaded here yet, returns null
+		 */
+		public function get src(): String
+		{
+			if( !_src_slave ) return null;
+			
+			return _src_slave.uri;
 		}
 	}
 }

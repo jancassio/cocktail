@@ -4,50 +4,43 @@ package cocktail.core.request
 	import cocktail.core.router.Route;
 
 	/**
-	 * Handle all possible kind of requests.
+	 * Represents GET and POST requests
+	 * 
+	 * GET will mostly change the cocktail url, if silent = true browser wont be
+	 * notified about the cahnge.
+	 * 
+	 * POST will mostly submit your actions, to a webpage or even to cocktail. 
+	 * 
 	 * @author nybras | nybras@codeine.it
 	 * @author hems | hems@henriquematias.com
 	 */
 	public class Request
 	{
-		/* CONSTANTS (+public getters) */
-		private static const _GET : String = "get";
+		/* CONSTANTS */
+		
+		
+		public static const GET : String = "get";
 
-		private static const _POST : String = "post";
+		public static const POST : String = "post";
 
+		/* VARS */
+		
 		private var _cocktail : Cocktail;
 
 		private var _silent : Boolean;
-
-		/**
-		 * Returns a GET request type.
-		 */
-		public static function get GET() : String
-		{
-			return _GET;
-		}
-
-		/**
-		 * Returns a GET request type.
-		 */
-		public static function get POST() : String
-		{
-			return _POST;
-		}
-
-		/* VARS */
+		
 		private var _type : String;
 
 		private var _uri : String;
 
 		private var _route : Route;
 
-		private var _data : String;
+		private var _data : Object;
 
 		/* INITIALIZING */
 		
 		/**
-		 * TODO: write docs
+		 * Instiate a Request
 		 */
 		public function Request(
 			type : String,
@@ -79,63 +72,72 @@ package cocktail.core.request
 
 		/* GETTERS / SETTERS */
 		
-		/*
-		 * TODO: write docs
-		 */
 		public function get uri() : String
 		{
 			return _uri;
 		}
 
 		/*
-		 * TODO: write docs
+		 * Saves a clean_uri, @see RoutesTail::clean_uri
 		 */
 		public function set uri( uri : String ) : void
 		{
 			_uri = _cocktail.routes.clean_uri( uri );
+			
 			( _route = new Route( _uri ) ).boot( _cocktail );
 		}
 
-		/*
-		 * TODO: write docs
-		 */
 		public function get type() : String
 		{
 			return _type;
 		}
 
-		/*
-		 * TODO: write docs
-		 */
 		public function set type( type : String ) : void
 		{
 			_type = type;
 		}
 
 		/*
-		 * TODO: write docs
+		 * Data added to request.
 		 */
-		public function get data() : String
+		public function get data() : Object
 		{
 			return _data;
 		}
 
 		/*
-		 * TODO: write docs
+		 * Set request Data.
+		 * If type == GET object will be serialized and appended to address
+		 * i.e. ?name=blah&age=17
+		 * 
+		 * If type == POST object will be posted 
 		 */
-		public function set data( data : String ) : void
+		public function set data( data : Object ) : void
 		{
-			_data = data;
+			
+			if( type == POST )
+			{
+				_data = data;
+			}
+			else
+			{
+				//TODO: save string for GET requests, append it to _uri, and test
+				_data = data;
+			}
 		}
 
 		/*
-		 * TODO: write docs
+		 * Everytime uri changes, a new Route is created based on it 
 		 */
 		public function get route() : Route
 		{
 			return _route;
 		}
 		
+		/**
+		 * If type == GET and silent == true, browser wont be notified about
+		 * the cocktail deeplink change.
+		 */
 		public function get silent() : Boolean
 		{
 			return _silent;

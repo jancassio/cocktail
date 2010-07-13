@@ -14,6 +14,7 @@ package cocktail.core.config
 	/**
 	 * Config class is the source holder for the application base config.
 	 * @author nybras | nybras@codeine.it
+	 * @author hems | hems@henriquematias.com
 	 */
 	public class Config extends Index
 	{
@@ -22,7 +23,7 @@ package cocktail.core.config
 
 		private var _current_locale : String;
 
-		private var _tmp_loader : URLLoader;
+		private var _xml_loader : URLLoader;
 
 		/* BOOTING */
 		
@@ -38,44 +39,55 @@ package cocktail.core.config
 			
 			_cocktail = cocktail;
 			
-			/*
-			TODO: 	REPLACE ALL THE LOADING PROCESS WITH THE NEW LOADING
-			ENGINE, POWERED BY GUNZ
-		 				
-			ie.: load( _config_path ).listen( _init );
-			 */
-			_tmp_loader = new URLLoader( );
-			_tmp_loader.addEventListener( Event.COMPLETE, _init );
-			_tmp_loader.load( new URLRequest( _config_path ) );
+			_load();
 			
 			return s;
 		}
 
-		/* LOADING */
+		private function _load(): void
+		{
+			/*
+			PIMP: Replace with core loading || slave
+			 */
+			 
+			_xml_loader = new URLLoader( );
+			_xml_loader.addEventListener( Event.COMPLETE, _xml_loaded );
+			_xml_loader.load( new URLRequest( _xml_path ) );			
+		}
 		
 		/**
+		 * Called by _xml_loader's complete event
 		 * Keep the configuration file contents.
-		 * @param TODO: write documentation
 		 */
-		private function _init( event : Event ) : void 
+		private function _xml_loaded( event : Event ) : void 
+		{
+			_raw = new XML( String( _xml_loader.data ) );
+			
+			_init_stage();
+			
+			_init_router();
+		}
+
+		private function _init_stage(): void
 		{
 			var stage : Stage;
-			var route : XML;
-			 
-			_raw = new XML( String( _tmp_loader.data ) );
 			
 			stage = _cocktail.app.stage;
 			stage.scaleMode = _movie( "scaleMode" );
 			stage.align = _movie( "align" );
 			stage.showDefaultContextMenu = ( _movie( "showMenu" ) == true );
-			
+		}
+		
+		private function _init_router(): void
+		{
+			var route : XML;
 			
 			for each( route in _raw..route )
 				routes.map( route.@mask, route.@target );
 			
 			router.init( );
 		}
-
+		
 		/* ENVIORNMENT */
 		
 		/**
@@ -101,7 +113,7 @@ package cocktail.core.config
 		 * Evaluates the path for the config file.
 		 * @return	The path to the config file.
 		 */
-		private function get _config_path() : String
+		private function get _xml_path() : String
 		{
 			return	( (	is_in_browser ? "" : "." ) + "./cocktail/config/config.xml" + "?v=" + Math.random( )
 					);

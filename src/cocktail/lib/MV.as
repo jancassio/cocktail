@@ -22,9 +22,12 @@ package cocktail.lib
 
 		public var on_xml_load_complete : Gun; 
 
+		/** flag exclusively used by "load" method **/
+		protected var _is_loading : Boolean;
+
 		private function _init_gunz() : void
 		{
-			on_xml_load_start = new Gun( gunz, this, "load_start" );
+			on_xml_load_start    = new Gun( gunz, this, "load_start" );
 			on_xml_load_complete = new Gun( gunz, this, "load_complete" );
 		}
 

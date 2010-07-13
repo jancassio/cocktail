@@ -3,7 +3,7 @@ package cocktail.core.request
 	import cocktail.Cocktail;
 
 	/**
-	 * Handles all async requests.
+	 * Handles async requests.
 	 * @author nybras | nybras@codeine.it
 	 */
 	public class RequestAsync extends Request 
@@ -11,7 +11,7 @@ package cocktail.core.request
 		/* INITIALIZING */
 		
 		/**
-		 * TODO: write docs
+		 * TODO: implement this class, using core load || slave ?
 		 */
 		public function RequestAsync(
 			uri : String,

@@ -57,7 +57,7 @@ package cocktail.core.slave.slaves
 			stuff.push( new Responder( _result, _fault ) );
 			
 			_conn.call.apply( _conn, stuff.concat( params ) );
-			gunz_start.shoot( new AmfSlaveBullet( ) );
+			on_start.shoot( new AmfSlaveBullet( ) );
 		}
 
 		/* DEFAULT RESPONDER AND FAULT */
@@ -68,7 +68,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _result( result : * ) : void
 		{
-			gunz_complete.shoot( new AmfSlaveBullet( result ) );
+			on_complete.shoot( new AmfSlaveBullet( result ) );
 		}
 
 		/**
@@ -77,7 +77,7 @@ package cocktail.core.slave.slaves
 		 */
 		private function _fault( fault : * ) : void
 		{
-			gunz_error.shoot( new AmfSlaveBullet( fault ) );
+			on_error.shoot( new AmfSlaveBullet( fault ) );
 		}
 	}
 }
