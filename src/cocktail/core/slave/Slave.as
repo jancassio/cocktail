@@ -360,19 +360,35 @@ package cocktail.core.slave
 			
 			return this;
 		}
-
-		public function destroy() : ISlave
+		/**
+		 * Unload and removes all slaves from list
+		 */
+		public function reset(): void
 		{
-			unload( );
+			unload();
+			
+			_node = null;
 			
 			var i : DListIterator;
 			
 			i = DListIterator( dlist.getIterator( ) );
 			while( i.hasNext( ) )
-				( i.next( ) as ISlave ).unload( );
-				
+			{
+				i.remove();
+			}
+			
+		}	
+
+		public function destroy() : ISlave
+		{
+			unload( );
+			
+			reset();
+			
 			gunz.rm_all( );	
 			
+			dlist = null;
+
 			return this;
 		}
 	}

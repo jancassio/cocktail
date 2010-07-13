@@ -116,6 +116,8 @@ package cocktail.lib
 				//redirect
 			}
 			
+			_loader.reset();			
+			
 			if( !super.load( request ) ) return false;
 			
 			if( loader.length )
