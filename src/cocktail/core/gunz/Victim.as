@@ -110,9 +110,7 @@ package cocktail.core.gunz
 			handler( bullet );
 			
 			if( _time == _times )
-			{
 				_gun.rm( handler );
-			}
 			
 			return this;
 		}
