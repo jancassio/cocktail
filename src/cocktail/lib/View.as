@@ -165,7 +165,7 @@ package cocktail.lib
 			//_is_loading = true;
 			
 			// will mark all views as dead ( not in current render )
-			childs.clear_render_poll( );
+			childs.mark_all_inactive( );
 
 			// ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
@@ -179,7 +179,7 @@ package cocktail.lib
 			{
 				view = assets[ i ];
 				
-				childs.mark_as_alive( view );
+				childs.mark_as_active( view );
 				
 				view.load( request );
 			} while( ++i < assets.length );

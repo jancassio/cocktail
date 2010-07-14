@@ -134,17 +134,17 @@ package cocktail.lib.views
 		}
 
 		/**
-		 * The method name is self explainatory
+		 * Flag all view as inactive, before run
 		 */
-		public function clear_render_poll() : void
+		public function mark_all_inactive() : void
 		{
 			_will_render = {};
 		}
 
 		/**
-		 * Mark the view as renderable
+		 * Flag a view as active, so it will be rendered
 		 */
-		public function mark_as_alive( view : View ) : View
+		public function mark_as_active( view : View ) : View
 		{
 			_will_render[ view.identifier ] = true;
 			
@@ -194,8 +194,7 @@ package cocktail.lib.views
 		}
 
 		/**
-		 * Run trough all views, and call destroy in those that arent in the
-		 * current request
+		 * Call destroy in all views that wasnt flaged as "active"
 		 */
 		private function _destroy_all() : void 
 		{
@@ -215,8 +214,7 @@ package cocktail.lib.views
 		}
 
 		/**
-		 * Run trough all views, and call render in those that arent in the
-		 * current request
+		 * Call render in all views flaged as "active"
 		 */
 		private function _render_all() : void 
 		{

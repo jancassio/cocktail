@@ -12,7 +12,10 @@ ADD NEW TAG TO layout XML
 		
 	3. if you add the tag to the core lib, you should refence it in:
 		cocktail.core.embedder.EmbedderTail
-		
+	
+	4. read some views at cocktail/lib/views/ to understand how core views
+	work 
+	
 ADD NEW DATASOURCE TO model XML
 
 	1. create class in one of those paths:
