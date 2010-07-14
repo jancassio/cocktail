@@ -52,7 +52,7 @@ package cocktail.lib
 			_init_gunz( );
 			
 			regexp = /(Model|View|Controller|Layout)$/;
-			_name = StringUtil.toUnderscore( classname.replace( regexp, '' ) );
+			_name  = StringUtil.toUnderscore( classname.replace( regexp, '' ) );
 			
 			return s;
 		}
@@ -79,7 +79,10 @@ package cocktail.lib
 		{
 			var to: Timeout;
 			
+			if( !_delays ) _delays = new Array();
+			
 			to = new Timeout( method, delay * 1000, params );
+			
 			_delays.push( to );
 			
 			return to; 
@@ -92,7 +95,7 @@ package cocktail.lib
 		{
 			var i: int;
 			
-			if( !_delays.length ) return;
+			if( !_delays ) return;
 			
 			do
 			{
