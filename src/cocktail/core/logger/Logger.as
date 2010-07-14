@@ -129,7 +129,7 @@ package cocktail.core.logger
 			var tmpl2 : String;
 			var msg : String;
 			
-			base = "[" + params[ 0 ] + "] ";
+			base = "[" + params[ 0 ] + ':' + getTimer() + "] ";
 			tmpl1 = base + "{$class} ~: ";
 			tmpl2 = base + "{$class:$line} => $method ~: ";
 			
@@ -202,7 +202,9 @@ package cocktail.core.logger
 			return "";
 		}
 
+
 		/* LOG METHODS */
+
 		
 		/**
 		 * Show/log info's messages.
