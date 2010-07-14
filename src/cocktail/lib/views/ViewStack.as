@@ -155,10 +155,13 @@ package cocktail.lib.views
 		 */
 		public function render( request : Request ) : void 
 		{
-			log.info( "Running..." );
-			
 			var node : DListNode;
 			var view : View;
+			
+			// no childs, no render
+			if( !list.size ) return;
+			
+			log.info( "Running..." );
 			
 			_request = request;
 			_group_rendering = new GunzGroup( );
@@ -203,8 +206,8 @@ package cocktail.lib.views
 			{
 				view = node.data;
 				
-				if( _will_render[ view.identifier ] )
-					view.render( request );
+				if( !_will_render[ view.identifier ] )
+					view.destroy( request );
 					
 				node = node.next;
 			}
@@ -224,8 +227,8 @@ package cocktail.lib.views
 			{
 				view = node.data;
 				
-				if( !_will_render[ view.identifier ] )
-					view.destroy( request );
+				if( _will_render[ view.identifier ] )
+					view.render( request );
 					
 				node = node.next;
 			}
