@@ -14,7 +14,7 @@ package cocktail.lib.views
 		public var img: Bitmap;
 		
 		/**
-		 * This function is a victim from _src_slave's gunz_complete
+		 * This function is a victim from _src_slave's gunz_complete.
 		 */
 		override protected function source_loaded( bullet: ASlaveBullet ) : void
 		{
