@@ -86,8 +86,6 @@ package cocktail.lib
 			
 			log.info( "Running..." );
 			
-			_is_loading = true;
-			
 			if( ( ds_list = _parse_datasources( request ) ).length )
 			{
 				group = new GunzGroup( );
@@ -114,8 +112,6 @@ package cocktail.lib
 		private function _after_load( ...n /* bullet : Bullet */ ) : void
 		{
 			log.info( "Running..." );
-			
-			_is_loading = false; 
 			
 			after_load( );
 			on_load_complete.shoot( new ModelBullet( ) );
