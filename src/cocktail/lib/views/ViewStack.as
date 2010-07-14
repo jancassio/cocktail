@@ -266,7 +266,6 @@ package cocktail.lib.views
 				path = StringUtil.toCamel( xml_node.localName( ) );
 			
 			created = View( new ( _cocktail.factory.view( area_path, path ) ) );
-			created.identifier = xml_node.localName( );
 			created.xml_node = xml_node;
 			created.up = view;
 			

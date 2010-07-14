@@ -415,6 +415,8 @@ package cocktail.lib
 		/** Set the xml_node for this view **/
 		public function set xml_node( xml_node : XML ) : void 
 		{
+			identifier = xml_node.localName( );
+			
 			_xml_node = xml_node;
 		}
 
