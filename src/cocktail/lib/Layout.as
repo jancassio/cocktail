@@ -105,7 +105,8 @@ package cocktail.lib
 			
 			action = request.route.api.action;
 			
-			list = _xml..action.( @id == action || @id == "*" );
+			//.( @id == action || @id == "*" );
+			list = _xml[ action ];
 			
 			if( list )
 				xml_node = XML( list.toXMLString( ) );
