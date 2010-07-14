@@ -24,7 +24,15 @@ package cocktail.lib
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
 
-		/** The string identifier on parent's ViewStack **/
+		/** 
+		 * Identifier on parent's ViewStack
+		 * 
+		 * Is setted on xml_node setter.
+		 * 
+		 * If no "id" property is set in the XML, use the tag localName.
+		 * 
+		 * IMP: may be the best choice isnt use localName as id 
+		 * **/
 		public var identifier : String;
 
 		/** The view node on the ViewStack DLinkedList **/
@@ -153,23 +161,20 @@ package cocktail.lib
 			var assets : Array;
 			var view : View;
 			
-			_load_attributes( );
-			
-			// will mark all views as dead ( not in current render )
-			childs.clear_render_poll( );
+			childs.mark_all_inactive( );
 
-			// ATT: _parse assets should run after childs.clear_render_poll()			
+			// ATT: _parse assets should run after childs.mark_all_inactive()			
 			assets = _parse_assets( request ); 
 
-			
+			_load_attributes( );
+						
 			if( assets.length == 0 ) return true;
 			
-			// PIMP: use a lambda to run all selected assets				
 			do 
 			{
 				view = assets[ i ];
 				
-				childs.mark_as_alive( view );
+				childs.mark_as_active( view );
 				
 				view.load( request );
 			} while( ++i < assets.length );
@@ -239,7 +244,7 @@ package cocktail.lib
 			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
 				log.warn( "Your view needs to have and id" );
-				//FIXME: this ['id'] is becoming a child, not a prop
+				// FIXME: this ['id'] is becoming a child, not a prop
 				xml_node[ 'id' ] = Math.random( ) * 100000000000;
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
@@ -319,7 +324,7 @@ package cocktail.lib
 		 */
 		private function _apply_styles( request : Request ) : void
 		{
-			//FIXME: Implement a style system
+			// FIXME: Implement a style system
 			request;
 			
 			//properties rendering
@@ -414,10 +419,16 @@ package cocktail.lib
 			return _xml_node;
 		}
 
-		/** Set the xml_node for this view **/
+		/**
+		 * Receive the xml node from ViewStack#create
+		 * 
+		 * This will defined the view identifier
+		 */
 		public function set xml_node( xml_node : XML ) : void 
 		{
 			_xml_node = xml_node;
+			
+			identifier = attribute( 'id' ) || xml_node.localName( );
 		}
 
 		

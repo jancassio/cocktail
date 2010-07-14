@@ -113,6 +113,7 @@ package cocktail.lib.views
 			var view : View;
 			
 			view = bullet.owner;
+			
 			//removing from child index
 			list.remove( list.nodeOf( view.identifier ) );
 			ids[ view.identifier ] = null;
@@ -141,17 +142,17 @@ package cocktail.lib.views
 		}
 
 		/**
-		 * The method name is self explainatory
+		 * Flag all view as inactive, before run
 		 */
-		public function clear_render_poll() : void
+		public function mark_all_inactive() : void
 		{
 			_will_render = {};
 		}
 
 		/**
-		 * Mark the view as renderable
+		 * Flag a view as active, so it will be rendered
 		 */
-		public function mark_as_alive( view : View ) : View
+		public function mark_as_active( view : View ) : View
 		{
 			_will_render[ view.identifier ] = true;
 			
@@ -163,10 +164,13 @@ package cocktail.lib.views
 		 */
 		public function render( request : Request ) : void 
 		{
-			log.info( "Running..." );
-			
 			var node : DListNode;
 			var view : View;
+			
+			// no childs, no render
+			if( !list.size ) return;
+			
+			log.info( "Running..." );
 			
 			_request = request;
 			_group_rendering = new GunzGroup( );
@@ -198,31 +202,9 @@ package cocktail.lib.views
 		}
 
 		/**
-		 * Run trough all views, and call destroy in those that arent in the
-		 * current request
+		 * Call destroy in all views that wasnt flaged as "active"
 		 */
 		private function _destroy_all() : void 
-		{
-			var node : DListNode;
-			var view: View;
-			
-			node = list.head;
-			while ( node )
-			{
-				view = node.data;
-				
-				if( _will_render[ view.identifier ] )
-					view.render( request );
-					
-				node = node.next;
-			}
-		}
-
-		/**
-		 * Run trough all views, and call render in those that arent in the
-		 * current request
-		 */
-		private function _render_all() : void 
 		{
 			var node : DListNode;
 			var view: View;
@@ -240,11 +222,30 @@ package cocktail.lib.views
 		}
 
 		/**
+		 * Call render in all views flaged as "active"
+		 */
+		private function _render_all() : void 
+		{
+			var node : DListNode;
+			var view: View;
+			
+			node = list.head;
+			while ( node )
+			{
+				view = node.data;
+				
+				if( _will_render[ view.identifier ] )
+					view.render( request );
+					
+				node = node.next;
+			}
+		}
+
+		/**
 		 * Victim of _group_rendering
 		 * 
 		 * @see	ViewStack#render
 		 * 
-		 * //TODO: verify how docs will behave with this link to private
 		 * @see	ViewStack#_group_rendering
 		 */
 		private function _after_render() : void 
@@ -271,14 +272,13 @@ package cocktail.lib.views
 				path = StringUtil.toCamel( xml_node.localName( ) );
 			
 			created = View( new ( _cocktail.factory.view( area_path, path ) ) );
-			created.identifier = xml_node.localName( );
+			
+			created.node = list.append( created ); 			
 			created.xml_node = xml_node;
 			created.up = view;
+			created.boot( cocktail );
 			
-			//ATT: boot should be runned after setting props
-			created.boot( _cocktail );
-			
-			return list.append( created ).data;
+			return created;
 		}
 
 		/**

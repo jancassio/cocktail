@@ -101,6 +101,13 @@ package cocktail.lib
 			else
 			{
 				_after_load();
+				
+				var bullet : ModelBullet;
+				
+				bullet = new ModelBullet( );
+				bullet.params = request;
+				
+				delay( 1, _after_load, bullet );
 			}
 			
 			return true;
