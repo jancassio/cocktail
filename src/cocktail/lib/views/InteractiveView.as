@@ -1,6 +1,7 @@
 package cocktail.lib.views 
 {
 	import cocktail.core.gunz.Gun;
+	import cocktail.core.request.Request;
 	import cocktail.lib.View;
 
 	/**
@@ -63,7 +64,38 @@ package cocktail.lib.views
 			return r; 
 		}
 
-		
+		/**
+		 * 
+		 */
+		override public function destroy( request : Request ) : Boolean 
+		{
+			if( _on_click )
+				_on_click.rm_all();
+			
+			if( _on_mouse_over )
+				_on_mouse_over.rm_all();
+				
+			if( _on_roll_over )
+				_on_roll_over.rm_all();
+				
+			if( _on_mouse_out )
+				_on_mouse_out.rm_all();
+				
+			if( _on_roll_out )
+				_on_roll_out.rm_all();
+			
+			if( _on_mouse_up )
+				_on_mouse_up.rm_all();
+				
+			if( _on_mouse_down )
+				_on_mouse_down.rm_all();
+			
+			if( _on_double_click )
+				_on_double_click.rm_all();
+			
+			return super.destroy( request );;
+		}
+
 		/**
 		 * Will check if user customized some events, if so, will plug
 		 * then for the user.
