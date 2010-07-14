@@ -7,7 +7,6 @@ package cocktail.lib
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
-	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.views.ViewStack;
 
 	import de.polygonal.ds.DListNode;
@@ -25,7 +24,15 @@ package cocktail.lib
 		/** Contains and indexes all the childs **/
 		private var _childs : ViewStack;
 
-		/** The string identifier on parent's ViewStack **/
+		/** 
+		 * Identifier on parent's ViewStack
+		 * 
+		 * Is setted on xml_node setter.
+		 * 
+		 * If no "id" property is set in the XML, use the tag localName.
+		 * 
+		 * IMP: may be the best choice isnt use localName as id 
+		 * **/
 		public var identifier : String;
 
 		/** The view node on the ViewStack DLinkedList **/
@@ -412,12 +419,16 @@ package cocktail.lib
 			return _xml_node;
 		}
 
-		/** Set the xml_node for this view **/
+		/**
+		 * Receive the xml node from ViewStack#create
+		 * 
+		 * This will defined the view identifier
+		 */
 		public function set xml_node( xml_node : XML ) : void 
 		{
-			identifier = xml_node.localName( );
-			
 			_xml_node = xml_node;
+			
+			identifier = attribute( 'id' ) || xml_node.localName( );
 		}
 
 		

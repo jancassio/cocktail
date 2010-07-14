@@ -266,13 +266,13 @@ package cocktail.lib.views
 				path = StringUtil.toCamel( xml_node.localName( ) );
 			
 			created = View( new ( _cocktail.factory.view( area_path, path ) ) );
+			
+			created.node = list.append( created ); 			
 			created.xml_node = xml_node;
 			created.up = view;
+			created.boot( cocktail );
 			
-			//ATT: boot should be runned after setting props
-			created.boot( _cocktail );
-			
-			return list.append( created ).data;
+			return created;
 		}
 
 		/**
