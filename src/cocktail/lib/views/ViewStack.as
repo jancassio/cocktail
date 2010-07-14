@@ -38,9 +38,17 @@ package cocktail.lib.views
 		public var ids : Dictionary;
 		
 		/** 
-		 * Everytime an action is rendered, cocktail needs to know
-		 * who will be rendered and who will de destroyed in the view
-		 * stack.
+		 * This object holds a "key" for each "active" view in the current
+		 * action.
+		 * 
+		 * Before the render process this object is cleared.
+		 * 
+		 * For each view in current action, a key will be added to this object.
+		 * 
+		 * i.e. _will_render[ 'my_view_id' ] = true
+		 * 
+		 * Then, in the "render" time, views not flaged will be destroyed.
+		 * 
 		 */
 		private var _will_render : Object;
 

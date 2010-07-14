@@ -153,8 +153,7 @@ package cocktail.lib
 			var assets : Array;
 			var view : View;
 			
-			//yet not used
-			//_is_loading = true;
+			_load_attributes( );
 			
 			// will mark all views as dead ( not in current render )
 			childs.clear_render_poll( );
@@ -162,7 +161,6 @@ package cocktail.lib
 			// ATT: _parse assets should run after childs.clear_render_poll()			
 			assets = _parse_assets( request ); 
 
-			_load_attributes( );
 			
 			if( assets.length == 0 ) return true;
 			
@@ -311,6 +309,8 @@ package cocktail.lib
 		 */
 		protected function _destroy_display(): void
 		{
+			if( !sprite.parent ) return;
+			
 			up.sprite.removeChild( sprite );
 		}
 		
@@ -360,6 +360,9 @@ package cocktail.lib
 			return true;
 		}
 
+		/**
+		 * Destroy should undo, everything as done when "rendering" the view.
+		 */
 		public function destroy( request : Request ) : Boolean 
 		{
 			if( !before_destroy( request ) ) return false;
@@ -419,7 +422,7 @@ package cocktail.lib
 
 		
 		/** 
-		 * ATRIBUTTE SETTERS
+		 * ATRIBUTTE GETTER / SETTERS
 		 * 
 		 * This setters will receive the properties from xml_node, each
 		 * time the "load" method is called
