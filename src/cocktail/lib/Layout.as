@@ -123,18 +123,20 @@ package cocktail.lib
 			
 			if( loader.length )
 			{
-				loader.on_complete.add( _after_load_assets, request ).once( );
+				loader.on_complete.add( _after_load, request ).once( );
 				loader.on_error.add( _load_assets_failed, request ).once( );
 				loader.load( );
 			}
 			else
 			{
+				_after_load();
+				
 				var bullet : ViewBullet;
 				
 				bullet = new ViewBullet( );
 				bullet.params = request;
 				
-				new Timeout( _after_load_assets, 1, bullet );
+				delay( 1, _after_load, bullet );
 			}
 				
 			return true;
@@ -143,10 +145,8 @@ package cocktail.lib
 		/**
 		 * Triggered after all views have loaded its content
 		 */
-		private function _after_load_assets( bullet : Bullet ) : void 
+		private function _after_load( ...n /* bullet : Bullet */ ) : void 
 		{
-			bullet;
-			
 			log.info( "Running..." );
 			
 			after_load( true );
@@ -158,7 +158,7 @@ package cocktail.lib
 		private function _load_assets_failed( bullet : Bullet ) : void
 		{
 			log.error( "Failed to load all layout assets" );
-			_after_load_assets( bullet );
+			_after_load( bullet );
 		}
 
 		override protected function _instantiate_display() : * 

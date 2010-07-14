@@ -161,20 +161,15 @@ package cocktail.lib
 			var assets : Array;
 			var view : View;
 			
-			//yet not used
-			//_is_loading = true;
-			
-			// will mark all views as dead ( not in current render )
 			childs.mark_all_inactive( );
 
-			// ATT: _parse assets should run after childs.clear_render_poll()			
+			// ATT: _parse assets should run after childs.mark_all_inactive()			
 			assets = _parse_assets( request ); 
 
 			_load_attributes( );
 			
 			if( assets.length == 0 ) return true;
 			
-			// PIMP: use a lambda to run all selected assets				
 			do 
 			{
 				view = assets[ i ];
