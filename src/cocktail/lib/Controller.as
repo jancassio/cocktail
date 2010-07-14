@@ -253,13 +253,14 @@ package cocktail.lib
 			
 			_auto_render = true;
 			
-			//_auto_render
+			// _auto_render
 			if( is_defined( request.route.api.action ) )
 			{
 				this[ request.route.api.action ]( ); 
 			}
 			
 			if( _auto_render == false ) return;
+			
 			_layout.gunz_render_done.add( after_render, request ).once( );
 			_layout.render( request );
 		}

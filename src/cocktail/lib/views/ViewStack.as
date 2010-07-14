@@ -105,6 +105,7 @@ package cocktail.lib.views
 			var view : View;
 			
 			view = bullet.owner;
+			
 			//removing from child index
 			list.remove( list.nodeOf( view.identifier ) );
 			ids[ view.identifier ] = null;
@@ -239,7 +240,6 @@ package cocktail.lib.views
 		 * 
 		 * @see	ViewStack#render
 		 * 
-		 * //TODO: verify how docs will behave with this link to private
 		 * @see	ViewStack#_group_rendering
 		 */
 		private function _after_render() : void 

@@ -7,6 +7,7 @@ package cocktail.lib
 	import cocktail.core.slave.ISlave;
 	import cocktail.core.slave.Slave;
 	import cocktail.core.slave.gunz.ASlaveBullet;
+	import cocktail.lib.gunz.ViewBullet;
 	import cocktail.lib.views.ViewStack;
 
 	import de.polygonal.ds.DListNode;
@@ -241,7 +242,7 @@ package cocktail.lib
 			if( !xml_node.hasOwnProperty( 'id' ) && false )
 			{
 				log.warn( "Your view needs to have and id" );
-				//FIXME: this ['id'] is becoming a child, not a prop
+				// FIXME: this ['id'] is becoming a child, not a prop
 				xml_node[ 'id' ] = Math.random( ) * 100000000000;
 				log.warn( "Assigned a random id: " + xml_node[ 'id' ] );
 			}
@@ -319,7 +320,7 @@ package cocktail.lib
 		 */
 		private function _apply_styles( request : Request ) : void
 		{
-			//FIXME: Implement a style system
+			// FIXME: Implement a style system
 			request;
 			
 			//properties rendering
